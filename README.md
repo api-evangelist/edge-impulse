@@ -1,14 +1,11 @@
 # Edge Impulse (edge-impulse)
 
-Build datasets, train models, and optimize libraries to run directly on
-device; from the smallest microcontrollers to gateways with the latest neural
-accelerators (and anything in between).
+Build datasets, train models, and optimize libraries to run directly on device; from the smallest microcontrollers to gateways with the latest neural accelerators (and anything in between).
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/edge-impulse/refs/heads/main/apis.yml)
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/edge-impulse/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/edge-impulse/refs/heads/main/apis.yml)
 
 ## Scope
 
-- **Type:** Contract
 - **Position:** Consumer
 - **Access:** 3rd-Party
 
@@ -27,13 +24,10 @@ accelerators (and anything in between).
 
 ### Edge Impulse API
 
-The Edge Impulse Studio API provides programmatic access to build datasets,
-train models, and deploy embedded machine learning libraries directly to
-devices, from microcontrollers to gateways with neural accelerators.
+The Edge Impulse Studio API provides programmatic access to build datasets, train models, and deploy embedded machine learning libraries directly to devices, from microcontrollers to gateways with neural accelerators.
 
-**Human URL:** [https://docs.edgeimpulse.com/reference/edge-impulse-api](https://docs.edgeimpulse.com/reference/edge-impulse-api)
-
-**Base URL:** https://studio.edgeimpulse.com/v1
+- **Human URL:** [https://docs.edgeimpulse.com/reference/edge-impulse-api](https://docs.edgeimpulse.com/reference/edge-impulse-api)
+- **Base URL:** `https://studio.edgeimpulse.com/v1`
 
 #### Tags
 
@@ -44,27 +38,28 @@ devices, from microcontrollers to gateways with neural accelerators.
 #### Properties
 
 - [Documentation](https://docs.edgeimpulse.com/reference/edge-impulse-api)
-- [OpenAPI](openapi/edge-impulse-openapi.yml)
+- [OpenAPI](openapi/edge-impulse-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
 
 ## Common Properties
 
+- [LinkedIn](https://www.linkedin.com/company/edgeimpulse)
 - [Website](https://edgeimpulse.com/)
 - [Documentation](https://docs.edgeimpulse.com/docs)
 - [Blog](https://www.edgeimpulse.com/blog/)
-- [FAQ](https://edgeimpulse.com/faqs)
+- [F A Q](https://edgeimpulse.com/faqs)
 - [About](https://edgeimpulse.com/about)
 - [Events](https://edgeimpulse.com/events)
 - [Discussions](https://forum.edgeimpulse.com/)
-- [CaseStudies](https://edgeimpulse.com/case-studies)
+- [Case Studies](https://edgeimpulse.com/case-studies)
 - [Plans](https://edgeimpulse.com/pricing)
 - [Login](https://studio.edgeimpulse.com/login)
-- [SignUp](https://studio.edgeimpulse.com/signup)
+- [Sign Up](https://studio.edgeimpulse.com/signup)
 - [Security](https://edgeimpulse.com/security)
 - [Branding](https://edgeimpulse.com/branding)
-- [GitHubOrganization](https://github.com/edgeimpulse)
+- [GitHub Organization](https://github.com/edgeimpulse)
+- [L L Ms Txt](https://docs.edgeimpulse.com/llms.txt)
 
 ## Maintainers
 
 **FN:** Kin Lane
-
 **Email:** kin@apievangelist.com
