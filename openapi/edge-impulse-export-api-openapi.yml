@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info:
+  title: Edge Impulse Export API
+  version: 1.0.0
+servers:
+- url: https://studio.edgeimpulse.com/v1
+security:
+- ApiKeyAuthentication: []
+- JWTAuthentication: []
+- JWTHttpHeaderAuthentication: []
+tags:
+- name: Export
+paths:
+  /api/{projectId}/export/get-url:
+    get:
+      summary: Get URL of export
+      description: Get the URL to the exported artefacts for an export job of a project.
+      operationId: getExportUrl
+      tags:
+      - Export
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExportGetUrlResponse'
+components:
+  schemas:
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    ExportGetUrlResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - hasExport
+        properties:
+          hasExport:
+            type: boolean
+          created:
+            description: Set if hasExport is true
+            type: string
+            format: date-time
+          url:
+            description: Set if hasExport is true
+            type: string
+  parameters:
+    ProjectIdParameter:
+      name: projectId
+      in: path
+      required: true
+      description: Project ID
+      schema:
+        type: integer
+  securitySchemes:
+    ApiKeyAuthentication:
+      type: apiKey
+      in: header
+      name: x-api-key
+    JWTAuthentication:
+      type: apiKey
+      in: cookie
+      name: jwt
+    JWTHttpHeaderAuthentication:
+      type: apiKey
+      in: header
+      name: x-jwt-token

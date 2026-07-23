@@ -1,0 +1,4293 @@
+openapi: 3.0.0
+info:
+  title: Edge Impulse Admin API
+  version: 1.0.0
+servers:
+- url: https://studio.edgeimpulse.com/v1
+security:
+- ApiKeyAuthentication: []
+- JWTAuthentication: []
+- JWTHttpHeaderAuthentication: []
+tags:
+- name: Admin
+paths:
+  /api/admin/metrics:
+    get:
+      summary: Get global metrics
+      description: Admin-only API to get global metrics.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:metrics:read
+      tags:
+      - Admin
+      operationId: adminGetMetrics
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminGetMetricsResponse'
+  /api/admin/metrics/reports:
+    get:
+      summary: Get global metrics reports
+      description: Admin-only API to get global metrics reports.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:metrics:read
+      tags:
+      - Admin
+      operationId: adminGetMetricsReports
+      parameters:
+      - $ref: '#/components/parameters/LimitResultsParameter'
+      - $ref: '#/components/parameters/OffsetResultsParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminGetReportsResponse'
+    post:
+      summary: Create a new global metrics report
+      description: 'Admin-only API to create a new global metrics report.
+
+        A job is created to process the report request and the job details are returned in the response.
+
+        '
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:metrics:read
+      tags:
+      - Admin
+      operationId: adminCreateMetricsReport
+      parameters:
+      - $ref: '#/components/parameters/RequiredStartDateParameter'
+      - $ref: '#/components/parameters/RequiredEndDateParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartJobResponse'
+  /api/admin/metrics/reports/{reportId}:
+    get:
+      summary: Get global metrics report
+      description: Admin-only API to get a global metrics report.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:metrics:read
+      tags:
+      - Admin
+      operationId: adminGetMetricsReport
+      parameters:
+      - $ref: '#/components/parameters/ReportIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminGetReportResponse'
+    delete:
+      summary: Delete global metrics report
+      description: Admin-only API to delete a global metrics report.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:metrics:write
+      tags:
+      - Admin
+      operationId: adminDeleteMetricsReport
+      parameters:
+      - $ref: '#/components/parameters/ReportIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/admin/metrics/reports/{reportId}/download:
+    get:
+      summary: Download global metrics report
+      description: Admin-only API to download a global metrics report.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:metrics:read
+      tags:
+      - Admin
+      operationId: adminDownloadMetricsReport
+      parameters:
+      - $ref: '#/components/parameters/ReportIdParameter'
+      responses:
+        '302':
+          description: A redirect to the ZIP file
+  /api/admin/infra/migrations:
+    get:
+      summary: Get data migrations
+      description: Admin-only API to get data migrations.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:infra:migrations:read
+      tags:
+      - Admin
+      operationId: adminGetDataMigrations
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminGetDataMigrationsResponse'
+  /api/admin/infra/migrations/{migrationId}:
+    get:
+      summary: Get data migration
+      description: Admin-only API to get a data migration.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:infra:migrations:read
+      tags:
+      - Admin
+      operationId: adminGetDataMigration
+      parameters:
+      - $ref: '#/components/parameters/MigrationIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminGetDataMigrationResponse'
+    post:
+      summary: Run or pause a data migration
+      description: Admin-only API to run or pause a data migration.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:infra:migrations:write
+      tags:
+      - Admin
+      operationId: adminToggleDataMigration
+      parameters:
+      - $ref: '#/components/parameters/MigrationIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminToggleDataMigrationRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/admin/infra/disallowedEmailDomains:
+    get:
+      summary: Get the list of disallowed email domains
+      description: Admin-only API to get the list of disallowed email domains.
+      x-internal-api: true
+      tags:
+      - Admin
+      operationId: adminGetDisallowedEmailDomains
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminGetDisallowedEmailDomainsResponse'
+    put:
+      summary: Add a disallowed email domain
+      description: Admin-only API to add an email domain to the list of disallowed email domains.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:infra:disallowedEmailDomains:write
+      tags:
+      - Admin
+      operationId: adminAddDisallowedEmailDomain
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminAddDisallowedEmailDomainRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/admin/infra/disallowedEmailDomains/{domainName}:
+    delete:
+      summary: Delete disallowed email domain
+      description: Admin-only API to delete an email domain from the list of disallowed email domains.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:infra:disallowedEmailDomains:write
+      tags:
+      - Admin
+      operationId: adminDeleteDisallowedEmailDomain
+      parameters:
+      - $ref: '#/components/parameters/DomainNameParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/admin/infra/featureFlags:
+    get:
+      summary: Get all feature flags
+      description: Admin-only API to get all feature flags.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:infra:featureFlags:read
+      tags:
+      - Admin
+      operationId: adminGetFeatureFlags
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFeatureFlagsResponse'
+  /api/admin/infra/featureFlags/{featureId}:
+    put:
+      summary: Set a feature flag ON
+      description: Admin-only API to set a feature flag ON. Setting a feature flag ON essentially enables the feature for all users.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:infra:featureFlags:write
+      tags:
+      - Admin
+      operationId: adminEnableFeature
+      parameters:
+      - $ref: '#/components/parameters/FeatureIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+    delete:
+      summary: Set a feature flag OFF
+      description: Admin-only API to delete a feature flag. Deleting a feature flag essentially disables the feature for all users.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:infra:featureFlags:write
+      tags:
+      - Admin
+      operationId: adminDisableFeature
+      parameters:
+      - $ref: '#/components/parameters/FeatureIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/admin/infra/config:
+    get:
+      summary: Get all studio config
+      description: Admin-only API to get all studio config.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:infra:config:read
+      tags:
+      - Admin
+      operationId: adminGetStudioConfig
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetStudioConfigResponse'
+  /api/admin/infra/config/{configKey}:
+    post:
+      summary: Update studio config
+      description: Admin-only API to update a studio config item.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:infra:config:write
+      tags:
+      - Admin
+      operationId: adminSetStudioConfig
+      parameters:
+      - $ref: '#/components/parameters/ConfigKeyParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminUpdateConfigRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+    delete:
+      summary: Delete a studio config item
+      description: Admin-only API to delete a studio config item.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:infra:config:write
+      tags:
+      - Admin
+      operationId: adminDeleteStudioConfig
+      parameters:
+      - $ref: '#/components/parameters/ConfigKeyParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/admin/users:
+    get:
+      summary: Get all users
+      description: Admin-only API to get the list of all registered users.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:users:read
+      tags:
+      - Admin
+      operationId: adminGetUsers
+      parameters:
+      - $ref: '#/components/parameters/FiltersActiveParameter'
+      - $ref: '#/components/parameters/FiltersTierParameter'
+      - $ref: '#/components/parameters/FieldsParameter'
+      - $ref: '#/components/parameters/SortQueryParameter'
+      - $ref: '#/components/parameters/FiltersQueryParameter'
+      - $ref: '#/components/parameters/LimitResultsParameter'
+      - $ref: '#/components/parameters/OffsetResultsParameter'
+      - $ref: '#/components/parameters/SearchQueryParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminGetUsersResponse'
+  /api/admin/users/{userId}:
+    get:
+      summary: Get user
+      description: Admin-only API to get information about a user.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:users:read
+      tags:
+      - Admin
+      operationId: adminGetUser
+      parameters:
+      - $ref: '#/components/parameters/UserIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminGetUserResponse'
+    post:
+      summary: Update user
+      description: Admin-only API to update user properties.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:users:write
+      tags:
+      - Admin
+      operationId: adminUpdateUser
+      parameters:
+      - $ref: '#/components/parameters/UserIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminUpdateUserRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+    delete:
+      summary: Delete a user
+      description: Admin-only API to delete a user.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:users:write
+      tags:
+      - Admin
+      operationId: adminDeleteUser
+      parameters:
+      - $ref: '#/components/parameters/UserIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartJobResponse'
+  /api/admin/users/{userId}/metrics:
+    get:
+      summary: Get user metrics
+      description: Admin-only API to get marketing metrics about a user.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:users:read
+      tags:
+      - Admin
+      operationId: adminGetUserMetrics
+      parameters:
+      - $ref: '#/components/parameters/UserIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminGetUserMetricsResponse'
+  /api/admin/users/{userId}/permissions:
+    post:
+      summary: Update user permissions
+      description: Admin-only API to update the list of permissions for a user.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:users:permissions:write
+      tags:
+      - Admin
+      operationId: adminUpdateUserPermissions
+      parameters:
+      - $ref: '#/components/parameters/UserIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminUpdateUserPermissionsRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/admin/users/{userId}/jobs:
+    get:
+      summary: Get user jobs
+      description: Admin-only API to get the list of all project jobs for a user.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:users:read
+      tags:
+      - Admin
+      operationId: adminGetUserJobs
+      parameters:
+      - $ref: '#/components/parameters/UserIdParameter'
+      - $ref: '#/components/parameters/LimitResultsParameter'
+      - $ref: '#/components/parameters/OffsetResultsParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListJobsResponse'
+  /api/admin/trials:
+    post:
+      summary: Create user enterprise trial
+      description: Admin-only API to create an enterprise trial for a user.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:trials:write
+      tags:
+      - Admin
+      operationId: adminCreateTrial
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminStartEnterpriseTrialRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityCreatedResponse'
+  /api/admin/trials/{enterpriseTrialId}:
+    get:
+      summary: Get enterprise trial
+      description: Admin-only API to get a specific enterprise trial.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:trials:read
+      tags:
+      - Admin
+      operationId: adminGetTrial
+      parameters:
+      - $ref: '#/components/parameters/EnterpriseTrialIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminGetTrialResponse'
+    put:
+      summary: Update enterprise trial
+      description: Admin-only API to update an enterprise trial.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:trials:write
+      tags:
+      - Admin
+      operationId: adminUpdateTrial
+      parameters:
+      - $ref: '#/components/parameters/EnterpriseTrialIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminUpdateTrialRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+    delete:
+      summary: Delete enterprise trial
+      description: Admin-only API to delete an enterprise trial.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:trials:write
+      tags:
+      - Admin
+      operationId: adminDeleteTrial
+      parameters:
+      - $ref: '#/components/parameters/EnterpriseTrialIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/admin/trials/{enterpriseTrialId}/upgrade:
+    post:
+      summary: Upgrade enterprise trial to a full enterprise account
+      description: Admin-only API to upgrade a specific enterprise trial to a full enterprise account.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:trials:write
+      tags:
+      - Admin
+      operationId: adminUpgradeTrial
+      parameters:
+      - $ref: '#/components/parameters/EnterpriseTrialIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/admin/projects:
+    get:
+      summary: Get all projects
+      description: Admin-only API to get the list of all projects.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:projects:read
+      tags:
+      - Admin
+      operationId: adminGetProjects
+      parameters:
+      - $ref: '#/components/parameters/FiltersActiveParameter'
+      - $ref: '#/components/parameters/SortQueryParameter'
+      - $ref: '#/components/parameters/FiltersQueryParameter'
+      - $ref: '#/components/parameters/LimitResultsParameter'
+      - $ref: '#/components/parameters/OffsetResultsParameter'
+      - $ref: '#/components/parameters/SearchQueryParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminListProjectsResponse'
+    post:
+      summary: Create a new project
+      description: Admin-only API to create a new free tier project.
+      x-internal-api: true
+      tags:
+      - Admin
+      security:
+      - permissions:
+        - admin:projects:write
+      operationId: adminCreateProject
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminCreateProjectRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateProjectResponse'
+  /api/admin/projects/{projectId}:
+    get:
+      summary: Get project
+      description: Admin-only API to get project information.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:projects:read
+      tags:
+      - Admin
+      operationId: adminGetProject
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectInfoResponse'
+    post:
+      summary: Update project
+      description: Admin-only API to update project properties.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:projects:write
+      tags:
+      - Admin
+      operationId: adminUpdateProject
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProjectRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+    delete:
+      summary: Delete a project
+      description: Admin-only API to delete a project.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:projects:write
+      tags:
+      - Admin
+      operationId: adminDeleteProject
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/admin/projects/{projectId}/members:
+    post:
+      summary: Add user to a project
+      description: Admin-only API to add a user to a project. If no user is provided, the current user is used.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:projects:members:write
+      tags:
+      - Admin
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      operationId: adminAddUserToProject
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminAddProjectUserRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/admin/projects/{projectId}/members/{userId}:
+    delete:
+      summary: Remove user from a project
+      description: Admin-only API to remove a user from a project.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:projects:members:write
+      tags:
+      - Admin
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/UserIdParameter'
+      operationId: adminRemoveUserFromProject
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/admin/projects/{projectId}/jobs:
+    get:
+      summary: Get project jobs
+      description: Admin-only API to get the list of all jobs for a project.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:projects:read
+      tags:
+      - Admin
+      operationId: adminGetProjectJobs
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/LimitResultsParameter'
+      - $ref: '#/components/parameters/OffsetResultsParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListJobsResponse'
+  /api/admin/organizations:
+    get:
+      summary: Get all organizations
+      description: Admin-only API to get the list of all organizations.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:organizations:read
+      tags:
+      - Admin
+      operationId: adminGetOrganizations
+      parameters:
+      - $ref: '#/components/parameters/FiltersActiveParameter'
+      - $ref: '#/components/parameters/FiltersIncludeDeletedParameter'
+      - $ref: '#/components/parameters/SortQueryParameter'
+      - $ref: '#/components/parameters/FiltersQueryParameter'
+      - $ref: '#/components/parameters/LimitResultsParameter'
+      - $ref: '#/components/parameters/OffsetResultsParameter'
+      - $ref: '#/components/parameters/SearchQueryParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminGetOrganizationsResponse'
+    post:
+      summary: Create a new organization
+      description: Admin-only API to create a new organization.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:organizations:write
+      tags:
+      - Admin
+      operationId: adminCreateOrganization
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminCreateOrganizationRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateOrganizationResponse'
+  /api/admin/organizations/{organizationId}:
+    get:
+      summary: Organization information
+      description: Admin-only API to list all information about this organization.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:organizations:read
+      tags:
+      - Admin
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/FiltersIncludeDeletedParameter'
+      operationId: adminGetOrganizationInfo
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminOrganizationInfoResponse'
+    post:
+      summary: Update organization
+      description: Admin-only API to update organization properties such as name and logo.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:organizations:write
+      tags:
+      - Admin
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      operationId: adminUpdateOrganization
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminUpdateOrganizationRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+    delete:
+      summary: Delete an organization
+      description: Admin-only API to delete an organization. If `fullDeletion` is set, it deletes the organization's identifiable information and files. Otherwise, it soft deletes the organization by setting its `delete_date` value.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:organizations:write
+      tags:
+      - Admin
+      operationId: adminDeleteOrganization
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/FullDeleteEntityParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/admin/organizations/{organizationId}/restore:
+    post:
+      summary: Restore an organization
+      description: 'Admin-only API to restore a soft deleted organization. All organization projects sharing the same deletion date as that of the organization will also be restored. If this is a trial organization that was never upgraded to a paid plan then the organization will be restored to its original trial state.
+
+        '
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:organizations:write
+      tags:
+      - Admin
+      operationId: adminRestoreOrganization
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/admin/organizations/{organizationId}/usage/computeTime:
+    get:
+      summary: Get organization compute time usage
+      description: Admin-only API to get compute time usage for an organization over a period of time.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:organizations:read
+      tags:
+      - Admin
+      operationId: adminGetOrganizationComputeTimeUsage
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/RequiredStartDateParameter'
+      - $ref: '#/components/parameters/RequiredEndDateParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminGetOrganizationComputeTimeUsageResponse'
+  /api/admin/organizations/{organizationId}/usage/reports:
+    get:
+      summary: Get all usage reports
+      description: Admin-only API to get all usage reports for an organization.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:organizations:read
+      tags:
+      - Admin
+      operationId: adminGetOrganizationUsageReports
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/LimitResultsParameter'
+      - $ref: '#/components/parameters/OffsetResultsParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminGetReportsResponse'
+    post:
+      summary: Creates a new usage report
+      description: Admin-only API to create a new usage report for an organization. A job is created to process the report request and the job details are returned in the response.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:organizations:read
+      tags:
+      - Admin
+      operationId: adminCreateOrganizationUsageReport
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/RequiredStartDateParameter'
+      - $ref: '#/components/parameters/RequiredEndDateParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartJobResponse'
+  /api/admin/organizations/{organizationId}/usage/reports/{reportId}:
+    get:
+      summary: Get usage report
+      description: Admin-only API to get a usage report for an organization.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:organizations:read
+      tags:
+      - Admin
+      operationId: adminGetOrganizationUsageReport
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/ReportIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminGetReportResponse'
+    delete:
+      summary: Delete usage report
+      description: Admin-only API to delete a usage report for an organization.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:organizations:read
+      tags:
+      - Admin
+      operationId: adminDeleteOrganizationUsageReport
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/ReportIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/admin/organizations/{organizationId}/usage/reports/{reportId}/download:
+    get:
+      summary: Download usage report
+      description: Admin-only API to download a usage report for an organization.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:organizations:read
+      tags:
+      - Admin
+      operationId: adminDownloadOrganizationUsageReport
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/ReportIdParameter'
+      responses:
+        '302':
+          description: A redirect to the CSV file
+  /api/admin/organizations/{organizationId}/members:
+    post:
+      summary: Add user to an organization
+      description: Admin-only API to add a user to an organization. If no user is provided, the current user is used.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:organizations:members:write
+      tags:
+      - Admin
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      operationId: adminAddUserToOrganization
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminAddOrganizationUserRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/admin/organizations/{organizationId}/members/{userId}:
+    delete:
+      summary: Remove user from an organization
+      description: Admin-only API to remove a user from an organization.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:organizations:members:write
+      tags:
+      - Admin
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/UserIdParameter'
+      operationId: adminRemoveUserFromOrganization
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/admin/organizations/{organizationId}/projects:
+    post:
+      summary: Create a new organization project
+      description: Admin-only API to create a new project for an organization.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:projects:write
+      tags:
+      - Admin
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      operationId: adminCreateOrganizationProject
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminCreateProjectRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateProjectResponse'
+  /api/admin/organizations/{organizationId}/exports:
+    get:
+      summary: Get all organization data exports
+      description: Admin-only API to get the list of all data exports for an organization.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:organizations:read
+      tags:
+      - Admin
+      operationId: adminGetOrganizationDataExports
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/LimitResultsParameter'
+      - $ref: '#/components/parameters/OffsetResultsParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOrganizationDataExportsResponse'
+    post:
+      summary: Create a new organization data export
+      description: 'Admin-only API to create a new data export for an organization.
+
+        A job is created to process the export request and the job details are returned in the response.
+
+        '
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:organizations:write
+      tags:
+      - Admin
+      operationId: adminCreateOrganizationDataExport
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminCreateOrganizationDataExportRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartJobResponse'
+  /api/admin/organizations/{organizationId}/exports/{exportId}:
+    get:
+      summary: Get organization data export
+      description: Admin-only API to get a data export for an organization.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:organizations:read
+      tags:
+      - Admin
+      operationId: adminGetOrganizationDataExport
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/ExportIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOrganizationDataExportResponse'
+    delete:
+      summary: Delete organization data export
+      description: Admin-only API to delete a data export for an organization.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:organizations:write
+      tags:
+      - Admin
+      operationId: adminDeleteOrganizationDataExport
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/ExportIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+    put:
+      summary: Update organization data export
+      description: Admin-only API to update a data export for an organization.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:organizations:write
+      tags:
+      - Admin
+      operationId: adminUpdateOrganizationDataExport
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/ExportIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminUpdateOrganizationDataExportRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/admin/organizations/{organizationId}/jobs:
+    get:
+      summary: Get organization jobs
+      description: Admin-only API to get the list of all jobs for a organization.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:organizations:read
+      tags:
+      - Admin
+      operationId: adminGetOrganizationJobs
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/LimitResultsParameter'
+      - $ref: '#/components/parameters/OffsetResultsParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListJobsResponse'
+  /api/admin/sso:
+    get:
+      summary: Get SSO settings
+      description: Admin-only API to get the SSO settings.
+      x-internal-api: true
+      tags:
+      - Admin
+      x-middleware:
+      - RequiresSudo
+      operationId: adminGetSSOSettings
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminGetSSOSettingsResponse'
+  /api/admin/sso/{domainName}:
+    get:
+      summary: Get SSO settings for a domain
+      description: Admin-only API to get the list of identity providers enabled for a given domain.
+      x-internal-api: true
+      tags:
+      - Admin
+      x-middleware:
+      - RequiresSudo
+      operationId: adminGetSSODomainIdPs
+      parameters:
+      - $ref: '#/components/parameters/DomainNameParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminGetSSODomainIdPsResponse'
+    put:
+      summary: Add or update SSO settings for a domain
+      description: Admin-only API to set the list of identity provider for a given domain.
+      x-internal-api: true
+      tags:
+      - Admin
+      x-middleware:
+      - RequiresSudo
+      operationId: adminAddOrUpdateSSODomainIdPs
+      parameters:
+      - $ref: '#/components/parameters/DomainNameParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminAddOrUpdateSSODomainIdPsRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+    delete:
+      summary: Delete SSO settings for a domain
+      description: Admin-only API to delete the list of identity providers for a given domain.
+      x-internal-api: true
+      tags:
+      - Admin
+      x-middleware:
+      - RequiresSudo
+      operationId: adminDeleteSSODomainIdPs
+      parameters:
+      - $ref: '#/components/parameters/DomainNameParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/admin/jobs/{jobId}/details:
+    get:
+      summary: Get job execution details
+      description: Get the job execution details including inner jobs
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:jobs:read
+      operationId: adminGetJobDetails
+      tags:
+      - Admin
+      parameters:
+      - $ref: '#/components/parameters/JobIdParameter'
+      - $ref: '#/components/parameters/ParentTypeParameter'
+      - $ref: '#/components/parameters/IncludeChildrenJobsParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobDetailsResponse'
+  /api/admin/jobs/{jobId}/logs:
+    get:
+      summary: Get job logs
+      description: Get the logs for a job.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:jobs:read
+      operationId: adminGetJobsLogs
+      tags:
+      - Admin
+      parameters:
+      - $ref: '#/components/parameters/JobIdParameter'
+      - $ref: '#/components/parameters/ParentTypeParameter'
+      - $ref: '#/components/parameters/LogsLimitParameter'
+      - $ref: '#/components/parameters/LogsOffsetParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobLogsResponse'
+  /api/admin/jobs/{jobId}/metrics:
+    get:
+      summary: Get job usage metrics
+      description: Get cpu/memory usage metrics, if the job is a Kubernetes job
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:jobs:read
+      operationId: adminGetJobsMetrics
+      tags:
+      - Admin
+      parameters:
+      - $ref: '#/components/parameters/JobIdParameter'
+      - $ref: '#/components/parameters/ParentTypeParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobMetricsResponse'
+  /api/admin/emails/{email}/verification-code:
+    get:
+      summary: Get enterprise trial email verification code
+      description: Get the enterprise trial verification code of the specified email.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:emails:verification:code:read
+      operationId: adminGetEmailVerificationCode
+      tags:
+      - Admin
+      parameters:
+      - $ref: '#/components/parameters/EmailParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEmailVerificationCodeResponse'
+  /api/admin/find-user:
+    get:
+      summary: Find a user
+      description: DEPRECATED. Admin-only API to find a user by username or email address.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:users:read
+      tags:
+      - Admin
+      operationId: adminFindUser
+      deprecated: true
+      parameters:
+      - $ref: '#/components/parameters/FindUserQueryParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindUserResponse'
+  /api/admin/users-ids:
+    get:
+      summary: Get all user IDs
+      description: DEPRECATED. Admin-only API to get list of all users.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:users:read
+      tags:
+      - Admin
+      operationId: adminGetAllUserIds
+      deprecated: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminGetUserIdsResponse'
+  /api/admin/users-ids/active:
+    get:
+      summary: Get all user IDs (active last 30 days)
+      description: DEPRECATED. Admin-only API to get list of all users that have been active in the past 30 days.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:users:read
+      tags:
+      - Admin
+      operationId: adminGetAllActiveUserIds
+      deprecated: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AdminGetUserIdsResponse'
+  /api/admin/projects/{projectId}/add:
+    post:
+      summary: Add current user to a project
+      description: DEPRECATED. Admin-only API to add the current user to a project.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:projects:members:write
+      tags:
+      - Admin
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      operationId: adminAddUserToProjectDeprecated
+      deprecated: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/admin/projects/{projectId}/remove:
+    post:
+      summary: Remove current user from a project
+      description: DEPRECATED. Admin-only API to remove the current user from a project.
+      x-internal-api: true
+      security:
+      - permissions:
+        - admin:projects:members:write
+      tags:
+      - Admin
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      operationId: adminRemoveUserFromProjectDeprecated
+      deprecated: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+components:
+  schemas:
+    EntitlementLimits:
+      type: object
+      properties:
+        totalStorage:
+          type: number
+          description: Storage entitlement, in bytes
+        computeTimePerYear:
+          type: number
+          description: Total compute time entitlement (CPU + GPU), in seconds
+        gpuComputeTimePerYear:
+          type: number
+          description: GPU compute time entitlement, in seconds
+        numberOfProjects:
+          type: integer
+          description: Number of projects allowed for this organization
+        numberOfUsers:
+          type: integer
+          description: Number of users allowed for this organization
+    JobLogsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - logs
+        properties:
+          logs:
+            type: array
+            items:
+              type: object
+              required:
+              - created
+              - data
+              properties:
+                created:
+                  type: string
+                  format: date-time
+                data:
+                  type: string
+                logLevel:
+                  type: string
+                  enum:
+                  - error
+                  - warn
+                  - info
+                  - debug
+    AdminGetSSODomainIdPsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - idps
+        properties:
+          idps:
+            type: array
+            items:
+              type: string
+              example:
+              - google
+              - okta
+    Report:
+      type: object
+      required:
+      - id
+      - created
+      - jobId
+      - jobFinished
+      - jobFinishedSuccessful
+      - reportStartDate
+      - reportEndDate
+      properties:
+        id:
+          type: integer
+        created:
+          type: string
+          format: date-time
+        createdByUser:
+          type: object
+          required:
+          - id
+          - name
+          - username
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            username:
+              type: string
+            photo:
+              type: string
+        jobId:
+          type: integer
+        jobFinished:
+          type: boolean
+        jobFinishedSuccessful:
+          type: boolean
+        downloadLink:
+          type: string
+        reportStartDate:
+          type: string
+          format: date-time
+        reportEndDate:
+          type: string
+          format: date-time
+    OrganizationDataExport:
+      type: object
+      required:
+      - id
+      - created
+      - expirationDate
+      - jobId
+      - jobFinished
+      - jobFinishedSuccessful
+      properties:
+        id:
+          type: integer
+        created:
+          type: string
+          format: date-time
+        createdByUser:
+          type: object
+          required:
+          - id
+          - name
+          - username
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            username:
+              type: string
+            photo:
+              type: string
+        jobId:
+          type: integer
+        jobFinished:
+          type: boolean
+        jobFinishedSuccessful:
+          type: boolean
+        description:
+          type: string
+          description: Description of the data export
+        expirationDate:
+          type: string
+          format: date-time
+          description: Date when the export will expire. Default is 30 days. Maximum expiration date is 60 days from the creation date.
+        downloadUrl:
+          type: string
+    ListJobsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - jobs
+        - totalJobCount
+        properties:
+          jobs:
+            type: array
+            description: Active jobs
+            items:
+              $ref: '#/components/schemas/Job'
+          totalJobCount:
+            type: integer
+    AdminGetTrialResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - trial
+        properties:
+          trial:
+            $ref: '#/components/schemas/EnterpriseTrial'
+    JobState:
+      type: object
+      required:
+      - version
+      - timestamp
+      - step
+      properties:
+        version:
+          type: integer
+          description: version number (indicates the order of the state)
+        timestamp:
+          type: string
+          format: date-time
+          description: timestamp when the job transistioned to this new step
+        executionDetails:
+          $ref: '#/components/schemas/JobStateExecutionDetails'
+        step:
+          $ref: '#/components/schemas/JobStep'
+    Feature:
+      type: string
+      enum:
+      - signup-thank-you-page
+      - stripe-live-mode
+      - azure-storage
+      description: Known feature identifiers.
+    ProjectCollaborator:
+      allOf:
+      - $ref: '#/components/schemas/User'
+      - type: object
+        required:
+        - isOwner
+        properties:
+          isOwner:
+            type: boolean
+    JobDetails:
+      allOf:
+      - $ref: '#/components/schemas/Job'
+      - type: object
+        required:
+        - states
+        properties:
+          childrenIds:
+            type: array
+            description: List of jobs children isd triggered by this job
+            items:
+              type: integer
+          states:
+            type: array
+            description: List of states the job went through
+            items:
+              $ref: '#/components/schemas/JobState'
+          spec:
+            type: object
+            description: Job specification (Kubernetes specification or other underlying engine)
+    CreateOrganizationResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        - apiKey
+        properties:
+          id:
+            type: integer
+            description: Organization ID for the new organization
+          apiKey:
+            type: string
+            description: API key for the new organization (this is shown only once)
+    JobStep:
+      type: object
+      required:
+      - ordinal
+      - name
+      properties:
+        ordinal:
+          type: number
+          description: ordinal number representing the step
+        progress:
+          type: number
+          description: 'progress percentage inside the same step example for "scheduled" step, we have the following values: 0%: pod scheduled to some node (but node creation may not be finished yet) 50%: image pulling started 90%: image pulled
+
+            '
+        name:
+          type: string
+          description: short name describing the step
+        attempt:
+          type: integer
+          description: execution attempt (starts at 0)
+        failureDetails:
+          $ref: '#/components/schemas/JobFailureDetails'
+          description: failure details
+    ApplicationBudget:
+      type: object
+      description: Specifies limits for your specific application, as available RAM and ROM for the model's operation and the maximum allowed latency.
+      properties:
+        latencyPerInferenceMs:
+          $ref: '#/components/schemas/ResourceRange'
+        energyPerInferenceJoules:
+          $ref: '#/components/schemas/ResourceRange'
+        memoryOverhead:
+          $ref: '#/components/schemas/TargetMemory'
+    AdminAddProjectUserRequest:
+      allOf:
+      - $ref: '#/components/schemas/AdminAddUserRequest'
+    TimeSeriesDataPoint:
+      type: object
+      required:
+      - timestamp
+      - value
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+        value:
+          type: number
+    ModelEngineShortEnum:
+      type: string
+      enum:
+      - tflite-eon
+      - tflite-eon-ram-optimized
+      - tflite
+    FindUserResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - users
+        properties:
+          users:
+            type: array
+            items:
+              type: object
+              required:
+              - id
+              - username
+              - name
+              - created
+              - email
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                username:
+                  type: string
+                  example: janjongboom
+                name:
+                  type: string
+                  example: Jan Jongboom
+                photo:
+                  type: string
+                  example: https://usercdn.edgeimpulse.com/photos/1.jpg
+                created:
+                  type: string
+                  format: date-time
+                  example: '2019-08-31T17:32:28Z'
+                email:
+                  type: string
+    AdminCreateOrganizationRequest:
+      type: object
+      required:
+      - organizationName
+      properties:
+        organizationName:
+          type: string
+          example: EdgeImpulse Inc.
+          description: The name of the organization.
+        adminId:
+          type: integer
+          example: 1
+          description: Unique identifier of the administrator of the new organization.
+    AdminGetUserMetricsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - metrics
+        properties:
+          metrics:
+            type: object
+    ProjectInfoResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - project
+        - downloads
+        - developmentKeys
+        - impulse
+        - devices
+        - dataSummary
+        - dataSummaryPerCategory
+        - computeTime
+        - acquisitionSettings
+        - collaborators
+        - deploySettings
+        - experiments
+        - latencyDevices
+        - urls
+        - showCreateFirstImpulse
+        - showGettingStartedWizard
+        - performance
+        - trainJobNotificationUids
+        - dspJobNotificationUids
+        - modelTestingJobNotificationUids
+        - exportJobNotificationUids
+        - hasNewTrainingData
+        - studioUrl
+        - inPretrainedModelFlow
+        - showSensorDataInAcquisitionGraph
+        - notifications
+        properties:
+          project:
+            $ref: '#/components/schemas/Project'
+          developmentKeys:
+            $ref: '#/components/schemas/DevelopmentKeys'
+          impulse:
+            type: object
+            required:
+            - created
+            - configured
+            - complete
+            properties:
+              created:
+                type: boolean
+                description: Whether an impulse was created
+              configured:
+                type: boolean
+                description: Whether an impulse was configured
+              complete:
+                type: boolean
+                description: Whether an impulse was fully trained and configured
+          devices:
+            type: array
+            items:
+              $ref: '#/components/schemas/Device'
+          dataSummary:
+            $ref: '#/components/schemas/ProjectDataSummary'
+          dataSummaryPerCategory:
+            type: object
+            required:
+            - training
+            - testing
+            - anomaly
+            properties:
+              training:
+                $ref: '#/components/schemas/ProjectDataSummary'
+              testing:
+                $ref: '#/components/schemas/ProjectDataSummary'
+              anomaly:
+                $ref: '#/components/schemas/ProjectDataSummary'
+          computeTime:
+            type: object
+            required:
+            - periodStartDate
+            - periodEndDate
+            - timeUsedMs
+            - timeLeftMs
+            properties:
+              periodStartDate:
+                type: string
+                format: date-time
+                description: Start of the current time period.
+              periodEndDate:
+                type: string
+                format: date-time
+                description: End of the current time period. This is the date when the compute time resets again.
+              timeUsedMs:
+                type: integer
+                description: The amount of compute used for the current time period.
+              timeLeftMs:
+                type: integer
+                description: The amount of compute left for the current time period.
+          acquisitionSettings:
+            type: object
+            required:
+            - intervalMs
+            - lengthMs
+            - segmentShift
+            - defaultPageSize
+            - viewType
+            - gridColumnCount
+            - gridColumnCountDetailed
+            - showExactSampleLength
+            - inlineEditBoundingBoxes
+            properties:
+              intervalMs:
+                type: number
+                description: Interval during the last acquisition, or the recommended interval based on the data set.
+              lengthMs:
+                type: integer
+                description: Length of the last acquisition, or a recommended interval based on the data set.
+              sensor:
+                type: string
+                description: Sensor that was used during the last acquisition.
+              label:
+                type: string
+                description: Label that was used during the last acquisition.
+              segmentLength:
+                type: number
+                description: Length of the last sample segment after segmenting a larger sample.
+              segmentShift:
+                type: boolean
+                description: Whether to auto-shift segments
+              defaultPageSize:
+                type: integer
+                description: Default page size on data acquisition
+              viewType:
+                type: string
+                description: Default view type on data acquisition
+                enum:
+                - list
+                - grid
+              gridColumnCount:
+                type: integer
+                description: Number of grid columns in non-detailed view
+              gridColumnCountDetailed:
+                type: integer
+                description: Number of grid columns in detailed view
+              showExactSampleLength:
+                type: boolean
+                description: If enabled, does not round sample length to hours/minutes/seconds, but always displays sample length in milliseconds. E.g. instead of 1m 32s, this'll say 92,142ms.
+              inlineEditBoundingBoxes:
+                type: boolean
+                description: If enabled, allows editing bounding box labels directly from the acquisition UI.
+          collaborators:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
+          deploySettings:
+            type: object
+            required:
+            - eonCompiler
+            - sensor
+            - arduinoLibraryName
+            - tinkergenLibraryName
+            - particleLibraryName
+            properties:
+              eonCompiler:
+                type: boolean
+              sensor:
+                type: string
+                enum:
+                - accelerometer
+                - microphone
+                - camera
+                - positional
+                - environmental
+                - fusion
+                - unknown
+              arduinoLibraryName:
+                type: string
+              tinkergenLibraryName:
+                type: string
+              particleLibraryName:
+                type: string
+              lastDeployModelEngine:
+                type: string
+                $ref: '#/components/schemas/ModelEngineShortEnum'
+                description: Model engine for last deploy
+          experiments:
+            type: array
+            description: Experiments that the project has access to. Enabling experiments can only be done through a JWT token.
+            items:
+              type: object
+              required:
+              - type
+              - title
+              - enabled
+              - showToUser
+              properties:
+                type:
+                  type: string
+                title:
+                  type: string
+                help:
+                  type: string
+                enabled:
+                  type: boolean
+                showToUser:
+                  type: boolean
+          latencyDevices:
+            type: array
+            items:
+              $ref: '#/components/schemas/LatencyDevice'
+          urls:
+            type: object
+            properties:
+              mobileClient:
+                description: Base URL for the mobile client. If this is undefined then no development API key is set.
+                type: string
+              mobileClientComputer:
+                description: Base URL for collecting data with the mobile client from a computer. If this is undefined then no development API key is set.
+                type: string
+              mobileClientInference:
+                description: Base URL for running inference with the mobile client. If this is undefined then no development API key is set.
+                type: string
+          showCreateFirstImpulse:
+            type: boolean
+          showGettingStartedWizard:
+            type: object
+            required:
+            - showWizard
+            - step
+            properties:
+              showWizard:
+                type: boolean
+              step:
+                type: integer
+                description: Current step of the getting started wizard
+          performance:
+            type: object
+            required:
+            - gpu
+            - jobLimitM
+            - dspFileSizeMb
+            - enterprisePerformance
+            - trainJobRamMb
+            properties:
+              gpu:
+                type: boolean
+              jobLimitM:
+                type: integer
+                description: Compute time limit per job in minutes (applies only to DSP and learning jobs).
+              dspFileSizeMb:
+                type: integer
+                description: Maximum size for DSP file output
+              enterprisePerformance:
+                type: boolean
+              trainJobRamMb:
+                type: integer
+                description: Amount of RAM allocated to training jobs
+          readme:
+            type: object
+            description: Present if a readme is set for this project
+            required:
+            - markdown
+            - html
+            properties:
+              markdown:
+                type: string
+              html:
+                type: string
+          trainJobNotificationUids:
+            type: array
+            description: The IDs of users who should be notified when a Keras or retrain job is finished.
+            items:
+              type: integer
+          dspJobNotificationUids:
+            type: array
+            description: The IDs of users who should be notified when a DSP job is finished.
+            items:
+              type: integer
+          modelTestingJobNotificationUids:
+            type: array
+            description: The IDs of users who should be notified when a model testing job is finished.
+            items:
+              type: integer
+          exportJobNotificationUids:
+            type: array
+            description: The IDs of users who should be notified when an export job is finished.
+            items:
+              type: integer
+          hasNewTrainingData:
+            type: boolean
+          csvImportConfig:
+            type: object
+            description: Config file specifying how to process CSV files.
+          studioUrl:
+            type: string
+          inPretrainedModelFlow:
+            type: boolean
+          dspPageSize:
+            type: integer
+          showSensorDataInAcquisitionGraph:
+            description: Whether to show the actual sensor data in acquisition charts (only applies when you have structured labels)
+            type: boolean
+          targetConstraints:
+            $ref: '#/components/schemas/TargetConstraints'
+          notifications:
+            type: array
+            description: List of notifications to show within the project
+            items:
+              type: string
+          defaultImpulseId:
+            type: integer
+            description: Default selected impulse (by ID).
+    Device:
+      type: object
+      required:
+      - id
+      - deviceId
+      - created
+      - lastSeen
+      - name
+      - deviceType
+      - sensors
+      - remote_mgmt_connected
+      - supportsSnapshotStreaming
+      - remoteMgmtMode
+      properties:
+        id:
+          type: integer
+          example: 1
+        deviceId:
+          type: string
+          description: Unique identifier (such as MAC address) for a device
+          example: 38:f9:d3:d7:62:03
+        created:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        lastSeen:
+          type: string
+          format: date-time
+          example: '2019-08-31T17:32:28Z'
+          description: Last message that was received from the device (ignoring keep-alive)
+        name:
+          type: string
+          example: m6d.1 desk sensor
+        deviceType:
+          type: string
+          example: DISCO-L475VG
+        sensors:
+          type: array
+          items:
+            type: object
+            required:
+            - name
+            - maxSampleLengthS
+            - frequencies
+            properties:
+              name:
+                type: string
+                example: Built-in accelerometer
+              maxSampleLengthS:
+                type: integer
+                description: Maximum supported sample length in seconds
+              frequencies:
+                type: array
+                description: Supported frequencies for this sensor in Hz.
+                example:
+                - 62.5
+                - 100
+                items:
+                  type: number
+        remote_mgmt_connected:
+          type: boolean
+          description: Whether the device is connected to the remote management interface. This property is deprecated, use `remoteMgmtMode` instead.
+        remote_mgmt_host:
+          type: string
+          description: The remote management host that the device is connected to
+        supportsSnapshotStreaming:
+          type: boolean
+        remoteMgmtMode:
+          description: Replaces `remote_mgmt_connected`. Shows whether the device is connected to the remote management interface, and in which mode.
+          type: string
+          enum:
+          - disconnected
+          - ingestion
+          - inference
+        inferenceInfo:
+          type: object
+          description: If `remoteMgmtMode` is set to `inference` this object shows information about the model that's ran on device.
+          required:
+          - projectId
+          - projectOwner
+          - projectName
+          - deployedVersion
+          properties:
+            projectId:
+              type: integer
+            projectOwner:
+              type: string
+            projectName:
+              type: string
+            deployedVersion:
+              type: integer
+            modelType:
+              type: string
+              enum:
+              - classification
+              - objectDetection
+              - constrainedObjectDetection
+    KerasModelVariantEnum:
+      type: string
+      enum:
+      - int8
+      - float32
+      - akida
+    AdminUpdateUserRequest:
+      type: object
+      description: Only fields set in this object will be updated.
+      properties:
+        email:
+          type: string
+          description: New email. This will also update the forum's email address but the user may need to logout/login back
+          example: quijote@lamancha.es
+        name:
+          type: string
+          description: New user full name
+          example: Don Quijote de la Mancha
+        activated:
+          type: boolean
+          description: Whether the user is active or not. Can only go from inactive to active.
+          example: true
+        suspended:
+          type: boolean
+          description: Whether the user is suspended or not.
+          example: false
+        jobTitle:
+          type: string
+          description: New user job title
+          example: Knight
+        experiments:
+          type: array
+          items:
+            type: string
+          description: List of user experiments
+    AdminCreateProjectRequest:
+      type: object
+      required:
+      - projectName
+      properties:
+        projectName:
+          type: string
+          example: My project
+          description: The name of the project.
+        projectVisibility:
+          $ref: '#/components/schemas/ProjectVisibility'
+        ownerId:
+          type: integer
+          example: 1
+          description: Unique identifier of the owner of the new project. Either this parameter or ownerEmail must be set.
+        ownerEmail:
+          type: string
+          example: groucho@marxbros.com
+          description: Email of the owner of the new project. Either this parameter or ownerId must be set.
+    StartJobResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: Job identifier. Status updates will include this identifier.
+            example: 12873488112
+    AdminGetOrganizationComputeTimeUsageResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - $ref: '#/components/schemas/OrganizationComputeTimeUsage'
+    EnterpriseTrial:
+      type: object
+      required:
+      - id
+      - userId
+      - created
+      - organizationId
+      - expirationDate
+      - expiredDate
+      - deletedDate
+      - upgradedDate
+      properties:
+        id:
+          type: integer
+          description: Unique identifier of the trial.
+        userId:
+          type: integer
+          description: ID of the user who created the trial.
+        organizationId:
+          type: integer
+          description: ID of the organization created for the trial.
+        created:
+          type: string
+          format: date-time
+          description: Date when the trial was created. Trials start immediately on creation.
+        expirationDate:
+          $ref: '#/components/schemas/TrialExpirationDate'
+        notes:
+          $ref: '#/components/schemas/TrialNotes'
+        expiredDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date when the trial actually expired. This is set when the trial is expired by the system.
+        deletedDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date when the trial was deleted. This is set when the trial is fully  deleted by the system.
+        upgradedDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date when the trial was upgraded to a full enterprise account.
+    JobStateExecutionDetails:
+      type: object
+      properties:
+        podName:
+          type: string
+          description: Kubernetes pod name
+    ProjectDataSummary:
+      type: object
+      required:
+      - totalLengthMs
+      - labels
+      - dataCount
+      properties:
+        totalLengthMs:
+          type: number
+          description: Total length (in ms.) of all data in the training set
+          example: '726336'
+        labels:
+          type: array
+          description: Labels in the training set
+          items:
+            type: string
+        dataCount:
+          type: integer
+          example: Number of files in the training set
+    AdminToggleDataMigrationRequest:
+      type: object
+      required:
+      - id
+      - shouldRun
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the data migration
+          example: entitlements_filesize
+        shouldRun:
+          type: boolean
+          description: Whether the migration should be queued for execution
+          example: true
+    MemorySpec:
+      type: object
+      description: Describes performance characteristics of a particular memory type
+      properties:
+        fastBytes:
+          $ref: '#/components/schemas/ResourceRange'
+        slowBytes:
+          $ref: '#/components/schemas/ResourceRange'
+    Permission:
+      type: string
+      enum:
+      - admin:infra:disallowedEmailDomains:write
+      - admin:infra:featureFlags:read
+      - admin:infra:featureFlags:write
+      - admin:infra:config:read
+      - admin:infra:config:write
+      - admin:infra:migrations:read
+      - admin:infra:migrations:write
+      - admin:metrics:read
+      - admin:metrics:write
+      - admin:organizations:read
+      - admin:organizations:write
+      - admin:organizations:members:write
+      - admin:projects:members:write
+      - admin:projects:read
+      - admin:projects:write
+      - admin:trials:read
+      - admin:trials:write
+      - admin:users:permissions:write
+      - admin:users:read
+      - admin:users:write
+      - admin:jobs:read
+      - admin:emails:verification:code:read
+      - projects:limits:write
+      - projects:training:keras:write
+      - thirdpartyauth:read
+      - thirdpartyauth:write
+      - users:emails:read
+      - whitelabels:read
+      - whitelabels:write
+    AdminUpdateOrganizationDataExportRequest:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of the data export
+        expirationDate:
+          type: string
+          format: date-time
+          description: Date when the export will expire. Default is 30 days. Maximum expiration date is 60 days from the creation date.
+    OrganizationMemberRole:
+      type: string
+      enum:
+      - admin
+      - member
+      - guest
+    Job:
+      type: object
+      required:
+      - id
+      - key
+      - created
+      - category
+      - jobNotificationUids
+      properties:
+        id:
+          type: integer
+          description: Job id, use this to refer back to the job. The web socket API also uses this ID.
+        category:
+          type: string
+        key:
+          type: string
+          description: 'External job identifier, this can be used to categorize jobs, and recover job status. E.g. set this to ''keras-192'' for a Keras learning block with ID 192. When a user refreshes the page you can check whether a job is active for this ID and re-attach.
+
+            '
+        created:
+          type: string
+          format: date-time
+          description: When the job was created.
+        started:
+          type: string
+          format: date-time
+          description: When the job was started.
+        finished:
+          type: string
+          format: date-time
+          description: When the job was finished.
+        finishedSuccessful:
+          type: boolean
+          description: Whether the job finished successfully.
+        jobNotificationUids:
+          type: array
+          description: The IDs of users who should be notified when a job is finished.
+          items:
+            type: integer
+        additionalInfo:
+          type: string
+          description: Additional metadata associated with this job.
+        computeTime:
+          type: number
+          description: Job duration time in seconds from start to finished, measured by k8s job watcher.
+        createdByUser:
+          type: object
+          required:
+          - id
+          - name
+          - username
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            username:
+              type: string
+            photo:
+              type: string
+        categoryCount:
+          type: integer
+          description: Some job categories keep a counter on the job number, e.g. in synthetic data, so we know what the 1st, 2nd etc. job was in the UI.
+    AdminGetDisallowedEmailDomainsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - domains
+        properties:
+          domains:
+            type: array
+            items:
+              type: string
+            example:
+            - domain.org
+            - domain2.org
+    JobMetricsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          cpuUsage:
+            type: array
+            items:
+              $ref: '#/components/schemas/TimeSeriesDataPoint'
+          memoryUsage:
+            type: array
+            items:
+              $ref: '#/components/schemas/TimeSeriesDataPoint'
+    AdminGetUserResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - user
+        properties:
+          user:
+            $ref: '#/components/schemas/AdminApiUser'
+    StartEnterpriseTrialRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email of the user requesting the trial. If this email is different to the one stored for the user requesting the trial, it will be used to replace the existing one.
+          example: fred@flintstones.org
+        organizationName:
+          type: string
+          description: Name of the trial organization. All enterprise features are tied to an organization. This organization will be deleted after the trial ends. If no organization name is provided, the user's name will be used.
+          example: My Company
+        expirationDate:
+          $ref: '#/components/schemas/TrialExpirationDate'
+        notes:
+          $ref: '#/components/schemas/TrialNotes'
+        useCase:
+          type: string
+          description: Use case of the trial.
+          example: Industrial
+        userHasMLModelsInProduction:
+          type: string
+          enum:
+          - 'yes'
+          - 'no'
+          - no, but we will soon
+          description: Whether the user has ML models in production.
+          example: 'no'
+        companyName:
+          type: string
+          description: Name of the company requesting the trial.
+          example: ACME Inc.
+        companySize:
+          type: string
+          description: Size of the company requesting the trial. This is a range of number of employees.
+          example: 1-10
+        country:
+          type: string
+          description: Country of the company requesting the trial.
+          example: United States
+        stateOrProvince:
+          type: string
+          description: State or province of the company requesting the trial.
+          example: California
+        redirectUrlOrigin:
+          type: string
+          description: Origin of the redirect URL returned as result of creating the trial user.
+          example: https://studio.edgeimpulse.com
+        redirectUrlQueryParams:
+          type: string
+          description: Query parameters to be appended to the redirect URL returned as result of creating the trial user.
+          example: utm_source=google&utm_medium=cpc&utm_campaign=trial
+    TrialNotes:
+      type: string
+      description: Notes about the trial. Free form text. This field is ignored if the trial is requested by a non-admin user.
+      example: This is a trial for the company's new project.
+    AdminOrganizationInfoResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - $ref: '#/components/schemas/OrganizationComputeTimeUsage'
+      - type: object
+        properties:
+          billable:
+            type: boolean
+          entitlementLimits:
+            $ref: '#/components/schemas/EntitlementLimits'
+          computeTimeCurrentContractSince:
+            type: string
+            format: date-time
+            description: The date from which the compute time for the running contract is calculated.
+          totalStorage:
+            type: number
+            description: Total storage used by the organization.
+          dailyMetrics:
+            type: array
+            description: Metrics for the last 365 days
+            nullable: true
+            items:
+              $ref: '#/components/schemas/DailyMetricsRecord'
+    User:
+      type: object
+      required:
+      - id
+      - username
+      - name
+      - email
+      - created
+      - staffInfo
+      - pending
+      - activated
+      - mfaConfigured
+      properties:
+        id:
+          type: integer
+          example: 1
+        username:
+          type: string
+          example: janjongboom
+        name:
+          type: string
+          example: Jan Jongboom
+        email:
+          type: string
+          example: quijote@edgeimpulse.com
+        photo:
+          type: string
+          example: https://usercdn.edgeimpulse.com/photos/1.jpg
+        created:
+          type: string
+          format: date-time
+          example: '2019-08-31T17:32:28Z'
+        lastSeen:
+          type: string
+          format: date-time
+          example: '2019-08-31T17:32:28Z'
+        staffInfo:
+          $ref: '#/components/schemas/StaffInfo'
+        pending:
+          type: boolean
+        lastTosAcceptanceDate:
+          type: string
+          format: date-time
+          example: '2019-08-31T17:32:28Z'
+        jobTitle:
+          type: string
+          example: Software Engineer
+        permissions:
+          description: List of permissions the user has
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+        companyName:
+          type: string
+          example: Edge Impulse Inc.
+        activated:
+          type: boolean
+          description: Whether the user has activated their account or not.
+        mfaConfigured:
+          type: boolean
+          description: Whether the user has configured multi-factor authentication
+        stripeCustomerId:
+          type: string
+          description: Stripe customer ID, if any.
+        hasPendingPayments:
+          type: boolean
+          description: Whether the user has pending payments.
+        tier:
+          $ref: '#/components/schemas/UserTierEnum'
+    DailyMetricsRecord:
+      type: object
+      required:
+      - date
+      - totalUsers
+      - totalStaffUsers
+      - totalProjects
+      - totalCurrentContractCpuComputeTimeSeconds
+      - totalCurrentContractGpuComputeTimeSeconds
+      - totalCurrentContractComputeTimeSeconds
+      - computeTimeCalculatedSince
+      - totalStorageSizeBytes
+      - usersAdded
+      - usersDeleted
+      - projectsAdded
+      - projectsDeleted
+      - cpuComputeTimeSeconds
+      - gpuComputeTimeSeconds
+      - computeTimeSeconds
+      - storageBytesAdded
+      - storageBytesDeleted
+      properties:
+        date:
+          type: string
+          format: date-time
+          description: Date of the metrics record.
+          example: '2021-01-01T00:00:00Z'
+        totalUsers:
+          type: integer
+          description: 'Total number of users, if the metrics record applies to a non-developer profile organization.
+
+            For developer profile organizations, we default to 0.
+
+            '
+          example: 100
+        totalStaffUsers:
+          type: integer
+          description: 'Total number of staff users, if the metrics record applies to a non-developer profile organization.
+
+            For developer profile organizations, we default to 0.
+
+            '
+          example: 10
+        totalProjects:
+          type: integer
+          description: 'Total number of projects at the end of the metrics record date.
+
+            '
+          example: 50
+        totalCurrentContractCpuComputeTimeSeconds:
+          type: integer
+          description: 'Total CPU compute time since contract start date, or organization / user creation date, at
+
+            the end of the metrics record date.
+
+            '
+          example: 100000
+        totalCurrentContractGpuComputeTimeSeconds:
+          type: integer
+          description: 'Total GPU compute time since contract start date, or organization / user creation date, at
+
+            the end of the metrics record date.
+
+            '
+          example: 100000
+        totalCurrentContractComputeTimeSeconds:
+          type: integer
+          description: 'Total compute time since contract start date, or organization / user creation date, at
+
+            the end of the metrics record date.
+
+            Compute time is calculated as CPU + 3*GPU compute time.
+
+            '
+          example: 100000
+        computeTimeCalculatedSince:
+          type: string
+          format: date-time
+          description: 'Date from which the total compute time is calculated. This is the contract start date for billing
+
+            organizations, or organization / user creation date.
+
+            '
+          example: '2021-01-01T00:00:00Z'
+        totalStorageSizeBytes:
+          type: integer
+          description: 'Total storage size in bytes at the end of the metrics record date.
+
+            '
+          example: 1000000000
+        usersAdded:
+          type: integer
+          description: 'Number of users added during the metrics record date.
+
+            '
+          example: 10
+        staffUsersAdded:
+          type: integer
+          description: 'Number of staff users added during the metrics record date.
+
+            '
+          example: 1
+        usersDeleted:
+          type: integer
+          description: 'Number of users deleted during the metrics record date.
+
+            '
+          example: 5
+        staffUsersDeleted:
+          type: integer
+          description: 'Number of staff users deleted during the metrics record date.
+
+            '
+          example: 1
+        projectsAdded:
+          type: integer
+          description: 'Number of projects added during the metrics record date.
+
+            '
+          example: 10
+        projectsDeleted:
+          type: integer
+          description: 'Number of projects deleted during the metrics record date.
+
+            '
+          example: 5
+        cpuComputeTimeSeconds:
+          type: integer
+          description: 'Total CPU compute time during the metrics record date.
+
+            '
+          example: 10000
+        gpuComputeTimeSeconds:
+          type: integer
+          description: 'Total GPU compute time during the metrics record date.
+
+            '
+          example: 10000
+        computeTimeSeconds:
+          type: integer
+          description: 'Total compute time during the metrics record date.
+
+            Compute time is calculated as CPU + 3*GPU compute time.
+
+            '
+          example: 10000
+        storageBytesAdded:
+          type: integer
+          description: 'Total storage size in bytes added during the metrics record date.
+
+            '
+          example: 1000000000
+        storageBytesDeleted:
+          type: integer
+          description: 'Total storage size in bytes deleted during the metrics record date.
+
+            '
+          example: 500000000
+    AdminGetUsersResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - users
+        - total
+        properties:
+          total:
+            type: integer
+          users:
+            type: array
+            items:
+              type: object
+              required:
+              - id
+              - username
+              - email
+              - name
+              - created
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                username:
+                  type: string
+                  example: janjongboom
+                email:
+                  type: string
+                  example: jan@edgeimpulse.com
+                name:
+                  type: string
+                  example: Jan Jongboom
+                photo:
+                  type: string
+                  example: https://usercdn.edgeimpulse.com/photos/1.jpg
+                created:
+                  type: string
+                  format: date-time
+                  example: '2019-08-31T17:32:28Z'
+                lastSeen:
+                  type: string
+                  format: date-time
+                  example: '2019-08-31T17:32:28Z'
+                activated:
+                  type: boolean
+                from_evaluation:
+                  type: boolean
+                tier:
+                  $ref: '#/components/schemas/UserTierEnum'
+    EntityCreatedResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: Unique identifier of the created entity.
+    TrialExpirationDate:
+      type: string
+      format: date-time
+      description: Expiration date of the trial. The trial will be set as expired after this date. There will be a grace period of 30 days after a trial expires before fully deleting the trial organization. This field is ignored if the trial is requested by a non-admin user, defaulting to 14 days trial.
+      example: '2020-01-01T00:00:00Z'
+    UserExperiment:
+      type: object
+      required:
+      - type
+      - title
+      - enabled
+      - showToUser
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        help:
+          type: string
+        enabled:
+          type: boolean
+        showToUser:
+          type: boolean
+    GetOrganizationDataExportsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - exports
+        - totalCount
+        properties:
+          exports:
+            type: array
+            description: List of organization data exports.
+            items:
+              $ref: '#/components/schemas/OrganizationDataExport'
+          totalCount:
+            type: integer
+    AdminUpdateOrganizationRequest:
+      type: object
+      description: Only fields set in this object will be updated.
+      properties:
+        logo:
+          type: string
+          description: New logo URL, or set to `null` to remove the logo.
+        headerImg:
+          type: string
+          description: New leader image URL, or set to `null` to remove the leader.
+        name:
+          type: string
+          description: New organization name.
+        experiments:
+          type: array
+          items:
+            type: string
+        readme:
+          type: string
+          description: Readme for the organization (in Markdown)
+        billable:
+          type: boolean
+        entitlementLimits:
+          $ref: '#/components/schemas/EntitlementLimits'
+        contractStartDate:
+          type: string
+          format: date-time
+          description: The date in which the organization contract started. Compute time will be calculated from this date.
+        domain:
+          type: string
+          description: The domain of the organization. The organization domain is used to add new users to an organization. For example, new @edgeimpulse.com would be added to the Edge Impulse organization if this organization has edgeimpulse.com as the domain.
+          example: edgeimpulse.com
+    ProjectVisibility:
+      type: string
+      enum:
+      - public
+      - private
+      description: The visibility of the project, either public or private. Public projects can be viewed by anyone on the internet and edited by collaborators. Private projects can only be viewed and edited by collaborators.
+    TargetProcessor:
+      type: object
+      properties:
+        part:
+          type: string
+          description: The exact part number, if available
+        format:
+          type: string
+          description: Processor type, serving as a broad descriptor for the intended use-case
+          example: low-end MCU
+        architecture:
+          type: string
+          description: Processor family, informing about the processor's instruction set and core design
+          example: Cortex-M
+        specificArchitecture:
+          type: string
+          description: Processor architecture, informing about the specific processor, if known
+          example: Cortex-M0+
+        accelerator:
+          type: string
+          description: Target accelerator, if any
+          example: Arm Cortex-U55
+        fpu:
+          type: boolean
+          description: Does the target processor have a floating point unit
+        clockRateMhz:
+          description: Clock rate of the processor
+          $ref: '#/components/schemas/ResourceRange'
+        memory:
+          $ref: '#/components/schemas/TargetMemory'
+    AdminGetOrganizationsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - organizations
+        - total
+        properties:
+          total:
+            type: integer
+          organizations:
+            type: array
+            description: Array with organizations
+            items:
+              type: object
+              required:
+              - id
+              - name
+              - created
+              - privateProjectCount
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                name:
+                  type: string
+                  example: Edge Impulse Inc.
+                logo:
+                  type: string
+                created:
+                  type: string
+                  format: date-time
+                  example: '2019-08-31T17:32:28Z'
+                readme:
+                  type: string
+                experiments:
+                  type: array
+                  items:
+                    type: string
+                domain:
+                  type: string
+                whitelabelId:
+                  type: integer
+                billable:
+                  type: boolean
+                privateProjectCount:
+                  type: integer
+                entitlementLimits:
+                  $ref: '#/components/schemas/EntitlementLimits'
+    LatencyDevice:
+      type: object
+      required:
+      - mcu
+      - name
+      - selected
+      - int8Latency
+      - int8ConvLatency
+      - float32Latency
+      - float32ConvLatency
+      - helpText
+      properties:
+        mcu:
+          type: string
+        name:
+          type: string
+        selected:
+          type: boolean
+        int8Latency:
+          type: number
+        int8ConvLatency:
+          type: number
+        float32Latency:
+          type: number
+        float32ConvLatency:
+          type: number
+        helpText:
+          type: string
+    GetStudioConfigResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - config
+        properties:
+          config:
+            type: array
+            description: List of config items
+            items:
+              type: object
+              required:
+              - key
+              - value
+              properties:
+                key:
+                  type: string
+                  description: Config key
+                value:
+                  type: string
+                  description: Config value (as JSON string)
+    JobFailureDetails:
+      type: object
+      properties:
+        reason:
+          type: string
+          description: short code describing the reason of the failure
+        message:
+          type: string
+          description: full description of the failure
+        exitCode:
+          type: integer
+          description: exit code of the failed job process
+    UserTierEnum:
+      type: string
+      description: The user account tier.
+      enum:
+      - free
+      - community-plus
+      - professional
+      - enterprise
+    StaffInfo:
+      type: object
+      required:
+      - isStaff
+      - hasSudoRights
+      properties:
+        isStaff:
+          type: boolean
+        hasSudoRights:
+          type: boolean
+        companyName:
+          type: string
+    TargetConstraintsDevice:
+      type: object
+      properties:
+        processors:
+          type: array
+          description: Target processors
+          items:
+            $ref: '#/components/schemas/TargetProcessor'
+        board:
+          type: string
+          description: The exact dev board part number, if available
+        name:
+          type: string
+          description: Display name in Studio
+        latencyDevice:
+          type: string
+          description: MCU identifier, if available
+          example: cortex-m4f-80mhz
+    ProjectType:
+      type: string
+      enum:
+      - kws
+      - audio
+      - object-detection
+      - image
+      - accelerometer
+      - other
+    AdminCreateOrganizationDataExportRequest:
+      type: object
+      required:
+      - description
+      properties:
+        description:
+          type: string
+          description: Description of the data export
+        expirationDate:
+          type: string
+          format: date-time
+          description: Date when the export will expire. Default is 30 days. Maximum expiration date is 60 days from the creation date.
+    GetOrganizationDataExportResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - export
+        properties:
+          export:
+            $ref: '#/components/schemas/OrganizationDataExport'
+    AdminGetReportsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - reports
+        - totalCount
+        properties:
+          reports:
+            type: array
+            description: List of organization usage reports.
+            items:
+              $ref: '#/components/schemas/Report'
+          totalCount:
+            type: integer
+    JobDetailsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          jobs:
+            type: array
+            items:
+              $ref: '#/components/schemas/JobDetails'
+    AdminGetUserIdsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - ids
+        properties:
+          ids:
+            type: array
+            items:
+              type: integer
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    GetFeatureFlagsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - flags
+        properties:
+          flags:
+            type: array
+            description: List of feature flags.
+            items:
+              type: object
+              required:
+              - feature
+              - enabled
+              properties:
+                feature:
+                  $ref: '#/components/schemas/Feature'
+                enabled:
+                  type: boolean
+                  description: Whether the feature is enabled.
+    CreateProjectResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        - apiKey
+        properties:
+          id:
+            type: integer
+            description: Project ID for the new project
+          apiKey:
+            type: string
+            description: API key for the new project
+    OrganizationComputeTimeUsage:
+      type: object
+      properties:
+        cpuComputeTime:
+          type: number
+          description: CPU compute time in seconds of all jobs in the organization (including organizational project jobs).
+        gpuComputeTime:
+          type: number
+          description: GPU compute time in seconds of all jobs in the organization (including organizational project jobs).
+        totalComputeTime:
+          type: number
+          description: Total compute time is the amount of computation time spent in jobs, in minutes used by an organization over the given period, calculated as CPU + GPU minutes.
+    AdminApiUser:
+      allOf:
+      - $ref: '#/components/schemas/User'
+      - type: object
+        required:
+        - email
+        - activated
+        - organizations
+        - projects
+        - experiments
+        - tier
+        - suspended
+        - trials
+        properties:
+          email:
+            type: string
+          activated:
+            type: boolean
+          organizations:
+            type: array
+            description: Organizations that the user is a member of. Only filled when requesting information about yourself.
+            items:
+              $ref: '#/components/schemas/UserOrganization'
+          projects:
+            type: array
+            items:
+              $ref: '#/components/schemas/Project'
+          experiments:
+            type: array
+            description: Experiments the user has access to. Enabling experiments can only be done through a JWT token.
+            items:
+              $ref: '#/components/schemas/UserExperiment'
+          evaluation:
+            type: boolean
+            description: Whether this is an ephemeral evaluation account.
+          ambassador:
+            type: boolean
+            description: Whether this user is an ambassador.
+          tier:
+            $ref: '#/components/schemas/UserTierEnum'
+          lastSeen:
+            type: string
+            format: date-time
+          suspended:
+            type: boolean
+            description: Whether the user is suspended.
+          trials:
+            type: array
+            description: Current or past enterprise trials.
+            items:
+              $ref: '#/components/schemas/EnterpriseTrial'
+          dailyMetrics:
+            type: array
+            description: Metrics for the last 365 days
+            nullable: true
+            items:
+              $ref: '#/components/schemas/DailyMetricsRecord'
+    AdminAddUserRequest:
+      type: object
+      properties:
+        usernameOrEmail:
+          type: string
+          example: janjongboom
+          description: Username or email of the user to be added to the project or organization. If no user is provided, the user ID attached to the JWT will be used.
+    AdminGetDataMigrationResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - migration
+        properties:
+          migration:
+            $ref: '#/components/schemas/Migration'
+    AdminUpdateConfigRequest:
+      type: object
+      required:
+      - value
+      properties:
+        value:
+          type: string
+          description: New config value, given as a JSON string.
+    TargetConstraints:
+      type: object
+      required:
+      - targetDevices
+      - applicationBudgets
+      properties:
+        selectedTargetBasedOn:
+          type: string
+          description: A type explaining how the target was chosen. If updating this manually, use the 'user-configured' type
+          enum:
+          - user-configured
+          - default
+          - default-accepted
+          - recent-project
+          - connected-device
+        targetDevices:
+          type: array
+          description: The potential targets for the project, where each entry captures hardware attributes that allow target guidance throughout the Studio workflow. The first target in the list is considered as the selected target for the project.
+          items:
+            $ref: '#/components/schemas/TargetConstraintsDevice'
+        applicationBudgets:
+          type: array
+          description: A list of application budgets to be configured based on target device. An application budget enables guidance on performance and resource usage. The first application budget in the list is considered as the selected budget for the project.
+          items:
+            $ref: '#/components/schemas/ApplicationBudget'
+    AdminApiProject:
+      type: object
+      required:
+      - id
+      - name
+      - owner
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Water hammer detection
+        description:
+          type: string
+        created:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        owner:
+          type: string
+          description: User or organization that owns the project
+        ownerUserId:
+          type: integer
+        ownerOrganizationId:
+          type: integer
+        lastAccessed:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        whitelabelId:
+          type: integer
+          nullable: true
+          description: Unique identifier of the white label this project belongs to, if any.
+        tier:
+          $ref: '#/components/schemas/ProjectTierEnum'
+        category:
+          $ref: '#/components/schemas/ProjectType'
+    AdminAddOrganizationUserRequest:
+      allOf:
+      - $ref: '#/components/schemas/AdminAddUserRequest'
+      - type: object
+        required:
+        - role
+        - datasets
+        properties:
+          role:
+            $ref: '#/components/schemas/OrganizationMemberRole'
+          datasets:
+            description: Only used for 'guest' users. Limits the datasets the user has access to.
+            type: array
+            items:
+              type: string
+    AdminAddOrUpdateSSODomainIdPsRequest:
+      type: object
+      required:
+      - idps
+      properties:
+        idps:
+          type: array
+          items:
+            type: string
+          example:
+          - google
+          - okta
+    ResourceRange:
+      type: object
+      description: Describes range of expected availability for an arbitrary resource
+      properties:
+        minimum:
+          type: number
+        maximum:
+          type: number
+    GetEmailVerificationCodeResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          code:
+            type: string
+            description: The verification code associated with the provided email.
+            nullable: true
+    JobParentTypeEnum:
+      type: string
+      enum:
+      - project
+      - organization
+      - standalone
+    Project:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - created
+      - owner
+      - collaborators
+      - labelingMethod
+      - metadata
+      - isEnterpriseProject
+      - whitelabelId
+      - tier
+      - hasPublicVersion
+      - isPublic
+      - allowsLivePublicAccess
+      - ownerIsDeveloperProfile
+      - indPauseProcessingSamples
+      - publicProjectListed
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Water hammer detection
+        description:
+          type: string
+        created:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        owner:
+          type: string
+          description: User or organization that owns the project
+        lastAccessed:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        lastModified:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        lastModificationDetails:
+          type: string
+          description: Details about the last modification
+          example: Data sample added
+        logo:
+          type: string
+          description: Custom logo for this project (not available for all projects)
+        ownerUserId:
+          type: integer
+        ownerOrganizationId:
+          type: integer
+        ownerAvatar:
+          type: string
+          description: URL of the project owner avatar, if any.
+        ownerIsDeveloperProfile:
+          type: boolean
+        developerProfileUserId:
+          type: integer
+          description: User ID of the developer profile, if any.
+        collaborators:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectCollaborator'
+        labelingMethod:
+          type: string
+          enum:
+          - single_label
+          - object_detection
+        metadata:
+          type: object
+          description: Metadata about the project
+        dataExplorerScreenshot:
+          type: string
+        isEnterpriseProject:
+          type: boolean
+          description: Whether this is an enterprise project
+        whitelabelId:
+          type: integer
+          nullable: true
+          description: Unique identifier of the white label this project belongs to, if any.
+        tags:
+          type: array
+          items:
+            type: string
+          description: List of project tags
+          example:
+          - FOMO
+          - beers
+        category:
+          type: string
+          description: Project category
+          example: Image classification
+        license:
+          type: string
+          description: Public project license, if any.
+        tier:
+          $ref: '#/components/schemas/ProjectTierEnum'
+        hasPublicVersion:
+          type: boolean
+          description: Whether this project has been published or not.
+        isPublic:
+          type: boolean
+          description: 'Whether this is a public version of a project. A version is a snapshot of a project at a certain point in time, which can be used to periodically save the state of a project. Versions can be private (just for internal use and reference) or public, available to everyone. A public version can be cloned by anyone, restoring the state of the project at the time into a new, separate project.
+
+            '
+        allowsLivePublicAccess:
+          type: boolean
+          description: 'Whether this project allows live, public access. Unlike a public version, a live public project is not fixed in time, and always includes the latest project changes. Similar to public versions, a live public project can be cloned by anyone, creating a new, separate project.
+
+            '
+        indPauseProcessingSamples:
+          type: boolean
+        publicProjectListed:
+          type: boolean
+          description: 'If the project allows public access, whether to list it the public projects overview response. If not listed, the project is still accessible via direct link. If the project does not allow public access, this field has no effect.
+
+            '
+    DevelopmentKeys:
+      type: object
+      properties:
+        apiKey:
+          type: string
+          description: API Key
+        hmacKey:
+          type: string
+          description: HMAC Key
+    AdminUpdateTrialRequest:
+      type: object
+      properties:
+        expirationDate:
+          $ref: '#/components/schemas/TrialExpirationDate'
+        notes:
+          $ref: '#/components/schemas/TrialNotes'
+    AdminGetSSOSettingsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - ssoWhitelist
+        properties:
+          ssoWhitelist:
+            type: array
+            items:
+              type: object
+              required:
+              - domain
+              - idps
+              properties:
+                domain:
+                  type: string
+                  example: example.com
+                idps:
+                  type: array
+                  items:
+                    type: string
+                  example:
+                  - google
+                  - okta
+    ProjectTierEnum:
+      type: string
+      description: The project tier. This is "enterprise" for all organization projects, or the user tier for all user projects.
+      enum:
+      - free
+      - community-plus
+      - professional
+      - enterprise
+    AdminGetReportResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - report
+        properties:
+          report:
+            $ref: '#/components/schemas/Report'
+    Migration:
+      type: object
+      required:
+      - id
+      - state
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the data migration
+          example: entitlements_filesize
+        state:
+          type: string
+          enum:
+          - paused
+          - queued
+          - running
+          - done
+          - failed
+          description: Migration state. Can be 'paused', 'queued', 'running', 'done', 'failed'
+          example: paused
+        offset:
+          type: integer
+          description: Number of items already processed
+          example: 0
+    UpdateProjectRequest:
+      type: object
+      description: Only fields set in this object will be updated.
+      properties:
+        logo:
+          type: string
+          description: New logo URL, or set to `null` to remove the logo.
+        name:
+          type: string
+          description: New project name.
+        description:
+          type: string
+        projectVisibility:
+          $ref: '#/components/schemas/ProjectVisibility'
+        publicProjectListed:
+          type: boolean
+          description: 'If the project allows public access, whether to list it the public projects overview response. If not listed, the project is still accessible via direct link. If the project does not allow public access, this field has no effect.
+
+            '
+        lastDeployEonCompiler:
+          type: boolean
+          description: Call this when clicking the Eon compiler setting
+        lastDeployModelEngine:
+          type: string
+          $ref: '#/components/schemas/ModelEngineShortEnum'
+          description: Model engine for last deploy
+        latencyDevice:
+          type: string
+          description: MCU used for calculating latency
+        experiments:
+          type: array
+          items:
+            type: string
+        showCreateFirstImpulse:
+          type: boolean
+          description: Whether to show the 'Create your first impulse' section on the dashboard
+        labelingMethod:
+          type: string
+          description: What labeling flow to use
+          enum:
+          - single_label
+          - object_detection
+        selectedProjectTypeInWizard:
+          type: string
+          description: Which option was selected in the project type wizard
+          enum:
+          - accelerometer
+          - audio
+          - image_classification
+          - object_detection
+          - something_else
+        gettingStartedStep:
+          type: integer
+          description: The next step in the getting started wizard, or set to -1 to clear the getting started wizard
+        useGpu:
+          type: boolean
+          description: Whether to use GPU for training
+        computeTimeLimitM:
+          type: integer
+          description: Job limit in minutes
+        dspFileSizeMb:
+          type: integer
+          description: DSP file size in MB
+        enterprisePerformance:
+          type: boolean
+        trainJobRamMb:
+          type: integer
+          description: Amount of RAM allocated to training jobs
+        metadata:
+          type: object
+          description: New metadata about the project
+        readme:
+          type: string
+          description: Readme for the project (in Markdown)
+        lastAcquisitionLabel:
+          type: string
+        trainJobNotificationUids:
+          type: array
+          description: The IDs of users who should be notified when a Keras or retrain job is finished.
+          items:
+            type: integer
+        dspJobNotificationUids:
+          type: array
+          description: The IDs of users who should be notified when a DSP job is finished.
+          items:
+            type: integer
+        modelTestingJobNotificationUids:
+          type: array
+          description: The IDs of users who should be notified when a model testing job is finished.
+          items:
+            type: integer
+        exportJobNotificationUids:
+          type: array
+          description: The IDs of users who should be notified when an export job is finished.
+          items:
+            type: integer
+        csvImportConfig:
+          type: object
+          description: Config file specifying how to process CSV files. (set to null to clear the config)
+        inPretrainedModelFlow:
+          type: boolean
+        dspPageSize:
+          description: Set to '0' to disable DSP paging
+          type: integer
+        indPauseProcessingSamples:
+          description: Used in tests, to ensure samples that need to be processed async are not picked up until the flag is set to FALSE again.
+          type: boolean
+        showSensorDataInAcquisitionGraph:
+          description: Whether to show the actual sensor data in acquisition charts (only applies when you have structured labels)
+          type: boolean
+        lastDeploymentTarget:
+          description: Which deployment target was last selected (used to populate this deployment target again the next time you visit the deployment page). Should match the _format_ property of the response from listDeploymentTargetsForProject.
+          type: string
+        dataAcquisitionPageSize:
+          type: integer
+          description: Default page size on data acquisition
+        dataAcquisitionViewType:
+          type: string
+          description: Default view type on data acquisition
+          enum:
+          - list
+          - grid
+        dataAcquisitionGridColumnCount:
+          type: integer
+          description: Number of grid columns in non-detailed view on data acquisition
+        dataAcquisitionGridColumnCountDetailed:
+          type: integer
+          description: Number of grid columns in detailed view on data acquisition
+        showExactSampleLength:
+          type: boolean
+          description: If enabled, does not round sample length to hours/minutes/seconds, but always displays sample length in milliseconds. E.g. instead of 1m 32s, this'll say 92,142ms.
+        inlineEditBoundingBoxes:
+          type: boolean
+          description: If enabled, allows editing bounding box labels directly from the acquisition UI.
+        defaultProfilingVariant:
+          $ref: '#/components/schemas/KerasModelVariantEnum'
+          description: Last shown variant on the model testing and live classification pages. Used to keep the same view after refreshing.
+        enabledModelProfilingVariants:
+          type: array
+          description: Set of model variants enabled by default on the model testing and live classification pages.
+          items:
+            $ref: '#/components/schemas/KerasModelVariantEnum'
+        impulseListCoreMetricsHiddenColumns:
+          type: array
+          description: Which core metrics should be hidden in the impulse list. See 'GetAllDetailedImpulsesResponse' for a list of all metrics.
+          items:
+            type: string
+        impulseListAdditionalMetricsShownColumns:
+          type: array
+          description: Which additional metrics should be shown in the impulse list. See 'GetAllDetailedImpulsesResponse' for a list of all metrics.
+          items:
+            type: string
+        impulseListExtraColumns:
+          type: array
+          description: Which extra columns should be shown in the impulse list.
+          items:
+            type: string
+        aiActionsGridColumnCount:
+          type: integer
+          description: Number of grid columns in AI Actions
+    AdminListProjectsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - $ref: '#/components/schemas/AdminListProjects'
+    UserOrganization:
+      type: object
+      required:
+      - id
+      - name
+      - isDeveloperProfile
+      - whitelabelId
+      - isAdmin
+      - created
+      - trialId
+      - trialExpiredDate
+      - trialUpgradedDate
+      - entitlementLimits
+      - userCount
+      - adminCount
+      - privateProjectCount
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        logo:
+          type: string
+        isDeveloperProfile:
+          type: boolean
+        whitelabelId:
+          type: integer
+          nullable: true
+          description: Unique identifier of the white label this project belongs to, if any.
+        isAdmin:
+          type: boolean
+          description: Whether the user is admin of this organization or not.
+        created:
+          type: string
+          format: date-time
+          description: When the organization was created.
+          example: '2019-08-31T17:32:28Z'
+        trialId:
+          type: number
+          nullable: true
+          description: Unique identifier of the trial this organization belongs to, if any.
+          example: 1
+        trialExpiredDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date when the trial expired, if any. A expired trial has a grace period of 30 days before it's associated organization is deleted.
+          example: '2019-08-31T17:32:28Z'
+        trialUpgradedDate:
+          type: string
+          format: date-time
+          nullable: true
+          description: Date when the trial was upgraded to a full enterprise account, if any.
+          example: '2019-08-31T17:32:28Z'
+        entitlementLimits:
+          $ref: '#/components/schemas/EntitlementLimits'
+        userCount:
+          type: integer
+          description: The total number of users that are a member of this organization.
+        adminCount:
+          type: integer
+          description: The number of admin users for this organization.
+        privateProjectCount:
+          type: integer
+          description: The number of private projects for this organization.
+        lastAccessed:
+          type: string
+          format: date-time
+          description: Last time this user accessed this organization.
+    AdminGetMetricsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - metrics
+        properties:
+          metrics:
+            type: object
+    AdminListProjects:
+      type: object
+      required:
+      - projects
+      - total
+      properties:
+        total:
+          type: integer
+        projects:
+          type: array
+          description: Array with projects
+          items:
+            $ref: '#/components/schemas/AdminApiProject'
+    AdminAddDisallowedEmailDomainRequest:
+      type: object
+      required:
+      - domain
+      properties:
+        domain:
+          type: string
+          example:
+          - domain.org
+    AdminStartEnterpriseTrialRequest:
+      allOf:
+      - $ref: '#/components/schemas/StartEnterpriseTrialRequest'
+      - type: object
+        required:
+        - userId
+        properties:
+          userId:
+            type: integer
+            description: ID of the user requesting the trial.
+    AdminUpdateUserPermissionsRequest:
+      type: object
+      required:
+      - permissions
+      properties:
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+    TargetMemory:
+      type: object
+      description: RAM and ROM specifications of target
+      properties:
+        ram:
+          $ref: '#/components/schemas/MemorySpec'
+        rom:
+          $ref: '#/components/schemas/MemorySpec'
+    AdminGetDataMigrationsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - migrations
+        properties:
+          migrations:
+            type: array
+            items:
+              $ref: '#/components/schemas/Migration'
+  parameters:
+    LogsLimitParameter:
+      name: limit
+      in: query
+      required: true
+      description: Maximum number of logs
+      schema:
+        type: integer
+    SearchQueryParameter:
+      name: search
+      in: query
+      required: false
+      description: Search query
+      schema:
+        example: <id> <name>
+        type: string
+    LimitResultsParameter:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of results
+      schema:
+        type: integer
+    EmailParameter:
+      name: email
+      in: path
+      required: true
+      description: Email address
+      schema:
+        type: string
+    MigrationIdParameter:
+      name: migrationId
+      in: path
+      required: true
+      description: Data migration ID
+      schema:
+        type: string
+    ProjectIdParameter:
+      name: projectId
+      in: path
+      required: true
+      description: Project ID
+      schema:
+        type: integer
+    RequiredStartDateParameter:
+      name: startDate
+      in: query
+      required: true
+      description: Start date
+      schema:
+        type: string
+        format: date-time
+    JobIdParameter:
+      name: jobId
+      in: path
+      required: true
+      description: Job ID
+      schema:
+        type: integer
+    ParentTypeParameter:
+      name: parentType
+      in: query
+      required: true
+      description: Job parent type (project, organization, or standalone)
+      schema:
+        $ref: '#/components/schemas/JobParentTypeEnum'
+    ReportIdParameter:
+      name: reportId
+      in: path
+      required: true
+      description: Report ID
+      schema:
+        type: integer
+    FiltersActiveParameter:
+      name: active
+      in: query
+      required: false
+      description: Whether to search for entities (users, orgs) active in the last X days
+      schema:
+        type: integer
+    FiltersIncludeDeletedParameter:
+      name: includeDeleted
+      in: query
+      required: false
+      description: Whether to include deleted entities (users, projects, orgs)
+      schema:
+        type: boolean
+    FullDeleteEntityParameter:
+      name: fullDeletion
+      in: query
+      required: false
+      description: Set to true for full deletion
+      schema:
+        type: boolean
+    FindUserQueryParameter:
+      name: query
+      in: query
+      required: true
+      description: Part of e-mail address or username
+      schema:
+        type: string
+    OrganizationIdParameter:
+      name: organizationId
+      in: path
+      required: true
+      description: Organization ID
+      schema:
+        type: integer
+    RequiredEndDateParameter:
+      name: endDate
+      in: query
+      required: true
+      description: End date
+      schema:
+        type: string
+        format: date-time
+    OffsetResultsParameter:
+      name: offset
+      in: query
+      required: false
+      description: Offset in results, can be used in conjunction with LimitResultsParameter to implement paging.
+      schema:
+        type: integer
+    FiltersTierParameter:
+      name: tier
+      in: query
+      required: false
+      description: Whether to search for free, community plus, professional, or enterprise entities (users, projects)
+      schema:
+        $ref: '#/components/schemas/UserTierEnum'
+    LogsOffsetParameter:
+      name: offset
+      in: query
+      required: true
+      description: Start fetching logs from this offset
+      schema:
+        type: integer
+    FiltersQueryParameter:
+      name: filters
+      in: query
+      required: false
+      schema:
+        type: string
+        description: 'Comma separated list of filters to apply to the query.
+
+          Filters should be in the format ''field:value''.
+
+          '
+        example: billable:true
+    ConfigKeyParameter:
+      name: configKey
+      in: path
+      required: true
+      description: Config Key
+      schema:
+        type: string
+    FeatureIdParameter:
+      name: featureId
+      in: path
+      required: true
+      description: Feature ID.
+      schema:
+        $ref: '#/components/schemas/Feature'
+    EnterpriseTrialIdParameter:
+      name: enterpriseTrialId
+      in: path
+      required: true
+      description: Enterprise trial ID
+      schema:
+        type: integer
+    FieldsParameter:
+      name: fields
+      in: query
+      required: false
+      description: Comma separated list of fields to fetch in a query
+      schema:
+        type: string
+        example: id,name
+    IncludeChildrenJobsParameter:
+      name: includeChildrenJobs
+      in: query
+      required: false
+      description: Include the details of each of the children jobs (recursively)
+      schema:
+        type: boolean
+    DomainNameParameter:
+      name: domainName
+      in: path
+      required: true
+      description: Email domain name
+      schema:
+        type: string
+    ExportIdParameter:
+      name: exportId
+      in: path
+      required: true
+      description: Export ID
+      schema:
+        type: integer
+    UserIdParameter:
+      name: userId
+      in: path
+      required: true
+      description: User ID
+      schema:
+        type: integer
+    SortQueryParameter:
+      name: sort
+      in: query
+      required: false
+      description: Fields and order to sort query by
+      schema:
+        type: string
+        description: Comma separated list of fields to sort query by. Prefix with a minus (-) sign to indicate descending order. Default order is ascending
+        example: id,-name
+  securitySchemes:
+    ApiKeyAuthentication:
+      type: apiKey
+      in: header
+      name: x-api-key
+    JWTAuthentication:
+      type: apiKey
+      in: cookie
+      name: jwt
+    JWTHttpHeaderAuthentication:
+      type: apiKey
+      in: header
+      name: x-jwt-token

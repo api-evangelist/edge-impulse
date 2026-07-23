@@ -1,0 +1,83 @@
+openapi: 3.0.0
+info:
+  title: Edge Impulse FeatureFlags API
+  version: 1.0.0
+servers:
+- url: https://studio.edgeimpulse.com/v1
+security:
+- ApiKeyAuthentication: []
+- JWTAuthentication: []
+- JWTHttpHeaderAuthentication: []
+tags:
+- name: FeatureFlags
+paths:
+  /api-feature-flags:
+    get:
+      summary: Get the current global feature flags and whether they are enabled
+      security: []
+      x-internal-api: true
+      description: Get the current global feature flags and whether they are enabled
+      operationId: getFeatureFlags
+      tags:
+      - FeatureFlags
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFeatureFlagsResponse'
+components:
+  schemas:
+    GetFeatureFlagsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - flags
+        properties:
+          flags:
+            type: array
+            description: List of feature flags.
+            items:
+              type: object
+              required:
+              - feature
+              - enabled
+              properties:
+                feature:
+                  $ref: '#/components/schemas/Feature'
+                enabled:
+                  type: boolean
+                  description: Whether the feature is enabled.
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    Feature:
+      type: string
+      enum:
+      - signup-thank-you-page
+      - stripe-live-mode
+      - azure-storage
+      description: Known feature identifiers.
+  securitySchemes:
+    ApiKeyAuthentication:
+      type: apiKey
+      in: header
+      name: x-api-key
+    JWTAuthentication:
+      type: apiKey
+      in: cookie
+      name: jwt
+    JWTHttpHeaderAuthentication:
+      type: apiKey
+      in: header
+      name: x-jwt-token

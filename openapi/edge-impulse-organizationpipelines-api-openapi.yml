@@ -1,0 +1,723 @@
+openapi: 3.0.0
+info:
+  title: Edge Impulse OrganizationPipelines API
+  version: 1.0.0
+servers:
+- url: https://studio.edgeimpulse.com/v1
+security:
+- ApiKeyAuthentication: []
+- JWTAuthentication: []
+- JWTHttpHeaderAuthentication: []
+tags:
+- name: OrganizationPipelines
+paths:
+  /api/organizations/{organizationId}/pipelines:
+    get:
+      summary: List pipelines
+      description: Retrieve all organizational pipelines
+      tags:
+      - OrganizationPipelines
+      x-middleware:
+      - OrganizationAllowDeveloperProfile
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/ListPipelinesProjectIdParameter'
+      operationId: listOrganizationPipelines
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOrganizationPipelinesResponse'
+    post:
+      summary: Create pipeline
+      description: Create an organizational pipelines
+      tags:
+      - OrganizationPipelines
+      x-middleware:
+      - OrganizationAllowDeveloperProfile
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      operationId: createOrganizationPipeline
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationUpdatePipelineBody'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityCreatedResponse'
+  /api/organizations/{organizationId}/pipelines/archived:
+    get:
+      summary: List archived pipelines
+      description: Retrieve all archived organizational pipelines
+      tags:
+      - OrganizationPipelines
+      x-middleware:
+      - OrganizationAllowDeveloperProfile
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/ListPipelinesProjectIdParameter'
+      operationId: listArchivedOrganizationPipelines
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOrganizationPipelinesResponse'
+  /api/organizations/{organizationId}/pipelines/{pipelineId}:
+    get:
+      summary: Get pipeline
+      description: Retrieve an organizational pipelines
+      tags:
+      - OrganizationPipelines
+      x-middleware:
+      - OrganizationAllowDeveloperProfile
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationPipelineIdParameter'
+      operationId: getOrganizationPipeline
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOrganizationPipelinesResponse'
+    post:
+      summary: Update pipeline
+      description: Update an organizational pipelines
+      tags:
+      - OrganizationPipelines
+      x-middleware:
+      - OrganizationAllowDeveloperProfile
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationPipelineIdParameter'
+      operationId: updateOrganizationPipeline
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationUpdatePipelineBody'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+    delete:
+      summary: Delete pipeline
+      description: Delete an organizational pipelines
+      tags:
+      - OrganizationPipelines
+      x-middleware:
+      - OrganizationAllowDeveloperProfile
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationPipelineIdParameter'
+      operationId: deleteOrganizationPipeline
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/organizations/{organizationId}/pipelines/{pipelineId}/run:
+    post:
+      summary: Run pipeline
+      description: Run an organizational pipeline
+      tags:
+      - OrganizationPipelines
+      x-middleware:
+      - OrganizationAllowDeveloperProfile
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationPipelineIdParameter'
+      - $ref: '#/components/parameters/IgnoreLastSuccessfulRunQueryParameter'
+      operationId: runOrganizationPipeline
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunOrganizationPipelineResponse'
+  /api/organizations/{organizationId}/pipelines/{pipelineId}/stop:
+    post:
+      summary: Stop a running pipeline
+      description: Stops the pipeline, and marks it as failed.
+      tags:
+      - OrganizationPipelines
+      x-middleware:
+      - OrganizationAllowDeveloperProfile
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationPipelineIdParameter'
+      operationId: stopOrganizationPipeline
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+components:
+  parameters:
+    OrganizationPipelineIdParameter:
+      name: pipelineId
+      in: path
+      required: true
+      description: Pipeline ID
+      schema:
+        type: integer
+    ListPipelinesProjectIdParameter:
+      name: projectId
+      in: query
+      required: false
+      description: If set, filters on pipelines which are attached to this project.
+      schema:
+        type: integer
+    IgnoreLastSuccessfulRunQueryParameter:
+      name: ignoreLastSuccessfulRun
+      in: query
+      required: false
+      description: If set then `EI_LAST_SUCCESSFUL_RUN` is not set. You can use this to re-run a pipeline from scratch.
+      schema:
+        type: boolean
+    OrganizationIdParameter:
+      name: organizationId
+      in: path
+      required: true
+      description: Organization ID
+      schema:
+        type: integer
+  schemas:
+    OrganizationCreateProject:
+      type: object
+      required:
+      - id
+      - organizationId
+      - name
+      - status
+      - transformJobStatus
+      - uploadJobStatus
+      - uploadType
+      - category
+      - created
+      - totalDownloadFileCount
+      - totalDownloadFileSize
+      - totalDownloadFileSizeString
+      - totalUploadFileCount
+      - transformationParallel
+      - transformationSummary
+      - inProgress
+      - operatesOn
+      - totalTimeSpentSeconds
+      - totalTimeSpentString
+      properties:
+        id:
+          type: integer
+        organizationId:
+          type: integer
+        name:
+          type: string
+        uploadType:
+          type: string
+          enum:
+          - dataset
+          - project
+        status:
+          $ref: '#/components/schemas/TransformationJobStatusEnum'
+        transformJobStatus:
+          $ref: '#/components/schemas/TransformationJobStatusEnum'
+        uploadJobId:
+          type: integer
+        uploadJobStatus:
+          $ref: '#/components/schemas/TransformationJobStatusEnum'
+        uploadJobFilesUploaded:
+          type: integer
+        projectOwner:
+          type: string
+        projectId:
+          type: integer
+        projectName:
+          type: string
+        transformationBlockId:
+          type: integer
+        builtinTransformationBlock:
+          type: object
+        transformationBlockName:
+          type: string
+        category:
+          type: string
+          enum:
+          - training
+          - testing
+          - split
+        created:
+          type: string
+          format: date-time
+        outputDatasetName:
+          type: string
+        outputDatasetBucketId:
+          type: integer
+        outputDatasetBucketPath:
+          type: string
+        totalDownloadFileCount:
+          type: integer
+        totalDownloadFileSize:
+          type: integer
+        totalDownloadFileSizeString:
+          type: string
+        totalUploadFileCount:
+          type: integer
+        transformationParallel:
+          type: integer
+          description: Number of transformation jobs that can be ran in parallel
+        transformationSummary:
+          type: object
+          required:
+          - startedCount
+          - succeededCount
+          - finishedCount
+          - totalFileCount
+          - totalTimeSpentSeconds
+          properties:
+            startedCount:
+              type: integer
+            succeededCount:
+              type: integer
+            finishedCount:
+              type: integer
+            totalFileCount:
+              type: integer
+            totalTimeSpentSeconds:
+              type: integer
+              description: Total amount of compute used for this job (in seconds)
+        inProgress:
+          type: boolean
+        label:
+          type: string
+        filterQuery:
+          type: string
+        emailRecipientUids:
+          type: array
+          items:
+            type: integer
+        pipelineId:
+          type: integer
+        pipelineName:
+          type: string
+        pipelineRunId:
+          type: integer
+        pipelineStep:
+          type: integer
+        operatesOn:
+          $ref: '#/components/schemas/TransformationJobOperatesOnEnum'
+        totalTimeSpentSeconds:
+          type: integer
+          description: Total amount of compute used for this job (in seconds)
+        totalTimeSpentString:
+          type: string
+          description: Total amount of compute used (friendly string)
+        createdByUser:
+          $ref: '#/components/schemas/CreatedUpdatedByUser'
+    OrganizationCreateProjectOutputDatasetPathRule:
+      description: Defines the folder structure for writing to the output dataset. Used only when uploading into a default (non-clinical) dataset.
+      type: string
+      enum:
+      - no-subfolders
+      - subfolder-per-item
+      - use-full-path
+    TransformationJobOperatesOnEnum:
+      type: string
+      enum:
+      - file
+      - directory
+      - standalone
+    ListOrganizationPipelinesResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - pipelines
+        properties:
+          pipelines:
+            type: array
+            items:
+              $ref: '#/components/schemas/OrganizationPipeline'
+    OrganizationPipelineRun:
+      type: object
+      required:
+      - id
+      - steps
+      - created
+      properties:
+        id:
+          type: integer
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationPipelineRunStep'
+        created:
+          type: string
+          format: date-time
+        finished:
+          type: string
+          format: date-time
+        itemCountBefore:
+          description: Item count before the pipeline ran, only set when the pipeline has a dataset attached.
+          $ref: '#/components/schemas/OrganizationPipelineItemCount'
+        itemCountAfter:
+          description: Item count after the pipeline ran, only set when the pipeline has a dataset attached.
+          $ref: '#/components/schemas/OrganizationPipelineItemCount'
+        itemCountImportIntoProjectFailed:
+          description: Number of data items that failed to import into a project (through the s3-to-project, portal-to-project or dataset-to-project) transform blocks
+          type: integer
+    GetOrganizationPipelinesResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - pipeline
+        properties:
+          pipeline:
+            $ref: '#/components/schemas/OrganizationPipeline'
+    OrganizationDatasetTypeEnum:
+      type: string
+      enum:
+      - clinical
+      - files
+    RunOrganizationPipelineResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - pipelineRun
+        properties:
+          pipelineRun:
+            $ref: '#/components/schemas/OrganizationPipelineRun'
+    OrganizationPipelineItemCount:
+      type: object
+      required:
+      - itemCount
+      - itemCountChecklistOK
+      - itemCountChecklistFailed
+      properties:
+        itemCount:
+          type: integer
+        itemCountChecklistOK:
+          type: integer
+        itemCountChecklistFailed:
+          type: integer
+    OrganizationPipeline:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - steps
+      - created
+      - emailRecipientUids
+      - whenToEmail
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        intervalStr:
+          type: string
+          description: 15m for every 15 minutes, 2h for every 2 hours, 1d for every 1 day
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationPipelineStep'
+        nextRun:
+          type: string
+          format: date-time
+        created:
+          type: string
+          format: date-time
+        currentRun:
+          $ref: '#/components/schemas/OrganizationPipelineRun'
+        lastRun:
+          $ref: '#/components/schemas/OrganizationPipelineRun'
+        feedingIntoDataset:
+          type: object
+          required:
+          - dataset
+          - datasetLink
+          - itemCount
+          - itemCountChecklistOK
+          - itemCountChecklistError
+          properties:
+            dataset:
+              type: string
+            datasetLink:
+              type: string
+            itemCount:
+              type: integer
+            itemCountChecklistOK:
+              type: integer
+            itemCountChecklistError:
+              type: integer
+            datasetType:
+              $ref: '#/components/schemas/OrganizationDatasetTypeEnum'
+        feedingIntoProject:
+          type: object
+          required:
+          - id
+          - name
+          - projectLink
+          - itemCount
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            projectLink:
+              type: string
+            itemCount:
+              type: integer
+        emailRecipientUids:
+          type: array
+          items:
+            type: integer
+        lastRunStartError:
+          type: string
+        notificationWebhook:
+          type: string
+        whenToEmail:
+          type: string
+          enum:
+          - always
+          - on_new_data
+          - never
+    CreatedUpdatedByUser:
+      type: object
+      required:
+      - id
+      - name
+      - username
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        username:
+          type: string
+        photo:
+          type: string
+    OrganizationUpdatePipelineBody:
+      type: object
+      required:
+      - name
+      - description
+      - steps
+      - emailRecipientUids
+      - whenToEmail
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        intervalStr:
+          type: string
+          description: 15m for every 15 minutes, 2h for every 2 hours, 1d for every 1 day
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationPipelineStep'
+        dataset:
+          type: string
+        projectId:
+          type: integer
+        emailRecipientUids:
+          type: array
+          items:
+            type: integer
+        notificationWebhook:
+          type: string
+        whenToEmail:
+          type: string
+          enum:
+          - always
+          - on_new_data
+          - never
+        archived:
+          type: boolean
+    OrganizationPipelineStep:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+        filter:
+          type: string
+        pathFilters:
+          type: array
+          description: Set of paths to apply the transformation to, used for creating transformation jobs on default datasets. This option is experimental and may change in the future.
+          items:
+            $ref: '#/components/schemas/OrganizationCreateProjectPathFilter'
+        uploadType:
+          type: string
+          enum:
+          - project
+          - dataset
+        projectId:
+          type: integer
+        newProjectName:
+          type: string
+        projectApiKey:
+          type: string
+        projectHmacKey:
+          type: string
+        transformationBlockId:
+          type: integer
+        builtinTransformationBlock:
+          type: object
+        category:
+          type: string
+          enum:
+          - training
+          - testing
+          - split
+        outputDatasetName:
+          type: string
+        outputDatasetBucketId:
+          type: integer
+        outputDatasetBucketPath:
+          type: string
+        outputPathInDataset:
+          description: Path within the selected dataset to upload transformed files into. Used only when uploading into a default (non-clinical) dataset.
+          type: string
+        outputDatasetPathRule:
+          $ref: '#/components/schemas/OrganizationCreateProjectOutputDatasetPathRule'
+        label:
+          type: string
+        transformationParallel:
+          type: integer
+        extraCliArguments:
+          type: string
+        parameters:
+          type: object
+          additionalProperties:
+            type: string
+    TransformationJobStatusEnum:
+      type: string
+      enum:
+      - waiting
+      - created
+      - started
+      - finished
+      - failed
+    EntityCreatedResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: Unique identifier of the created entity.
+    OrganizationPipelineRunStep:
+      type: object
+      required:
+      - name
+      - status
+      properties:
+        name:
+          type: string
+        transformationJob:
+          $ref: '#/components/schemas/OrganizationCreateProject'
+        filter:
+          type: string
+        uploadType:
+          type: string
+          enum:
+          - project
+          - dataset
+        projectId:
+          type: integer
+        newProjectName:
+          type: string
+        projectApiKey:
+          type: string
+        projectHmacKey:
+          type: string
+        transformationBlockId:
+          type: integer
+        builtinTransformationBlock:
+          type: object
+        category:
+          type: string
+          enum:
+          - training
+          - testing
+          - split
+        outputDatasetName:
+          type: string
+        outputDatasetBucketId:
+          type: integer
+        outputDatasetBucketPath:
+          type: string
+        label:
+          type: string
+        extraCliArguments:
+          type: string
+        parameters:
+          type: object
+          additionalProperties:
+            type: string
+    OrganizationCreateProjectPathFilter:
+      type: object
+      description: Filter, given as a dataset and path containing wildcards, used for creating transformation jobs
+      required:
+      - dataset
+      - filter
+      properties:
+        dataset:
+          type: string
+          description: Dataset name of files to transform
+        filter:
+          type: string
+          description: Path filter with wildcards, relative to the root of the dataset. For example, /folder/*.json will transform all JSON files in /folder (when operating on files)
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+  securitySchemes:
+    ApiKeyAuthentication:
+      type: apiKey
+      in: header
+      name: x-api-key
+    JWTAuthentication:
+      type: apiKey
+      in: cookie
+      name: jwt
+    JWTHttpHeaderAuthentication:
+      type: apiKey
+      in: header
+      name: x-jwt-token

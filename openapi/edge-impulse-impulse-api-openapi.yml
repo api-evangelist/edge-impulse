@@ -1,0 +1,2275 @@
+openapi: 3.0.0
+info:
+  title: Edge Impulse API
+  version: 1.0.0
+servers:
+- url: https://studio.edgeimpulse.com/v1
+security:
+- ApiKeyAuthentication: []
+- JWTAuthentication: []
+- JWTHttpHeaderAuthentication: []
+tags:
+- name: Impulse
+paths:
+  /api/{projectId}/impulse:
+    get:
+      summary: Get impulse
+      description: Retrieve the impulse for this project. If you specify `impulseId` then that impulse is returned, otherwise the default impulse is returned.
+      operationId: getImpulse
+      tags:
+      - Impulse
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetImpulseResponse'
+    post:
+      summary: Create impulse
+      description: Sets the impulse for this project.  If you specify `impulseId` then that impulse is created/updated, otherwise the default impulse is created/updated.
+      operationId: createImpulse
+      tags:
+      - Impulse
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateImpulseRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateImpulseResponse'
+    delete:
+      summary: Delete impulse
+      description: Clears the impulse and all associated blocks for this project.  If you specify `impulseId` then that impulse is cleared, otherwise the default impulse is cleared.
+      operationId: deleteImpulse
+      tags:
+      - Impulse
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/{projectId}/impulse/new:
+    post:
+      summary: Create new empty impulse
+      description: Create a new empty impulse, and return the ID.
+      operationId: createNewEmptyImpulse
+      tags:
+      - Impulse
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateNewEmptyImpulseResponse'
+  /api/{projectId}/impulse/update:
+    post:
+      summary: Update impulse
+      description: Update the impulse for this project.  If you specify `impulseId` then that impulse is created/updated, otherwise the default impulse is created/updated.
+      operationId: updateImpulse
+      tags:
+      - Impulse
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateImpulseRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/{projectId}/impulse/all:
+    get:
+      summary: Get impulse including disabled blocks
+      description: Retrieve the impulse for this project including disabled blocks. If you specify `impulseId` then that impulse is returned, otherwise the default impulse is returned.
+      operationId: getImpulseAll
+      tags:
+      - Impulse
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetImpulseResponse'
+  /api/{projectId}/impulse/get-new-block-id:
+    post:
+      summary: Get new block ID
+      description: Returns an unused block ID. Use this function to determine new block IDs when you construct an impulse; so you won't accidentally re-use block IDs.
+      operationId: getNewBlockId
+      tags:
+      - Impulse
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetNewBlockIdResponse'
+  /api/{projectId}/impulse/blocks:
+    get:
+      summary: Get impulse blocks
+      description: Lists all possible blocks that can be used in the impulse
+      operationId: getImpulseBlocks
+      tags:
+      - Impulse
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetImpulseBlocksResponse'
+  /api/{projectId}/verify-dsp-block/url:
+    post:
+      summary: Verify custom DSP block
+      description: Verify the validity of a custom DSP block
+      operationId: verifyDspBlockUrl
+      tags:
+      - Impulse
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyDspBlockUrlRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyDspBlockUrlResponse'
+  /api/{projectId}/impulses:
+    get:
+      summary: Get all impulses
+      description: Retrieve all impulse for a project
+      operationId: getAllImpulses
+      tags:
+      - Impulse
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllImpulsesResponse'
+  /api/{projectId}/impulses-detailed:
+    get:
+      summary: Get all impulses (incl. metrics)
+      description: Retrieve all impulse for a project, including accuracy and performance metrics.
+      operationId: getAllDetailedImpulses
+      tags:
+      - Impulse
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllDetailedImpulsesResponse'
+  /api/{projectId}/download-impulses-detailed:
+    get:
+      summary: Download all impulses (incl. metrics), as JSON or CSV.
+      description: Download all impulse for a project, including accuracy and performance metrics, as JSON or CSV.
+      operationId: downloadDetailedImpulses
+      tags:
+      - Impulse
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/DetailedImpulsesFormatParameter'
+      responses:
+        '200':
+          description: File
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api/{projectId}/impulse/legacy-set-impulse:
+    post:
+      summary: Set legacy impulse
+      description: Set the complete impulse state for a project, writing impulses in the old (pre-impulse experiments) format. This completely clears out all files on FSx for this project. This is an internal API.
+      x-internal-api: true
+      security:
+      - permissions:
+        - projects:training:keras:write
+      operationId: setLegacyImpulseStateInternal
+      tags:
+      - Impulse
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SetLegacyImpulseStateInternalRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/{projectId}/impulse/{impulseId}/clone/structure:
+    post:
+      summary: Clone impulse (structure)
+      description: Clones the complete structure (incl. config) of an impulse. Does not copy data.
+      operationId: cloneImpulseStructure
+      tags:
+      - Impulse
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/ImpulseIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloneImpulseRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateImpulseResponse'
+  /api/{projectId}/impulse/{impulseId}/clone/complete:
+    post:
+      summary: Clone impulse (complete)
+      description: Clones the complete impulse (incl. config and data) of an existing impulse.
+      operationId: cloneImpulseComplete
+      tags:
+      - Impulse
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/ImpulseIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloneImpulseRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartJobResponse'
+components:
+  schemas:
+    VerifyDspBlockUrlRequest:
+      type: object
+      required:
+      - url
+      properties:
+        url:
+          type: string
+    BlockDisplayCategory:
+      description: Category to display this block in the UI.
+      type: string
+      enum:
+      - classical
+      - tao
+    KerasModelVariantEnum:
+      type: string
+      enum:
+      - int8
+      - float32
+      - akida
+    AnomalyGmmMetadata:
+      type: object
+      required:
+      - means
+      - covariances
+      - weights
+      properties:
+        means:
+          type: array
+          items:
+            type: array
+            items:
+              type: number
+          description: 2D array of shape (n, m)
+        covariances:
+          type: array
+          items:
+            type: array
+            items:
+              type: array
+              items:
+                type: number
+          description: 3D array of shape (n, m, m)
+        weights:
+          type: array
+          items:
+            type: number
+          description: 1D array of shape (n,)
+    BlockType:
+      type: string
+      enum:
+      - official
+      - personal
+      - enterprise
+      - pro-or-enterprise
+      - community
+    LearnBlock:
+      type: object
+      required:
+      - type
+      - title
+      - author
+      - description
+      - name
+      - recommend
+      - blockType
+      properties:
+        type:
+          type: string
+          example: spectral-analysis
+        title:
+          type: string
+          example: Spectral features
+        author:
+          type: string
+          example: Edge Impulse Inc.
+        description:
+          type: string
+        name:
+          type: string
+          example: Spectral analysis
+        recommended:
+          type: boolean
+        organizationModelId:
+          type: integer
+        publicProjectTierAvailability:
+          $ref: '#/components/schemas/PublicProjectTierAvailability'
+        isPublicEnterpriseOnly:
+          type: boolean
+          description: Whether this block is publicly available to only enterprise users
+        blockType:
+          $ref: '#/components/schemas/BlockType'
+        displayCategory:
+          $ref: '#/components/schemas/BlockDisplayCategory'
+    SetLegacyImpulseStateInternalRequest:
+      type: object
+      required:
+      - zip
+      - impulse
+      - config
+      properties:
+        zip:
+          type: string
+          format: binary
+        impulse:
+          type: string
+          format: binary
+        config:
+          type: string
+          format: binary
+    StartJobResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: Job identifier. Status updates will include this identifier.
+            example: 12873488112
+    ImpulseInputBlock:
+      type: object
+      required:
+      - id
+      - type
+      - name
+      - title
+      - primaryVersion
+      properties:
+        id:
+          type: integer
+          minimum: 1
+          description: Identifier for this block. Make sure to up this number when creating a new block, and don't re-use identifiers. If the block hasn't changed, keep the ID as-is. ID must be unique across the project and greather than zero (>0).
+        type:
+          type: string
+          description: Block type (either time-series, image or features)
+          example: time-series
+          enum:
+          - time-series
+          - image
+          - features
+        name:
+          type: string
+          description: Block name, will be used in menus
+          example: Time series
+        title:
+          type: string
+          description: Block title, used in the impulse UI
+          example: Time series
+        windowSizeMs:
+          type: integer
+          description: Size of the sliding window in milliseconds
+          example: 2004
+        windowIncreaseMs:
+          type: integer
+          description: We use a sliding window to go over the raw data. How many milliseconds to increase the sliding window with for each step.
+        frequencyHz:
+          type: number
+          description: (Input only) Frequency of the input data in Hz
+          example: 60
+        classificationWindowIncreaseMs:
+          type: integer
+          description: We use a sliding window to go over the raw data. How many milliseconds to increase the sliding window with for each step in classification mode.
+        padZeros:
+          type: boolean
+          description: Whether to zero pad data when a data item is too short
+        imageWidth:
+          type: integer
+          description: Width all images are resized to before training
+          example: 28
+        imageHeight:
+          type: integer
+          description: Width all images are resized to before training
+          example: 28
+        resizeMode:
+          type: string
+          description: How to resize images before training
+          example: squash
+          enum:
+          - squash
+          - fit-short
+          - fit-long
+          - crop
+        resizeMethod:
+          type: string
+          description: Resize method to use when resizing images
+          example: squash
+          enum:
+          - lanczos3
+          - nearest
+        cropAnchor:
+          type: string
+          description: If images are resized using a crop, choose where to anchor the crop
+          example: middle-center
+          enum:
+          - top-left
+          - top-center
+          - top-right
+          - middle-left
+          - middle-center
+          - middle-right
+          - bottom-left
+          - bottom-center
+          - bottom-right
+        description:
+          type: string
+          description: A short description of the block version, displayed in the block versioning UI
+          example: Reduced learning rate and more layers
+        createdBy:
+          type: string
+          description: The system component that created the block version (createImpulse | clone | tuner). Cannot be set via API.
+          example: createImpulse
+        createdAt:
+          type: string
+          format: date-time
+          description: The datetime that the block version was created. Cannot be set via API.
+        datasetSubset:
+          type: object
+          description: Only generate features for samples where (sample_id + datasetSubsetSeed) % datasetSubset) == 0
+          required:
+          - datasetSubset
+          - datasetSubsetSeed
+          properties:
+            subsetModulo:
+              type: number
+            subsetSeed:
+              type: number
+    DetailedImpulse:
+      type: object
+      required:
+      - impulse
+      - metrics
+      - dspBlockConfigs
+      - learnBlockKerasConfigs
+      - learnBlockAnomalyConfigs
+      - isStale
+      - tags
+      properties:
+        impulse:
+          $ref: '#/components/schemas/Impulse'
+        metrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/DetailedImpulseMetric'
+        dspBlockConfigs:
+          type: array
+          items:
+            type: object
+            required:
+            - blockId
+            - config
+            properties:
+              blockId:
+                type: integer
+              config:
+                description: This returns a DSPConfig object, but "dsp.classes" and "dsp.features.classes" will be set to an empty array (use getDspConfig to retrieve these).
+                $ref: '#/components/schemas/DSPConfig'
+              metadata:
+                description: This returns a DSPMetadata object, but "labels" will be set to an empty array (use getDspMetadata to retrieve these).
+                $ref: '#/components/schemas/DSPMetadata'
+        learnBlockKerasConfigs:
+          items:
+            type: object
+            required:
+            - blockId
+            - config
+            properties:
+              blockId:
+                type: integer
+              config:
+                description: This returns a KerasConfig object, but "transferLearningModels" and "dependencies.classes" will be set to an empty array (use getKeras to retrieve these).
+                $ref: '#/components/schemas/KerasConfig'
+              metadata:
+                description: This returns a KerasModelMetadata object, but 1) non-default "onDevicePerformance", 2) "predictions", 3) "labels"; are omitted (use getKerasMetadata to retrieve these).
+                $ref: '#/components/schemas/KerasModelMetadata'
+        learnBlockAnomalyConfigs:
+          items:
+            type: object
+            required:
+            - blockId
+            - config
+            properties:
+              blockId:
+                type: integer
+              config:
+                $ref: '#/components/schemas/AnomalyConfig'
+              metadata:
+                description: This returns a AnomalyModelMetadata object, but 1) non-default "onDevicePerformance", 2) "predictions" are omitted (use getAnomalyMetadata to retrieve these).
+                $ref: '#/components/schemas/AnomalyModelMetadata'
+              gmmMetadata:
+                $ref: '#/components/schemas/AnomalyGmmMetadata'
+        pretrainedModelInfo:
+          type: object
+          required:
+          - fileName
+          properties:
+            fileName:
+              type: string
+        isStale:
+          type: boolean
+          description: Whether this impulse contains blocks with "stale" features (i.e. the dataset has changed since features were generated)
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags associated with this impulse
+        createdFromTunerTrialId:
+          type: number
+          description: The source EON Tuner trial ID for impulses created from the EON Tuner
+    AnomalyConfig:
+      type: object
+      required:
+      - name
+      - axes
+      - trained
+      - dependencies
+      - selectedAxes
+      - minimumConfidenceRating
+      properties:
+        dependencies:
+          $ref: '#/components/schemas/DependencyData'
+        name:
+          type: string
+        axes:
+          type: array
+          description: Selectable axes for the anomaly detection block
+          items:
+            type: object
+            required:
+            - label
+            - selected
+            - favourite
+            properties:
+              label:
+                type: string
+              selected:
+                type: boolean
+              favourite:
+                type: boolean
+        trained:
+          type: boolean
+          description: Whether the block is trained
+        clusterCount:
+          type: integer
+          description: Number of clusters for K-means, or number of components for GMM (in config)
+        selectedAxes:
+          type: array
+          items:
+            type: integer
+          description: Selected clusters (in config)
+        minimumConfidenceRating:
+          type: number
+          description: Minimum confidence rating for this block, scores above this number will be flagged as anomaly.
+    Impulse:
+      type: object
+      required:
+      - id
+      - name
+      - inputBlocks
+      - dspBlocks
+      - learnBlocks
+      properties:
+        id:
+          type: integer
+          description: ID for this impulse.
+        name:
+          type: string
+          description: Name for this impulse.
+        inputBlocks:
+          type: array
+          description: Input Blocks that are part of this impulse
+          items:
+            $ref: '#/components/schemas/ImpulseInputBlock'
+        dspBlocks:
+          type: array
+          description: DSP Blocks that are part of this impulse
+          items:
+            $ref: '#/components/schemas/ImpulseDspBlock'
+        learnBlocks:
+          type: array
+          description: Learning Blocks that are part of this impulse
+          items:
+            $ref: '#/components/schemas/ImpulseLearnBlock'
+    BlockParameters:
+      description: Training parameters specific to the type of the learn block. Parameters may be adjusted depending on the model defined in the visual layers. Used for our built-in blocks.
+      oneOf:
+      - $ref: '#/components/schemas/BlockParamsVisualAnomalyPatchcore'
+      - $ref: '#/components/schemas/BlockParamsVisualAnomalyGmm'
+    DetailedImpulseMetricCategory:
+      type: string
+      enum:
+      - impulseMetrics
+      - inputBlockConfig
+      - dspBlockConfig
+      - learnBlockConfig
+      - learnBlockMetrics
+    AnomalyCapacity:
+      type: string
+      description: Capacity level for visual anomaly detection. Determines which set of default configurations to use. The higher capacity, the higher number of (Gaussian) components, and the more adapted the model becomes to the original distribution
+      enum:
+      - low
+      - medium
+      - high
+    DSPConfig:
+      type: object
+      required:
+      - dsp
+      properties:
+        dsp:
+          $ref: '#/components/schemas/DSPInfo'
+        config:
+          type: array
+          items:
+            $ref: '#/components/schemas/DSPGroup'
+        configError:
+          type: string
+    DSPMetadata:
+      type: object
+      required:
+      - created
+      - dspConfig
+      - labels
+      - featureCount
+      - windowCount
+      - includedSamples
+      - windowSizeMs
+      - windowIncreaseMs
+      - padZeros
+      - frequency
+      - outputConfig
+      properties:
+        created:
+          type: string
+          format: date-time
+          description: Date when the features were created
+        dspConfig:
+          type: object
+          additionalProperties:
+            type: string
+        labels:
+          type: array
+          description: Labels in the dataset when generator ran
+          items:
+            type: string
+        featureLabels:
+          type: array
+          description: Names of the generated features. Only set if axes have explicit labels.
+          items:
+            type: string
+        windowCount:
+          type: integer
+        featureCount:
+          type: integer
+          description: Number of features for this DSP block
+        includedSamples:
+          type: array
+          description: The included samples in this DSP block. Note that these are sorted in the same way as the `npy` files are laid out. So with the `windowCount` parameter you can exactly search back to see which file contributed to which windows there.
+          items:
+            type: object
+            required:
+            - id
+            - windowCount
+            properties:
+              id:
+                type: integer
+              windowCount:
+                type: integer
+        windowSizeMs:
+          type: integer
+          description: Length of the sliding window when generating features.
+        windowIncreaseMs:
+          type: integer
+          description: Increase of the sliding window when generating features.
+        padZeros:
+          type: boolean
+          description: Whether data was zero-padded when generating features.
+        frequency:
+          type: number
+          description: Frequency of the original data in Hz.
+        outputConfig:
+          type: object
+          description: Information about the output of the DSP block
+          required:
+          - type
+          - shape
+          properties:
+            type:
+              type: string
+              description: Output type of the DSP block
+              enum:
+              - image
+              - spectrogram
+              - flat
+            shape:
+              type: object
+              description: The shape of the block output
+              required:
+              - width
+              properties:
+                width:
+                  description: Available on all types. Denotes the width of an 'image' or 'spectrogram', or the number of features in a 'flat' block.
+                  type: integer
+                height:
+                  description: Only available for type 'image' and 'spectrogram'
+                  type: integer
+                channels:
+                  description: Only available for type 'image'
+                  type: integer
+                frames:
+                  description: Number of frames, only available for type 'image'
+                  type: integer
+        fftUsed:
+          type: array
+          items:
+            type: integer
+        resamplingAlgorithmVersion:
+          type: number
+          description: The version number of the resampling algorithm used (for resampled time series data only)
+    GetNewBlockIdResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - blockId
+        properties:
+          blockId:
+            type: integer
+    KerasCustomMetric:
+      type: object
+      required:
+      - name
+      - value
+      properties:
+        name:
+          description: The name of the metric
+          type: string
+        value:
+          description: The value of this metric for this model type
+          type: string
+    ImpulseDspBlock:
+      type: object
+      required:
+      - id
+      - type
+      - name
+      - axes
+      - title
+      - primaryVersion
+      - implementationVersion
+      properties:
+        id:
+          minimum: 1
+          type: integer
+          description: Identifier for this block. Make sure to up this number when creating a new block, and don't re-use identifiers. If the block hasn't changed, keep the ID as-is. ID must be unique across the project and greather than zero (>0).
+        type:
+          type: string
+          description: Block type
+          example: spectral-analysis
+        name:
+          type: string
+          description: Block name, will be used in menus
+          example: Spectral features
+        axes:
+          type: array
+          description: Input axes, identified by the name in the name of the axis
+          items:
+            type: string
+            example: accX
+        title:
+          type: string
+          description: Block title, used in the impulse UI
+          example: Spectral Analysis
+        valuesPerAxis:
+          type: integer
+          description: Number of features this DSP block outputs per axis. This is only set when the DSP block is configured.
+          example: 11
+        input:
+          type: integer
+          description: The ID of the Input block a DSP block is connected to
+          example: 1
+        description:
+          type: string
+          description: A short description of the block version, displayed in the block versioning UI
+          example: Reduced learning rate and more layers
+        createdBy:
+          type: string
+          description: The system component that created the block version (createImpulse | clone | tuner). Cannot be set via API.
+          example: createImpulse
+        createdAt:
+          type: string
+          format: date-time
+          description: The datetime that the block version was created. Cannot be set via API.
+        implementationVersion:
+          type: integer
+          description: Implementation version of the block
+        organization:
+          type: object
+          required:
+          - id
+          - dspId
+          properties:
+            id:
+              type: integer
+            dspId:
+              type: integer
+        customUrl:
+          type: string
+          description: Required for type 'custom'
+        namedAxes:
+          type: array
+          description: Named axes for the block
+          items:
+            type: object
+            required:
+            - name
+            properties:
+              name:
+                type: string
+                description: Name of the axis
+              description:
+                type: string
+                description: Description of the axis
+              required:
+                type: boolean
+                description: Whether the axis is required
+              selectedAxis:
+                type: string
+                description: The selected axis for the block
+    AdditionalMetric:
+      type: object
+      required:
+      - name
+      - value
+      - fullPrecisionValue
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        fullPrecisionValue:
+          type: number
+        tooltipText:
+          type: string
+        link:
+          type: string
+    PublicProjectTierAvailability:
+      description: For public blocks, this indicates the project tiers for which this block is available.
+      type: string
+      enum:
+      - enterprise-only
+      - pro-or-enterprise
+      - all-projects
+    CreateNewEmptyImpulseResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        - redirectUrl
+        properties:
+          id:
+            type: integer
+            description: ID of the new impulse
+          redirectUrl:
+            type: string
+            description: Link to redirect the user to afterwards
+    DetailedImpulseMetric:
+      type: object
+      required:
+      - name
+      - type
+      - category
+      - description
+      - value
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+          enum:
+          - core
+          - additional
+        filteringType:
+          $ref: '#/components/schemas/DetailedImpulseMetricFilteringType'
+        category:
+          $ref: '#/components/schemas/DetailedImpulseMetricCategory'
+        description:
+          type: string
+        value:
+          oneOf:
+          - type: string
+          - type: boolean
+        title:
+          type: string
+        valueForSorting:
+          type: integer
+        valueHint:
+          type: string
+          description: Additional help explaining the value for this metric
+    ImpulseLearnBlock:
+      type: object
+      required:
+      - id
+      - type
+      - name
+      - dsp
+      - title
+      - primaryVersion
+      properties:
+        id:
+          type: integer
+          minimum: 1
+          description: Identifier for this block. Make sure to up this number when creating a new block, and don't re-use identifiers. If the block hasn't changed, keep the ID as-is. ID must be unique across the project and greather than zero (>0).
+        type:
+          $ref: '#/components/schemas/LearnBlockType'
+        name:
+          type: string
+          description: Block name, will be used in menus. If a block has a baseBlockId, this field is ignored and the base block's name is used instead.
+          example: NN Classifier
+        dsp:
+          type: array
+          description: DSP dependencies, identified by DSP block ID
+          items:
+            type: integer
+            example: 27
+        title:
+          type: string
+          description: Block title, used in the impulse UI
+          example: Classification (Keras)
+        description:
+          type: string
+          description: A short description of the block version, displayed in the block versioning UI
+          example: Reduced learning rate and more layers
+        createdBy:
+          type: string
+          description: The system component that created the block version (createImpulse | clone | tuner). Cannot be set via API.
+          example: createImpulse
+        createdAt:
+          type: string
+          format: date-time
+          description: The datetime that the block version was created. Cannot be set via API.
+    ModelEngineShortEnum:
+      type: string
+      enum:
+      - tflite-eon
+      - tflite-eon-ram-optimized
+      - tflite
+    GetImpulseBlocksResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - inputBlocks
+        - dspBlocks
+        - learnBlocks
+        properties:
+          inputBlocks:
+            type: array
+            items:
+              $ref: '#/components/schemas/InputBlock'
+          dspBlocks:
+            type: array
+            items:
+              $ref: '#/components/schemas/DSPBlock'
+          learnBlocks:
+            type: array
+            items:
+              $ref: '#/components/schemas/LearnBlock'
+    CreateImpulseResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: ID of the new impulse
+    DependencyData:
+      type: object
+      required:
+      - classes
+      - blockNames
+      - featureCount
+      - sampleCount
+      properties:
+        classes:
+          type: array
+          items:
+            type: string
+        blockNames:
+          type: array
+          items:
+            type: string
+        featureCount:
+          type: integer
+        sampleCount:
+          type: integer
+    AnomalyModelMetadata:
+      type: object
+      required:
+      - created
+      - scale
+      - mean
+      - clusters
+      - axes
+      properties:
+        created:
+          type: string
+          format: date-time
+          description: Date when the model was trained
+        scale:
+          type: array
+          description: 'Scale input for StandardScaler. Values are scaled like this (where `ix` is axis index): `input[ix] = (input[ix] - mean[ix]) / scale[ix];`'
+          items:
+            type: number
+        mean:
+          type: array
+          description: 'Mean input for StandardScaler. Values are scaled like this (where `ix` is axis index): `input[ix] = (input[ix] - mean[ix]) / scale[ix];`'
+          items:
+            type: number
+        clusters:
+          type: array
+          description: Trained K-means clusters
+          items:
+            type: object
+            required:
+            - center
+            - maxError
+            properties:
+              center:
+                type: array
+                description: Center of each cluster (one value per axis)
+                items:
+                  type: number
+              maxError:
+                type: number
+                description: Size of the cluster
+        axes:
+          type: array
+          description: Which axes were included during training (by index)
+          example: '`[ 0, 11, 22 ]`'
+          items:
+            type: integer
+        defaultMinimumConfidenceRating:
+          type: number
+          description: Default minimum confidence rating required before tagging as anomaly, based on scores of training data (GMM only).
+        availableModelTypes:
+          type: array
+          description: The types of model that are available
+          items:
+            $ref: '#/components/schemas/KerasModelTypeEnum'
+        recommendedModelType:
+          description: The model type that is recommended for use
+          $ref: '#/components/schemas/KerasModelTypeEnum'
+        modelValidationMetrics:
+          type: array
+          description: Metrics for each of the available model types
+          items:
+            $ref: '#/components/schemas/KerasModelMetadataMetrics'
+        hasTrainedModel:
+          type: boolean
+    KerasVisualLayerType:
+      type: string
+      enum:
+      - dense
+      - conv1d
+      - conv2d
+      - reshape
+      - flatten
+      - dropout
+      - batchNormalization
+      - transfer_mobilenetv2_a35
+      - transfer_mobilenetv2_a1
+      - transfer_mobilenetv2_a05
+      - transfer_mobilenetv2_160_a1
+      - transfer_mobilenetv2_160_a75
+      - transfer_mobilenetv2_160_a5
+      - transfer_mobilenetv2_160_a35
+      - transfer_mobilenetv1_a25_d100
+      - transfer_mobilenetv1_a2_d100
+      - transfer_mobilenetv1_a1_d100
+      - transfer_kws_mobilenetv1_a1_d100
+      - transfer_kws_mobilenetv2_a35_d100
+      - transfer_kws_syntiant_ndp10x
+      - transfer_kws_conv2d_tiny
+      - object_ssd_mobilenet_v2_fpnlite_320x320
+      - fomo_mobilenet_v2_a01
+      - fomo_mobilenet_v2_a35
+      - transfer_organization
+      - transfer_akidanet_imagenet_160_a100
+      - transfer_akidanet_imagenet_160_a50
+      - transfer_akidanet_imagenet_160_a25
+      - transfer_akidanet_imagenet_224_a100
+      - transfer_akidanet_imagenet_224_a50
+      - transfer_akidanet_imagenet_224_a25
+      - fomo_akidanet_a50
+      - fomo_ad_gmm
+      - fomo_ad_patchcore
+    DSPBlock:
+      type: object
+      required:
+      - type
+      - title
+      - author
+      - description
+      - name
+      - recommend
+      - experimental
+      - latestImplementationVersion
+      - blockType
+      properties:
+        type:
+          type: string
+          example: spectral-analysis
+        title:
+          type: string
+          example: Spectral features
+        author:
+          type: string
+          example: Edge Impulse Inc.
+        description:
+          type: string
+        name:
+          type: string
+          example: Spectral analysis
+        recommended:
+          type: boolean
+        experimental:
+          type: boolean
+        latestImplementationVersion:
+          type: integer
+        organizationId:
+          type: integer
+        organizationDspId:
+          type: integer
+        blockType:
+          $ref: '#/components/schemas/BlockType'
+        namedAxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DSPNamedAxis'
+    ObjectDetectionLastLayer:
+      type: string
+      enum:
+      - mobilenet-ssd
+      - fomo
+      - yolov2-akida
+      - yolov5
+      - yolov5v5-drpai
+      - yolox
+      - yolov7
+      - tao-retinanet
+      - tao-ssd
+      - tao-yolov3
+      - tao-yolov4
+    DSPGroup:
+      type: object
+      required:
+      - group
+      - items
+      properties:
+        group:
+          type: string
+          example: Scaling
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DSPGroupItem'
+    DspPerformance:
+      type: object
+      required:
+      - latency
+      - ram
+      properties:
+        latency:
+          type: integer
+        ram:
+          type: integer
+        customDspString:
+          type: string
+          description: If the project latencyDevice has custom DSP hardware, this value contains a device specific latency metric (eg. cycles)
+    KerasVisualLayer:
+      type: object
+      required:
+      - type
+      properties:
+        type:
+          $ref: '#/components/schemas/KerasVisualLayerType'
+        neurons:
+          type: integer
+          description: Number of neurons or filters in this layer (only for dense, conv1d, conv2d) or in the final conv2d layer (only for transfer layers)
+        kernelSize:
+          type: integer
+          description: Kernel size for the convolutional layers (only for conv1d, conv2d)
+        dropoutRate:
+          type: number
+          description: Fraction of input units to drop (only for dropout) or in the final layer dropout (only for transfer layers)
+        columns:
+          type: integer
+          description: Number of columns for the reshape operation (only for reshape)
+        stack:
+          type: integer
+          description: Number of convolutional layers before the pooling layer (only for conv1d, conv2d)
+        enabled:
+          type: boolean
+        organizationModelId:
+          type: integer
+          description: Custom transfer learning model ID (when type is set to transfer_organization)
+    ImageInputScaling:
+      description: Normalization that is applied to images. If this is not set then 0..1 is used. "0..1" gives you non-normalized pixels between 0 and 1. "-1..1" gives you non-normalized pixels between -1 and 1. "0..255" gives you non-normalized pixels between 0 and 255. "-128..127" gives you non-normalized pixels between -128 and 127. "torch" first scales pixels between 0 and 1, then applies normalization using the ImageNet dataset (same as `torchvision.transforms.Normalize()`). "bgr-subtract-imagenet-mean" scales to 0..255, reorders pixels to BGR, and subtracts the ImageNet mean from each channel.
+      type: string
+      enum:
+      - 0..1
+      - -1..1
+      - -128..127
+      - 0..255
+      - torch
+      - bgr-subtract-imagenet-mean
+    DSPInfo:
+      type: object
+      required:
+      - id
+      - name
+      - windowLength
+      - type
+      - classes
+      - features
+      - expectedWindowCount
+      - inputAxes
+      - canCalculateFeatureImportance
+      - calculateFeatureImportance
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Spectral features
+        windowLength:
+          type: integer
+          example: 3000
+        type:
+          type: string
+          example: spectral-analysis
+        classes:
+          type: array
+          items:
+            type: string
+        features:
+          type: object
+          required:
+          - generated
+          properties:
+            generated:
+              type: boolean
+              description: Whether this block has generated features
+            count:
+              type: integer
+              description: Number of generated features
+            labels:
+              type: array
+              description: Names of the features
+              items:
+                type: string
+            classes:
+              type: array
+              description: Classes that the features were generated on
+              items:
+                type: string
+        expectedWindowCount:
+          type: integer
+          description: Expected number of windows that would be generated
+        inputAxes:
+          type: array
+          description: Axes that this block depends on.
+          items:
+            type: string
+        performance:
+          $ref: '#/components/schemas/DspPerformance'
+        canCalculateFeatureImportance:
+          type: boolean
+        calculateFeatureImportance:
+          type: boolean
+        hasAutoTune:
+          description: Whether this type of DSP block supports autotuning.
+          type: boolean
+        minimumVersionForAutotune:
+          description: For DSP blocks that support autotuning, this value specifies the minimum block implementation version for which autotuning is supported.
+          type: number
+        hasAutotunerResults:
+          description: Whether autotune results exist for this DSP block.
+          type: boolean
+        usesState:
+          description: Whether this DSP block uses state.
+          type: boolean
+    BlockParamsVisualAnomalyGmm:
+      type: object
+      properties:
+        backbone:
+          type: string
+          description: The backbone to use for feature extraction
+    KerasConfig:
+      type: object
+      required:
+      - dependencies
+      - trained
+      - name
+      - script
+      - minimumConfidenceRating
+      - selectedModelType
+      - mode
+      - trainingCycles
+      - learningRate
+      - defaultBatchSize
+      - visualLayers
+      - augmentationPolicyImage
+      - transferLearningModels
+      - shape
+      - profileInt8
+      - skipEmbeddingsAndMemory
+      - showAdvancedTrainingSettings
+      - showAugmentationTrainingSettings
+      properties:
+        dependencies:
+          $ref: '#/components/schemas/DependencyData'
+        trained:
+          type: boolean
+          description: Whether the block is trained
+        name:
+          type: string
+        type:
+          $ref: '#/components/schemas/LearnBlockType'
+        script:
+          type: string
+          description: The Keras script. This script might be empty if the mode is visual.
+        minimumConfidenceRating:
+          type: number
+          description: Minimum confidence rating required for the neural network. Scores below this confidence are tagged as uncertain.
+        selectedModelType:
+          description: The model type that is currently selected.
+          $ref: '#/components/schemas/KerasModelTypeEnum'
+        mode:
+          type: string
+          description: The mode (visual or expert) to use for editing this network.
+          enum:
+          - visual
+          - expert
+        visualLayers:
+          type: array
+          description: The visual layers (if in visual mode) for the neural network. This will be an empty array when in expert mode.
+          items:
+            $ref: '#/components/schemas/KerasVisualLayer'
+        trainingCycles:
+          type: integer
+          description: Number of training cycles. If in expert mode this will be 0.
+        learningRate:
+          type: number
+          description: Learning rate (between 0 and 1). If in expert mode this will be 0.
+        batchSize:
+          type: integer
+          description: The batch size used during training.
+        defaultBatchSize:
+          type: integer
+          description: The default batch size if a value is not configured.
+        shape:
+          type: string
+          description: Python-formatted tuple of input axes
+        trainTestSplit:
+          type: number
+          description: Train/test split (between 0 and 1)
+        autoClassWeights:
+          type: boolean
+          description: Whether to automatically balance class weights, use this for skewed datasets.
+        useLearnedOptimizer:
+          type: boolean
+          description: Use learned optimizer and ignore learning rate.
+        augmentationPolicyImage:
+          $ref: '#/components/schemas/AugmentationPolicyImageEnum'
+        augmentationPolicySpectrogram:
+          $ref: '#/components/schemas/AugmentationPolicySpectrogram'
+        transferLearningModels:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransferLearningModel'
+        profileInt8:
+          type: boolean
+          description: Whether to profile the i8 model (might take a very long time)
+        skipEmbeddingsAndMemory:
+          type: boolean
+          description: If set, skips creating embeddings and measuring memory (used in tests)
+        akidaEdgeLearningConfig:
+          $ref: '#/components/schemas/AkidaEdgeLearningConfig'
+        customValidationMetadataKey:
+          type: string
+          description: This metadata key is used to prevent group data leakage between train and validation datasets.
+        showAdvancedTrainingSettings:
+          type: boolean
+          description: Whether the 'Advanced training settings' UI element should be expanded.
+        showAugmentationTrainingSettings:
+          type: boolean
+          description: Whether the 'Augmentation training settings' UI element should be expanded.
+        customParameters:
+          type: object
+          description: Training parameters, this list depends on the list of parameters that the model exposes.
+          additionalProperties:
+            type: string
+            nullable: true
+        anomalyCapacity:
+          description: Capacity level for visual anomaly detection (GMM). Determines which set of default configurations to use. The higher capacity, the higher number of (Gaussian) components, and the more adapted the model becomes to the original distribution
+          $ref: '#/components/schemas/AnomalyCapacity'
+        lastShownModelVariant:
+          $ref: '#/components/schemas/KerasModelVariantEnum'
+          description: Last shown variant on the Keras screen. Used to keep the same view after refreshing.
+        lastShownModelEngine:
+          $ref: '#/components/schemas/ModelEngineShortEnum'
+          description: Last shown model engine on the Keras screen. Used to keep the same view after refreshing.
+        blockParameters:
+          $ref: '#/components/schemas/BlockParameters'
+          description: Training parameters specific to the type of the learn block. Parameters may be adjusted depending on the model defined in the visual layers. Used for our built-in blocks.
+    GetImpulseResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          impulse:
+            $ref: '#/components/schemas/Impulse'
+    GetAllImpulsesResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - impulses
+        properties:
+          impulses:
+            type: array
+            items:
+              $ref: '#/components/schemas/Impulse'
+    InputBlock:
+      type: object
+      required:
+      - type
+      - title
+      - author
+      - description
+      - name
+      - recommend
+      - blockType
+      properties:
+        type:
+          type: string
+          enum:
+          - time-series
+          - image
+          - features
+        title:
+          type: string
+          example: Time series
+        author:
+          type: string
+          example: Edge Impulse Inc.
+        description:
+          type: string
+        name:
+          type: string
+          example: Time series
+        recommended:
+          type: boolean
+        blockType:
+          $ref: '#/components/schemas/BlockType'
+    GetAllDetailedImpulsesResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - impulses
+        - metricKeysByCategory
+        - extraTableColumns
+        properties:
+          impulses:
+            type: array
+            items:
+              $ref: '#/components/schemas/DetailedImpulse'
+          metricKeysByCategory:
+            type: array
+            items:
+              type: object
+              required:
+              - category
+              - metricKeys
+              properties:
+                category:
+                  $ref: '#/components/schemas/DetailedImpulseMetricCategory'
+                metricKeys:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - name
+                    - description
+                    - type
+                    - showInTable
+                    properties:
+                      name:
+                        type: string
+                      description:
+                        type: string
+                      type:
+                        type: string
+                        enum:
+                        - core
+                        - additional
+                      filteringType:
+                        $ref: '#/components/schemas/DetailedImpulseMetricFilteringType'
+                      showInTable:
+                        type: boolean
+          extraTableColumns:
+            type: array
+            description: Which extra impulse information should be shown in the impulses table.
+            items:
+              type: string
+    TransferLearningModel:
+      type: object
+      required:
+      - name
+      - shortName
+      - description
+      - hasNeurons
+      - hasDropout
+      - type
+      - author
+      - blockType
+      properties:
+        name:
+          type: string
+        shortName:
+          type: string
+        abbreviatedName:
+          type: string
+        description:
+          type: string
+        hasNeurons:
+          type: boolean
+        hasDropout:
+          type: boolean
+        defaultNeurons:
+          type: integer
+        defaultDropout:
+          type: number
+        defaultLearningRate:
+          type: number
+        defaultTrainingCycles:
+          type: number
+        hasImageAugmentation:
+          type: boolean
+        type:
+          $ref: '#/components/schemas/KerasVisualLayerType'
+        learnBlockType:
+          $ref: '#/components/schemas/LearnBlockType'
+        organizationModelId:
+          type: integer
+        implementationVersion:
+          type: integer
+        repositoryUrl:
+          type: string
+          description: URL to the source code of this custom learn block.
+        author:
+          type: string
+        blockType:
+          $ref: '#/components/schemas/BlockType'
+        customParameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/DSPGroupItem'
+        displayCategory:
+          $ref: '#/components/schemas/BlockDisplayCategory'
+    UpdateImpulseRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+    KerasModelMetadataMetrics:
+      type: object
+      required:
+      - type
+      - loss
+      - confusionMatrix
+      - report
+      - onDevicePerformance
+      - visualization
+      - isSupportedOnMcu
+      - additionalMetrics
+      properties:
+        type:
+          description: The type of model
+          $ref: '#/components/schemas/KerasModelTypeEnum'
+        loss:
+          type: number
+          description: The model's loss on the validation set after training
+        accuracy:
+          type: number
+          description: The model's accuracy on the validation set after training
+        confusionMatrix:
+          type: array
+          example:
+          - - 31
+            - 1
+            - 0
+          - - 2
+            - 27
+            - 3
+          - - 1
+            - 0
+            - 39
+          items:
+            type: array
+            items:
+              type: number
+        report:
+          type: object
+          description: Precision, recall, F1 and support scores
+        onDevicePerformance:
+          type: array
+          items:
+            type: object
+            required:
+            - mcu
+            - name
+            - isDefault
+            - latency
+            - tflite
+            - eon
+            properties:
+              mcu:
+                type: string
+              name:
+                type: string
+              isDefault:
+                type: boolean
+              latency:
+                type: number
+              tflite:
+                type: object
+                required:
+                - ramRequired
+                - romRequired
+                - arenaSize
+                - modelSize
+                properties:
+                  ramRequired:
+                    type: integer
+                  romRequired:
+                    type: integer
+                  arenaSize:
+                    type: integer
+                  modelSize:
+                    type: integer
+              eon:
+                type: object
+                required:
+                - ramRequired
+                - romRequired
+                - arenaSize
+                - modelSize
+                properties:
+                  ramRequired:
+                    type: integer
+                  romRequired:
+                    type: integer
+                  arenaSize:
+                    type: integer
+                  modelSize:
+                    type: integer
+              eon_ram_optimized:
+                type: object
+                required:
+                - ramRequired
+                - romRequired
+                - arenaSize
+                - modelSize
+                properties:
+                  ramRequired:
+                    type: integer
+                  romRequired:
+                    type: integer
+                  arenaSize:
+                    type: integer
+                  modelSize:
+                    type: integer
+              customMetrics:
+                description: Custom, device-specific performance metrics
+                type: array
+                items:
+                  $ref: '#/components/schemas/KerasCustomMetric'
+        predictions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelPrediction'
+        visualization:
+          type: string
+          enum:
+          - featureExplorer
+          - dataExplorer
+          - none
+        isSupportedOnMcu:
+          type: boolean
+        mcuSupportError:
+          type: string
+        profilingJobId:
+          description: If this is set, then we're still profiling this model. Subscribe to job updates to see when it's done (afterward the metadata will be updated).
+          type: integer
+        profilingJobFailed:
+          description: If this is set, then the profiling job failed (get the status by getting the job logs for 'profilingJobId').
+          type: boolean
+        additionalMetrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdditionalMetric'
+    CloneImpulseRequest:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+    VerifyDspBlockUrlResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          block:
+            type: object
+            required:
+            - title
+            - author
+            - description
+            - name
+            - latestImplementationVersion
+            properties:
+              title:
+                type: string
+              author:
+                type: string
+              description:
+                type: string
+              name:
+                type: string
+              latestImplementationVersion:
+                type: integer
+              namedAxes:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DSPNamedAxis'
+    BlockParamsVisualAnomalyPatchcore:
+      type: object
+      properties:
+        backbone:
+          type: string
+          description: The backbone to use for feature extraction
+        numLayers:
+          type: integer
+          description: The number of layers in the feature extractor (1-3)
+        poolSize:
+          type: integer
+          description: The pool size for the feature extractor
+        samplingRatio:
+          type: number
+          description: The sampling ratio for the coreset, used for anomaly scoring
+        numNearestNeighbors:
+          type: integer
+          description: The number of nearest neighbors to consider, used for anomaly scoring
+    DetailedImpulseMetricFilteringType:
+      type: object
+      required:
+      - type
+      - options
+      properties:
+        type:
+          type: string
+          enum:
+          - numeric
+          - string
+          - select
+          - boolean
+          - list
+        options:
+          type: array
+          items:
+            type: string
+    DSPGroupItem:
+      type: object
+      required:
+      - name
+      - type
+      - param
+      - defaultValue
+      - readonly
+      - shouldShow
+      - required
+      properties:
+        name:
+          type: string
+          example: Scale axes
+        value:
+          type: string
+        defaultValue:
+          type: string
+        type:
+          type: string
+          example: text
+        help:
+          type: string
+          example: Divide axes by this number
+        param:
+          type: string
+          example: scale-axes
+        selectOptions:
+          type: array
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+              selected:
+                type: boolean
+              optionLabel:
+                type: string
+        readonly:
+          type: boolean
+        shouldShow:
+          type: boolean
+        showIf:
+          type: object
+          required:
+          - parameter
+          - operator
+          - value
+          properties:
+            parameter:
+              type: string
+            operator:
+              type: string
+              enum:
+              - eq
+              - neq
+            value:
+              type: string
+        invalidText:
+          type: string
+        section:
+          type: string
+          description: Interface section to render parameter in.
+          enum:
+          - advanced
+          - augmentation
+          - modelProfiling
+        multiline:
+          type: boolean
+          description: Only valid for type "string". Will render a multiline text area.
+        required:
+          type: boolean
+        hint:
+          type: string
+          description: If set, shows a hint below the input.
+        placeholder:
+          type: string
+          description: Sets the placeholder text on the input element (for types "string", "int", "float" and "secret")
+    ModelPrediction:
+      type: object
+      required:
+      - sampleId
+      - startMs
+      - endMs
+      - prediction
+      properties:
+        sampleId:
+          type: integer
+        startMs:
+          type: number
+        endMs:
+          type: number
+        label:
+          type: string
+        prediction:
+          type: string
+        predictionCorrect:
+          type: boolean
+        f1Score:
+          type: number
+          description: Only set for object detection projects
+        anomalyScores:
+          type: array
+          description: Only set for visual anomaly projects. 2D array of shape (n, n) with raw anomaly scores, where n varies based on the image input size and the specific visual anomaly algorithm used. The scores corresponds to each grid cell in the image's spatial matrix.
+          items:
+            type: array
+            items:
+              type: number
+    AkidaEdgeLearningConfig:
+      type: object
+      required:
+      - enabled
+      properties:
+        enabled:
+          type: boolean
+          description: True if Akida Edge Learning model creation is enabled. Other properties will be ignored if this is false.
+        additionalClasses:
+          type: number
+          description: Number of additional classes that will be added to the Edge Learning model.
+        neuronsPerClass:
+          type: number
+          description: Number of neurons in each class on the last layer in the Edge Learning model.
+    DSPNamedAxis:
+      type: object
+      required:
+      - name
+      - description
+      - required
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        required:
+          type: boolean
+    CreateImpulseRequest:
+      type: object
+      required:
+      - inputBlocks
+      - dspBlocks
+      - learnBlocks
+      properties:
+        name:
+          type: string
+          description: Name for this impulse (optional). If no name is provided one is created based on your blocks.
+        inputBlocks:
+          type: array
+          description: Input Blocks that are part of this impulse
+          items:
+            $ref: '#/components/schemas/ImpulseInputBlock'
+        dspBlocks:
+          type: array
+          description: DSP Blocks that are part of this impulse
+          items:
+            $ref: '#/components/schemas/ImpulseDspBlock'
+        learnBlocks:
+          type: array
+          description: Learning Blocks that are part of this impulse
+          items:
+            $ref: '#/components/schemas/ImpulseLearnBlock'
+    AugmentationPolicySpectrogram:
+      type: object
+      required:
+      - enabled
+      properties:
+        enabled:
+          type: boolean
+          description: True if spectrogram augmentation is enabled. Other properties will be ignored if this is false.
+        warping:
+          type: boolean
+          description: True if warping along the time axis is enabled.
+        freqMasking:
+          type: string
+          enum:
+          - none
+          - low
+          - high
+          description: The amount of frequency masking to apply.
+        timeMasking:
+          type: string
+          enum:
+          - none
+          - low
+          - high
+          description: The amount of time masking to apply.
+        gaussianNoise:
+          type: string
+          enum:
+          - none
+          - low
+          - high
+          description: The amount of Gaussian noise to add.
+    KerasModelTypeEnum:
+      type: string
+      enum:
+      - int8
+      - float32
+      - akida
+      - requiresRetrain
+    KerasModelMetadata:
+      type: object
+      required:
+      - created
+      - layers
+      - classNames
+      - availableModelTypes
+      - recommendedModelType
+      - modelValidationMetrics
+      - hasTrainedModel
+      - mode
+      - imageInputScaling
+      - labels
+      properties:
+        created:
+          type: string
+          format: date-time
+          description: Date when the model was trained
+        layers:
+          type: array
+          description: Layers of the neural network
+          items:
+            $ref: '#/components/schemas/KerasModelLayer'
+        classNames:
+          type: array
+          description: Labels for the output layer
+          items:
+            type: string
+        labels:
+          type: array
+          description: Original labels in the dataset when features were generated, e.g. used to render the feature explorer.
+          items:
+            type: string
+        availableModelTypes:
+          type: array
+          description: The types of model that are available
+          items:
+            $ref: '#/components/schemas/KerasModelTypeEnum'
+        recommendedModelType:
+          description: The model type that is recommended for use
+          $ref: '#/components/schemas/KerasModelTypeEnum'
+        modelValidationMetrics:
+          type: array
+          description: Metrics for each of the available model types
+          items:
+            $ref: '#/components/schemas/KerasModelMetadataMetrics'
+        hasTrainedModel:
+          type: boolean
+        mode:
+          type: string
+          enum:
+          - classification
+          - regression
+          - object-detection
+          - visual-anomaly
+          - anomaly-gmm
+        objectDetectionLastLayer:
+          $ref: '#/components/schemas/ObjectDetectionLastLayer'
+        imageInputScaling:
+          $ref: '#/components/schemas/ImageInputScaling'
+    KerasModelLayer:
+      type: object
+      required:
+      - input
+      - output
+      properties:
+        input:
+          type: object
+          required:
+          - shape
+          - name
+          - type
+          properties:
+            shape:
+              type: integer
+              description: Input size
+              example: 33
+            name:
+              type: string
+              description: TensorFlow name
+              example: x_input:0
+            type:
+              type: string
+              description: TensorFlow type
+              example: '<dtype: ''float32''>'
+        output:
+          type: object
+          required:
+          - shape
+          - name
+          - type
+          properties:
+            shape:
+              type: integer
+              description: Output size
+              example: 20
+            name:
+              type: string
+              description: TensorFlow name
+              example: dense_1/Relu:0
+            type:
+              type: string
+              description: TensorFlow type
+              example: '<dtype: ''float32''>'
+    LearnBlockType:
+      type: string
+      description: The type of learning block (anomaly, keras, keras-transfer-image, keras-transfer-kws, keras-object-detection, keras-regression). Each behaves differently.
+      enum:
+      - anomaly
+      - anomaly-gmm
+      - keras
+      - keras-transfer-image
+      - keras-transfer-kws
+      - keras-object-detection
+      - keras-regression
+      - keras-akida
+      - keras-akida-transfer-image
+      - keras-akida-object-detection
+      - keras-visual-anomaly
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    AugmentationPolicyImageEnum:
+      type: string
+      description: The data augmentation policy to use with image input
+      enum:
+      - none
+      - all
+  parameters:
+    ProjectIdParameter:
+      name: projectId
+      in: path
+      required: true
+      description: Project ID
+      schema:
+        type: integer
+    DetailedImpulsesFormatParameter:
+      name: format
+      in: query
+      required: false
+      description: Format of the detailed impulses response, either 'json' or 'csv'. If not set, defaults to 'json'.
+      schema:
+        type: string
+        enum:
+        - json
+        - csv
+    OptionalImpulseIdParameter:
+      name: impulseId
+      in: query
+      required: false
+      description: Impulse ID. If this is unset then the default impulse is used.
+      schema:
+        type: integer
+    ImpulseIdParameter:
+      name: impulseId
+      in: path
+      required: true
+      description: Impulse ID
+      schema:
+        type: integer
+  securitySchemes:
+    ApiKeyAuthentication:
+      type: apiKey
+      in: header
+      name: x-api-key
+    JWTAuthentication:
+      type: apiKey
+      in: cookie
+      name: jwt
+    JWTHttpHeaderAuthentication:
+      type: apiKey
+      in: header
+      name: x-jwt-token

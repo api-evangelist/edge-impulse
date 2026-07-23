@@ -1,0 +1,1884 @@
+openapi: 3.0.0
+info:
+  title: Edge Impulse OrganizationData API
+  version: 1.0.0
+servers:
+- url: https://studio.edgeimpulse.com/v1
+security:
+- ApiKeyAuthentication: []
+- JWTAuthentication: []
+- JWTHttpHeaderAuthentication: []
+tags:
+- name: OrganizationData
+paths:
+  /api/organizations/{organizationId}/buckets:
+    get:
+      summary: List storage buckets
+      description: Retrieve all configured storage buckets. This does not list the secret key.
+      tags:
+      - OrganizationData
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      operationId: listOrganizationBuckets
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOrganizationBucketsResponse'
+    post:
+      summary: Add a storage bucket
+      description: Add a storage bucket.
+      tags:
+      - OrganizationData
+      x-middleware:
+      - OrganizationRequiresAdmin
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      operationId: addOrganizationBucket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddOrganizationBucketRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityCreatedResponse'
+  /api/organizations/{organizationId}/buckets/verify:
+    post:
+      summary: Verify bucket connectivity
+      description: 'Verify connectivity to a storage bucket and optionally list its contents. This endpoint allows you to:
+
+        1. Check if the provided bucket credentials are valid and the bucket is accessible.
+
+        2. Optionally list files in the bucket up to a specified limit.
+
+        3. Validate the bucket configuration before adding it to the organization.
+
+
+        The request can include details such as the bucket name, region, credentials, and listing options.
+
+        The response provides information about the bucket''s accessibility and, if requested, a list of files in the bucket.
+
+
+        Important note on verification process:
+
+        - For S3-compatible storage backends: Verification is expected to be immediate.
+
+        - For Azure buckets: Verification takes longer. Users are required to poll this endpoint
+
+        until the connectionStatus changes from ''connecting'' to ''connected''.
+
+
+        When dealing with Azure buckets, implement a polling mechanism to check the status
+
+        periodically until it''s confirmed as connected.
+
+        '
+      tags:
+      - OrganizationData
+      x-middleware:
+      - OrganizationAllowDeveloperProfile
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      operationId: verifyOrganizationBucket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyOrganizationBucketRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyOrganizationBucketResponse'
+  /api/organizations/{organizationId}/buckets/{bucketId}:
+    get:
+      summary: Get storage bucket
+      description: Get storage bucket details.
+      tags:
+      - OrganizationData
+      x-middleware:
+      - OrganizationRequiresAdmin
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/BucketIdParameter'
+      operationId: getOrganizationBucket
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOrganizationBucketResponse'
+    post:
+      summary: Update storage bucket
+      description: 'Updates storage bucket details. This only updates fields that were set in the request body.
+
+        Before updating the bucket details, it is required to verify the connection using the
+
+        POST /api/organizations/{organizationId}/buckets/verify endpoint.
+
+
+        The verification process:
+
+        1. Call the verify endpoint with the new bucket details.
+
+        2. Poll the verify endpoint until it responds with `connectionStatus: connected`.
+
+        3. If the endpoint responds with `connectionStatus: error`, the verification has failed.
+
+
+        Only proceed with updating the bucket details after receiving a `connected` status.
+
+        The polling interval and timeout should be determined based on your application''s requirements.
+
+        '
+      tags:
+      - OrganizationData
+      x-middleware:
+      - OrganizationRequiresAdmin
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/BucketIdParameter'
+      operationId: updateOrganizationBucket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrganizationBucketRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+    delete:
+      summary: Remove storage bucket
+      description: Remove a storage bucket. This will render any data in this storage bucket unreachable.
+      tags:
+      - OrganizationData
+      x-middleware:
+      - OrganizationRequiresAdmin
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/BucketIdParameter'
+      operationId: removeOrganizationBucket
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/organizations/{organizationId}/buckets/{bucketId}/verify:
+    post:
+      summary: Verify existing bucket connectivity
+      description: Verify whether we can reach a bucket before adding it.
+      tags:
+      - OrganizationData
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/BucketIdParameter'
+      operationId: verifyExistingOrganizationBucket
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyOrganizationExistingBucketRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyOrganizationBucketResponse'
+  /api/organizations/{organizationId}/data:
+    get:
+      summary: List data
+      description: Lists all data items. This can be filtered by the ?filter parameter.
+      tags:
+      - OrganizationData
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDatasetParameter'
+      - $ref: '#/components/parameters/OrganizationDataFilterParameter'
+      - $ref: '#/components/parameters/LimitResultsParameter'
+      - $ref: '#/components/parameters/OffsetResultsParameter'
+      operationId: listOrganizationData
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOrganizationDataResponse'
+  /api/organizations/{organizationId}/data/add:
+    post:
+      summary: Add new data
+      description: Add a new data item. You can add a maximum of 10000 files directly through this API. Use `addOrganizationDataFile` to add additional files.
+      tags:
+      - OrganizationData
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrganizationAddDataItemRequest'
+      operationId: addOrganizationDataItem
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityCreatedResponse'
+  /api/organizations/{organizationId}/data/add-folder:
+    post:
+      summary: Add data items from bucket
+      description: Bulk adds data items that already exist in a storage bucket. The bucket path specified should contain folders. Each folder is added as a data item in Edge Impulse.
+      tags:
+      - OrganizationData
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationAddDataFolderRequest'
+      operationId: addOrganizationDataFolder
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartJobResponse'
+  /api/organizations/{organizationId}/data/download:
+    get:
+      summary: Download data
+      description: Download all data for selected data items. This function does not query the underlying bucket.
+      operationId: downloadOrganizationDataItem
+      tags:
+      - OrganizationData
+      x-middleware:
+      - OrganizationAllowGuestAccess
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDatasetParameter'
+      - $ref: '#/components/parameters/OrganizationDataIdsParameter'
+      - $ref: '#/components/parameters/OrganizationDataFilterParameter'
+      responses:
+        '200':
+          description: TAR file
+          content:
+            application/x-tar:
+              schema:
+                type: string
+                format: binary
+  /api/organizations/{organizationId}/data/delete:
+    post:
+      summary: Delete data
+      description: Delete all data for selected data items. This removes all data in the underlying data bucket.
+      operationId: deleteOrganizationDataItems
+      tags:
+      - OrganizationData
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDatasetParameter'
+      - $ref: '#/components/parameters/OrganizationDataIdsParameter'
+      - $ref: '#/components/parameters/OrganizationDataFilterParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartJobResponse'
+  /api/organizations/{organizationId}/data/clear-checklist:
+    post:
+      summary: Clear checklist for data
+      description: Clear all checklist flags for selected data items.
+      operationId: clearChecklistOrganizationDataItems
+      tags:
+      - OrganizationData
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDatasetParameter'
+      - $ref: '#/components/parameters/OrganizationDataIdsParameter'
+      - $ref: '#/components/parameters/OrganizationDataFilterParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartJobResponse'
+  /api/organizations/{organizationId}/data/change-dataset:
+    post:
+      summary: Change dataset
+      description: Change the dataset for selected data items.
+      operationId: changeDatasetOrganizationDataItems
+      tags:
+      - OrganizationData
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDatasetParameter'
+      - $ref: '#/components/parameters/OrganizationDataIdsParameter'
+      - $ref: '#/components/parameters/OrganizationDataFilterParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetOrganizationDataDatasetRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartJobResponse'
+  /api/organizations/{organizationId}/data/files:
+    get:
+      summary: List files
+      description: Lists all files included by the filter.
+      tags:
+      - OrganizationData
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDatasetParameter'
+      - $ref: '#/components/parameters/OrganizationDataFilterParameter'
+      - $ref: '#/components/parameters/LimitResultsParameter'
+      - $ref: '#/components/parameters/OffsetResultsParameter'
+      operationId: listOrganizationFiles
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListOrganizationFilesResponse'
+  /api/organizations/{organizationId}/data/refresh:
+    post:
+      summary: Refresh data
+      description: Update all data items. HEADs all underlying buckets to retrieve the last file information. Use this API after uploading data directly to S3. If your dataset has bucketId and bucketPath set then this will also remove items that have been removed from S3.
+      tags:
+      - OrganizationData
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDatasetRequiredParameter'
+      operationId: refreshOrganizationData
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartJobResponse'
+  /api/organizations/{organizationId}/data/bulk-metadata:
+    post:
+      summary: Bulk update metadata
+      description: Bulk update the metadata of many data items in one go. This requires you to submit a CSV file with headers, one of which the columns should be named 'name'. The other columns are used as metadata keys.
+      tags:
+      - OrganizationData
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrganizationBulkMetadataRequest'
+      operationId: organizationBulkUpdateMetadata
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartJobResponse'
+  /api/organizations/{organizationId}/data/{dataId}:
+    get:
+      summary: Get data metadata
+      description: Get a data item. This will HEAD the underlying bucket to retrieve the last file information.
+      tags:
+      - OrganizationData
+      x-middleware:
+      - OrganizationAllowGuestAccess
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDataIdParameter'
+      - $ref: '#/components/parameters/OrganizationDataFilterParameter'
+      operationId: getOrganizationDataItem
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOrganizationDataItemResponse'
+    post:
+      summary: Update data metadata
+      description: Update the data item metadata.
+      tags:
+      - OrganizationData
+      x-middleware:
+      - OrganizationAllowGuestAccess
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDataIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrganizationDataItemRequest'
+      operationId: updateOrganizationDataItem
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+    delete:
+      summary: Delete data
+      description: Delete a data item. This will remove items the items from the underlying storage if your dataset has "bucketPath" set.
+      tags:
+      - OrganizationData
+      x-middleware:
+      - OrganizationAllowGuestAccess
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDataIdParameter'
+      operationId: deleteOrganizationDataItem
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/organizations/{organizationId}/data/{dataId}/add:
+    post:
+      summary: Add files
+      description: Add a new file to an existing data item.
+      tags:
+      - OrganizationData
+      x-middleware:
+      - OrganizationAllowGuestAccess
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDataIdParameter'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/OrganizationAddDataFileRequest'
+      operationId: addOrganizationDataFile
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/organizations/{organizationId}/data/{dataId}/download:
+    get:
+      summary: Download data
+      description: Download all data for this data item.
+      operationId: downloadOrganizationSingleDataItem
+      tags:
+      - OrganizationData
+      x-middleware:
+      - OrganizationAllowGuestAccess
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDataIdParameter'
+      - $ref: '#/components/parameters/OrganizationDataFilterParameter'
+      responses:
+        '200':
+          description: ZIP file
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+    delete:
+      summary: Delete file
+      description: Delete a single file from a data item.
+      operationId: deleteOrganizationDataFile
+      tags:
+      - OrganizationData
+      x-middleware:
+      - OrganizationAllowGuestAccess
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDataIdParameter'
+      - $ref: '#/components/parameters/OrganizationFileNameParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/organizations/{organizationId}/data/{dataId}/files/download:
+    get:
+      summary: Download file
+      description: Download a single file from a data item.
+      operationId: downloadOrganizationDataFile
+      tags:
+      - OrganizationData
+      x-middleware:
+      - OrganizationAllowGuestAccess
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDataIdParameter'
+      - $ref: '#/components/parameters/OrganizationFileNameParameter'
+      responses:
+        '200':
+          description: File
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api/organizations/{organizationId}/data/{dataId}/files/preview:
+    get:
+      summary: Preview file
+      description: Preview a single file from a data item (same as downloadOrganizationDataFile but w/ content-disposition inline and could be truncated).
+      operationId: previewOrganizationDataFile
+      tags:
+      - OrganizationData
+      x-middleware:
+      - ContentDispositionInline
+      - OrganizationAllowGuestAccess
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDataIdParameter'
+      - $ref: '#/components/parameters/OrganizationFileNameParameter'
+      responses:
+        '200':
+          description: File
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api/organizations/{organizationId}/data/{dataId}/transformation-jobs:
+    get:
+      summary: Get transformation jobs for data item
+      description: Get all transformation jobs that ran for a data item. If limit / offset is not provided then max. 20 results are returned.
+      tags:
+      - OrganizationData
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDataIdParameter'
+      - $ref: '#/components/parameters/LimitResultsParameter'
+      - $ref: '#/components/parameters/OffsetResultsParameter'
+      operationId: getOrganizationDataItemTransformJobs
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOrganizationDataItemTransformJobsResponse'
+  /api/organizations/{organizationId}/dataset:
+    post:
+      summary: Add dataset
+      description: Add a new research dataset
+      operationId: addOrganizationDataset
+      tags:
+      - OrganizationData
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationAddDatasetRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartJobResponse'
+  /api/organizations/{organizationId}/dataset/{dataset}:
+    get:
+      summary: Get dataset
+      description: Get information about a dataset
+      operationId: getOrganizationDataset
+      tags:
+      - OrganizationData
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDatasetPathParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOrganizationDatasetResponse'
+    post:
+      summary: Update dataset
+      description: Set information about a dataset
+      operationId: updateOrganizationDataset
+      tags:
+      - OrganizationData
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDatasetPathParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrganizationDatasetRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/organizations/{organizationId}/dataset/{dataset}/hide:
+    post:
+      summary: Hide dataset
+      description: Hide a dataset (does not remove underlying data)
+      operationId: hideOrganizationDataset
+      tags:
+      - OrganizationData
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDatasetPathParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/organizations/{organizationId}/dataset/{dataset}/upload-link:
+    post:
+      summary: Create pre-signed S3 upload link
+      description: Creates a signed link to securely upload data to s3 bucket directly from the client.
+      tags:
+      - OrganizationData
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDatasetPathParameter'
+      operationId: createSignedUploadLinkDataset
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSignedUploadLinkRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateSignedUploadLinkResponse'
+  /api/organizations/{organizationId}/dataset/{dataset}/verify:
+    post:
+      summary: Verify dataset
+      description: Verify whether we can reach a dataset (and return some random files, used for data sources)
+      tags:
+      - OrganizationData
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDatasetPathParameter'
+      operationId: verifyDataset
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyOrganizationBucketResponse'
+  /api/organizations/{organizationId}/dataset/{dataset}/files:
+    post:
+      summary: List files in dataset
+      description: List all files and directories in specified prefix.
+      tags:
+      - OrganizationData
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDatasetPathParameter'
+      operationId: listDatasetFilesInFolder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListPortalFilesInFolderRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListPortalFilesInFolderResponse'
+  /api/organizations/{organizationId}/dataset/{dataset}/files/delete:
+    post:
+      summary: Delete file from dataset
+      description: Delete a file from a dataset
+      tags:
+      - OrganizationData
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDatasetPathParameter'
+      operationId: deleteDatasetFile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeletePortalFileRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/organizations/{organizationId}/dataset/{dataset}/files/rename:
+    post:
+      summary: Rename file from dataset
+      description: Rename a file in a dataset
+      tags:
+      - OrganizationData
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDatasetPathParameter'
+      operationId: renameDatasetFile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenamePortalFileRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/organizations/{organizationId}/dataset/{dataset}/files/download:
+    post:
+      summary: Download file from dataset
+      description: Download a file from a dataset. Will return a signed URL to the bucket.
+      tags:
+      - OrganizationData
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDatasetPathParameter'
+      operationId: downloadDatasetFile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DownloadPortalFileRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DownloadPortalFileResponse'
+  /api/organizations/{organizationId}/dataset/{dataset}/files/download-folder:
+    get:
+      summary: Download folder from dataset
+      description: Download all files in the given folder in a dataset, ignoring any subdirectories.
+      operationId: downloadDatasetFolder
+      tags:
+      - OrganizationData
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDatasetPathParameter'
+      - $ref: '#/components/parameters/OrganizationPathInDatasetParameter'
+      responses:
+        '200':
+          description: ZIP file
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+  /api/organizations/{organizationId}/dataset/{dataset}/files/view:
+    get:
+      summary: View file from dataset
+      description: View a file that's located in a dataset (requires JWT auth). File might be converted (e.g. Parquet) or truncated (e.g. CSV).
+      tags:
+      - OrganizationData
+      x-middleware:
+      - ContentDispositionInline
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDatasetPathParameter'
+      - $ref: '#/components/parameters/PortalPathParameter'
+      operationId: viewDatasetFile
+      responses:
+        '200':
+          description: OK
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+  /api/organizations/{organizationId}/dataset/{dataset}/files/preview:
+    post:
+      summary: Preview files in a default dataset
+      description: Preview files and directories in a default dataset for the given prefix, with support for wildcards. This is an internal API used when starting a transformation job.
+      tags:
+      - OrganizationData
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDatasetPathParameter'
+      operationId: previewDefaultFilesInFolder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PreviewDefaultFilesInFolderRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreviewDefaultFilesInFolderResponse'
+components:
+  parameters:
+    OrganizationDataIdParameter:
+      name: dataId
+      in: path
+      required: true
+      description: Data ID
+      schema:
+        type: integer
+    LimitResultsParameter:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of results
+      schema:
+        type: integer
+    OrganizationDataIdsParameter:
+      name: dataIds
+      in: query
+      required: true
+      description: Data IDs as an Array
+      example:
+      - 3
+      - 7
+      schema:
+        type: string
+    OrganizationPathInDatasetParameter:
+      name: path
+      in: query
+      required: true
+      description: Path, relative to dataset
+      schema:
+        type: string
+    OrganizationDataFilterParameter:
+      name: filter
+      in: query
+      required: false
+      description: Data filter in SQL WHERE format, where you can reference 'dataset', 'bucket', 'name', 'total_file_count', 'total_file_size', 'created' and any metadata label through 'metadata->' (dots are replaced by underscore).
+      example: dataset = 'activity data' AND (label = 'running' OR metadata->user = 'Jan Jongboom')
+      schema:
+        type: string
+    BucketIdParameter:
+      name: bucketId
+      in: path
+      required: true
+      description: Bucket ID
+      schema:
+        type: integer
+    OrganizationIdParameter:
+      name: organizationId
+      in: path
+      required: true
+      description: Organization ID
+      schema:
+        type: integer
+    OrganizationDatasetParameter:
+      name: dataset
+      in: query
+      required: false
+      description: Selected dataset
+      example: activity data
+      schema:
+        type: string
+    PortalPathParameter:
+      name: path
+      in: query
+      required: true
+      description: Path to file in portal
+      schema:
+        type: string
+    OrganizationFileNameParameter:
+      name: fileName
+      in: query
+      required: true
+      description: File name
+      schema:
+        type: string
+    OrganizationDatasetRequiredParameter:
+      name: dataset
+      in: query
+      required: true
+      description: Selected dataset
+      example: activity data
+      schema:
+        type: string
+    OffsetResultsParameter:
+      name: offset
+      in: query
+      required: false
+      description: Offset in results, can be used in conjunction with LimitResultsParameter to implement paging.
+      schema:
+        type: integer
+    OrganizationDatasetPathParameter:
+      name: dataset
+      in: path
+      required: true
+      description: Dataset name
+      schema:
+        type: string
+  schemas:
+    ListOrganizationBucketsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - buckets
+        properties:
+          buckets:
+            type: array
+            items:
+              $ref: '#/components/schemas/OrganizationBucket'
+    ListPortalFilesInFolderRequest:
+      type: object
+      required:
+      - prefix
+      properties:
+        prefix:
+          type: string
+          description: S3 prefix
+        continuationToken:
+          type: string
+          description: Only one S3 page (1000 items typically) is returned. Pass in the continuationToken on the next request to receive the next page.
+        onlyFetchFolders:
+          type: boolean
+          description: If set, then no files will be returned
+    CreateSignedUploadLinkRequest:
+      type: object
+      required:
+      - fileName
+      - fileSize
+      - fileHash
+      properties:
+        fileName:
+          type: string
+          description: file name
+        fileSize:
+          type: integer
+          description: file size in bytes
+        fileHash:
+          type: string
+          description: hash to identify file changes
+    StartJobResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: Job identifier. Status updates will include this identifier.
+            example: 12873488112
+    VerifyOrganizationBucketRequest:
+      type: object
+      required:
+      - accessKey
+      - endpoint
+      - bucket
+      properties:
+        storageProvider:
+          $ref: '#/components/schemas/StorageProvider'
+          description: 'The type of storage backend to use. Supported options are:
+
+            - ''s3'': Amazon S3
+
+            - ''google'': Google Cloud Storage
+
+            - ''azure'': Azure Blob Storage
+
+            - ''other'': Other S3-compatible storage
+
+            If not specified, defaults to ''s3''
+
+            '
+        accessKey:
+          type: string
+          description: 'Access key for the storage service:
+
+            - For S3 and GCS: Use the access key.
+
+            - For Azure: Use the Storage Account Name.
+
+            '
+        secretKey:
+          type: string
+          description: 'Secret key for the storage service:
+
+            - For S3 and GCS: Use the secret key.
+
+            - For Azure: Use the Storage Account Access Key.
+
+            Note: You should either pass a `secretKey` value or a `bucketId` value.
+
+            '
+        bucketId:
+          type: integer
+          description: 'ID of an existing bucket. If provided, the credentials from this bucket
+
+            will be used unless overridden by the `secretKey` property.
+
+            '
+        bucket:
+          type: string
+          description: Name of the storage bucket or container.
+        endpoint:
+          type: string
+          description: 'Endpoint URL for the storage service.
+
+            For S3-compatible services, Azure, or custom endpoints.
+
+            '
+        region:
+          type: string
+          description: Optional region of the storage service (if applicable).
+        prefix:
+          type: string
+          description: 'Optional prefix within the bucket.
+
+            Set this if you don''t have access to the full bucket or want to limit the scope.
+
+            '
+    GetOrganizationDataItemTransformJobsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - transformationJobs
+        - totalTransformationJobCount
+        properties:
+          transformationJobs:
+            type: array
+            items:
+              type: object
+              required:
+              - id
+              - transformationJobId
+              - createProjectId
+              - created
+              - jobId
+              - transformationBlockName
+              properties:
+                id:
+                  type: integer
+                transformationJobId:
+                  type: integer
+                createProjectId:
+                  type: integer
+                created:
+                  type: string
+                  format: date-time
+                jobId:
+                  type: integer
+                jobStarted:
+                  type: string
+                  format: date-time
+                jobFinished:
+                  type: string
+                  format: date-time
+                jobFinishedSuccessful:
+                  type: boolean
+                transformationBlockName:
+                  type: string
+                pipelineName:
+                  type: string
+          totalTransformationJobCount:
+            type: integer
+    VerifyOrganizationExistingBucketRequest:
+      type: object
+      required:
+      - prefix
+      properties:
+        prefix:
+          type: string
+    ListOrganizationFilesResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - totalFileSize
+        - totalFileCount
+        - totalDataItemCount
+        - data
+        properties:
+          filterParseError:
+            type: string
+          totalFileSize:
+            type: integer
+          totalFileCount:
+            type: integer
+          totalDataItemCount:
+            type: integer
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/OrganizationDataItem'
+    OrganizationDataItem:
+      type: object
+      required:
+      - id
+      - name
+      - bucketId
+      - bucketName
+      - bucketPath
+      - dataset
+      - totalFileCount
+      - totalFileSize
+      - created
+      - metadata
+      - files
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        bucketId:
+          type: integer
+        bucketName:
+          type: string
+        bucketPath:
+          type: string
+        dataset:
+          type: string
+        totalFileCount:
+          type: integer
+        totalFileSize:
+          type: integer
+        created:
+          type: string
+          format: date-time
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+        files:
+          type: array
+          items:
+            type: object
+            required:
+            - name
+            - bucketPath
+            - size
+            properties:
+              name:
+                type: string
+              bucketPath:
+                type: string
+              size:
+                type: integer
+              lastModified:
+                type: string
+                format: date-time
+    DownloadPortalFileRequest:
+      type: object
+      required:
+      - path
+      properties:
+        path:
+          type: string
+          description: S3 path (within the portal)
+    OrganizationDatasetTypeEnum:
+      type: string
+      enum:
+      - clinical
+      - files
+    OrganizationDatasetBucket:
+      type: object
+      required:
+      - id
+      - bucket
+      - path
+      - fullBucketPathDescription
+      - dataItemNamingLevelsDeep
+      properties:
+        id:
+          description: Bucket ID
+          type: integer
+        bucket:
+          type: string
+        path:
+          description: Path in the bucket
+          type: string
+        fullBucketPathDescription:
+          description: Full bucket path, incl. protocol (e.g. s3://bucket/path) - to be used in the UI
+          type: string
+        dataItemNamingLevelsDeep:
+          description: Number of levels deep for data items, e.g. if you have folder "test/abc", with value 1 "test" will be a data item, with value 2 "test/abc" will be a data item. Only used for "clinical" type.
+          type: integer
+    GetOrganizationBucketResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - bucket
+        properties:
+          bucket:
+            $ref: '#/components/schemas/OrganizationBucket'
+    OrganizationBulkMetadataRequest:
+      type: object
+      required:
+      - dataset
+      - csvFile
+      properties:
+        dataset:
+          type: string
+        csvFile:
+          type: string
+          format: binary
+    RenamePortalFileRequest:
+      type: object
+      required:
+      - oldPath
+      - newPath
+      properties:
+        oldPath:
+          type: string
+          description: S3 path (within the portal)
+        newPath:
+          type: string
+          description: S3 path (within the portal)
+    UpdateOrganizationBucketRequest:
+      type: object
+      properties:
+        accessKey:
+          type: string
+          description: S3 access key
+        secretKey:
+          type: string
+          description: S3 secret key
+        endpoint:
+          type: string
+          description: S3 endpoint
+        bucket:
+          type: string
+          description: S3 bucket
+        region:
+          type: string
+          description: S3 region
+        checkConnectivityPrefix:
+          type: string
+          description: 'Set this if you don''t have access to the root of this bucket.
+
+            Only used to verify connectivity to this bucket.
+
+            '
+        storageAccountName:
+          type: string
+          description: The name of the storage account for Azure Blob Storage
+          example: my-storage-account
+    SetOrganizationDataDatasetRequest:
+      type: object
+      required:
+      - dataset
+      properties:
+        dataset:
+          type: string
+    UpdateOrganizationDataItemRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        dataset:
+          type: string
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+    DownloadPortalFileResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - url
+        properties:
+          url:
+            type: string
+            description: Signed URL to download the file
+    StorageProvider:
+      type: string
+      enum:
+      - s3
+      - google
+      - azure
+      - other
+    AddOrganizationBucketRequest:
+      type: object
+      required:
+      - accessKey
+      - secretKey
+      - endpoint
+      - bucket
+      - region
+      properties:
+        accessKey:
+          type: string
+          description: Access key for the storage service (e.g., S3 access key, GCS access key)
+        secretKey:
+          type: string
+          description: Secret key for the storage service (e.g., S3 secret key, GCS secret key)
+        endpoint:
+          type: string
+          description: 'Endpoint URL for the storage service (e.g., S3 endpoint, custom endpoint for other services)
+
+            '
+        bucket:
+          type: string
+          description: Name of the storage bucket
+        region:
+          type: string
+          description: Region of the storage service (if applicable)
+        checkConnectivityPrefix:
+          type: string
+          description: 'Set this if you don''t have access to the root of this bucket.
+
+            Only used to verify connectivity to this bucket.
+
+            '
+        storageProvider:
+          $ref: '#/components/schemas/StorageProvider'
+          description: The type of storage provider. Defaults to 's3' if not specified.
+    CreateSignedUploadLinkResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          url:
+            type: string
+            description: S3 Upload Link
+          ETag:
+            type: string
+            description: S3 File Tag
+    PreviewDefaultFilesInFolderRequest:
+      type: object
+      required:
+      - prefix
+      - itemsToList
+      properties:
+        prefix:
+          type: string
+          description: S3 prefix
+        itemsToList:
+          description: Return either files or folders matching the specified prefix
+          type: string
+          enum:
+          - files
+          - folders
+    GetOrganizationDataItemResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - data
+        properties:
+          data:
+            $ref: '#/components/schemas/OrganizationDataItem'
+    OrganizationAddDatasetRequest:
+      type: object
+      required:
+      - dataset
+      - tags
+      - category
+      - type
+      - bucket
+      properties:
+        dataset:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        category:
+          type: string
+        type:
+          $ref: '#/components/schemas/OrganizationDatasetTypeEnum'
+        bucket:
+          type: object
+          required:
+          - id
+          - path
+          - dataItemNamingLevelsDeep
+          properties:
+            id:
+              description: Bucket ID
+              type: integer
+            path:
+              description: Path in the bucket
+              type: string
+            dataItemNamingLevelsDeep:
+              description: Number of levels deep for data items, e.g. if you have folder "test/abc", with value 1 "test" will be a data item, with value 2 "test/abc" will be a data item. Only used for "clinical" type.
+              type: integer
+    ListPortalFilesInFolderResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - files
+        properties:
+          files:
+            type: array
+            items:
+              $ref: '#/components/schemas/PortalFile'
+          continuationToken:
+            type: string
+    OrganizationAddDataFileRequest:
+      type: object
+      required:
+      - files[]
+      properties:
+        files[]:
+          type: array
+          items:
+            type: string
+            format: binary
+    OrganizationBucket:
+      type: object
+      required:
+      - id
+      - accessKey
+      - endpoint
+      - bucket
+      - region
+      - connected
+      - storageProvider
+      properties:
+        id:
+          type: integer
+          example: 1
+        accessKey:
+          type: string
+          description: Access key for the storage service
+          example: AKIAIOSFODNN7EXAMPLE
+        endpoint:
+          type: string
+          description: Endpoint URL for the storage service
+          example: https://s3.amazonaws.com
+        bucket:
+          type: string
+          description: Name of the storage bucket
+          example: my-organization-bucket
+        region:
+          type: string
+          description: Region of the storage service (if applicable)
+          example: us-west-2
+        connected:
+          type: boolean
+          description: Whether we can reach the bucket
+          example: true
+        checkConnectivityPrefix:
+          type: string
+          description: 'Optional prefix used for connectivity verification when root bucket access is restricted.
+
+            '
+          example: data/
+        storageProvider:
+          $ref: '#/components/schemas/StorageProvider'
+          description: The type of storage provider for this bucket
+          example: s3
+        storageAccountName:
+          type: string
+          description: The name of the storage account for Azure Blob Storage
+          example: my-storage-account
+    PreviewDefaultFilesInFolderResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - files
+        properties:
+          files:
+            type: array
+            items:
+              $ref: '#/components/schemas/PortalFile'
+          isTruncated:
+            type: boolean
+            description: True if results are truncated.
+          truncationReason:
+            type: string
+            description: 'Explains why results are truncated; only present in the response if isTruncated is true. Results can be truncated if there are too many results (more than 500 matches), or if searching for more results is too expensive (for example, the dataset contains many items but very few match the given wildcard).
+
+              '
+            enum:
+            - too-many-results
+            - too-expensive-search
+    OrganizationDataset:
+      type: object
+      required:
+      - dataset
+      - lastFileCreated
+      - totalFileSize
+      - totalFileCount
+      - totalItemCount
+      - totalItemCountChecklistOK
+      - totalItemCountChecklistFailed
+      - tags
+      - type
+      properties:
+        dataset:
+          type: string
+        lastFileCreated:
+          type: string
+          format: date-time
+        totalFileSize:
+          type: integer
+        totalFileCount:
+          type: integer
+        totalItemCount:
+          type: integer
+        totalItemCountChecklistOK:
+          type: integer
+        totalItemCountChecklistFailed:
+          type: integer
+        tags:
+          type: array
+          items:
+            type: string
+        category:
+          type: string
+        bucket:
+          $ref: '#/components/schemas/OrganizationDatasetBucket'
+        type:
+          $ref: '#/components/schemas/OrganizationDatasetTypeEnum'
+        bucketPath:
+          type: string
+          description: Location of the dataset within the bucket
+    DeletePortalFileRequest:
+      type: object
+      required:
+      - path
+      properties:
+        path:
+          type: string
+          description: S3 path (within the portal)
+    EntityCreatedResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: Unique identifier of the created entity.
+    OrganizationAddDataFolderRequest:
+      type: object
+      required:
+      - dataset
+      - bucketId
+      - bucketPath
+      properties:
+        dataset:
+          type: string
+        bucketId:
+          type: integer
+        bucketPath:
+          type: string
+        metadataDataset:
+          type: string
+        type:
+          $ref: '#/components/schemas/OrganizationDatasetTypeEnum'
+    PortalFile:
+      type: object
+      required:
+      - name
+      - path
+      - type
+      properties:
+        name:
+          type: string
+        addedDate:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        size:
+          type: integer
+        ETag:
+          type: string
+        path:
+          type: string
+        type:
+          type: string
+          enum:
+          - folder
+          - file
+    ListOrganizationDataResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          filterParseError:
+            type: string
+          data:
+            type: array
+            items:
+              type: object
+              required:
+              - id
+              - name
+              - bucketId
+              - bucketName
+              - bucketPath
+              - fullBucketPath
+              - dataset
+              - totalFileCount
+              - totalFileSize
+              - created
+              - metadata
+              - metadataStringForCLI
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                bucketId:
+                  type: integer
+                bucketName:
+                  type: string
+                bucketPath:
+                  type: string
+                fullBucketPath:
+                  type: string
+                dataset:
+                  type: string
+                totalFileCount:
+                  type: integer
+                totalFileSize:
+                  type: integer
+                created:
+                  type: string
+                  format: date-time
+                metadata:
+                  type: object
+                  additionalProperties:
+                    type: string
+                metadataStringForCLI:
+                  type: string
+                  description: String that's passed in to a transformation block in `--metadata` (the metadata + a `dataItemInfo` object)
+          totalFileCount:
+            type: integer
+          totalDataItemCount:
+            type: integer
+    UpdateOrganizationDatasetRequest:
+      type: object
+      properties:
+        dataset:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        category:
+          type: string
+        type:
+          $ref: '#/components/schemas/OrganizationDatasetTypeEnum'
+        bucket:
+          type: object
+          required:
+          - id
+          - path
+          - dataItemNamingLevelsDeep
+          properties:
+            id:
+              description: Bucket ID
+              type: integer
+            path:
+              description: Path in the bucket
+              type: string
+            dataItemNamingLevelsDeep:
+              description: Number of levels deep for data items, e.g. if you have folder "test/abc", with value 1 "test" will be a data item, with value 2 "test/abc" will be a data item. Only used for "clinical" datasets.
+              type: integer
+    GetOrganizationDatasetResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - dataset
+        properties:
+          dataset:
+            $ref: '#/components/schemas/OrganizationDataset'
+    VerifyOrganizationBucketResponse:
+      description: "Response object for verifying an organization's bucket connectivity.\n\nWorkflow:\n1. The client initiates verification by sending a GET request to /api/organizations/{organizationId}/buckets/verify with bucket and credential details.\n2. The server responds with this VerifyOrganizationBucketResponse object.\n3. The client checks the connectionStatus:\n   - If \"connected\": Verification is complete. Other properties (files, hasInfoLabelsFile, signedUrl) are available.\n   - If \"connecting\": Verification is in progress. The client should continue polling. Other properties are not yet available.\n   - If \"error\": Verification failed. Check connectionError for details. Other properties are not available.\n4. If connectionStatus is \"connecting\", the client should periodically poll the endpoint until the status changes to \"connected\" or \"error\".\n"
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - connectionStatus
+        properties:
+          connectionStatus:
+            type: string
+            description: 'Indicates the current state of the connectivity verification process.
+
+              - "connected": Verification successful, other properties are available.
+
+              - "connecting": Verification in progress, continue polling.
+
+              - "error": Verification failed, check connectionError for details.
+
+              '
+            enum:
+            - connected
+            - connecting
+            - error
+          connectionError:
+            type: string
+            nullable: true
+            description: 'Provides additional details if connectionStatus is "error". Helps diagnose verification failures.
+
+              '
+          connectionStatusSince:
+            type: string
+            format: date-time
+            nullable: true
+            description: 'Timestamp of when the connectionStatus last changed.
+
+              '
+          files:
+            type: array
+            description: Random files from the bucket. Only available when connectionStatus is "connected".
+            items:
+              type: object
+              required:
+              - name
+              - size
+              - folderName
+              properties:
+                name:
+                  type: string
+                  description: The name of the file.
+                size:
+                  type: integer
+                  description: The size of the file in bytes.
+                folderName:
+                  type: string
+                  description: The name of the folder containing the file.
+          hasInfoLabelsFile:
+            type: boolean
+            description: 'Indicates whether there are any info.labels files in this bucket.
+
+              If so, those are used for category/labels.
+
+              Only available when connectionStatus is "connected".
+
+              '
+          signedUrl:
+            type: string
+            description: 'A signed URL that allows you to PUT an item, to check whether CORS headers are set up correctly for this bucket.
+
+              Only available when connectionStatus is "connected".
+
+              '
+          endpoint:
+            type: string
+            description: 'An alternative endpoint URL. Only returned and required for Azure storage accounts,
+
+              where the endpoint must be reformatted. This field will be undefined for other storage providers.
+
+              '
+    OrganizationAddDataItemRequest:
+      type: object
+      required:
+      - name
+      - dataset
+      - metadata
+      - files[]
+      properties:
+        name:
+          type: string
+        bucketId:
+          type: integer
+        bucketName:
+          type: string
+          description: Name of the bucket name (as an Edge Impulse name)
+        dataset:
+          type: string
+        bucketPath:
+          type: string
+          description: Optional path in the bucket to create this data item (files are created under this path).
+        metadata:
+          type: string
+          description: Key-value pair of metadata (in JSON format)
+        files[]:
+          type: array
+          items:
+            type: string
+            format: binary
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+  securitySchemes:
+    ApiKeyAuthentication:
+      type: apiKey
+      in: header
+      name: x-api-key
+    JWTAuthentication:
+      type: apiKey
+      in: cookie
+      name: jwt
+    JWTHttpHeaderAuthentication:
+      type: apiKey
+      in: header
+      name: x-jwt-token

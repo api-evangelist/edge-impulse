@@ -1,0 +1,338 @@
+openapi: 3.0.0
+info:
+  title: Edge Impulse UploadPortal API
+  version: 1.0.0
+servers:
+- url: https://studio.edgeimpulse.com/v1
+security:
+- ApiKeyAuthentication: []
+- JWTAuthentication: []
+- JWTHttpHeaderAuthentication: []
+tags:
+- name: UploadPortal
+paths:
+  /api/portals/{portalId}:
+    get:
+      summary: Portal info
+      description: Get information about a portal
+      tags:
+      - UploadPortal
+      parameters:
+      - $ref: '#/components/parameters/PortalIdParameter'
+      operationId: getPortalInfo
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PortalInfoResponse'
+  /api/portals/{portalId}/upload-link:
+    post:
+      summary: Create pre-signed S3 upload link
+      description: Creates a signed link to securely upload data to s3 bucket directly from the client.
+      tags:
+      - UploadPortal
+      parameters:
+      - $ref: '#/components/parameters/PortalIdParameter'
+      operationId: createSignedUploadLink
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSignedUploadLinkRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateSignedUploadLinkResponse'
+  /api/portals/{portalId}/files:
+    post:
+      summary: List files in portal
+      description: List all files and directories in specified prefix.
+      tags:
+      - UploadPortal
+      parameters:
+      - $ref: '#/components/parameters/PortalIdParameter'
+      operationId: listPortalFilesInFolder
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListPortalFilesInFolderRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListPortalFilesInFolderResponse'
+  /api/portals/{portalId}/files/delete:
+    post:
+      summary: Delete file from portal
+      description: Delete a file from an upload portal (requires JWT auth).
+      tags:
+      - UploadPortal
+      parameters:
+      - $ref: '#/components/parameters/PortalIdParameter'
+      operationId: deletePortalFile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeletePortalFileRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/portals/{portalId}/files/rename:
+    post:
+      summary: Rename file from portal
+      description: Rename a file on an upload portal (requires JWT auth).
+      tags:
+      - UploadPortal
+      parameters:
+      - $ref: '#/components/parameters/PortalIdParameter'
+      operationId: renamePortalFile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenamePortalFileRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/portals/{portalId}/files/download:
+    post:
+      summary: Download file from portal
+      description: Download a file from an upload portal (requires JWT auth). Will return a signed URL to the bucket.
+      tags:
+      - UploadPortal
+      parameters:
+      - $ref: '#/components/parameters/PortalIdParameter'
+      operationId: downloadPortalFile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DownloadPortalFileRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DownloadPortalFileResponse'
+  /api/portals/{portalId}/files/view:
+    get:
+      summary: View file from portal
+      description: View a file that's located in an upload portal (requires JWT auth). File might be converted (e.g. Parquet) or truncated (e.g. CSV).
+      tags:
+      - UploadPortal
+      x-middleware:
+      - ContentDispositionInline
+      parameters:
+      - $ref: '#/components/parameters/PortalIdParameter'
+      - $ref: '#/components/parameters/PortalPathParameter'
+      operationId: viewPortalFile
+      responses:
+        '200':
+          description: OK
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+                format: binary
+components:
+  schemas:
+    ListPortalFilesInFolderResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - files
+        properties:
+          files:
+            type: array
+            items:
+              $ref: '#/components/schemas/PortalFile'
+          continuationToken:
+            type: string
+    DownloadPortalFileRequest:
+      type: object
+      required:
+      - path
+      properties:
+        path:
+          type: string
+          description: S3 path (within the portal)
+    ListPortalFilesInFolderRequest:
+      type: object
+      required:
+      - prefix
+      properties:
+        prefix:
+          type: string
+          description: S3 prefix
+        continuationToken:
+          type: string
+          description: Only one S3 page (1000 items typically) is returned. Pass in the continuationToken on the next request to receive the next page.
+        onlyFetchFolders:
+          type: boolean
+          description: If set, then no files will be returned
+    CreateSignedUploadLinkRequest:
+      type: object
+      required:
+      - fileName
+      - fileSize
+      - fileHash
+      properties:
+        fileName:
+          type: string
+          description: file name
+        fileSize:
+          type: integer
+          description: file size in bytes
+        fileHash:
+          type: string
+          description: hash to identify file changes
+    DeletePortalFileRequest:
+      type: object
+      required:
+      - path
+      properties:
+        path:
+          type: string
+          description: S3 path (within the portal)
+    CreateSignedUploadLinkResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          url:
+            type: string
+            description: S3 Upload Link
+          ETag:
+            type: string
+            description: S3 File Tag
+    PortalFile:
+      type: object
+      required:
+      - name
+      - path
+      - type
+      properties:
+        name:
+          type: string
+        addedDate:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        size:
+          type: integer
+        ETag:
+          type: string
+        path:
+          type: string
+        type:
+          type: string
+          enum:
+          - folder
+          - file
+    PortalInfoResponse:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - organizationId
+      - organizationName
+      - bucketName
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        organizationId:
+          type: integer
+        organizationName:
+          type: string
+        organizationLogo:
+          type: string
+        bucketName:
+          type: string
+    RenamePortalFileRequest:
+      type: object
+      required:
+      - oldPath
+      - newPath
+      properties:
+        oldPath:
+          type: string
+          description: S3 path (within the portal)
+        newPath:
+          type: string
+          description: S3 path (within the portal)
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    DownloadPortalFileResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - url
+        properties:
+          url:
+            type: string
+            description: Signed URL to download the file
+  parameters:
+    PortalPathParameter:
+      name: path
+      in: query
+      required: true
+      description: Path to file in portal
+      schema:
+        type: string
+    PortalIdParameter:
+      name: portalId
+      in: path
+      required: true
+      description: Portal ID
+      schema:
+        type: integer
+  securitySchemes:
+    ApiKeyAuthentication:
+      type: apiKey
+      in: header
+      name: x-api-key
+    JWTAuthentication:
+      type: apiKey
+      in: cookie
+      name: jwt
+    JWTHttpHeaderAuthentication:
+      type: apiKey
+      in: header
+      name: x-jwt-token

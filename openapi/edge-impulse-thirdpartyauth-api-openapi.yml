@@ -1,0 +1,348 @@
+openapi: 3.0.0
+info:
+  title: Edge Impulse ThirdPartyAuth API
+  version: 1.0.0
+servers:
+- url: https://studio.edgeimpulse.com/v1
+security:
+- ApiKeyAuthentication: []
+- JWTAuthentication: []
+- JWTHttpHeaderAuthentication: []
+tags:
+- name: ThirdPartyAuth
+paths:
+  /api/third-party-auth:
+    get:
+      summary: Get all third party auth
+      description: Get information about all third party authentication partners
+      operationId: getAllThirdPartyAuth
+      x-internal-api: true
+      security:
+      - permissions:
+        - thirdpartyauth:read
+      tags:
+      - ThirdPartyAuth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllThirdPartyAuthResponse'
+    post:
+      summary: Create third party auth
+      description: Create a new third party authentication partner
+      operationId: createThirdPartyAuth
+      x-internal-api: true
+      security:
+      - permissions:
+        - thirdpartyauth:write
+      tags:
+      - ThirdPartyAuth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateThirdPartyAuthRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateThirdPartyAuthResponse'
+  /api/third-party-auth/{authId}:
+    get:
+      summary: Get third party auth
+      description: Get information about a third party authentication partner
+      operationId: getThirdPartyAuth
+      x-internal-api: true
+      security:
+      - permissions:
+        - thirdpartyauth:read
+      tags:
+      - ThirdPartyAuth
+      parameters:
+      - $ref: '#/components/parameters/AuthIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetThirdPartyAuthResponse'
+    post:
+      summary: Update third party auth
+      description: Update a third party authentication partner
+      operationId: updateThirdPartyAuth
+      x-internal-api: true
+      security:
+      - permissions:
+        - thirdpartyauth:write
+      tags:
+      - ThirdPartyAuth
+      parameters:
+      - $ref: '#/components/parameters/AuthIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateThirdPartyAuthRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+    delete:
+      summary: Delete third party auth
+      description: Delete a third party authentication partner
+      operationId: deleteThirdPartyAuth
+      x-internal-api: true
+      security:
+      - permissions:
+        - thirdpartyauth:write
+      tags:
+      - ThirdPartyAuth
+      parameters:
+      - $ref: '#/components/parameters/AuthIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/{projectId}/third-party-auth/{authId}/authorize:
+    post:
+      summary: Give access to project
+      description: Authorize a third party to access a project
+      operationId: authorizeThirdParty
+      x-internal-api: true
+      tags:
+      - ThirdPartyAuth
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/AuthIdParameter'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AuthorizeThirdPartyRequest'
+      responses:
+        '302':
+          description: A redirect to the nextUrl from the request
+  /api/third-party-auth/{authId}/login:
+    post:
+      summary: Create or login a user
+      description: Login as a user as a third-party authentication provider. If the user does not exists, it's automatically created. You can only log in as users that were previously created by you.
+      tags:
+      - ThirdPartyAuth
+      x-middleware:
+      - RequiresThirdPartyAuthApiKey
+      parameters:
+      - $ref: '#/components/parameters/AuthIdParameter'
+      operationId: createUserThirdParty
+      x-internal-api: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserThirdPartyRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateUserThirdPartyResponse'
+components:
+  schemas:
+    CreateThirdPartyAuthRequest:
+      type: object
+      required:
+      - name
+      - description
+      - logo
+      - domains
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        domains:
+          type: array
+          items:
+            type: string
+        secretKey:
+          type: string
+        apiKey:
+          type: string
+    CreateUserThirdPartyRequest:
+      type: object
+      required:
+      - name
+      - username
+      - email
+      - privacyPolicy
+      properties:
+        name:
+          type: string
+          description: Your name
+          example: Jan Jongboom
+        username:
+          type: string
+          description: Username, minimum 4 and maximum 30 characters. May contain alphanumeric characters, hyphens, underscores and dots. Validated according to `^(?=.{4,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._-]+(?<![_.])$`.
+          example: janjongboom
+        email:
+          type: string
+          description: E-mail address. Will need to be validated before the account will become active.
+          example: jan@edgeimpulse.com
+        projectName:
+          type: string
+          description: A project will automatically be created. Sets the name of the first project. If not set, this will be derived from the username.
+        privacyPolicy:
+          type: boolean
+          description: Whether the user accepted the privacy policy
+    AuthorizeThirdPartyRequest:
+      type: object
+      required:
+      - nextUrl
+      properties:
+        nextUrl:
+          description: The URL to redirect to after authorization is completed.
+          type: string
+    UpdateThirdPartyAuthRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        domains:
+          type: array
+          items:
+            type: string
+    CreateThirdPartyAuthResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        - secretKey
+        - apiKey
+        properties:
+          id:
+            type: integer
+          secretKey:
+            type: string
+          apiKey:
+            type: string
+    GetAllThirdPartyAuthResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - auths
+        properties:
+          auths:
+            type: array
+            items:
+              $ref: '#/components/schemas/ThirdPartyAuth'
+    GetThirdPartyAuthResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - auth
+        properties:
+          auth:
+            $ref: '#/components/schemas/ThirdPartyAuth'
+    CreateUserThirdPartyResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - status
+        properties:
+          status:
+            type: string
+            enum:
+            - userWasCreated
+            - userNotManagedByThirdParty
+            - userAlreadyExists
+          jwtToken:
+            type: string
+    ThirdPartyAuth:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - logo
+      - domains
+      - created
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        domains:
+          type: array
+          items:
+            type: string
+        created:
+          type: string
+          format: date-time
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+  parameters:
+    AuthIdParameter:
+      name: authId
+      in: path
+      required: true
+      description: Auth ID
+      schema:
+        type: integer
+    ProjectIdParameter:
+      name: projectId
+      in: path
+      required: true
+      description: Project ID
+      schema:
+        type: integer
+  securitySchemes:
+    ApiKeyAuthentication:
+      type: apiKey
+      in: header
+      name: x-api-key
+    JWTAuthentication:
+      type: apiKey
+      in: cookie
+      name: jwt
+    JWTHttpHeaderAuthentication:
+      type: apiKey
+      in: header
+      name: x-jwt-token

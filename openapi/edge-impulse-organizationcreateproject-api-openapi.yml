@@ -1,0 +1,844 @@
+openapi: 3.0.0
+info:
+  title: Edge Impulse OrganizationCreateProject API
+  version: 1.0.0
+servers:
+- url: https://studio.edgeimpulse.com/v1
+security:
+- ApiKeyAuthentication: []
+- JWTAuthentication: []
+- JWTHttpHeaderAuthentication: []
+tags:
+- name: OrganizationCreateProject
+paths:
+  /api/organizations/{organizationId}/create-project:
+    get:
+      summary: List transformation jobs
+      description: Get list of transformation jobs.
+      operationId: getOrganizationCreateProjects
+      tags:
+      - OrganizationCreateProject
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/LimitResultsParameter'
+      - $ref: '#/components/parameters/OffsetResultsParameter'
+      - $ref: '#/components/parameters/IncludePipelineJobsParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationGetCreateProjectsResponse'
+    post:
+      summary: Start transformation job
+      description: Start a transformation job to fetch data from the organization and put it in a project, or transform into new data.
+      operationId: organizationCreateProject
+      tags:
+      - OrganizationCreateProject
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationCreateProjectRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationCreateProjectResponse'
+  /api/organizations/{organizationId}/create-project/{createProjectId}:
+    get:
+      summary: Get transformation job status
+      description: Get the current status of a transformation job job.
+      operationId: getOrganizationCreateProjectStatus
+      tags:
+      - OrganizationCreateProject
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationCreateProjectIdParameter'
+      - $ref: '#/components/parameters/TransformLimitResultsParameter'
+      - $ref: '#/components/parameters/TransformOffsetResultsParameter'
+      - $ref: '#/components/parameters/TransformSelectionParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationCreateProjectStatusResponse'
+    post:
+      summary: Update transformation job
+      description: Update the properties of a transformation job.
+      operationId: updateOrganizationCreateProject
+      tags:
+      - OrganizationCreateProject
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationCreateProjectIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrganizationCreateProjectRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+    delete:
+      summary: Delete transformation job
+      description: Remove a transformation job. This will stop all running jobs.
+      operationId: deleteOrganizationCreateProject
+      tags:
+      - OrganizationCreateProject
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationCreateProjectIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/organizations/{organizationId}/create-project/{createProjectId}/transform/retry:
+    post:
+      summary: Retry failed transform jobs
+      description: Retry all failed transform job from a transformation job. Only jobs that have failed will be retried.
+      operationId: retryOrganizationTransform
+      tags:
+      - OrganizationCreateProject
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationCreateProjectIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/organizations/{organizationId}/create-project/{createProjectId}/transform/clear:
+    post:
+      summary: Clear failed transform jobs
+      description: Clear all failed transform job from a create project job. Only jobs that have failed will be cleared.
+      operationId: clearOrganizationTransform
+      tags:
+      - OrganizationCreateProject
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationCreateProjectIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/organizations/{organizationId}/create-project/{createProjectId}/upload/retry:
+    post:
+      summary: Retry transformation upload job
+      description: Retry the upload job from a transformation job. Only jobs that have failed can be retried.
+      operationId: retryOrganizationUpload
+      tags:
+      - OrganizationCreateProject
+      x-middleware:
+      - OrganizationAllowDeveloperProfile
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationCreateProjectIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/organizations/{organizationId}/create-project/{createProjectId}/files/{createProjectFileId}:
+    delete:
+      summary: Delete create project file
+      description: Remove a file from a create project job. Only files for which no jobs are running can be deleted.
+      operationId: deleteOrganizationCreateProjectFile
+      tags:
+      - OrganizationCreateProject
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationCreateProjectIdParameter'
+      - $ref: '#/components/parameters/OrganizationCreateProjectFileIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/organizations/{organizationId}/create-project/{createProjectId}/files/{createProjectFileId}/retry:
+    post:
+      summary: Retry transformation file
+      description: Retry a transformation action on a file from a transformation job. Only files that have failed can be retried.
+      operationId: retryOrganizationCreateProjectFile
+      tags:
+      - OrganizationCreateProject
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationCreateProjectIdParameter'
+      - $ref: '#/components/parameters/OrganizationCreateProjectFileIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/organizations/{organizationId}/custom-block:
+    post:
+      summary: Upload a custom block
+      description: Upload a zip file containing a custom transformation or deployment block.
+      tags:
+      - OrganizationCreateProject
+      x-middleware:
+      - OrganizationAllowDeveloperProfile
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      operationId: uploadCustomBlock
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UploadCustomBlockRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartJobResponse'
+  /api/organizations/{organizationId}/new-project:
+    post:
+      summary: Create new empty project
+      description: Create a new empty project within an organization.
+      operationId: organizationCreateEmptyProject
+      tags:
+      - OrganizationCreateProject
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrganizationCreateEmptyProjectRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateProjectResponse'
+  /api/organizations/{organizationId}/add-project-collaborator:
+    post:
+      summary: Add a collaborator to a project within an organisation
+      description: Add a new collaborator to a project owned by an organisation.
+      operationId: organizationAddCollaborator
+      tags:
+      - OrganizationCreateProject
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrganizationAddCollaboratorRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+components:
+  schemas:
+    UploadCustomBlockRequest:
+      type: object
+      required:
+      - tar
+      - type
+      - blockId
+      properties:
+        tar:
+          type: string
+          format: binary
+        type:
+          type: string
+          enum:
+          - transform
+          - deploy
+          - dsp
+          - transferLearning
+        blockId:
+          type: integer
+    OrganizationCreateProject:
+      type: object
+      required:
+      - id
+      - organizationId
+      - name
+      - status
+      - transformJobStatus
+      - uploadJobStatus
+      - uploadType
+      - category
+      - created
+      - totalDownloadFileCount
+      - totalDownloadFileSize
+      - totalDownloadFileSizeString
+      - totalUploadFileCount
+      - transformationParallel
+      - transformationSummary
+      - inProgress
+      - operatesOn
+      - totalTimeSpentSeconds
+      - totalTimeSpentString
+      properties:
+        id:
+          type: integer
+        organizationId:
+          type: integer
+        name:
+          type: string
+        uploadType:
+          type: string
+          enum:
+          - dataset
+          - project
+        status:
+          $ref: '#/components/schemas/TransformationJobStatusEnum'
+        transformJobStatus:
+          $ref: '#/components/schemas/TransformationJobStatusEnum'
+        uploadJobId:
+          type: integer
+        uploadJobStatus:
+          $ref: '#/components/schemas/TransformationJobStatusEnum'
+        uploadJobFilesUploaded:
+          type: integer
+        projectOwner:
+          type: string
+        projectId:
+          type: integer
+        projectName:
+          type: string
+        transformationBlockId:
+          type: integer
+        builtinTransformationBlock:
+          type: object
+        transformationBlockName:
+          type: string
+        category:
+          type: string
+          enum:
+          - training
+          - testing
+          - split
+        created:
+          type: string
+          format: date-time
+        outputDatasetName:
+          type: string
+        outputDatasetBucketId:
+          type: integer
+        outputDatasetBucketPath:
+          type: string
+        totalDownloadFileCount:
+          type: integer
+        totalDownloadFileSize:
+          type: integer
+        totalDownloadFileSizeString:
+          type: string
+        totalUploadFileCount:
+          type: integer
+        transformationParallel:
+          type: integer
+          description: Number of transformation jobs that can be ran in parallel
+        transformationSummary:
+          type: object
+          required:
+          - startedCount
+          - succeededCount
+          - finishedCount
+          - totalFileCount
+          - totalTimeSpentSeconds
+          properties:
+            startedCount:
+              type: integer
+            succeededCount:
+              type: integer
+            finishedCount:
+              type: integer
+            totalFileCount:
+              type: integer
+            totalTimeSpentSeconds:
+              type: integer
+              description: Total amount of compute used for this job (in seconds)
+        inProgress:
+          type: boolean
+        label:
+          type: string
+        filterQuery:
+          type: string
+        emailRecipientUids:
+          type: array
+          items:
+            type: integer
+        pipelineId:
+          type: integer
+        pipelineName:
+          type: string
+        pipelineRunId:
+          type: integer
+        pipelineStep:
+          type: integer
+        operatesOn:
+          $ref: '#/components/schemas/TransformationJobOperatesOnEnum'
+        totalTimeSpentSeconds:
+          type: integer
+          description: Total amount of compute used for this job (in seconds)
+        totalTimeSpentString:
+          type: string
+          description: Total amount of compute used (friendly string)
+        createdByUser:
+          $ref: '#/components/schemas/CreatedUpdatedByUser'
+    OrganizationCreateProjectOutputDatasetPathRule:
+      description: Defines the folder structure for writing to the output dataset. Used only when uploading into a default (non-clinical) dataset.
+      type: string
+      enum:
+      - no-subfolders
+      - subfolder-per-item
+      - use-full-path
+    TransformationJobOperatesOnEnum:
+      type: string
+      enum:
+      - file
+      - directory
+      - standalone
+    StartJobResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: Job identifier. Status updates will include this identifier.
+            example: 12873488112
+    UpdateOrganizationAddCollaboratorRequest:
+      type: object
+      required:
+      - projectId
+      - userId
+      properties:
+        projectId:
+          type: integer
+          description: The ID of the project to add the collaborator to.
+        userId:
+          type: integer
+          description: The user ID to add to the project. The user must be an admin of the organization.
+    CreateProjectResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        - apiKey
+        properties:
+          id:
+            type: integer
+            description: Project ID for the new project
+          apiKey:
+            type: string
+            description: API key for the new project
+    ProjectVisibility:
+      type: string
+      enum:
+      - public
+      - private
+      description: The visibility of the project, either public or private. Public projects can be viewed by anyone on the internet and edited by collaborators. Private projects can only be viewed and edited by collaborators.
+    UpdateOrganizationCreateEmptyProjectRequest:
+      type: object
+      required:
+      - projectName
+      properties:
+        projectName:
+          type: string
+          example: EEG trials
+          description: The name of the project.
+        projectVisibility:
+          $ref: '#/components/schemas/ProjectVisibility'
+        projectOwnerUsernameOrEmail:
+          type: string
+          example: jan@edgeimpulse.com
+          description: The username or email of the owner of the project. This field is mandatory when authenticating via API key. If no email is provided when authenticating via JWT, the user ID attached to the JWT will be user as project owner.
+    OrganizationCreateProjectRequest:
+      type: object
+      description: If uploadType is set to 'project', either projectId, newProjectName or both projectApiKey and projectHmacKey are required. projectId and newProjectName are only available through JWT tokens. If uploadType is set to 'dataset' then outputDatasetName can be set to '' to output in the same dataset, or set to a string to create (or append to) a new dataset.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+        filter:
+          type: string
+          description: Filter in SQL format, used for creating transformation jobs on clinical datasets
+        pathFilters:
+          type: array
+          description: Set of paths to apply the transformation to, used for creating transformation jobs on default datasets. This option is experimental and may change in the future.
+          items:
+            $ref: '#/components/schemas/OrganizationCreateProjectPathFilter'
+        uploadType:
+          type: string
+          enum:
+          - project
+          - dataset
+        projectId:
+          type: integer
+        projectVisibility:
+          $ref: '#/components/schemas/ProjectVisibility'
+        newProjectName:
+          type: string
+        projectApiKey:
+          type: string
+        projectHmacKey:
+          type: string
+        transformationBlockId:
+          type: integer
+        builtinTransformationBlock:
+          type: object
+        category:
+          type: string
+          enum:
+          - training
+          - testing
+          - split
+        outputDatasetName:
+          type: string
+        outputDatasetBucketId:
+          type: integer
+        outputDatasetBucketPath:
+          description: Path of new dataset within the bucket; used only when creating a new dataset.
+          type: string
+        outputPathInDataset:
+          description: Path within the selected dataset to upload transformed files into. Used only when uploading into a default (non-clinical) dataset.
+          type: string
+        outputDatasetPathRule:
+          $ref: '#/components/schemas/OrganizationCreateProjectOutputDatasetPathRule'
+        label:
+          type: string
+        emailRecipientUids:
+          type: array
+          items:
+            type: integer
+        transformationParallel:
+          description: Number of parallel jobs to start
+          type: integer
+        extraCliArguments:
+          description: Optional extra arguments for this transformation block
+          type: string
+        parameters:
+          type: object
+          description: List of custom parameters for this transformation job (see the list of parameters that the block exposes).
+          additionalProperties:
+            type: string
+    OrganizationGetCreateProjectsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - jobs
+        - totalJobCount
+        properties:
+          totalJobCount:
+            type: integer
+          jobs:
+            type: array
+            items:
+              type: object
+              required:
+              - id
+              - name
+              - transformJobStatus
+              - uploadJobStatus
+              - uploadType
+              - category
+              - created
+              - totalDownloadFileCount
+              - totalDownloadFileSize
+              - totalDownloadFileSizeString
+              - totalTimeSpentString
+              properties:
+                id:
+                  type: integer
+                organizationId:
+                  type: integer
+                name:
+                  type: string
+                uploadType:
+                  type: string
+                  enum:
+                  - dataset
+                  - project
+                transformJobStatus:
+                  $ref: '#/components/schemas/TransformationJobStatusEnum'
+                uploadJobId:
+                  type: integer
+                uploadJobStatus:
+                  $ref: '#/components/schemas/TransformationJobStatusEnum'
+                projectOwner:
+                  type: string
+                projectId:
+                  type: integer
+                projectName:
+                  type: string
+                transformationBlockId:
+                  type: integer
+                builtinTransformationBlock:
+                  type: object
+                transformationBlockName:
+                  type: string
+                transformationOperatesOn:
+                  $ref: '#/components/schemas/TransformationJobOperatesOnEnum'
+                created:
+                  type: string
+                  format: date-time
+                outputDatasetName:
+                  type: string
+                outputDatasetBucketId:
+                  type: integer
+                outputDatasetBucketPath:
+                  type: string
+                totalDownloadFileCount:
+                  type: integer
+                totalDownloadFileSize:
+                  type: integer
+                totalDownloadFileSizeString:
+                  type: string
+                totalUploadFileCount:
+                  type: integer
+                totalTimeSpentSeconds:
+                  type: integer
+                  description: Total amount of compute used for this job (in seconds)
+                totalTimeSpentString:
+                  type: string
+                  description: Total amount of compute used (friendly string)
+                createdByUser:
+                  $ref: '#/components/schemas/CreatedUpdatedByUser'
+    OrganizationDatasetTypeEnum:
+      type: string
+      enum:
+      - clinical
+      - files
+    UpdateOrganizationCreateProjectRequest:
+      type: object
+      properties:
+        transformationParallel:
+          type: integer
+          description: Number of transformation jobs that can be ran in parallel
+        emailRecipientUids:
+          description: List of user IDs to notify when a Job succeeds
+          type: array
+          items:
+            type: integer
+    CreatedUpdatedByUser:
+      type: object
+      required:
+      - id
+      - name
+      - username
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        username:
+          type: string
+        photo:
+          type: string
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    TransformationJobStatusEnum:
+      type: string
+      enum:
+      - waiting
+      - created
+      - started
+      - finished
+      - failed
+    OrganizationCreateProjectResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - createProjectId
+        - apiKey
+        properties:
+          createProjectId:
+            type: integer
+            description: Project ID for the new project
+          apiKey:
+            type: string
+            description: API key for the new project
+    OrganizationCreateProjectWithFiles:
+      allOf:
+      - $ref: '#/components/schemas/OrganizationCreateProject'
+      - type: object
+        required:
+        - files
+        - fileCountForFilter
+        properties:
+          files:
+            type: array
+            items:
+              type: object
+              required:
+              - id
+              - fileName
+              - bucketPath
+              - transformationJobStatus
+              - linkToDataItem
+              - lengthString
+              - sourceDatasetType
+              properties:
+                id:
+                  type: integer
+                fileName:
+                  type: string
+                bucketPath:
+                  type: string
+                transformationJobId:
+                  type: integer
+                transformationJobStatus:
+                  $ref: '#/components/schemas/TransformationJobStatusEnum'
+                linkToDataItem:
+                  type: string
+                lengthString:
+                  type: string
+                  description: Only set after job was finished
+                sourceDatasetType:
+                  $ref: '#/components/schemas/OrganizationDatasetTypeEnum'
+          fileCountForFilter:
+            type: integer
+    OrganizationCreateProjectStatusResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          status:
+            $ref: '#/components/schemas/OrganizationCreateProjectWithFiles'
+    OrganizationCreateProjectPathFilter:
+      type: object
+      description: Filter, given as a dataset and path containing wildcards, used for creating transformation jobs
+      required:
+      - dataset
+      - filter
+      properties:
+        dataset:
+          type: string
+          description: Dataset name of files to transform
+        filter:
+          type: string
+          description: Path filter with wildcards, relative to the root of the dataset. For example, /folder/*.json will transform all JSON files in /folder (when operating on files)
+  parameters:
+    TransformSelectionParameter:
+      name: selection
+      in: query
+      required: false
+      description: Type of selected rows, either 'all', 'created', 'in-progress' or 'failed' (defaults to 'all')
+      schema:
+        type: string
+    OrganizationCreateProjectFileIdParameter:
+      name: createProjectFileId
+      in: path
+      required: true
+      description: Create project job file ID.
+      schema:
+        type: integer
+    LimitResultsParameter:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of results
+      schema:
+        type: integer
+    OrganizationCreateProjectIdParameter:
+      name: createProjectId
+      in: path
+      required: true
+      description: Create project job ID.
+      schema:
+        type: integer
+    TransformOffsetResultsParameter:
+      name: transformOffset
+      in: query
+      required: true
+      description: Offset in results of transformation jobs, can be used in conjunction with TransformLimitResultsParameter to implement paging.
+      schema:
+        type: integer
+    OrganizationIdParameter:
+      name: organizationId
+      in: path
+      required: true
+      description: Organization ID
+      schema:
+        type: integer
+    OffsetResultsParameter:
+      name: offset
+      in: query
+      required: false
+      description: Offset in results, can be used in conjunction with LimitResultsParameter to implement paging.
+      schema:
+        type: integer
+    TransformLimitResultsParameter:
+      name: transformLimit
+      in: query
+      required: true
+      description: Maximum number of results of transformation jobs
+      schema:
+        type: integer
+    IncludePipelineJobsParameter:
+      name: includePipelineJobs
+      in: query
+      required: false
+      description: If enabled, also includes jobs that are part of a pipeline
+      schema:
+        type: boolean
+  securitySchemes:
+    ApiKeyAuthentication:
+      type: apiKey
+      in: header
+      name: x-api-key
+    JWTAuthentication:
+      type: apiKey
+      in: cookie
+      name: jwt
+    JWTHttpHeaderAuthentication:
+      type: apiKey
+      in: header
+      name: x-jwt-token

@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info:
+  title: Edge Impulse Canary API
+  version: 1.0.0
+servers:
+- url: https://studio.edgeimpulse.com/v1
+security:
+- ApiKeyAuthentication: []
+- JWTAuthentication: []
+- JWTHttpHeaderAuthentication: []
+tags:
+- name: Canary
+paths:
+  /api/canary:
+    get:
+      summary: Get the decision to whether the requested URL goes on canary deployment or not
+      description: Get the decision to whether the requested URL goes on canary deployment or not
+      x-internal-api: true
+      x-required-headers:
+      - x-edge-lambda
+      security:
+      - JWTAuthentication: []
+      operationId: shouldGoOnCanary
+      tags:
+      - Canary
+      parameters:
+      - $ref: '#/components/parameters/RequestedUrlParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CanaryResponse'
+components:
+  schemas:
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    CanaryResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - routeToCanary
+        properties:
+          routeToCanary:
+            type: boolean
+            description: Whether the request should be routed to the canary or not.
+            example: true
+  parameters:
+    RequestedUrlParameter:
+      name: requestedUrl
+      in: query
+      required: true
+      description: Full url (host included) that is requested
+      schema:
+        type: string
+  securitySchemes:
+    ApiKeyAuthentication:
+      type: apiKey
+      in: header
+      name: x-api-key
+    JWTAuthentication:
+      type: apiKey
+      in: cookie
+      name: jwt
+    JWTHttpHeaderAuthentication:
+      type: apiKey
+      in: header
+      name: x-jwt-token

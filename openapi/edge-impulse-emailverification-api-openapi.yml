@@ -1,0 +1,233 @@
+openapi: 3.0.0
+info:
+  title: Edge Impulse EmailVerification API
+  version: 1.0.0
+servers:
+- url: https://studio.edgeimpulse.com/v1
+security:
+- ApiKeyAuthentication: []
+- JWTAuthentication: []
+- JWTHttpHeaderAuthentication: []
+tags:
+- name: EmailVerification
+paths:
+  /api/emails/{email}/request-verification:
+    post:
+      summary: Request email verification
+      description: Request an email activation code to be sent to the specified email address.
+      security: []
+      x-internal-api: true
+      operationId: requestEmailVerification
+      tags:
+      - EmailVerification
+      parameters:
+      - $ref: '#/components/parameters/EmailParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RequestEmailVerificationRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EntityCreatedResponse'
+  /api/emails/verify:
+    post:
+      summary: Verify email
+      description: Verify an email address using the specified verification code.
+      security: []
+      x-internal-api: true
+      operationId: verifyEmail
+      tags:
+      - EmailVerification
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ActivateUserOrVerifyEmailRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyEmailResponse'
+  /api/emails/validate:
+    post:
+      summary: Validate email for account sign-up
+      security: []
+      description: Validate whether an email is valid for sign up. Using an email that fails this check can result in the associated account missing communications and features that are distributed through email.
+      tags:
+      - EmailVerification
+      operationId: validateEmail
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmailValidationRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateEmailResponse'
+  /api/emails/{emailId}:
+    get:
+      summary: Get email verification status
+      description: Get the status of an email verification.
+      security: []
+      x-internal-api: true
+      operationId: getEmailVerificationStatus
+      tags:
+      - EmailVerification
+      parameters:
+      - $ref: '#/components/parameters/EmailIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEmailVerificationStatusResponse'
+components:
+  parameters:
+    EmailIdParameter:
+      name: emailId
+      in: path
+      required: true
+      description: Unique identifier for an email verification request
+      schema:
+        type: integer
+    EmailParameter:
+      name: email
+      in: path
+      required: true
+      description: Email address
+      schema:
+        type: string
+  schemas:
+    EmailValidationRequest:
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          description: E-mail address to validate
+          example: jan@edgeimpulse.com
+    RequestEmailVerificationRequest:
+      type: object
+      required:
+      - redirectUrl
+      properties:
+        redirectUrl:
+          type: string
+          description: URL to redirect the user after email verification.
+    EntityCreatedResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: Unique identifier of the created entity.
+    ActivateUserOrVerifyEmailRequest:
+      type: object
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          description: Activation or verification code (sent via email)
+    ValidateEmailResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - email
+        - verdict
+        - score
+        properties:
+          email:
+            type: string
+            description: Email address that was checked.
+          verdict:
+            type: string
+            description: Classification of the email's validity status
+            enum:
+            - Valid
+            - Risky
+            - Invalid
+          score:
+            type: number
+            example: 0.98015
+            description: This number from 0 to 1 represents the likelihood the email address is valid, expressed as a percentage.
+          suggestion:
+            type: string
+            example: gmail.com
+            description: A corrected domain, if a possible typo is detected.
+          local:
+            type: string
+            example: jan.jongboom
+            description: The first part of the email address (before the @ sign)
+          host:
+            type: string
+            example: edgeimpulse.com
+            description: The second part of the email address (after the @ sign)
+    VerifyEmailResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          email:
+            type: string
+            description: Email address that was verified.
+          userId:
+            type: number
+            description: ID of the user associated with the verified email address, if any.
+          redirectUrl:
+            type: string
+            description: URL to redirect the user to after email verification.
+    GetEmailVerificationStatusResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - verified
+        properties:
+          verified:
+            type: boolean
+            description: Whether the email address has been verified.
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+  securitySchemes:
+    ApiKeyAuthentication:
+      type: apiKey
+      in: header
+      name: x-api-key
+    JWTAuthentication:
+      type: apiKey
+      in: cookie
+      name: jwt
+    JWTHttpHeaderAuthentication:
+      type: apiKey
+      in: header
+      name: x-jwt-token

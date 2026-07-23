@@ -1,0 +1,728 @@
+openapi: 3.0.0
+info:
+  title: Edge Impulse OrganizationDataCampaigns API
+  version: 1.0.0
+servers:
+- url: https://studio.edgeimpulse.com/v1
+security:
+- ApiKeyAuthentication: []
+- JWTAuthentication: []
+- JWTHttpHeaderAuthentication: []
+tags:
+- name: OrganizationDataCampaigns
+paths:
+  /api/organizations/{organizationId}/campaign-dashboards:
+    get:
+      summary: Get data campaign dashboards
+      description: List all data campaign dashboards
+      operationId: getOrganizationDataCampaignDashboards
+      tags:
+      - OrganizationDataCampaigns
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOrganizationDataCampaignDashboardsResponse'
+    post:
+      summary: Add data campaign dashboard
+      description: Add a new data campaign dashboard
+      operationId: addOrganizationDataCampaignDashboard
+      tags:
+      - OrganizationDataCampaigns
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddOrganizationDataCampaignDashboardRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddOrganizationDataCampaignDashboardResponse'
+  /api/organizations/{organizationId}/campaign-dashboard/{campaignDashboardId}:
+    get:
+      summary: Get data campaign dashboard
+      description: Get a data campaign dashboard
+      operationId: getOrganizationDataCampaignDashboard
+      tags:
+      - OrganizationDataCampaigns
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDataCampaignDashboardIdPathParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOrganizationDataCampaignDashboardResponse'
+    post:
+      summary: Update data campaign dashboard
+      description: Update a data campaign dashboard
+      operationId: updateOrganizationDataCampaignDashboard
+      tags:
+      - OrganizationDataCampaigns
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDataCampaignDashboardIdPathParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrganizationDataCampaignDashboardRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+    delete:
+      summary: Delete data campaign dashboard
+      description: Delete a data campaign dashboard
+      operationId: deleteOrganizationDataCampaignDashboard
+      tags:
+      - OrganizationDataCampaigns
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDataCampaignDashboardIdPathParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/organizations/{organizationId}/campaign-dashboard/{campaignDashboardId}/campaigns:
+    get:
+      summary: Get data campaigns
+      description: Get a list of all data campaigns for a dashboard
+      operationId: getOrganizationDataCampaignsForDashboard
+      tags:
+      - OrganizationDataCampaigns
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDataCampaignDashboardIdPathParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOrganizationDataCampaignsResponse'
+  /api/organizations/{organizationId}/campaign-dashboard/{campaignDashboardId}/screenshot:
+    post:
+      summary: Upload a dashboard screenshot
+      description: Used internally to upload a picture of a screenshot
+      x-internal-api: true
+      operationId: uploadDashboardScreenshot
+      tags:
+      - OrganizationDataCampaigns
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDataCampaignDashboardIdPathParameter'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UploadImageRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/organizations/{organizationId}/campaigns:
+    post:
+      summary: Add a data campaign
+      description: Add a new data campaign to a data campaign dashboard
+      operationId: addOrganizationDataCampaign
+      tags:
+      - OrganizationDataCampaigns
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddOrganizationDataCampaignRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddOrganizationDataCampaignResponse'
+  /api/organizations/{organizationId}/campaigns/{campaignId}:
+    get:
+      summary: Get data campaign
+      description: Get a data campaign
+      operationId: getOrganizationDataCampaign
+      tags:
+      - OrganizationDataCampaigns
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDataCampaignIdPathParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetOrganizationDataCampaignResponse'
+    post:
+      summary: Update data campaign
+      description: Update a data campaign
+      operationId: updateOrganizationDataCampaign
+      tags:
+      - OrganizationDataCampaigns
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDataCampaignIdPathParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateOrganizationDataCampaignRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+    delete:
+      summary: Delete data campaign
+      description: Delete a data campaign
+      operationId: deleteOrganizationDataCampaign
+      tags:
+      - OrganizationDataCampaigns
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDataCampaignIdPathParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/organizations/{organizationId}/campaigns/{campaignId}/diff:
+    post:
+      summary: Get diff for data campaign
+      description: Get which items have changed for a data campaign. You post the data points and we'll return which data items are different in the past day.
+      operationId: getOrganizationDataCampaignDiff
+      tags:
+      - OrganizationDataCampaigns
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OrganizationDataCampaignIdPathParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrganizationDataCampaignDiffRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrganizationDataCampaignDiffResponse'
+components:
+  schemas:
+    AddOrganizationDataCampaignDashboardRequest:
+      type: object
+      required:
+      - name
+      - emailRecipientUids
+      - whenToEmail
+      - showNoOfDays
+      properties:
+        name:
+          type: string
+        emailRecipientUids:
+          description: List of user IDs to notify for this dashboard (sent daily)
+          type: array
+          items:
+            type: integer
+        whenToEmail:
+          type: string
+          enum:
+          - always
+          - on_changes
+          - never
+        showNoOfDays:
+          type: integer
+    UploadImageRequest:
+      type: object
+      required:
+      - image
+      properties:
+        image:
+          type: string
+          format: binary
+    UpdateOrganizationDataCampaignDashboardRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        emailRecipientUids:
+          description: List of user IDs to notify for this dashboard (sent daily)
+          type: array
+          items:
+            type: integer
+        whenToEmail:
+          type: string
+          enum:
+          - always
+          - on_changes
+          - never
+        showNoOfDays:
+          type: integer
+    GetOrganizationDataCampaignsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - campaigns
+        properties:
+          campaigns:
+            type: array
+            items:
+              type: object
+              required:
+              - campaign
+              - graphs
+              properties:
+                campaign:
+                  $ref: '#/components/schemas/DataCampaign'
+                graphs:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/DataCampaignGraph'
+    DataCampaign:
+      type: object
+      required:
+      - id
+      - dataCampaignDashboardId
+      - created
+      - name
+      - description
+      - coordinatorUids
+      - pipelineIds
+      - queries
+      - links
+      - datasets
+      - projectIds
+      properties:
+        id:
+          type: integer
+        dataCampaignDashboardId:
+          type: integer
+        created:
+          type: string
+          format: date-time
+        name:
+          type: string
+        description:
+          type: string
+        coordinatorUids:
+          description: List of user IDs that coordinate this campaign
+          type: array
+          items:
+            type: integer
+        logo:
+          type: string
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataCampaignQuery'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataCampaignLink'
+        datasets:
+          type: array
+          items:
+            type: string
+        pipelineIds:
+          type: array
+          items:
+            type: integer
+        projectIds:
+          type: array
+          items:
+            type: integer
+    AddOrganizationDataCampaignDashboardResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - dataCampaignDashboardId
+        properties:
+          dataCampaignDashboardId:
+            type: integer
+    UpdateOrganizationDataCampaignRequest:
+      type: object
+      properties:
+        dataCampaignDashboardId:
+          type: integer
+        name:
+          type: string
+        coordinatorUids:
+          description: List of user IDs that coordinate this campaign
+          type: array
+          items:
+            type: integer
+        logo:
+          type: string
+        description:
+          type: string
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataCampaignQuery'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataCampaignLink'
+        datasets:
+          type: array
+          items:
+            type: string
+        pipelineIds:
+          type: array
+          items:
+            type: integer
+        projectIds:
+          type: array
+          items:
+            type: integer
+    GetOrganizationDataCampaignDashboardResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - dashboard
+        properties:
+          dashboard:
+            $ref: '#/components/schemas/DataCampaignDashboard'
+    OrganizationDataCampaignDiffRequest:
+      type: object
+      required:
+      - queries
+      properties:
+        queries:
+          type: array
+          items:
+            type: object
+            required:
+            - dataset
+            - query
+            - graphValueId
+            properties:
+              dataset:
+                type: string
+              query:
+                type: string
+              graphValueId:
+                type: integer
+                description: Which point in the graph was clicked (from "graphs.values")
+    DataCampaignQuery:
+      type: object
+      required:
+      - name
+      - dataset
+      - query
+      properties:
+        name:
+          type: string
+        dataset:
+          type: string
+        query:
+          type: string
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    DataCampaignGraph:
+      type: object
+      required:
+      - title
+      - link
+      - xData
+      - yTicks
+      - nextUpdate
+      properties:
+        title:
+          type: string
+        link:
+          type: string
+        xData:
+          type: array
+          items:
+            type: object
+            required:
+            - color
+            - popupText
+            - legendText
+            - values
+            - dataType
+            properties:
+              color:
+                type: string
+              legendText:
+                type: string
+              popupText:
+                type: string
+              values:
+                type: array
+                items:
+                  type: object
+                  required:
+                  - id
+                  properties:
+                    id:
+                      type: integer
+                    value:
+                      type: number
+              dataset:
+                type: string
+              query:
+                type: string
+              dataType:
+                type: string
+                enum:
+                - dataItems
+                - time
+                - percentage
+        yTicks:
+          type: array
+          items:
+            type: string
+            format: date-time
+        nextUpdate:
+          type: string
+          format: date-time
+    OrganizationDataCampaignDiffResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - date
+        - queries
+        properties:
+          date:
+            type: string
+            format: date-time
+          queries:
+            type: array
+            items:
+              type: object
+              required:
+              - title
+              - dataset
+              - query
+              - newItems
+              - deletedItems
+              properties:
+                title:
+                  type: string
+                dataset:
+                  type: string
+                query:
+                  type: string
+                newItems:
+                  type: array
+                  items:
+                    type: string
+                deletedItems:
+                  type: array
+                  items:
+                    type: string
+    DataCampaignDashboard:
+      type: object
+      required:
+      - id
+      - created
+      - name
+      - emailRecipientUids
+      - whenToEmail
+      - showNoOfDays
+      properties:
+        id:
+          type: integer
+        created:
+          type: string
+          format: date-time
+        name:
+          type: string
+        emailRecipientUids:
+          description: List of user IDs to notify for this dashboard (sent daily)
+          type: array
+          items:
+            type: integer
+        latestScreenshot:
+          type: string
+        whenToEmail:
+          type: string
+          enum:
+          - always
+          - on_changes
+          - never
+        showNoOfDays:
+          type: integer
+    AddOrganizationDataCampaignResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - dataCampaignId
+        properties:
+          dataCampaignId:
+            type: integer
+    GetOrganizationDataCampaignDashboardsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - dashboards
+        properties:
+          dashboards:
+            type: array
+            items:
+              $ref: '#/components/schemas/DataCampaignDashboard'
+    GetOrganizationDataCampaignResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - campaign
+        - graphs
+        properties:
+          campaign:
+            $ref: '#/components/schemas/DataCampaign'
+          graphs:
+            type: array
+            items:
+              $ref: '#/components/schemas/DataCampaignGraph'
+    DataCampaignLink:
+      type: object
+      required:
+      - icon
+      - name
+      - link
+      properties:
+        icon:
+          type: string
+        name:
+          type: string
+        link:
+          type: string
+    AddOrganizationDataCampaignRequest:
+      type: object
+      required:
+      - dataCampaignDashboardId
+      - name
+      - description
+      - coordinatorUids
+      - queries
+      - links
+      - datasets
+      - pipelineIds
+      - projectIds
+      properties:
+        id:
+          type: integer
+        dataCampaignDashboardId:
+          type: integer
+        created:
+          type: string
+          format: date-time
+        name:
+          type: string
+        description:
+          type: string
+        coordinatorUids:
+          description: List of user IDs that coordinate this campaign
+          type: array
+          items:
+            type: integer
+        logo:
+          type: string
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataCampaignQuery'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataCampaignLink'
+        datasets:
+          type: array
+          items:
+            type: string
+        pipelineIds:
+          type: array
+          items:
+            type: integer
+        projectIds:
+          type: array
+          items:
+            type: integer
+  parameters:
+    OrganizationDataCampaignDashboardIdPathParameter:
+      name: campaignDashboardId
+      in: path
+      required: true
+      schema:
+        type: integer
+    OrganizationIdParameter:
+      name: organizationId
+      in: path
+      required: true
+      description: Organization ID
+      schema:
+        type: integer
+    OrganizationDataCampaignIdPathParameter:
+      name: campaignId
+      in: path
+      required: true
+      schema:
+        type: integer
+  securitySchemes:
+    ApiKeyAuthentication:
+      type: apiKey
+      in: header
+      name: x-api-key
+    JWTAuthentication:
+      type: apiKey
+      in: cookie
+      name: jwt
+    JWTHttpHeaderAuthentication:
+      type: apiKey
+      in: header
+      name: x-jwt-token

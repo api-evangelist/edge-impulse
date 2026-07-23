@@ -1,0 +1,139 @@
+openapi: 3.0.0
+info:
+  title: Edge Impulse Metrics API
+  version: 1.0.0
+servers:
+- url: https://studio.edgeimpulse.com/v1
+security:
+- ApiKeyAuthentication: []
+- JWTAuthentication: []
+- JWTHttpHeaderAuthentication: []
+tags:
+- name: Metrics
+paths:
+  /api-metrics:
+    get:
+      summary: Get public metrics
+      security: []
+      description: Get information about number of projects, compute and data samples. Updated once per hour.
+      x-internal-api: true
+      tags:
+      - Metrics
+      operationId: getPublicMetrics
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPublicMetricsResponse'
+  /api-metrics/website/pageviews:
+    post:
+      summary: Log website pageview
+      x-internal-api: true
+      security: []
+      description: Log a website pageview. Used for website analytics.
+      tags:
+      - Metrics
+      operationId: logWebsitePageview
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogWebsitePageviewRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api-metrics/events:
+    post:
+      summary: Log analytics event
+      security: []
+      x-internal-api: true
+      description: Log an analytics event.
+      tags:
+      - Metrics
+      operationId: logAnalyticsEvent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogAnalyticsEventRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+components:
+  schemas:
+    GetPublicMetricsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - projects
+        - data_samples
+        - jobs
+        properties:
+          projects:
+            type: integer
+          data_samples:
+            type: integer
+          jobs:
+            type: integer
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    LogAnalyticsEventRequest:
+      type: object
+      required:
+      - eventName
+      - eventProperties
+      properties:
+        sessionId:
+          type: string
+          description: Optional session ID for users who have not signed in yet. Helps match anonymous activity with user activity once they sign in.
+        eventName:
+          type: string
+        eventProperties:
+          type: object
+    LogWebsitePageviewRequest:
+      type: object
+      required:
+      - sessionId
+      - pageUrl
+      properties:
+        sessionId:
+          type: string
+        pageUrl:
+          type: string
+        pageReferrer:
+          type: string
+  securitySchemes:
+    ApiKeyAuthentication:
+      type: apiKey
+      in: header
+      name: x-api-key
+    JWTAuthentication:
+      type: apiKey
+      in: cookie
+      name: jwt
+    JWTHttpHeaderAuthentication:
+      type: apiKey
+      in: header
+      name: x-jwt-token

@@ -1,0 +1,522 @@
+openapi: 3.0.0
+info:
+  title: Edge Impulse Devices API
+  version: 1.0.0
+servers:
+- url: https://studio.edgeimpulse.com/v1
+security:
+- ApiKeyAuthentication: []
+- JWTAuthentication: []
+- JWTHttpHeaderAuthentication: []
+tags:
+- name: Devices
+paths:
+  /api/{projectId}/devices:
+    get:
+      summary: Lists devices
+      description: List all devices for this project. Devices get included here if they connect to the remote management API or if they have sent data to the ingestion API and had the `device_id` field set.
+      tags:
+      - Devices
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      operationId: listDevices
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDevicesResponse'
+  /api/{projectId}/device/{deviceId}:
+    get:
+      summary: Get device
+      description: Retrieves a single device
+      tags:
+      - Devices
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/DeviceIdParameter'
+      operationId: getDevice
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDeviceResponse'
+    delete:
+      summary: Delete device
+      description: Delete a device. When this device sends a new message to ingestion or connects to remote management the device will be recreated.
+      tags:
+      - Devices
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/DeviceIdParameter'
+      operationId: deleteDevice
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/{projectId}/device/{deviceId}/start-sampling:
+    post:
+      summary: Start sampling
+      description: Start sampling on a device. This function returns immediately. Updates are streamed through the websocket API.
+      tags:
+      - Devices
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/DeviceIdParameter'
+      operationId: startSampling
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartSamplingRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartSamplingResponse'
+  /api/{projectId}/device/{deviceId}/debug-stream/inference/start:
+    post:
+      summary: Start inference debug stream
+      description: Start an inference debug stream for this device with inference results (and images if a camera is attached). Updates are streamed through the websocket API. A keep-alive token is returned, you'll need to ping the API (with keepDeviceDebugStreamAlive) every 10 seconds (so we know when the client is disconnected).
+      tags:
+      - Devices
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/DeviceIdParameter'
+      operationId: startDeviceInferenceDebugStream
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartDeviceDebugStreamResponse'
+  /api/{projectId}/device/{deviceId}/debug-stream/snapshot/start:
+    post:
+      summary: Start snapshot debug stream
+      description: Start a snapshot debug stream for this device with a current camera view. Updates are streamed through the websocket API. A keep-alive token is returned, you'll need to ping the API (with keepDeviceDebugStreamAlive) every 10 seconds (so we know when the client is disconnected).
+      tags:
+      - Devices
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/DeviceIdParameter'
+      operationId: startDeviceSnapshotDebugStream
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartDeviceSnapshotDebugStreamRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartDeviceDebugStreamResponse'
+  /api/{projectId}/device/{deviceId}/debug-stream/keep-alive:
+    post:
+      summary: Keep debug stream alive
+      description: If you have opened a debug stream, ping this interface every 10 seconds to let us know to keep the debug stream open.
+      tags:
+      - Devices
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/DeviceIdParameter'
+      operationId: keepDeviceDebugStreamAlive
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KeepDeviceDebugStreamAliveRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/{projectId}/device/{deviceId}/debug-stream/stop:
+    post:
+      summary: Stop debug stream
+      description: If you have opened a debug stream, close it.
+      tags:
+      - Devices
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/DeviceIdParameter'
+      operationId: stopDeviceDebugStream
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StopDeviceDebugStreamRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/{projectId}/device/{deviceId}/get-impulse-records:
+    post:
+      summary: Get impulse records
+      description: Retrieve impulse records from the device.
+      tags:
+      - Devices
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/DeviceIdParameter'
+      operationId: getImpulseRecords
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetImpulseRecordsRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/{projectId}/devices/create:
+    post:
+      summary: Create device
+      description: Create a new device. If you set `ifNotExists` to `false` and the device already exists, the `deviceType` will be overwritten.
+      tags:
+      - Devices
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      operationId: createDevice
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDeviceRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/{projectId}/devices/{deviceId}/rename:
+    post:
+      summary: Rename device
+      description: Set the current name for a device.
+      tags:
+      - Devices
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/DeviceIdParameter'
+      operationId: renameDevice
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RenameDeviceRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/{projectId}/devices/{deviceId}/request-model-update:
+    post:
+      summary: Trigger model update request
+      description: Trigger a model update request, this only works for devices connected to remote management server in inference mode.
+      tags:
+      - Devices
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/DeviceIdParameter'
+      operationId: requestDeviceModelUpdate
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+components:
+  schemas:
+    StartDeviceSnapshotDebugStreamRequest:
+      type: object
+      required:
+      - resolution
+      properties:
+        resolution:
+          type: string
+          enum:
+          - high
+          - low
+    KeepDeviceDebugStreamAliveRequest:
+      type: object
+      required:
+      - streamId
+      properties:
+        streamId:
+          type: integer
+    RenameDeviceRequest:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: New name for this device
+          example: Jan's development board
+    StartDeviceDebugStreamResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - streamId
+        properties:
+          streamId:
+            type: integer
+    StartSamplingResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          id:
+            type: integer
+    StartSamplingRequest:
+      type: object
+      required:
+      - label
+      - lengthMs
+      - category
+      - intervalMs
+      properties:
+        label:
+          type: string
+          description: Label to be used during sampling.
+        lengthMs:
+          type: integer
+          description: Requested length of the sample (in ms).
+        category:
+          type: string
+          description: Which acquisition category to sample data into.
+          enum:
+          - training
+          - testing
+          - anomaly
+        intervalMs:
+          type: number
+          description: Interval between samples (can be calculated like `1/hz * 1000`)
+        sensor:
+          type: string
+          description: The sensor to sample from.
+    StopDeviceDebugStreamRequest:
+      type: object
+      required:
+      - streamId
+      properties:
+        streamId:
+          type: integer
+    GetDeviceResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          device:
+            $ref: '#/components/schemas/Device'
+    ListDevicesResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - devices
+        properties:
+          devices:
+            type: array
+            items:
+              $ref: '#/components/schemas/Device'
+    CreateDeviceRequest:
+      type: object
+      required:
+      - deviceId
+      - deviceType
+      - ifNotExists
+      properties:
+        deviceId:
+          type: string
+          description: Globally unique device identifier (e.g. MAC address)
+          example: ac:87:a3:0a:2d:1b
+        deviceType:
+          type: string
+          description: Device type, for example the exact model of the device. Should be the same for all similar devices
+          example: DISCO_L475VG_IOT01A
+        ifNotExists:
+          type: boolean
+          description: Whether to throw an error when this device already exists.
+    GetImpulseRecordsRequest:
+      type: object
+      properties:
+        index:
+          type: integer
+        range:
+          type: object
+          properties:
+            first:
+              type: integer
+            last:
+              type: integer
+        list:
+          type: array
+          items:
+            type: integer
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    Device:
+      type: object
+      required:
+      - id
+      - deviceId
+      - created
+      - lastSeen
+      - name
+      - deviceType
+      - sensors
+      - remote_mgmt_connected
+      - supportsSnapshotStreaming
+      - remoteMgmtMode
+      properties:
+        id:
+          type: integer
+          example: 1
+        deviceId:
+          type: string
+          description: Unique identifier (such as MAC address) for a device
+          example: 38:f9:d3:d7:62:03
+        created:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        lastSeen:
+          type: string
+          format: date-time
+          example: '2019-08-31T17:32:28Z'
+          description: Last message that was received from the device (ignoring keep-alive)
+        name:
+          type: string
+          example: m6d.1 desk sensor
+        deviceType:
+          type: string
+          example: DISCO-L475VG
+        sensors:
+          type: array
+          items:
+            type: object
+            required:
+            - name
+            - maxSampleLengthS
+            - frequencies
+            properties:
+              name:
+                type: string
+                example: Built-in accelerometer
+              maxSampleLengthS:
+                type: integer
+                description: Maximum supported sample length in seconds
+              frequencies:
+                type: array
+                description: Supported frequencies for this sensor in Hz.
+                example:
+                - 62.5
+                - 100
+                items:
+                  type: number
+        remote_mgmt_connected:
+          type: boolean
+          description: Whether the device is connected to the remote management interface. This property is deprecated, use `remoteMgmtMode` instead.
+        remote_mgmt_host:
+          type: string
+          description: The remote management host that the device is connected to
+        supportsSnapshotStreaming:
+          type: boolean
+        remoteMgmtMode:
+          description: Replaces `remote_mgmt_connected`. Shows whether the device is connected to the remote management interface, and in which mode.
+          type: string
+          enum:
+          - disconnected
+          - ingestion
+          - inference
+        inferenceInfo:
+          type: object
+          description: If `remoteMgmtMode` is set to `inference` this object shows information about the model that's ran on device.
+          required:
+          - projectId
+          - projectOwner
+          - projectName
+          - deployedVersion
+          properties:
+            projectId:
+              type: integer
+            projectOwner:
+              type: string
+            projectName:
+              type: string
+            deployedVersion:
+              type: integer
+            modelType:
+              type: string
+              enum:
+              - classification
+              - objectDetection
+              - constrainedObjectDetection
+  parameters:
+    DeviceIdParameter:
+      name: deviceId
+      in: path
+      required: true
+      description: Device ID
+      schema:
+        type: string
+    ProjectIdParameter:
+      name: projectId
+      in: path
+      required: true
+      description: Project ID
+      schema:
+        type: integer
+  securitySchemes:
+    ApiKeyAuthentication:
+      type: apiKey
+      in: header
+      name: x-api-key
+    JWTAuthentication:
+      type: apiKey
+      in: cookie
+      name: jwt
+    JWTHttpHeaderAuthentication:
+      type: apiKey
+      in: header
+      name: x-jwt-token

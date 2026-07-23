@@ -1,0 +1,632 @@
+openapi: 3.0.0
+info:
+  title: Edge Impulse Deployment API
+  version: 1.0.0
+servers:
+- url: https://studio.edgeimpulse.com/v1
+security:
+- ApiKeyAuthentication: []
+- JWTAuthentication: []
+- JWTHttpHeaderAuthentication: []
+tags:
+- name: Deployment
+paths:
+  /api/deployment/targets:
+    get:
+      summary: Deployment targets
+      description: List all deployment targets
+      operationId: listAllDeploymentTargets
+      tags:
+      - Deployment
+      x-middleware:
+      - AllowsReadOnly
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentTargetsResponse'
+  /api/{projectId}/deployment/targets:
+    get:
+      summary: Deployment targets
+      description: List deployment targets for a project
+      operationId: listDeploymentTargetsForProject
+      tags:
+      - Deployment
+      x-middleware:
+      - AllowsReadOnly
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDeploymentTargetsResponse'
+  /api/{projectId}/deployment/targets/data-sources:
+    get:
+      summary: Deployment targets (data sources)
+      description: List deployment targets for a project from data sources page  (it shows some things like all Linux deploys, and hides 'fake' deploy targets like mobile phone / computer)
+      operationId: listDeploymentTargetsForProjectDataSources
+      tags:
+      - Deployment
+      x-middleware:
+      - AllowsReadOnly
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeploymentTargetsResponse'
+  /api/{projectId}/deployment/evaluate:
+    get:
+      summary: Evaluate job result
+      description: Get evaluate job result, containing detailed performance statistics for every possible variant of the impulse.
+      operationId: getEvaluateJobResult
+      tags:
+      - Deployment
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluateJobResponse'
+  /api/{projectId}/deployment/evaluate/cache:
+    get:
+      summary: Check evaluate job result (cache)
+      description: Get evaluate job result, containing detailed performance statistics for every possible variant of the impulse. This only checks cache, and throws an error if there is no data in cache.
+      operationId: getEvaluateJobResultCache
+      tags:
+      - Deployment
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EvaluateJobResponse'
+  /api/{projectId}/deployment:
+    get:
+      summary: Get deployment info
+      description: Gives information on whether a deployment was already built for a type
+      operationId: getDeployment
+      tags:
+      - Deployment
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/DeploymentTypeParameter'
+      - $ref: '#/components/parameters/ModelTypeParameter'
+      - $ref: '#/components/parameters/ModelEngineParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDeploymentResponse'
+  /api/{projectId}/deployment/download:
+    get:
+      summary: Download
+      description: Download the build artefacts for a project
+      operationId: downloadBuild
+      tags:
+      - Deployment
+      x-middleware:
+      - AllowsReadOnly
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/DeploymentTypeParameter'
+      - $ref: '#/components/parameters/ModelTypeParameter'
+      - $ref: '#/components/parameters/ModelEngineParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      responses:
+        '200':
+          description: ZIP or BIN file
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+  /api/{projectId}/deployment/last:
+    get:
+      summary: Get information on the last deployment build
+      description: Get information on the result of the last successful deployment job, including info on the build e.g. whether it is still valid.
+      operationId: getLastDeploymentBuild
+      tags:
+      - Deployment
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetLastDeploymentBuildResponse'
+  /api/{projectId}/deployment/syntiant/posterior:
+    get:
+      summary: Get Syntiant posterior parameters
+      description: Get the current posterior parameters for the Syntiant deployment target
+      operationId: getSyntiantPosterior
+      tags:
+      - Deployment
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSyntiantPosteriorResponse'
+    post:
+      summary: Set Syntiant posterior parameters
+      description: Set the current posterior parameters for the Syntiant deployment target
+      operationId: setSyntiantPosterior
+      tags:
+      - Deployment
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetSyntiantPosteriorRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/{projectId}/jobs/find-syntiant-posterior:
+    post:
+      summary: Find Syntiant posterior parameters
+      description: Automatically find the current posterior parameters for the Syntiant deployment target
+      operationId: findSyntiantPosterior
+      tags:
+      - Deployment
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/FindSyntiantPosteriorRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartJobResponse'
+components:
+  schemas:
+    FindSyntiantPosteriorRequest:
+      type: object
+      required:
+      - targetWords
+      - referenceSet
+      properties:
+        targetWords:
+          type: array
+          items:
+            type: string
+        referenceSet:
+          type: string
+          enum:
+          - 600_seconds
+          - full
+          - custom
+          - no_calibration
+        wavFile:
+          type: string
+          format: binary
+        metaCsvFile:
+          type: string
+          format: binary
+        deploymentTarget:
+          type: string
+          enum:
+          - syntiant-ndp101
+          - syntiant-ndp101-lib
+          - syntiant-ndp120-lib
+          - syntiant-ndp120-lib-tdk-v14
+          - syntiant-nicla-ndp120
+          - syntiant-avnet-rasyn
+          - syntiant-ndp120-lib-ndp-v1-15-0
+    StartJobResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: Job identifier. Status updates will include this identifier.
+            example: 12873488112
+    ProjectDeploymentTarget:
+      allOf:
+      - $ref: '#/components/schemas/DeploymentTarget'
+      - type: object
+        required:
+        - recommendedForProject
+        - disabledForProject
+        properties:
+          recommendedForProject:
+            type: boolean
+            description: Whether this deployment target is recommended for the project based on connected devices.
+          disabledForProject:
+            type: boolean
+            description: Whether this deployment target is disabled for the project based on various attributes of the project.
+          reasonTargetDisabled:
+            type: string
+            description: If the deployment target is disabled for the project, this gives the reason why.
+    GetLastDeploymentBuildResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - hasBuild
+        properties:
+          hasBuild:
+            type: boolean
+            description: Does the deployment build still exist? (Builds are deleted if they are no longer valid for the project)
+          lastBuild:
+            type: object
+            required:
+            - version
+            - deploymentType
+            - engine
+            - created
+            properties:
+              version:
+                type: integer
+                description: The build version, incremented after each deployment build
+              deploymentType:
+                type: string
+                description: Deployment type of the build
+              engine:
+                $ref: '#/components/schemas/DeploymentTargetEngine'
+              modelType:
+                $ref: '#/components/schemas/KerasModelTypeEnum'
+              created:
+                type: string
+                format: date-time
+                description: The time this build was created
+          lastDeploymentTarget:
+            $ref: '#/components/schemas/ProjectDeploymentTarget'
+    ProjectDeploymentTargetsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - targets
+        properties:
+          targets:
+            type: array
+            items:
+              $ref: '#/components/schemas/ProjectDeploymentTarget'
+    EvaluateResultValue:
+      type: object
+      properties:
+        raw:
+          description: The value based on the model alone
+          type: number
+        withAnomaly:
+          description: The value including the result of anomaly detection
+          type: number
+    ModelVariantStats:
+      type: object
+      required:
+      - modelType
+      - learnBlockType
+      - learnBlockId
+      - confusionMatrix
+      - confusionMatrixRowHeaders
+      - confusionMatrixColumnHeaders
+      - accuracy
+      - trainingLabels
+      - classificationLabels
+      properties:
+        modelType:
+          description: The type of model
+          $ref: '#/components/schemas/KerasModelTypeEnum'
+        learnBlockId:
+          description: The learning block this model variant is from
+          type: integer
+        learnBlockType:
+          $ref: '#/components/schemas/LearnBlockType'
+        confusionMatrix:
+          description: A map from actual labels to predicted labels, where actual labels are listed in `trainingLabels` and possible predicted labels are listed in `classificationLabels`.
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: object
+              $ref: '#/components/schemas/EvaluateResultValue'
+        trainingLabels:
+          description: The labels present in the model's training data. These are all present in the first dimension of the confusion matrix.
+          type: array
+          items:
+            type: string
+        classificationLabels:
+          description: The possible labels resulting from classification. These may be present in the second dimension of the confusion matrix.
+          type: array
+          items:
+            type: string
+        totalWindowCount:
+          description: The total number of windows that were evaluated
+          type: integer
+        totalCorrectWindowCount:
+          description: The total number of windows that the model classified correctly
+          $ref: '#/components/schemas/EvaluateResultValue'
+        accuracy:
+          description: The model's accuracy as a percentage
+          $ref: '#/components/schemas/EvaluateResultValue'
+    DeploymentTargetEngine:
+      type: string
+      enum:
+      - tflite
+      - tflite-eon
+      - tflite-eon-ram-optimized
+      - tensorrt
+      - tensaiflow
+      - drp-ai
+      - tidl
+      - akida
+      - syntiant
+      - memryx
+      - neox
+      - ethos-linux
+      - st-aton
+    GetSyntiantPosteriorResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - hasPosteriorParameters
+        properties:
+          hasPosteriorParameters:
+            type: boolean
+          parameters:
+            type: object
+    EvaluateJobResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - result
+        properties:
+          result:
+            type: array
+            items:
+              $ref: '#/components/schemas/ModelVariantStats'
+    SetSyntiantPosteriorRequest:
+      type: object
+      required:
+      - parameters
+      properties:
+        parameters:
+          type: object
+    DeploymentTargetsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - targets
+        properties:
+          targets:
+            type: array
+            items:
+              $ref: '#/components/schemas/DeploymentTarget'
+    DeploymentTarget:
+      type: object
+      required:
+      - name
+      - description
+      - image
+      - imageClasses
+      - format
+      - hasEonCompiler
+      - hasTensorRT
+      - hasTensaiFlow
+      - hasDRPAI
+      - hasTIDL
+      - hasAkida
+      - hasMemryx
+      - hasStAton
+      - hideOptimizations
+      - uiSection
+      - supportedEngines
+      - preferredEngine
+      - docsUrl
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        image:
+          type: string
+        imageClasses:
+          type: string
+        format:
+          type: string
+        latencyDevice:
+          type: string
+        hasEonCompiler:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasTensorRT:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasTensaiFlow:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasDRPAI:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasTIDL:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasAkida:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasMemryx:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasStAton:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hideOptimizations:
+          type: boolean
+        badge:
+          type: object
+          required:
+          - name
+          - description
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+        uiSection:
+          type: string
+          enum:
+          - library
+          - firmware
+          - mobile
+          - hidden
+        customDeployId:
+          type: integer
+        integrateUrl:
+          type: string
+        ownerOrganizationName:
+          type: string
+        supportedEngines:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentTargetEngine'
+        preferredEngine:
+          $ref: '#/components/schemas/DeploymentTargetEngine'
+        url:
+          type: string
+        docsUrl:
+          type: string
+        firmwareRepoUrl:
+          type: string
+    KerasModelTypeEnum:
+      type: string
+      enum:
+      - int8
+      - float32
+      - akida
+      - requiresRetrain
+    LearnBlockType:
+      type: string
+      description: The type of learning block (anomaly, keras, keras-transfer-image, keras-transfer-kws, keras-object-detection, keras-regression). Each behaves differently.
+      enum:
+      - anomaly
+      - anomaly-gmm
+      - keras
+      - keras-transfer-image
+      - keras-transfer-kws
+      - keras-object-detection
+      - keras-regression
+      - keras-akida
+      - keras-akida-transfer-image
+      - keras-akida-object-detection
+      - keras-visual-anomaly
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    GetDeploymentResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - hasDeployment
+        properties:
+          hasDeployment:
+            type: boolean
+          version:
+            type: integer
+  parameters:
+    ModelEngineParameter:
+      name: engine
+      in: query
+      required: false
+      description: Optional engine for the build (if not, it uses the default engine for the deployment target)
+      schema:
+        $ref: '#/components/schemas/DeploymentTargetEngine'
+    ModelTypeParameter:
+      name: modelType
+      in: query
+      required: false
+      description: Optional model type of the build (if not, it uses the settings in the Keras block)
+      schema:
+        $ref: '#/components/schemas/KerasModelTypeEnum'
+    ProjectIdParameter:
+      name: projectId
+      in: path
+      required: true
+      description: Project ID
+      schema:
+        type: integer
+    OptionalImpulseIdParameter:
+      name: impulseId
+      in: query
+      required: false
+      description: Impulse ID. If this is unset then the default impulse is used.
+      schema:
+        type: integer
+    DeploymentTypeParameter:
+      name: type
+      in: query
+      required: true
+      description: The name of the built target. You can find this by listing all deployment targets through `listDeploymentTargetsForProject` (via `GET /v1/api/{projectId}/deployment/targets`) and see the `format` type.
+      schema:
+        type: string
+  securitySchemes:
+    ApiKeyAuthentication:
+      type: apiKey
+      in: header
+      name: x-api-key
+    JWTAuthentication:
+      type: apiKey
+      in: cookie
+      name: jwt
+    JWTHttpHeaderAuthentication:
+      type: apiKey
+      in: header
+      name: x-jwt-token

@@ -1,0 +1,295 @@
+openapi: 3.0.0
+info:
+  title: Edge Impulse Themes API
+  version: 1.0.0
+servers:
+- url: https://studio.edgeimpulse.com/v1
+security:
+- ApiKeyAuthentication: []
+- JWTAuthentication: []
+- JWTHttpHeaderAuthentication: []
+tags:
+- name: Themes
+paths:
+  /api/themes:
+    get:
+      summary: Get themes
+      description: Get all available Studio themes.
+      operationId: getThemes
+      x-internal-api: true
+      tags:
+      - Themes
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetThemesResponse'
+  /api/themes/{themeId}:
+    get:
+      summary: Get theme by ID
+      description: Get a theme given its unique identifier.
+      operationId: getTheme
+      x-internal-api: true
+      tags:
+      - Themes
+      parameters:
+      - $ref: '#/components/parameters/ThemeIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetThemeResponse'
+    delete:
+      summary: Delete theme by ID
+      description: Delete a theme given its unique identifier.
+      operationId: deleteTheme
+      x-internal-api: true
+      tags:
+      - Themes
+      parameters:
+      - $ref: '#/components/parameters/ThemeIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/themes/{themeId}/logos:
+    post:
+      summary: Update theme logos
+      description: Update some or all theme logos.
+      operationId: updateThemeLogos
+      x-internal-api: true
+      tags:
+      - Themes
+      parameters:
+      - $ref: '#/components/parameters/ThemeIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateThemeLogosRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/themes/{themeId}/colors:
+    post:
+      summary: Update theme colors
+      description: Update some or all theme colors.
+      operationId: updateThemeColors
+      x-internal-api: true
+      tags:
+      - Themes
+      parameters:
+      - $ref: '#/components/parameters/ThemeIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateThemeColorsRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/themes/{themeId}/favicon:
+    post:
+      summary: Update theme favicon
+      description: Update the theme favicon
+      operationId: updateThemeFavicon
+      x-internal-api: true
+      tags:
+      - Themes
+      parameters:
+      - $ref: '#/components/parameters/ThemeIdParameter'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UploadImageRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+components:
+  schemas:
+    GetThemesResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - themes
+        properties:
+          themes:
+            type: array
+            items:
+              $ref: '#/components/schemas/Theme'
+    GetThemeResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          theme:
+            $ref: '#/components/schemas/Theme'
+    UploadImageRequest:
+      type: object
+      required:
+      - image
+      properties:
+        image:
+          type: string
+          format: binary
+    Theme:
+      type: object
+      required:
+      - id
+      - name
+      - favicon
+      - logos
+      - colors
+      properties:
+        id:
+          type: integer
+        ownerUserId:
+          type: integer
+        ownerOrganizationId:
+          type: integer
+        name:
+          type: string
+        favicon:
+          type: object
+          properties:
+            favicon32:
+              type: string
+            favicon57:
+              type: string
+            favicon76:
+              type: string
+            favicon96:
+              type: string
+            favicon120:
+              type: string
+            favicon128:
+              type: string
+            favicon144:
+              type: string
+            favicon152:
+              type: string
+            favicon180:
+              type: string
+            favicon228:
+              type: string
+        logos:
+          type: object
+          properties:
+            primary:
+              type: string
+            primaryPng:
+              type: string
+            primaryWhite:
+              type: string
+            loginLogo:
+              type: string
+            loginLogoWhite:
+              type: string
+            mark:
+              type: string
+            markWhite:
+              type: string
+            deviceLogo:
+              type: string
+        colors:
+          type: object
+          properties:
+            primaryColor:
+              type: string
+            primaryColorRgb:
+              type: array
+              items:
+                type: number
+            primaryColorGradientEnd:
+              type: string
+    UpdateThemeColorsRequest:
+      type: object
+      description: Only fields set in this object will be updated.
+      properties:
+        primaryColor:
+          type: string
+          description: Primary color in hex format
+        primaryColorGradientEnd:
+          type: string
+          description: Primary color gradient end in hex format
+    UpdateThemeLogosRequest:
+      type: object
+      description: Only fields set in this object will be updated.
+      properties:
+        primary:
+          type: string
+          description: Primary logo URL
+        primaryWhite:
+          type: string
+          description: Primary logo for dark background URL
+        login:
+          type: string
+          description: Login logo URL
+        loginWhite:
+          type: string
+          description: Login logo for dark background URL
+        mark:
+          type: string
+          description: Mark URL
+        markWhite:
+          type: string
+          description: Mark for dark background URL
+        deviceLogo:
+          type: string
+          description: Device logo URL
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+  parameters:
+    ThemeIdParameter:
+      name: themeId
+      in: path
+      required: true
+      description: Theme ID
+      schema:
+        type: integer
+  securitySchemes:
+    ApiKeyAuthentication:
+      type: apiKey
+      in: header
+      name: x-api-key
+    JWTAuthentication:
+      type: apiKey
+      in: cookie
+      name: jwt
+    JWTHttpHeaderAuthentication:
+      type: apiKey
+      in: header
+      name: x-jwt-token

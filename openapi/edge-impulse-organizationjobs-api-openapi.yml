@@ -1,0 +1,434 @@
+openapi: 3.0.0
+info:
+  title: Edge Impulse OrganizationJobs API
+  version: 1.0.0
+servers:
+- url: https://studio.edgeimpulse.com/v1
+security:
+- ApiKeyAuthentication: []
+- JWTAuthentication: []
+- JWTHttpHeaderAuthentication: []
+tags:
+- name: OrganizationJobs
+paths:
+  /api/organizations/{organizationId}/jobs:
+    get:
+      summary: List active jobs
+      description: Get all active jobs for this organization
+      operationId: listActiveOrganizationJobs
+      tags:
+      - OrganizationJobs
+      x-middleware:
+      - OrganizationAllowDeveloperProfile
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OnlyRootJobsParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListJobsResponse'
+  /api/organizations/{organizationId}/jobs/history:
+    get:
+      summary: List finished jobs
+      description: Get all finished jobs for this organization
+      operationId: listFinishedOrganizationJobs
+      tags:
+      - OrganizationJobs
+      x-middleware:
+      - OrganizationAllowDeveloperProfile
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OptionalStartDateParameter'
+      - $ref: '#/components/parameters/OptionalEndDateParameter'
+      - $ref: '#/components/parameters/LimitResultsParameter'
+      - $ref: '#/components/parameters/OffsetResultsParameter'
+      - $ref: '#/components/parameters/OnlyRootJobsParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListJobsResponse'
+  /api/organizations/{organizationId}/jobs/all:
+    get:
+      summary: List all jobs
+      description: Get all jobs for this organization
+      operationId: listAllOrganizationJobs
+      tags:
+      - OrganizationJobs
+      x-middleware:
+      - OrganizationAllowDeveloperProfile
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/OptionalStartDateParameter'
+      - $ref: '#/components/parameters/OptionalEndDateParameter'
+      - $ref: '#/components/parameters/LimitResultsParameter'
+      - $ref: '#/components/parameters/OffsetResultsParameter'
+      - $ref: '#/components/parameters/ExcludePipelineTransformationJobsParameter'
+      - $ref: '#/components/parameters/OnlyRootJobsParameter'
+      - $ref: '#/components/parameters/OptionalJobsKeyParameter'
+      - $ref: '#/components/parameters/OptionalJobsCategoryParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListJobsResponse'
+  /api/organizations/{organizationId}/jobs/{jobId}/cancel:
+    post:
+      summary: Cancel job
+      description: Cancel a running job.
+      operationId: cancelOrganizationJob
+      tags:
+      - OrganizationJobs
+      x-middleware:
+      - OrganizationAllowDeveloperProfile
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/JobIdParameter'
+      - $ref: '#/components/parameters/ForceCancelParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/organizations/{organizationId}/jobs/{jobId}/status:
+    get:
+      summary: Get job status
+      description: Get the status for a job.
+      operationId: getOrganizationJobStatus
+      tags:
+      - OrganizationJobs
+      x-middleware:
+      - OrganizationAllowDeveloperProfile
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/JobIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetJobResponse'
+  /api/organizations/{organizationId}/jobs/{jobId}/stdout:
+    get:
+      summary: Get logs
+      description: Get the logs for a job.
+      operationId: getOrganizationJobsLogs
+      tags:
+      - OrganizationJobs
+      x-middleware:
+      - OrganizationAllowDeveloperProfile
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/JobIdParameter'
+      - $ref: '#/components/parameters/LimitResultsParameter'
+      - $ref: '#/components/parameters/LogLevelParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogStdoutResponse'
+  /api/organizations/{organizationId}/jobs/{jobId}/stdout/download:
+    get:
+      summary: Download logs
+      description: Download the logs for a job (as a text file).
+      operationId: downloadOrganizationJobsLogs
+      tags:
+      - OrganizationJobs
+      x-middleware:
+      - OrganizationAllowDeveloperProfile
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      - $ref: '#/components/parameters/JobIdParameter'
+      - $ref: '#/components/parameters/LimitResultsParameter'
+      - $ref: '#/components/parameters/LogLevelParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+  /api/organizations/{organizationId}/socket-token:
+    get:
+      summary: Get socket token for an organization
+      description: Get a token to authenticate with the web socket interface.
+      tags:
+      - OrganizationJobs
+      x-middleware:
+      - OrganizationAllowDeveloperProfile
+      parameters:
+      - $ref: '#/components/parameters/OrganizationIdParameter'
+      operationId: getOrganizationSocketToken
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SocketTokenResponse'
+components:
+  schemas:
+    Job:
+      type: object
+      required:
+      - id
+      - key
+      - created
+      - category
+      - jobNotificationUids
+      properties:
+        id:
+          type: integer
+          description: Job id, use this to refer back to the job. The web socket API also uses this ID.
+        category:
+          type: string
+        key:
+          type: string
+          description: 'External job identifier, this can be used to categorize jobs, and recover job status. E.g. set this to ''keras-192'' for a Keras learning block with ID 192. When a user refreshes the page you can check whether a job is active for this ID and re-attach.
+
+            '
+        created:
+          type: string
+          format: date-time
+          description: When the job was created.
+        started:
+          type: string
+          format: date-time
+          description: When the job was started.
+        finished:
+          type: string
+          format: date-time
+          description: When the job was finished.
+        finishedSuccessful:
+          type: boolean
+          description: Whether the job finished successfully.
+        jobNotificationUids:
+          type: array
+          description: The IDs of users who should be notified when a job is finished.
+          items:
+            type: integer
+        additionalInfo:
+          type: string
+          description: Additional metadata associated with this job.
+        computeTime:
+          type: number
+          description: Job duration time in seconds from start to finished, measured by k8s job watcher.
+        createdByUser:
+          type: object
+          required:
+          - id
+          - name
+          - username
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            username:
+              type: string
+            photo:
+              type: string
+        categoryCount:
+          type: integer
+          description: Some job categories keep a counter on the job number, e.g. in synthetic data, so we know what the 1st, 2nd etc. job was in the UI.
+    LogStdoutResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - stdout
+        - totalCount
+        properties:
+          stdout:
+            type: array
+            items:
+              type: object
+              required:
+              - created
+              - data
+              properties:
+                created:
+                  type: string
+                  format: date-time
+                data:
+                  type: string
+                logLevel:
+                  type: string
+                  enum:
+                  - error
+                  - warn
+                  - info
+                  - debug
+          totalCount:
+            type: integer
+            description: Total number of logs (only the last 1000 lines are returned)
+    SocketTokenResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - token
+        properties:
+          token:
+            type: object
+            required:
+            - socketToken
+            - expires
+            properties:
+              socketToken:
+                type: string
+              expires:
+                type: string
+                format: date-time
+    ListJobsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - jobs
+        - totalJobCount
+        properties:
+          jobs:
+            type: array
+            description: Active jobs
+            items:
+              $ref: '#/components/schemas/Job'
+          totalJobCount:
+            type: integer
+    GetJobResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - job
+        properties:
+          job:
+            $ref: '#/components/schemas/Job'
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+  parameters:
+    LogLevelParameter:
+      name: logLevel
+      in: query
+      required: false
+      description: Log level (error, warn, info, debug)
+      schema:
+        type: string
+        enum:
+        - error
+        - warn
+        - info
+        - debug
+    OptionalStartDateParameter:
+      name: startDate
+      in: query
+      required: false
+      description: Start date
+      schema:
+        type: string
+        format: date-time
+    OptionalJobsKeyParameter:
+      name: key
+      in: query
+      required: false
+      description: Job key to filter on
+      schema:
+        type: string
+    OptionalJobsCategoryParameter:
+      name: category
+      in: query
+      required: false
+      description: Job category to filter on
+      schema:
+        type: string
+    ExcludePipelineTransformationJobsParameter:
+      name: excludePipelineTransformJobs
+      in: query
+      required: false
+      description: Whether to exclude pipeline / transformation jobs
+      schema:
+        type: boolean
+    JobIdParameter:
+      name: jobId
+      in: path
+      required: true
+      description: Job ID
+      schema:
+        type: integer
+    OffsetResultsParameter:
+      name: offset
+      in: query
+      required: false
+      description: Offset in results, can be used in conjunction with LimitResultsParameter to implement paging.
+      schema:
+        type: integer
+    OnlyRootJobsParameter:
+      name: rootOnly
+      in: query
+      required: false
+      description: Whether to exclude jobs with a parent ID (so jobs started as part of another job)
+      schema:
+        type: boolean
+    LimitResultsParameter:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of results
+      schema:
+        type: integer
+    OrganizationIdParameter:
+      name: organizationId
+      in: path
+      required: true
+      description: Organization ID
+      schema:
+        type: integer
+    ForceCancelParameter:
+      name: forceCancel
+      in: query
+      required: false
+      description: If set to 'true', we won't wait for the job cluster to cancel the job, and will mark the job as finished.
+      schema:
+        type: string
+    OptionalEndDateParameter:
+      name: endDate
+      in: query
+      required: false
+      description: End date
+      schema:
+        type: string
+        format: date-time
+  securitySchemes:
+    ApiKeyAuthentication:
+      type: apiKey
+      in: header
+      name: x-api-key
+    JWTAuthentication:
+      type: apiKey
+      in: cookie
+      name: jwt
+    JWTHttpHeaderAuthentication:
+      type: apiKey
+      in: header
+      name: x-jwt-token

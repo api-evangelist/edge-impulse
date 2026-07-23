@@ -1,0 +1,67 @@
+openapi: 3.0.0
+info:
+  title: Edge Impulse Auth API
+  version: 1.0.0
+servers:
+- url: https://studio.edgeimpulse.com/v1
+security:
+- ApiKeyAuthentication: []
+- JWTAuthentication: []
+- JWTHttpHeaderAuthentication: []
+tags:
+- name: Auth
+paths:
+  /api/auth/discourse:
+    get:
+      summary: Discourse
+      description: Log in a user to the forum. This function is only available through a JWT token.
+      operationId: discourse
+      x-internal-api: true
+      tags:
+      - Auth
+      parameters:
+      - $ref: '#/components/parameters/DiscourseSsoParameter'
+      - $ref: '#/components/parameters/DiscourseSigParameter'
+      responses:
+        '302':
+          description: Discourse SSO link
+  /api/auth/readme:
+    get:
+      summary: Readme.io
+      description: Log in a user to the docs. This function is only available through a JWT token.
+      operationId: readme
+      x-internal-api: true
+      tags:
+      - Auth
+      responses:
+        '302':
+          description: Readme.io SSO link
+components:
+  parameters:
+    DiscourseSsoParameter:
+      name: sso
+      in: query
+      required: true
+      description: Single sign-on token
+      schema:
+        type: string
+    DiscourseSigParameter:
+      name: sig
+      in: query
+      required: true
+      description: Verification signature
+      schema:
+        type: string
+  securitySchemes:
+    ApiKeyAuthentication:
+      type: apiKey
+      in: header
+      name: x-api-key
+    JWTAuthentication:
+      type: apiKey
+      in: cookie
+      name: jwt
+    JWTHttpHeaderAuthentication:
+      type: apiKey
+      in: header
+      name: x-jwt-token

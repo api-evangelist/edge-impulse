@@ -1,0 +1,95 @@
+openapi: 3.0.0
+info:
+  title: Edge Impulse Health API
+  version: 1.0.0
+servers:
+- url: https://studio.edgeimpulse.com/v1
+security:
+- ApiKeyAuthentication: []
+- JWTAuthentication: []
+- JWTHttpHeaderAuthentication: []
+tags:
+- name: Health
+paths:
+  /api-health:
+    get:
+      summary: Get studio web containers health
+      security: []
+      x-internal-api: true
+      description: Get studio web containers health.
+      tags:
+      - Health
+      parameters:
+      - $ref: '#/components/parameters/HealthCheckRequesterParameter'
+      operationId: health
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+        '503':
+          description: Unhealthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/api-health:
+    get:
+      summary: Get studio api containers health
+      security: []
+      x-internal-api: true
+      description: Get studio api containers health.
+      tags:
+      - Health
+      parameters:
+      - $ref: '#/components/parameters/HealthCheckRequesterParameter'
+      operationId: apiHealth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+        '503':
+          description: Unhealthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+components:
+  schemas:
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+  parameters:
+    HealthCheckRequesterParameter:
+      name: requester
+      in: query
+      required: false
+      description: Health check requester
+      schema:
+        type: string
+  securitySchemes:
+    ApiKeyAuthentication:
+      type: apiKey
+      in: header
+      name: x-api-key
+    JWTAuthentication:
+      type: apiKey
+      in: cookie
+      name: jwt
+    JWTHttpHeaderAuthentication:
+      type: apiKey
+      in: header
+      name: x-jwt-token

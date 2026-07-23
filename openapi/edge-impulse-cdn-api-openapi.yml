@@ -1,0 +1,53 @@
+openapi: 3.0.0
+info:
+  title: Edge Impulse CDN API
+  version: 1.0.0
+servers:
+- url: https://studio.edgeimpulse.com/v1
+security:
+- ApiKeyAuthentication: []
+- JWTAuthentication: []
+- JWTHttpHeaderAuthentication: []
+tags:
+- name: CDN
+paths:
+  /api-usercdn:
+    get:
+      summary: User CDN resource
+      description: Proxy function to retrieve data from the user CDN. This function is only used during development.
+      x-internal-api: true
+      operationId: getUserCDNResource
+      security: []
+      tags:
+      - CDN
+      parameters:
+      - $ref: '#/components/parameters/CDNPathParameter'
+      responses:
+        '200':
+          description: Image
+          content:
+            image/jpeg:
+              schema:
+                type: string
+components:
+  parameters:
+    CDNPathParameter:
+      name: path
+      in: query
+      required: true
+      description: CDN Path
+      schema:
+        type: string
+  securitySchemes:
+    ApiKeyAuthentication:
+      type: apiKey
+      in: header
+      name: x-api-key
+    JWTAuthentication:
+      type: apiKey
+      in: cookie
+      name: jwt
+    JWTHttpHeaderAuthentication:
+      type: apiKey
+      in: header
+      name: x-jwt-token

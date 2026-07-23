@@ -1,0 +1,620 @@
+openapi: 3.0.0
+info:
+  title: Edge Impulse PerformanceCalibration API
+  version: 1.0.0
+servers:
+- url: https://studio.edgeimpulse.com/v1
+security:
+- ApiKeyAuthentication: []
+- JWTAuthentication: []
+- JWTHttpHeaderAuthentication: []
+tags:
+- name: PerformanceCalibration
+paths:
+  /api/{projectId}/performance-calibration/status:
+    get:
+      summary: Get status
+      description: Get performance calibration status
+      operationId: getPerformanceCalibrationStatus
+      tags:
+      - PerformanceCalibration
+      x-middleware:
+      - AllowsReadOnly
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPerformanceCalibrationStatusResponse'
+  /api/{projectId}/performance-calibration/ground-truth:
+    get:
+      summary: Get ground truth
+      description: Get performance calibration ground truth data
+      operationId: getPerformanceCalibrationGroundTruth
+      tags:
+      - PerformanceCalibration
+      x-middleware:
+      - AllowsReadOnly
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPerformanceCalibrationGroundTruthResponse'
+  /api/{projectId}/performance-calibration/raw-result:
+    get:
+      summary: Get raw result
+      description: Get performance calibration raw result
+      operationId: getPerformanceCalibrationRawResult
+      tags:
+      - PerformanceCalibration
+      x-middleware:
+      - AllowsReadOnly
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      responses:
+        '200':
+          description: File
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPerformanceCalibrationRawResultResponse'
+  /api/{projectId}/performance-calibration/parameter-sets:
+    get:
+      summary: Get parameter sets
+      description: Get performance calibration parameter sets
+      operationId: getPerformanceCalibrationParameterSets
+      tags:
+      - PerformanceCalibration
+      x-middleware:
+      - AllowsReadOnly
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      responses:
+        '200':
+          description: File
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPerformanceCalibrationParameterSetsResponse'
+  /api/{projectId}/performance-calibration/parameters:
+    get:
+      summary: Get parameters
+      description: Get performance calibration stored parameters
+      operationId: getPerformanceCalibrationSavedParameters
+      tags:
+      - PerformanceCalibration
+      x-middleware:
+      - AllowsReadOnly
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPerformanceCalibrationParametersResponse'
+    post:
+      summary: Save performance calibration parameters
+      description: Set the current performance calibration parameters
+      operationId: setPerformanceCalibrationSavedParameters
+      tags:
+      - PerformanceCalibration
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PerformanceCalibrationSaveParameterSetRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+    delete:
+      summary: Clear performance calibration parameters
+      description: Clears the current performance calibration parameters
+      operationId: deletePerformanceCalibrationSavedParameters
+      tags:
+      - PerformanceCalibration
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/{projectId}/performance-calibration/wav:
+    get:
+      summary: Get WAV file
+      description: Get the synthetic sample as a WAV file
+      operationId: getWavFile
+      tags:
+      - PerformanceCalibration
+      x-middleware:
+      - SupportsRange
+      - AllowsReadOnly
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      responses:
+        '200':
+          description: Wav file
+          content:
+            audio/wav:
+              schema:
+                type: string
+                format: binary
+  /api/{projectId}/performance-calibration/files:
+    post:
+      summary: Upload Performance Calibration Audio files
+      description: Upload a zip files with a wav file and its Label metadata to run performance calibration on it.
+      operationId: uploadLabeledAudio
+      tags:
+      - PerformanceCalibration
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PerformanceCalibrationUploadLabeledAudioRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PerformanceCalibrationUploadLabeledAudioResponse'
+  /api/{projectId}/performance-calibration/clear:
+    post:
+      summary: Clear Performance Calibration state
+      description: Deletes all state related to performance calibration (used in tests for example).
+      operationId: clearPerformanceCalibrationState
+      tags:
+      - PerformanceCalibration
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+  /api/{projectId}/post-processing/results:
+    get:
+      summary: Get post processing results
+      description: Get results of most recent post processing run
+      operationId: getPostProcessingResults
+      tags:
+      - PerformanceCalibration
+      x-middleware:
+      - AllowsReadOnly
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPostProcessingResultsResponse'
+components:
+  schemas:
+    GetPerformanceCalibrationRawResultResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - detections
+        properties:
+          detections:
+            type: array
+            items:
+              $ref: '#/components/schemas/PerformanceCalibrationRawDetection'
+    PerformanceCalibrationGroundTruth:
+      type: object
+      required:
+      - type
+      - labelIdx
+      - labelString
+      - start
+      - length
+      properties:
+        type:
+          type: string
+          description: Whether this region is a single sample, a region of background noise, or a region of background noise that contains samples.
+          enum:
+          - sample
+          - noise
+          - combined_noise
+        labelIdx:
+          type: integer
+          description: Index of the label in the array of all labels
+        labelString:
+          type: string
+          description: String label of the sample
+        start:
+          type: integer
+          description: The start time of the region in milliseconds
+        length:
+          type: integer
+          description: The length of the region in milliseconds
+        samples:
+          type: array
+          description: If the region contains samples, all the samples within this region
+          items:
+            type: object
+            required:
+            - id
+            - start
+            - length
+            - idx
+            properties:
+              id:
+                type: integer
+                description: The ID of the samples in Studio
+              start:
+                type: number
+                description: The start time of the sample in milliseconds
+              length:
+                type: number
+                description: The length of the sample in milliseconds
+              idx:
+                type: integer
+                description: For debugging. The index of the sample in the original Y array.
+    PerformanceCalibrationDetection:
+      type: object
+      required:
+      - time
+      - label
+      properties:
+        time:
+          type: integer
+          description: The time of the detection in milliseconds
+        label:
+          type: string
+          description: The label that was detected
+    PerformanceCalibrationRawDetection:
+      type: object
+      required:
+      - start
+      - end
+      - result
+      properties:
+        start:
+          type: integer
+          description: The start time of the detected window in milliseconds
+        end:
+          type: integer
+          description: The end time of the detected window in milliseconds
+        result:
+          type: array
+          items:
+            type: number
+    PerformanceCalibrationParameterSet:
+      type: object
+      required:
+      - detections
+      - isBest
+      - labels
+      - stats
+      - aggregateStats
+      - params
+      - windowSizeMs
+      properties:
+        detections:
+          type: array
+          description: All of the detections using this parameter set
+          items:
+            $ref: '#/components/schemas/PerformanceCalibrationDetection'
+        isBest:
+          type: boolean
+          description: Whether this is considered the best parameter set
+        labels:
+          type: array
+          description: All of the possible labels in the detections array
+          items:
+            type: string
+        aggregateStats:
+          type: object
+          required:
+          - falsePositiveRate
+          - falseNegativeRate
+          properties:
+            falsePositiveRate:
+              type: number
+            falseNegativeRate:
+              type: number
+        stats:
+          type: array
+          items:
+            type: object
+            required:
+            - label
+            - truePositives
+            - falsePositives
+            - falseNegatives
+            - trueNegatives
+            - falsePositiveRate
+            - falseNegativeRate
+            - wrongMatches
+            - falsePositiveTimes
+            - falseNegativeTimes
+            properties:
+              label:
+                type: string
+              truePositives:
+                type: integer
+              falsePositives:
+                type: integer
+              falseNegatives:
+                type: integer
+              trueNegatives:
+                type: integer
+              falsePositiveRate:
+                type: number
+              falseNegativeRate:
+                type: number
+              falsePositiveDetails:
+                type: array
+                description: The details of every false positive detection.
+                items:
+                  $ref: '#/components/schemas/PerformanceCalibrationFalsePositive'
+              falseNegativeTimes:
+                type: array
+                description: The times in ms at which false negatives occurred. These correspond to specific items in the ground truth.
+                items:
+                  type: number
+        params:
+          $ref: '#/components/schemas/PerformanceCalibrationParameters'
+        windowSizeMs:
+          type: number
+          description: The size of the input block window in milliseconds.
+    PerformanceCalibrationParameters:
+      type: object
+      required:
+      - type
+      - version
+      properties:
+        type:
+          type: string
+          description: The post-processing algorithm type.
+          enum:
+          - standard
+        version:
+          type: integer
+          description: The version number of the post-processing algorithm.
+          example: 1
+        parametersStandard:
+          $ref: '#/components/schemas/PerformanceCalibrationParametersStandard'
+    PerformanceCalibrationUploadLabeledAudioRequest:
+      type: object
+      required:
+      - zip
+      properties:
+        zip:
+          type: string
+          format: binary
+    StartPerformanceCalibrationRequest:
+      type: object
+      required:
+      - backgroundNoiseLabel
+      properties:
+        backgroundNoiseLabel:
+          type: string
+          description: The label used to signify background noise in the impulse
+        otherNoiseLabels:
+          type: array
+          items:
+            type: string
+          description: Any other labels that should be considered equivalent to background noise
+        uploadKey:
+          type: string
+          description: The key of an uploaded sample. If not present, a synthetic sample will be created.
+        sampleLengthMinutes:
+          type: number
+          description: The length of sample to create (required for synthetic samples)
+    PerformanceCalibrationParametersStandard:
+      type: object
+      required:
+      - averageWindowDurationMs
+      - detectionThreshold
+      - suppressionMs
+      properties:
+        averageWindowDurationMs:
+          type: number
+          description: The length of the averaging window in milliseconds.
+          example: 1000
+        detectionThreshold:
+          type: number
+          description: The minimum threshold for detection, from 0-1.
+          example: 0.8
+        suppressionMs:
+          type: number
+          description: The amount of time new matches will be ignored after a positive result.
+          example: 500
+    GetPerformanceCalibrationParameterSetsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - parameterSets
+        properties:
+          parameterSets:
+            type: array
+            items:
+              $ref: '#/components/schemas/PerformanceCalibrationParameterSet'
+    GetPostProcessingResultsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - variableNames
+        - objectiveNames
+        - variables
+        - objectives
+        properties:
+          variableNames:
+            type: array
+            description: The names of the variables being tuned, in column order.
+            items:
+              type: string
+          objectiveNames:
+            type: array
+            description: The names of the objectives being minimized, in column order.
+            items:
+              type: string
+          variables:
+            type: array
+            description: The variable values representing the pareto front of optimal solutions.
+            items:
+              type: array
+              items:
+                type: number
+          objectives:
+            type: array
+            description: The objective values that correspond with the variables.
+            items:
+              type: array
+              items:
+                type: number
+    PerformanceCalibrationFalsePositive:
+      type: object
+      required:
+      - type
+      - detectionTime
+      properties:
+        type:
+          type: string
+          enum:
+          - incorrect
+          - duplicate
+          - spurious
+          description: The type of false positive. Incorrect is when a detection matches the wrong ground truth. Duplicate is when the same ground truth was detected more than once. The first correct detection is considered a true positive but subsequent detections are considered false positives. Spurious is when the detection was not associated with any ground truth.
+        detectionTime:
+          type: integer
+          description: The time of the detection in milliseconds
+        groundTruthLabel:
+          type: string
+          description: The label of any associated ground truth
+        groundTruthStart:
+          type: number
+          description: The start time of any associated ground truth
+        sampleIds:
+          type: array
+          description: All of the sample IDs in the affected region
+          items:
+            type: integer
+    PerformanceCalibrationSaveParameterSetRequest:
+      type: object
+      required:
+      - params
+      properties:
+        params:
+          $ref: '#/components/schemas/PerformanceCalibrationParameters'
+    GetPerformanceCalibrationGroundTruthResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - samples
+        properties:
+          samples:
+            type: array
+            items:
+              $ref: '#/components/schemas/PerformanceCalibrationGroundTruth'
+    PerformanceCalibrationUploadLabeledAudioResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - uploadKey
+        properties:
+          uploadKey:
+            type: string
+    GetPerformanceCalibrationStatusResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - available
+        properties:
+          available:
+            type: boolean
+          unsupportedProjectError:
+            type: string
+            description: If the current project is unsupported by performance calibration, this field explains the reason why. Otherwise, it is undefined.
+          options:
+            $ref: '#/components/schemas/StartPerformanceCalibrationRequest'
+    GetPerformanceCalibrationParametersResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          params:
+            $ref: '#/components/schemas/PerformanceCalibrationParameters'
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+  parameters:
+    ProjectIdParameter:
+      name: projectId
+      in: path
+      required: true
+      description: Project ID
+      schema:
+        type: integer
+    OptionalImpulseIdParameter:
+      name: impulseId
+      in: query
+      required: false
+      description: Impulse ID. If this is unset then the default impulse is used.
+      schema:
+        type: integer
+  securitySchemes:
+    ApiKeyAuthentication:
+      type: apiKey
+      in: header
+      name: x-api-key
+    JWTAuthentication:
+      type: apiKey
+      in: cookie
+      name: jwt
+    JWTHttpHeaderAuthentication:
+      type: apiKey
+      in: header
+      name: x-jwt-token
