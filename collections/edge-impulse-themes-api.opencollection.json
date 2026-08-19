@@ -1,0 +1,144 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edge Impulse Themes API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Themes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get themes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/themes"
+          },
+          "docs": "Get all available Studio themes."
+        },
+        {
+          "info": {
+            "name": "Get theme by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/themes/:themeId",
+            "params": [
+              {
+                "name": "themeId",
+                "value": "",
+                "type": "path",
+                "description": "Theme ID"
+              }
+            ]
+          },
+          "docs": "Get a theme given its unique identifier."
+        },
+        {
+          "info": {
+            "name": "Delete theme by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/themes/:themeId",
+            "params": [
+              {
+                "name": "themeId",
+                "value": "",
+                "type": "path",
+                "description": "Theme ID"
+              }
+            ]
+          },
+          "docs": "Delete a theme given its unique identifier."
+        },
+        {
+          "info": {
+            "name": "Update theme logos",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/themes/:themeId/logos",
+            "params": [
+              {
+                "name": "themeId",
+                "value": "",
+                "type": "path",
+                "description": "Theme ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update some or all theme logos."
+        },
+        {
+          "info": {
+            "name": "Update theme colors",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/themes/:themeId/colors",
+            "params": [
+              {
+                "name": "themeId",
+                "value": "",
+                "type": "path",
+                "description": "Theme ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update some or all theme colors."
+        },
+        {
+          "info": {
+            "name": "Update theme favicon",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/themes/:themeId/favicon",
+            "params": [
+              {
+                "name": "themeId",
+                "value": "",
+                "type": "path",
+                "description": "Theme ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Update the theme favicon"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

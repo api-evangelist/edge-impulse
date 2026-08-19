@@ -1,0 +1,664 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edge Impulse Learn API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Learn",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Download data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/training/:learnId/x",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "learnId",
+                "value": "",
+                "type": "path",
+                "description": "Learn Block ID, use the impulse functions to retrieve the ID"
+              }
+            ]
+          },
+          "docs": "Download the processed data for this learning block. This is data already processed by the signal processing blocks."
+        },
+        {
+          "info": {
+            "name": "Download labels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/training/:learnId/y",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "learnId",
+                "value": "",
+                "type": "path",
+                "description": "Learn Block ID, use the impulse functions to retrieve the ID"
+              }
+            ]
+          },
+          "docs": "Download the labels for this learning block. This is data already processed by the signal processing blocks. Not all blocks support this function. If so, a GenericApiResponse is returned with an error message."
+        },
+        {
+          "info": {
+            "name": "Anomaly information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/training/anomaly/:learnId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "learnId",
+                "value": "",
+                "type": "path",
+                "description": "Learn Block ID, use the impulse functions to retrieve the ID"
+              }
+            ]
+          },
+          "docs": "Get information about an anomaly block, such as its dependencies. Use the impulse blocks to find the learnId."
+        },
+        {
+          "info": {
+            "name": "Anomaly settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/training/anomaly/:learnId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "learnId",
+                "value": "",
+                "type": "path",
+                "description": "Learn Block ID, use the impulse functions to retrieve the ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Configure the anomaly block, such as its minimum confidence score. Use the impulse blocks to find the learnId."
+        },
+        {
+          "info": {
+            "name": "Anomaly metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/training/anomaly/:learnId/metadata",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "learnId",
+                "value": "",
+                "type": "path",
+                "description": "Learn Block ID, use the impulse functions to retrieve the ID"
+              }
+            ]
+          },
+          "docs": "Get metadata about a trained anomaly block. Use the impulse blocks to find the learnId."
+        },
+        {
+          "info": {
+            "name": "Anomaly GMM metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/training/anomaly/:learnId/gmm/metadata",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "learnId",
+                "value": "",
+                "type": "path",
+                "description": "Learn Block ID, use the impulse functions to retrieve the ID"
+              }
+            ]
+          },
+          "docs": "Get raw model metadata of the Gaussian mixture model (GMM) for a trained anomaly block. Use the impulse blocks to find the learnId."
+        },
+        {
+          "info": {
+            "name": "Keras information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/training/keras/:learnId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "learnId",
+                "value": "",
+                "type": "path",
+                "description": "Learn Block ID, use the impulse functions to retrieve the ID"
+              }
+            ]
+          },
+          "docs": "Get information about a Keras block, such as its dependencies. Use the impulse blocks to find the learnId."
+        },
+        {
+          "info": {
+            "name": "Keras settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/training/keras/:learnId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "learnId",
+                "value": "",
+                "type": "path",
+                "description": "Learn Block ID, use the impulse functions to retrieve the ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Configure the Keras block, such as its minimum confidence score. Use the impulse blocks to find the learnId."
+        },
+        {
+          "info": {
+            "name": "Keras metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/training/keras/:learnId/metadata",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "learnId",
+                "value": "",
+                "type": "path",
+                "description": "Learn Block ID, use the impulse functions to retrieve the ID"
+              },
+              {
+                "name": "excludeLabels",
+                "value": "",
+                "type": "query",
+                "description": "If set to \"true\", the \"labels\" field is left empty (which can be big on e.g. regression projects)."
+              }
+            ]
+          },
+          "docs": "Get metadata about a trained Keras block. Use the impulse blocks to find the learnId."
+        },
+        {
+          "info": {
+            "name": "Get data explorer features",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/training/keras/:learnId/data-explorer/features",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "learnId",
+                "value": "",
+                "type": "path",
+                "description": "Learn Block ID, use the impulse functions to retrieve the ID"
+              }
+            ]
+          },
+          "docs": "t-SNE2 output of the raw dataset using embeddings from this Keras block"
+        },
+        {
+          "info": {
+            "name": "Upload Keras files",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/training/keras/:learnId/files",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "learnId",
+                "value": "",
+                "type": "path",
+                "description": "Learn Block ID, use the impulse functions to retrieve the ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Replace Keras block files with the contents of a zip. This is an internal API."
+        },
+        {
+          "info": {
+            "name": "Add Keras files",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/training/keras/:learnId/addFiles",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "learnId",
+                "value": "",
+                "type": "path",
+                "description": "Learn Block ID, use the impulse functions to retrieve the ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Add Keras block files with the contents of a zip. This is an internal API."
+        },
+        {
+          "info": {
+            "name": "Download Keras export",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/training/keras/:learnId/download-export",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "learnId",
+                "value": "",
+                "type": "path",
+                "description": "Learn Block ID, use the impulse functions to retrieve the ID"
+              }
+            ]
+          },
+          "docs": "Download an exported Keras block - needs to be exported via 'exportKerasBlock' first"
+        },
+        {
+          "info": {
+            "name": "Download Keras data export",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/training/keras/:learnId/download-data",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "learnId",
+                "value": "",
+                "type": "path",
+                "description": "Learn Block ID, use the impulse functions to retrieve the ID"
+              }
+            ]
+          },
+          "docs": "Download the data of an exported Keras block - needs to be exported via 'exportKerasBlockData' first"
+        },
+        {
+          "info": {
+            "name": "Download trained model",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/learn-data/:learnId/model/:modelDownloadId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "learnId",
+                "value": "",
+                "type": "path",
+                "description": "Learn Block ID, use the impulse functions to retrieve the ID"
+              },
+              {
+                "name": "modelDownloadId",
+                "value": "",
+                "type": "path",
+                "description": "Model download ID, which can be obtained from the project information"
+              }
+            ]
+          },
+          "docs": "Download a trained model for a learning block. Depending on the block this can be a TensorFlow model, or the cluster centroids."
+        },
+        {
+          "info": {
+            "name": "Trained features",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/training/anomaly/:learnId/features/get-graph",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "learnId",
+                "value": "",
+                "type": "path",
+                "description": "Learn Block ID, use the impulse functions to retrieve the ID"
+              },
+              {
+                "name": "featureAx1",
+                "value": "",
+                "type": "query",
+                "description": "Feature axis 1"
+              },
+              {
+                "name": "featureAx2",
+                "value": "",
+                "type": "query",
+                "description": "Feature axis 2"
+              }
+            ]
+          },
+          "docs": "Get a sample of trained features, this extracts a number of samples and their features."
+        },
+        {
+          "info": {
+            "name": "Trained features for sample",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/training/anomaly/:learnId/features/get-graph/classification/:sampleId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "learnId",
+                "value": "",
+                "type": "path",
+                "description": "Learn Block ID, use the impulse functions to retrieve the ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              }
+            ]
+          },
+          "docs": "Get trained features for a single sample. This runs both the DSP prerequisites and the anomaly classifier."
+        },
+        {
+          "info": {
+            "name": "Get pretrained model",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/pretrained-model",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "Receive info back about the earlier uploaded pretrained model (via `uploadPretrainedModel`) input/output tensors. If you want to deploy a pretrained model from the API, see `startDeployPretrainedModelJob`."
+        },
+        {
+          "info": {
+            "name": "Upload a pretrained model",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/pretrained-model/upload",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Upload a pretrained model and receive info back about the input/output tensors. If you want to deploy a pretrained model from the API, see `startDeployPretrainedModelJob`."
+        },
+        {
+          "info": {
+            "name": "Save parameters for pretrained model",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/pretrained-model/save",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Save input / model configuration for a pretrained model. This overrides the current impulse. If you want to deploy a pretrained model from the API, see `startDeployPretrainedModelJob`."
+        },
+        {
+          "info": {
+            "name": "Test pretrained model",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/pretrained-model/test",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Test out a pretrained model (using raw features) - upload first via  `uploadPretrainedModel`. If you want to deploy a pretrained model from the API, see `startDeployPretrainedModelJob`."
+        },
+        {
+          "info": {
+            "name": "Profile pretrained model",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/pretrained-model/profile",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "Returns the latency, RAM and ROM used for the pretrained model - upload first via  `uploadPretrainedModel`. This is using the project's selected latency device. Updates are streamed over the websocket API (or can be retrieved through the /stdout endpoint). Use getProfileTfliteJobResult to get the results when the job is completed."
+        },
+        {
+          "info": {
+            "name": "Download pretrained model",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/pretrained-model/download/:pretrainedModelDownloadType",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "pretrainedModelDownloadType",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "Download a pretrained model file"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

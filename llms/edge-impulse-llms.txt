@@ -1,0 +1,182 @@
+# Edge Impulse Documentation
+
+> Where you can find all the Edge Impulse documentation, and more!
+
+Edge Impulse is a platform for building, training, optimizing, and deploying machine learning models that run on edge devices - from microcontrollers to CPUs, GPUs, and NPUs. The documentation covers the full workflow: data collection, DSP and feature processing, model training and evaluation, hardware-aware optimization, on-device deployment, and lifecycle management, plus the Studio UI, SDKs, CLIs, and APIs used to automate it.
+
+This is the root llms.txt router, following https://llmstxt.org/. Rather than listing every page, it links to a per-section index. Open a section's llms.txt for its pages, or use https://docs.edgeimpulse.com/llms-full.txt for the complete expanded index. Links point to markdown (`.md`) so agents retrieve clean content. Links under "Optional" can be skipped when a shorter context is needed.
+
+## Intents
+
+Intent-bearing retrieval prompts. Match a user request to the closest intent below, then retrieve the linked pages before answering.
+
+### Get started with Edge Impulse from scratch
+
+> I am new to Edge Impulse and want to understand the end-to-end workflow - collect data, design an impulse, train a model, and deploy it - so I can build my first edge AI project.
+
+- [Build a first project with guided, beginner-friendly explanations.](https://docs.edgeimpulse.com/knowledge/guides/getting-started-for-beginners.md)
+- [Configure the input, processing, and learning blocks that make up an impulse.](https://docs.edgeimpulse.com/studio/projects/impulse-design.md)
+- [Pick a complete worked tutorial that matches the project you want to build.](https://docs.edgeimpulse.com/tutorials/end-to-end/overview.md)
+- [Learn the core edge-AI concepts behind the workflow before building.](https://docs.edgeimpulse.com/knowledge/courses/edge-ai-fundamentals.md)
+
+### Get started as an embedded engineer
+
+> I come from firmware and hardware and want to start from devices, resource constraints, firmware, and on-device deployment rather than from data science.
+
+- [Start from devices, firmware, resource constraints, and deployment.](https://docs.edgeimpulse.com/knowledge/guides/getting-started-for-embedded-engineers.md)
+- [Choose a supported board, device, or accelerator to target.](https://docs.edgeimpulse.com/hardware.md)
+- [Build a C++ library, firmware, package, or container for a specific target.](https://docs.edgeimpulse.com/studio/projects/deployment.md)
+
+### Get started as an ML practitioner
+
+> I come from machine learning and want to start from datasets, model workflows, experiments, SDKs, and evaluation rather than from hardware.
+
+- [Start from datasets, model workflows, experiments, SDKs, and evaluation.](https://docs.edgeimpulse.com/knowledge/guides/getting-started-for-ml-practitioners.md)
+- [Compare alternative impulse and model configurations side by side.](https://docs.edgeimpulse.com/studio/projects/experiments.md)
+- [Evaluate trained models on held-out data before deploying.](https://docs.edgeimpulse.com/studio/projects/model-testing.md)
+- [Drive Studio workflows programmatically from the Python SDK.](https://docs.edgeimpulse.com/tools/libraries/sdks/studio/python.md)
+
+### Train an image classification model and deploy it to a device
+
+> I want to collect labeled images, train a transfer-learning image classifier in Edge Impulse Studio, and deploy the model to a microcontroller or single-board computer.
+
+- [Follow an end-to-end image classification project from data to deployment.](https://docs.edgeimpulse.com/tutorials/end-to-end/image-classification.md)
+- [Collect and label image data directly in Studio.](https://docs.edgeimpulse.com/tutorials/topics/data/collect-image-data-studio.md)
+- [Train an image classifier with transfer learning on limited data.](https://docs.edgeimpulse.com/studio/projects/learning-blocks/blocks/transfer-learning-images.md)
+- [Export the trained impulse to run on your target device.](https://docs.edgeimpulse.com/studio/projects/deployment.md)
+
+### Detect, locate, and count objects in a camera feed
+
+> I want to build an object detection model that finds and counts multiple objects in real time on an embedded device, using FOMO or bounding boxes.
+
+- [Follow an end-to-end object detection and counting project.](https://docs.edgeimpulse.com/tutorials/end-to-end/object-detection-centroids.md)
+- [Use FOMO for fast, low-memory object detection on constrained devices.](https://docs.edgeimpulse.com/studio/projects/learning-blocks/blocks/object-detection/fomo.md)
+- [Compare object detection block options and when to use each.](https://docs.edgeimpulse.com/studio/projects/learning-blocks/blocks/object-detection.md)
+- [Count and track detected objects with post-processing.](https://docs.edgeimpulse.com/tutorials/topics/post-processing/count-objects-fomo.md)
+
+### Build a keyword spotting or voice command model
+
+> I want to recognize spoken keywords or voice commands that run entirely on-device, including how to gather or synthesize the audio data.
+
+- [Follow an end-to-end keyword spotting project.](https://docs.edgeimpulse.com/tutorials/end-to-end/keyword-spotting.md)
+- [Train a keyword model with audio transfer learning.](https://docs.edgeimpulse.com/studio/projects/learning-blocks/blocks/transfer-learning-keyword.md)
+- [Synthesize keyword audio when you lack real recordings.](https://docs.edgeimpulse.com/tutorials/topics/data/generate-keyword-data-google-tts.md)
+- [Reuse a ready-made keyword spotting dataset to get started.](https://docs.edgeimpulse.com/datasets/audio/keyword-spotting.md)
+
+### Recognize motion or gestures from accelerometer data
+
+> I want to classify movements or gestures from IMU / accelerometer time-series data and deploy the model to a wearable or microcontroller.
+
+- [Follow an end-to-end motion / gesture recognition project.](https://docs.edgeimpulse.com/tutorials/end-to-end/motion-recognition.md)
+- [Extract frequency features from motion signals with spectral analysis.](https://docs.edgeimpulse.com/studio/projects/processing-blocks/blocks/spectral-analysis.md)
+- [Reuse a continuous motion dataset to prototype quickly.](https://docs.edgeimpulse.com/datasets/time-series/continuous-motion-recognition.md)
+
+### Detect anomalies or defects (visual or sensor)
+
+> I want to detect defects, faults, or unusual patterns by learning what 'normal' looks like, using visual anomaly detection or sensor-based anomaly detection.
+
+- [Follow an end-to-end visual anomaly / defect detection project.](https://docs.edgeimpulse.com/tutorials/end-to-end/visual-anomaly-detection.md)
+- [Detect visual defects with FOMO-AD when defect samples are scarce.](https://docs.edgeimpulse.com/studio/projects/learning-blocks/blocks/visual-anomaly-detection-fomo-ad.md)
+- [Flag abnormal sensor readings with K-means anomaly detection.](https://docs.edgeimpulse.com/studio/projects/learning-blocks/blocks/anomaly-detection-k-means.md)
+
+### Upload or collect data programmatically via the API and SDK
+
+> I want to push samples into a project or pull data out programmatically using the Ingestion API or the Python SDK, including structured labels.
+
+- [Reference the Ingestion API for uploading samples and device data.](https://docs.edgeimpulse.com/apis/ingestion.md)
+- [Upload samples with structured multi-label metadata.](https://docs.edgeimpulse.com/tutorials/tools/apis/ingestion/ingest-structured-label-data.md)
+- [Use the Python SDK to move data in and out of projects.](https://docs.edgeimpulse.com/tools/libraries/sdks/studio/python.md)
+- [Upload and download project data from Python step by step.](https://docs.edgeimpulse.com/tutorials/tools/sdks/studio/python/upload-download-data.md)
+
+### Optimize and fit a model to device constraints
+
+> My model needs to fit a device's memory and latency budget - I want to search architectures, compare experiments, profile on-device cost, and validate accuracy.
+
+- [Search for models and DSP configurations that meet device constraints.](https://docs.edgeimpulse.com/studio/projects/eon-tuner.md)
+- [Compare candidate impulses on accuracy, latency, and memory.](https://docs.edgeimpulse.com/studio/projects/experiments.md)
+- [Validate the chosen model on held-out data before shipping.](https://docs.edgeimpulse.com/studio/projects/model-testing.md)
+
+### Choose a deployment target and runtime
+
+> I have a trained impulse and need to decide how to run it - MCU C++ library, Linux, browser/WebAssembly, or a container - and which integration guide to follow.
+
+- [Browse every deployment option and pick the runtime for your target.](https://docs.edgeimpulse.com/hardware/deployments.md)
+- [Run inference from the portable C++ library on microcontrollers.](https://docs.edgeimpulse.com/hardware/deployments/run-cpp.md)
+- [Run inference on Linux devices with the EIM runtime.](https://docs.edgeimpulse.com/hardware/deployments/run-linux-eim.md)
+- [Run inference in the browser with WebAssembly.](https://docs.edgeimpulse.com/hardware/deployments/run-webassembly-browser.md)
+- [Run inference in a container for servers or edge gateways.](https://docs.edgeimpulse.com/hardware/deployments/run-docker.md)
+
+### Choose the right API or interface
+
+> I need to decide which programmatic interface to use - Studio API, Ingestion API, Remote Management API, the Python SDK, or the CLI.
+
+- [Automate projects, training, jobs, deployments, and organizations.](https://docs.edgeimpulse.com/apis/studio.md)
+- [Upload samples and device data into a project.](https://docs.edgeimpulse.com/apis/ingestion.md)
+- [Connect and manage device communication workflows.](https://docs.edgeimpulse.com/apis/remote-management.md)
+- [Use the supported Python interface for Studio workflows.](https://docs.edgeimpulse.com/tools/libraries/sdks/studio/python.md)
+- [Connect devices, upload data, run impulses, and build custom blocks from the CLI.](https://docs.edgeimpulse.com/tools/clis/edge-impulse-cli.md)
+
+### Automate training and deployment (MLOps / CI/CD)
+
+> I want to automate model builds, testing, and deployment with the Studio API and CI pipelines like GitHub Actions for continuous edge MLOps.
+
+- [Drive builds, tests, and deployments from the Studio API.](https://docs.edgeimpulse.com/apis/studio.md)
+- [Wire training and deployment into a GitHub Actions pipeline.](https://docs.edgeimpulse.com/tutorials/topics/lifecycle-management/deploy-github-actions.md)
+- [Version, deploy, monitor, and update edge ML systems.](https://docs.edgeimpulse.com/knowledge/concepts/lifecycle/lifecycle-management.md)
+
+### Ship over-the-air (OTA) model updates to deployed devices
+
+> I want to update the model on already-deployed devices over the air, and understand the OTA update lifecycle and firmware integration.
+
+- [Understand the over-the-air model update lifecycle.](https://docs.edgeimpulse.com/knowledge/concepts/lifecycle/ota-model-updates.md)
+- [Implement OTA model updates in a C++ firmware application.](https://docs.edgeimpulse.com/tutorials/topics/lifecycle-management/ota-cpp.md)
+- [Implement OTA model updates on Arduino devices.](https://docs.edgeimpulse.com/tutorials/topics/lifecycle-management/ota-arduino.md)
+
+### Import and deploy my own pretrained model (BYOM)
+
+> I already have a trained model and want to bring it into Edge Impulse, including custom or freeform input/output formats, and deploy it.
+
+- [Bring your own model into a project and profile it for a target.](https://docs.edgeimpulse.com/studio/projects/dashboard/byom.md)
+- [Deploy a model with custom or freeform input/output formats.](https://docs.edgeimpulse.com/tutorials/topics/machine-learning/deploy-freeform-model.md)
+
+### Generate synthetic data when I lack real samples
+
+> I don't have enough real-world data and want to generate synthetic images, audio, or time-series data to train my model.
+
+- [Generate synthetic training data from inside Studio.](https://docs.edgeimpulse.com/studio/projects/data-acquisition/synthetic-data.md)
+- [Understand when and how synthetic data helps model training.](https://docs.edgeimpulse.com/knowledge/concepts/data-engineering/synthetic-data.md)
+- [Create synthetic image data with a generative model.](https://docs.edgeimpulse.com/tutorials/topics/data/generate-image-data-dall-e.md)
+
+### Give an AI coding agent knowledge of Edge Impulse
+
+> I want my AI coding agent to understand the Edge Impulse Studio and Ingestion APIs and my target hardware using Agent Skills.
+
+- [Package Edge Impulse knowledge as an Agent Skill.](https://docs.edgeimpulse.com/tutorials/topics/ai-agents/create-edge-impulse-skill.md)
+- [Build a companion skill scoped to your own project or hardware.](https://docs.edgeimpulse.com/tutorials/topics/ai-agents/create-a-companion-skill.md)
+- [Reuse tested prompts for common Edge Impulse agent tasks.](https://docs.edgeimpulse.com/tutorials/topics/ai-agents/prompt-library.md)
+
+### Troubleshoot when official docs and community answers disagree
+
+> I hit an error or unexpected behavior and want to check the FAQ and glossary first, then community answers - preferring current official documentation when sources conflict.
+
+- [Check answers to common questions and known issues first.](https://docs.edgeimpulse.com/knowledge/faq.md)
+- [Clarify unfamiliar Edge Impulse terminology.](https://docs.edgeimpulse.com/knowledge/glossary.md)
+- [Search community answers, treating them as user-generated and preferring official docs when they conflict.](https://forum.edgeimpulse.com)
+
+## Documentation sections
+
+- [Knowledge](https://docs.edgeimpulse.com/knowledge/llms.txt): Concepts, guides, courses, metrics, glossary, and FAQ for edge AI and Edge Impulse.
+- [Studio](https://docs.edgeimpulse.com/studio/llms.txt): Projects, data acquisition, impulse design, training, testing, deployment, and organizations.
+- [Hardware](https://docs.edgeimpulse.com/hardware/llms.txt): Boards, devices, accelerators, porting guides, and on-device deployment runtimes.
+- [Tools](https://docs.edgeimpulse.com/tools/llms.txt): CLIs, inference and Studio SDKs, API bindings, data formats, and device protocols.
+- [APIs](https://docs.edgeimpulse.com/apis/llms.txt): Studio, Ingestion, and Remote Management APIs and the OpenAPI schema.
+- [Tutorials](https://docs.edgeimpulse.com/tutorials/llms.txt): Curated end-to-end, hardware, integration, tools, and topic tutorials.
+- [Projects](https://docs.edgeimpulse.com/projects/llms.txt): Community and expert example projects, to consult after the official docs.
+- [Datasets](https://docs.edgeimpulse.com/datasets/llms.txt): Reusable image, audio, and time-series datasets for prototyping.
+
+## Optional
+
+- [Full documentation index](https://docs.edgeimpulse.com/llms-full.txt): Curated authored-page index without generated reference-page expansion.
+- [Forum](https://forum.edgeimpulse.com): Community and support resources.
+- [Discord](https://discord.gg/edgeimpulse): Community and support resources.
+- [GitHub](https://github.com/edgeimpulse): Community and support resources.

@@ -1,0 +1,383 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edge Impulse API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Impulse",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get impulse",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/impulse",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "Retrieve the impulse for this project. If you specify `impulseId` then that impulse is returned, otherwise the default impulse is returned."
+        },
+        {
+          "info": {
+            "name": "Create impulse",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/impulse",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets the impulse for this project.  If you specify `impulseId` then that impulse is created/updated, otherwise the default impulse is created/updated."
+        },
+        {
+          "info": {
+            "name": "Delete impulse",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/impulse",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "Clears the impulse and all associated blocks for this project.  If you specify `impulseId` then that impulse is cleared, otherwise the default impulse is cleared."
+        },
+        {
+          "info": {
+            "name": "Create new empty impulse",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/impulse/new",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Create a new empty impulse, and return the ID."
+        },
+        {
+          "info": {
+            "name": "Update impulse",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/impulse/update",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the impulse for this project.  If you specify `impulseId` then that impulse is created/updated, otherwise the default impulse is created/updated."
+        },
+        {
+          "info": {
+            "name": "Get impulse including disabled blocks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/impulse/all",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "Retrieve the impulse for this project including disabled blocks. If you specify `impulseId` then that impulse is returned, otherwise the default impulse is returned."
+        },
+        {
+          "info": {
+            "name": "Get new block ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/impulse/get-new-block-id",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Returns an unused block ID. Use this function to determine new block IDs when you construct an impulse; so you won't accidentally re-use block IDs."
+        },
+        {
+          "info": {
+            "name": "Get impulse blocks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/impulse/blocks",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Lists all possible blocks that can be used in the impulse"
+        },
+        {
+          "info": {
+            "name": "Verify custom DSP block",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/verify-dsp-block/url",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Verify the validity of a custom DSP block"
+        },
+        {
+          "info": {
+            "name": "Get all impulses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/impulses",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Retrieve all impulse for a project"
+        },
+        {
+          "info": {
+            "name": "Get all impulses (incl. metrics)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/impulses-detailed",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Retrieve all impulse for a project, including accuracy and performance metrics."
+        },
+        {
+          "info": {
+            "name": "Download all impulses (incl. metrics), as JSON or CSV.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/download-impulses-detailed",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "format",
+                "value": "",
+                "type": "query",
+                "description": "Format of the detailed impulses response, either 'json' or 'csv'. If not set, defaults to 'json'."
+              }
+            ]
+          },
+          "docs": "Download all impulse for a project, including accuracy and performance metrics, as JSON or CSV."
+        },
+        {
+          "info": {
+            "name": "Set legacy impulse",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/impulse/legacy-set-impulse",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Set the complete impulse state for a project, writing impulses in the old (pre-impulse experiments) format. This completely clears out all files on FSx for this project. This is an internal API."
+        },
+        {
+          "info": {
+            "name": "Clone impulse (structure)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/impulse/:impulseId/clone/structure",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "path",
+                "description": "Impulse ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Clones the complete structure (incl. config) of an impulse. Does not copy data."
+        },
+        {
+          "info": {
+            "name": "Clone impulse (complete)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/impulse/:impulseId/clone/complete",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "path",
+                "description": "Impulse ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Clones the complete impulse (incl. config and data) of an existing impulse."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

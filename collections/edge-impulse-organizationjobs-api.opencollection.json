@@ -1,0 +1,316 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edge Impulse OrganizationJobs API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OrganizationJobs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List active jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/jobs",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "rootOnly",
+                "value": "",
+                "type": "query",
+                "description": "Whether to exclude jobs with a parent ID (so jobs started as part of another job)"
+              }
+            ]
+          },
+          "docs": "Get all active jobs for this organization"
+        },
+        {
+          "info": {
+            "name": "List finished jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/jobs/history",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              },
+              {
+                "name": "rootOnly",
+                "value": "",
+                "type": "query",
+                "description": "Whether to exclude jobs with a parent ID (so jobs started as part of another job)"
+              }
+            ]
+          },
+          "docs": "Get all finished jobs for this organization"
+        },
+        {
+          "info": {
+            "name": "List all jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/jobs/all",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              },
+              {
+                "name": "excludePipelineTransformJobs",
+                "value": "",
+                "type": "query",
+                "description": "Whether to exclude pipeline / transformation jobs"
+              },
+              {
+                "name": "rootOnly",
+                "value": "",
+                "type": "query",
+                "description": "Whether to exclude jobs with a parent ID (so jobs started as part of another job)"
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "Job key to filter on"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Job category to filter on"
+              }
+            ]
+          },
+          "docs": "Get all jobs for this organization"
+        },
+        {
+          "info": {
+            "name": "Cancel job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/jobs/:jobId/cancel",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "forceCancel",
+                "value": "",
+                "type": "query",
+                "description": "If set to 'true', we won't wait for the job cluster to cancel the job, and will mark the job as finished."
+              }
+            ]
+          },
+          "docs": "Cancel a running job."
+        },
+        {
+          "info": {
+            "name": "Get job status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/jobs/:jobId/status",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ]
+          },
+          "docs": "Get the status for a job."
+        },
+        {
+          "info": {
+            "name": "Get logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/jobs/:jobId/stdout",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "logLevel",
+                "value": "",
+                "type": "query",
+                "description": "Log level (error, warn, info, debug)"
+              }
+            ]
+          },
+          "docs": "Get the logs for a job."
+        },
+        {
+          "info": {
+            "name": "Download logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/jobs/:jobId/stdout/download",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "logLevel",
+                "value": "",
+                "type": "query",
+                "description": "Log level (error, warn, info, debug)"
+              }
+            ]
+          },
+          "docs": "Download the logs for a job (as a text file)."
+        },
+        {
+          "info": {
+            "name": "Get socket token for an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/socket-token",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ]
+          },
+          "docs": "Get a token to authenticate with the web socket interface."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

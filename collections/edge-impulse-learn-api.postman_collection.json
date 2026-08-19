@@ -1,0 +1,3024 @@
+{
+  "item": [
+    {
+      "id": "d061e034-7a11-4e99-9b8d-1173fad99d1b",
+      "name": "Learn",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ea55ce39-5e4f-40f1-9758-fee8f33a912d",
+          "name": "Download data",
+          "request": {
+            "name": "Download data",
+            "description": {
+              "content": "Download the processed data for this learning block. This is data already processed by the signal processing blocks.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "training",
+                ":learnId",
+                "x"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "learnId",
+                  "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7e0a63ea-8dd3-4c7b-b495-17a68c4a8f9c",
+              "name": "Numpy binary file",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "training",
+                    ":learnId",
+                    "x"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "learnId",
+                      "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1fd36205-cb93-470d-b044-6685c33ed3d1",
+          "name": "Download labels",
+          "request": {
+            "name": "Download labels",
+            "description": {
+              "content": "Download the labels for this learning block. This is data already processed by the signal processing blocks. Not all blocks support this function. If so, a GenericApiResponse is returned with an error message.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "training",
+                ":learnId",
+                "y"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "learnId",
+                  "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "645efc03-7724-4426-8904-f2d1f5300678",
+              "name": "Numpy binary file",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "training",
+                    ":learnId",
+                    "y"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "learnId",
+                      "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "20172bfb-83f0-4e93-93ff-c0409fe7c448",
+          "name": "Anomaly information",
+          "request": {
+            "name": "Anomaly information",
+            "description": {
+              "content": "Get information about an anomaly block, such as its dependencies. Use the impulse blocks to find the learnId.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "training",
+                "anomaly",
+                ":learnId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "learnId",
+                  "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3bf25d7b-ebc2-46f0-a748-e39336979a4f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "training",
+                    "anomaly",
+                    ":learnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "learnId",
+                      "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"axes\": [\n    {\n      \"label\": \"string\",\n      \"selected\": false,\n      \"favourite\": false\n    },\n    {\n      \"label\": \"string\",\n      \"selected\": false,\n      \"favourite\": false\n    }\n  ],\n  \"dependencies\": {\n    \"classes\": [\n      \"string\",\n      \"string\"\n    ],\n    \"blockNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"featureCount\": 4149,\n    \"sampleCount\": 7229\n  },\n  \"minimumConfidenceRating\": 6.9164961383261225,\n  \"name\": \"string\",\n  \"selectedAxes\": [\n    5332,\n    7966\n  ],\n  \"success\": false,\n  \"trained\": false,\n  \"error\": \"string\",\n  \"clusterCount\": 2009\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a95d877a-acf7-4357-92da-6d8daa8cffc6",
+          "name": "Anomaly settings",
+          "request": {
+            "name": "Anomaly settings",
+            "description": {
+              "content": "Configure the anomaly block, such as its minimum confidence score. Use the impulse blocks to find the learnId.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "training",
+                "anomaly",
+                ":learnId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "learnId",
+                  "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"minimumConfidenceRating\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4c1aedd3-cd3f-4e96-903e-274a273e05ee",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "training",
+                    "anomaly",
+                    ":learnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "learnId",
+                      "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"minimumConfidenceRating\": \"<number>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "48b93bb3-ef71-4a4b-b257-0ccc8a7894db",
+          "name": "Anomaly metadata",
+          "request": {
+            "name": "Anomaly metadata",
+            "description": {
+              "content": "Get metadata about a trained anomaly block. Use the impulse blocks to find the learnId.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "training",
+                "anomaly",
+                ":learnId",
+                "metadata"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "learnId",
+                  "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "689bd728-a6bc-4694-ba39-b755e8dbd04e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "training",
+                    "anomaly",
+                    ":learnId",
+                    "metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "learnId",
+                      "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"axes\": [\n    6248,\n    7069\n  ],\n  \"clusters\": [\n    {\n      \"center\": [\n        6101.587912201016,\n        3978.9070824077535\n      ],\n      \"maxError\": 9633.063236143009\n    },\n    {\n      \"center\": [\n        7211.778258692685,\n        8463.018934979451\n      ],\n      \"maxError\": 7933.8551997377845\n    }\n  ],\n  \"created\": \"1972-07-21T00:01:59.197Z\",\n  \"mean\": [\n    8714.642775064707,\n    348.36263769524754\n  ],\n  \"scale\": [\n    7884.7868114134235,\n    1349.1543733557364\n  ],\n  \"success\": true,\n  \"error\": \"string\",\n  \"defaultMinimumConfidenceRating\": 5598.062733956749,\n  \"availableModelTypes\": [\n    \"float32\",\n    \"akida\"\n  ],\n  \"recommendedModelType\": \"requiresRetrain\",\n  \"modelValidationMetrics\": [\n    {\n      \"type\": \"float32\",\n      \"loss\": 6161.757384580165,\n      \"confusionMatrix\": [\n        [\n          1913.8358334573002,\n          2893.401409518733\n        ],\n        [\n          682.4730686420444,\n          1362.0279381359192\n        ]\n      ],\n      \"report\": {},\n      \"onDevicePerformance\": [\n        {\n          \"mcu\": \"string\",\n          \"name\": \"string\",\n          \"isDefault\": false,\n          \"latency\": 8383.856983193538,\n          \"tflite\": {\n            \"ramRequired\": 7931,\n            \"romRequired\": 4193,\n            \"arenaSize\": 4589,\n            \"modelSize\": 6240\n          },\n          \"eon\": {\n            \"ramRequired\": 5430,\n            \"romRequired\": 7212,\n            \"arenaSize\": 9090,\n            \"modelSize\": 5281\n          },\n          \"eon_ram_optimized\": {\n            \"ramRequired\": 936,\n            \"romRequired\": 8876,\n            \"arenaSize\": 5281,\n            \"modelSize\": 2357\n          },\n          \"customMetrics\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"mcu\": \"string\",\n          \"name\": \"string\",\n          \"isDefault\": true,\n          \"latency\": 6913.18990263266,\n          \"tflite\": {\n            \"ramRequired\": 1455,\n            \"romRequired\": 2326,\n            \"arenaSize\": 1710,\n            \"modelSize\": 5511\n          },\n          \"eon\": {\n            \"ramRequired\": 9734,\n            \"romRequired\": 2998,\n            \"arenaSize\": 7661,\n            \"modelSize\": 2564\n          },\n          \"eon_ram_optimized\": {\n            \"ramRequired\": 6264,\n            \"romRequired\": 6172,\n            \"arenaSize\": 7084,\n            \"modelSize\": 2190\n          },\n          \"customMetrics\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"visualization\": \"none\",\n      \"isSupportedOnMcu\": false,\n      \"additionalMetrics\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"fullPrecisionValue\": 4326.405109890326,\n          \"tooltipText\": \"string\",\n          \"link\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"fullPrecisionValue\": 5499.018549867076,\n          \"tooltipText\": \"string\",\n          \"link\": \"string\"\n        }\n      ],\n      \"accuracy\": 2148.936832088515,\n      \"predictions\": [\n        {\n          \"sampleId\": 165,\n          \"startMs\": 399.47201002823897,\n          \"endMs\": 1267.527928383354,\n          \"prediction\": \"string\",\n          \"label\": \"string\",\n          \"predictionCorrect\": false,\n          \"f1Score\": 1612.2676909463873,\n          \"anomalyScores\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"sampleId\": 4391,\n          \"startMs\": 9130.51757202786,\n          \"endMs\": 9135.347491980341,\n          \"prediction\": \"string\",\n          \"label\": \"string\",\n          \"predictionCorrect\": false,\n          \"f1Score\": 8589.156444114251,\n          \"anomalyScores\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"mcuSupportError\": \"string\",\n      \"profilingJobId\": 4247,\n      \"profilingJobFailed\": false\n    },\n    {\n      \"type\": \"int8\",\n      \"loss\": 2256.1225890509727,\n      \"confusionMatrix\": [\n        [\n          9349.43139885933,\n          7652.572315504799\n        ],\n        [\n          6300.461998455047,\n          8292.620005885652\n        ]\n      ],\n      \"report\": {},\n      \"onDevicePerformance\": [\n        {\n          \"mcu\": \"string\",\n          \"name\": \"string\",\n          \"isDefault\": true,\n          \"latency\": 9454.101164753221,\n          \"tflite\": {\n            \"ramRequired\": 6736,\n            \"romRequired\": 6450,\n            \"arenaSize\": 3163,\n            \"modelSize\": 5197\n          },\n          \"eon\": {\n            \"ramRequired\": 7702,\n            \"romRequired\": 5655,\n            \"arenaSize\": 8664,\n            \"modelSize\": 9373\n          },\n          \"eon_ram_optimized\": {\n            \"ramRequired\": 9595,\n            \"romRequired\": 9289,\n            \"arenaSize\": 4109,\n            \"modelSize\": 7844\n          },\n          \"customMetrics\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"mcu\": \"string\",\n          \"name\": \"string\",\n          \"isDefault\": false,\n          \"latency\": 5255.129166863721,\n          \"tflite\": {\n            \"ramRequired\": 2319,\n            \"romRequired\": 6483,\n            \"arenaSize\": 1283,\n            \"modelSize\": 8440\n          },\n          \"eon\": {\n            \"ramRequired\": 5138,\n            \"romRequired\": 5162,\n            \"arenaSize\": 8233,\n            \"modelSize\": 1938\n          },\n          \"eon_ram_optimized\": {\n            \"ramRequired\": 442,\n            \"romRequired\": 7553,\n            \"arenaSize\": 1980,\n            \"modelSize\": 4619\n          },\n          \"customMetrics\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"visualization\": \"featureExplorer\",\n      \"isSupportedOnMcu\": false,\n      \"additionalMetrics\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"fullPrecisionValue\": 2442.102027662917,\n          \"tooltipText\": \"string\",\n          \"link\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"fullPrecisionValue\": 4140.006803384303,\n          \"tooltipText\": \"string\",\n          \"link\": \"string\"\n        }\n      ],\n      \"accuracy\": 9603.45389709353,\n      \"predictions\": [\n        {\n          \"sampleId\": 3902,\n          \"startMs\": 5771.6271489494675,\n          \"endMs\": 6806.037988183385,\n          \"prediction\": \"string\",\n          \"label\": \"string\",\n          \"predictionCorrect\": false,\n          \"f1Score\": 904.7135351804192,\n          \"anomalyScores\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"sampleId\": 9302,\n          \"startMs\": 3422.7123511518043,\n          \"endMs\": 3309.8964027804454,\n          \"prediction\": \"string\",\n          \"label\": \"string\",\n          \"predictionCorrect\": true,\n          \"f1Score\": 8693.74157177492,\n          \"anomalyScores\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"mcuSupportError\": \"string\",\n      \"profilingJobId\": 4954,\n      \"profilingJobFailed\": true\n    }\n  ],\n  \"hasTrainedModel\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a7da7e0a-badb-4973-86a3-e7cda791709f",
+          "name": "Anomaly GMM metadata",
+          "request": {
+            "name": "Anomaly GMM metadata",
+            "description": {
+              "content": "Get raw model metadata of the Gaussian mixture model (GMM) for a trained anomaly block. Use the impulse blocks to find the learnId.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "training",
+                "anomaly",
+                ":learnId",
+                "gmm",
+                "metadata"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "learnId",
+                  "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "be9f704c-6bfd-46cb-98ff-9ad11d224e7c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "training",
+                    "anomaly",
+                    ":learnId",
+                    "gmm",
+                    "metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "learnId",
+                      "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"covariances\": [\n    [\n      [\n        6723.628939738002,\n        2569.9738497656967\n      ],\n      [\n        6127.6355281746955,\n        1845.5175487630859\n      ]\n    ],\n    [\n      [\n        4838.440238327444,\n        3779.0205040596925\n      ],\n      [\n        3023.808108784126,\n        5976.511957337662\n      ]\n    ]\n  ],\n  \"means\": [\n    [\n      5733.161329296505,\n      3216.7263874851014\n    ],\n    [\n      3681.9152889277584,\n      9082.598581076718\n    ]\n  ],\n  \"success\": false,\n  \"weights\": [\n    6389.542538568322,\n    3744.408340187967\n  ],\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5a8fc745-e07c-4b8c-ac2b-1f3a8df25133",
+          "name": "Keras information",
+          "request": {
+            "name": "Keras information",
+            "description": {
+              "content": "Get information about a Keras block, such as its dependencies. Use the impulse blocks to find the learnId.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "training",
+                "keras",
+                ":learnId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "learnId",
+                  "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ad965f98-6198-409e-9ddf-b21c03aaf91d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "training",
+                    "keras",
+                    ":learnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "learnId",
+                      "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"augmentationPolicyImage\": \"none\",\n  \"defaultBatchSize\": 4527,\n  \"dependencies\": {\n    \"classes\": [\n      \"string\",\n      \"string\"\n    ],\n    \"blockNames\": [\n      \"string\",\n      \"string\"\n    ],\n    \"featureCount\": 4241,\n    \"sampleCount\": 9748\n  },\n  \"learningRate\": 3828.416987639479,\n  \"minimumConfidenceRating\": 6244.4131883351465,\n  \"mode\": \"expert\",\n  \"name\": \"string\",\n  \"profileInt8\": true,\n  \"script\": \"string\",\n  \"selectedModelType\": \"int8\",\n  \"shape\": \"string\",\n  \"showAdvancedTrainingSettings\": false,\n  \"showAugmentationTrainingSettings\": true,\n  \"skipEmbeddingsAndMemory\": true,\n  \"success\": false,\n  \"trained\": false,\n  \"trainingCycles\": 148,\n  \"transferLearningModels\": [\n    {\n      \"name\": \"string\",\n      \"shortName\": \"string\",\n      \"description\": \"string\",\n      \"hasNeurons\": false,\n      \"hasDropout\": true,\n      \"type\": \"fomo_ad_patchcore\",\n      \"author\": \"string\",\n      \"blockType\": \"official\",\n      \"abbreviatedName\": \"string\",\n      \"defaultNeurons\": 3728,\n      \"defaultDropout\": 4063.4462474077773,\n      \"defaultLearningRate\": 4239.4798919195755,\n      \"defaultTrainingCycles\": 1700.1954559680566,\n      \"hasImageAugmentation\": false,\n      \"learnBlockType\": \"keras-akida-object-detection\",\n      \"organizationModelId\": 1663,\n      \"implementationVersion\": 8504,\n      \"repositoryUrl\": \"string\",\n      \"customParameters\": [\n        {\n          \"name\": \"Scale axes\",\n          \"type\": \"text\",\n          \"param\": \"scale-axes\",\n          \"defaultValue\": \"string\",\n          \"readonly\": false,\n          \"shouldShow\": true,\n          \"required\": true,\n          \"value\": \"string\",\n          \"help\": \"Divide axes by this number\",\n          \"selectOptions\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"showIf\": {\n            \"parameter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"operator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"invalidText\": \"string\",\n          \"section\": \"augmentation\",\n          \"multiline\": true,\n          \"hint\": \"string\",\n          \"placeholder\": \"string\"\n        },\n        {\n          \"name\": \"Scale axes\",\n          \"type\": \"text\",\n          \"param\": \"scale-axes\",\n          \"defaultValue\": \"string\",\n          \"readonly\": true,\n          \"shouldShow\": true,\n          \"required\": true,\n          \"value\": \"string\",\n          \"help\": \"Divide axes by this number\",\n          \"selectOptions\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"showIf\": {\n            \"parameter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"operator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"invalidText\": \"string\",\n          \"section\": \"augmentation\",\n          \"multiline\": true,\n          \"hint\": \"string\",\n          \"placeholder\": \"string\"\n        }\n      ],\n      \"displayCategory\": \"classical\"\n    },\n    {\n      \"name\": \"string\",\n      \"shortName\": \"string\",\n      \"description\": \"string\",\n      \"hasNeurons\": true,\n      \"hasDropout\": true,\n      \"type\": \"flatten\",\n      \"author\": \"string\",\n      \"blockType\": \"personal\",\n      \"abbreviatedName\": \"string\",\n      \"defaultNeurons\": 656,\n      \"defaultDropout\": 1356.720451547595,\n      \"defaultLearningRate\": 5135.372112963173,\n      \"defaultTrainingCycles\": 1409.101602528815,\n      \"hasImageAugmentation\": true,\n      \"learnBlockType\": \"keras-visual-anomaly\",\n      \"organizationModelId\": 144,\n      \"implementationVersion\": 5536,\n      \"repositoryUrl\": \"string\",\n      \"customParameters\": [\n        {\n          \"name\": \"Scale axes\",\n          \"type\": \"text\",\n          \"param\": \"scale-axes\",\n          \"defaultValue\": \"string\",\n          \"readonly\": true,\n          \"shouldShow\": false,\n          \"required\": false,\n          \"value\": \"string\",\n          \"help\": \"Divide axes by this number\",\n          \"selectOptions\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"showIf\": {\n            \"parameter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"operator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"invalidText\": \"string\",\n          \"section\": \"augmentation\",\n          \"multiline\": false,\n          \"hint\": \"string\",\n          \"placeholder\": \"string\"\n        },\n        {\n          \"name\": \"Scale axes\",\n          \"type\": \"text\",\n          \"param\": \"scale-axes\",\n          \"defaultValue\": \"string\",\n          \"readonly\": false,\n          \"shouldShow\": false,\n          \"required\": true,\n          \"value\": \"string\",\n          \"help\": \"Divide axes by this number\",\n          \"selectOptions\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"showIf\": {\n            \"parameter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"operator\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"value\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"invalidText\": \"string\",\n          \"section\": \"modelProfiling\",\n          \"multiline\": false,\n          \"hint\": \"string\",\n          \"placeholder\": \"string\"\n        }\n      ],\n      \"displayCategory\": \"tao\"\n    }\n  ],\n  \"visualLayers\": [\n    {\n      \"type\": \"transfer_mobilenetv2_a05\",\n      \"neurons\": 24,\n      \"kernelSize\": 7464,\n      \"dropoutRate\": 9004.15439502806,\n      \"columns\": 4600,\n      \"stack\": 1913,\n      \"enabled\": false,\n      \"organizationModelId\": 8316\n    },\n    {\n      \"type\": \"transfer_organization\",\n      \"neurons\": 1749,\n      \"kernelSize\": 1876,\n      \"dropoutRate\": 9620.163108858485,\n      \"columns\": 4287,\n      \"stack\": 5310,\n      \"enabled\": true,\n      \"organizationModelId\": 2462\n    }\n  ],\n  \"error\": \"string\",\n  \"type\": \"keras-akida\",\n  \"batchSize\": 8684,\n  \"trainTestSplit\": 1679.7610674449081,\n  \"autoClassWeights\": false,\n  \"useLearnedOptimizer\": false,\n  \"augmentationPolicySpectrogram\": {\n    \"enabled\": true,\n    \"warping\": false,\n    \"freqMasking\": \"high\",\n    \"timeMasking\": \"high\",\n    \"gaussianNoise\": \"none\"\n  },\n  \"akidaEdgeLearningConfig\": {\n    \"enabled\": false,\n    \"additionalClasses\": 3640.879570823435,\n    \"neuronsPerClass\": 7247.626846821518\n  },\n  \"customValidationMetadataKey\": \"string\",\n  \"customParameters\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"anomalyCapacity\": \"medium\",\n  \"lastShownModelVariant\": \"int8\",\n  \"lastShownModelEngine\": \"tflite-eon\",\n  \"blockParameters\": {\n    \"backbone\": \"string\",\n    \"numLayers\": 4007,\n    \"poolSize\": 386,\n    \"samplingRatio\": 1232.4032045909983,\n    \"numNearestNeighbors\": 7177\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1e4e99df-6948-4a6b-ac96-368465d1846a",
+          "name": "Keras settings",
+          "request": {
+            "name": "Keras settings",
+            "description": {
+              "content": "Configure the Keras block, such as its minimum confidence score. Use the impulse blocks to find the learnId.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "training",
+                "keras",
+                ":learnId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "learnId",
+                  "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mode\": \"<string>\",\n  \"minimumConfidenceRating\": \"<number>\",\n  \"selectedModelType\": \"<string>\",\n  \"script\": \"<string>\",\n  \"visualLayers\": [\n    {\n      \"type\": \"<string>\",\n      \"neurons\": \"<integer>\",\n      \"kernelSize\": \"<integer>\",\n      \"dropoutRate\": \"<number>\",\n      \"columns\": \"<integer>\",\n      \"stack\": \"<integer>\",\n      \"enabled\": \"<boolean>\",\n      \"organizationModelId\": \"<integer>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"neurons\": \"<integer>\",\n      \"kernelSize\": \"<integer>\",\n      \"dropoutRate\": \"<number>\",\n      \"columns\": \"<integer>\",\n      \"stack\": \"<integer>\",\n      \"enabled\": \"<boolean>\",\n      \"organizationModelId\": \"<integer>\"\n    }\n  ],\n  \"trainingCycles\": \"<integer>\",\n  \"learningRate\": \"<number>\",\n  \"batchSize\": \"<number>\",\n  \"trainTestSplit\": \"<number>\",\n  \"autoClassWeights\": \"<boolean>\",\n  \"useLearnedOptimizer\": \"<boolean>\",\n  \"augmentationPolicyImage\": \"<string>\",\n  \"augmentationPolicySpectrogram\": {\n    \"enabled\": \"<boolean>\",\n    \"warping\": \"<boolean>\",\n    \"freqMasking\": \"<string>\",\n    \"timeMasking\": \"<string>\",\n    \"gaussianNoise\": \"<string>\"\n  },\n  \"profileInt8\": \"<boolean>\",\n  \"skipEmbeddingsAndMemory\": \"<boolean>\",\n  \"akidaEdgeLearningConfig\": {\n    \"enabled\": \"<boolean>\",\n    \"additionalClasses\": \"<number>\",\n    \"neuronsPerClass\": \"<number>\"\n  },\n  \"customValidationMetadataKey\": \"<string>\",\n  \"showAdvancedTrainingSettings\": \"<boolean>\",\n  \"showAugmentationTrainingSettings\": \"<boolean>\",\n  \"customParameters\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"anomalyCapacity\": \"<string>\",\n  \"lastShownModelVariant\": \"<string>\",\n  \"lastShownModelEngine\": \"<string>\",\n  \"blockParameters\": {\n    \"backbone\": \"<string>\",\n    \"numLayers\": \"<integer>\",\n    \"poolSize\": \"<integer>\",\n    \"samplingRatio\": \"<number>\",\n    \"numNearestNeighbors\": \"<integer>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "baad815a-db20-4dbc-8f18-fe5bdeb2b188",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "training",
+                    "keras",
+                    ":learnId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "learnId",
+                      "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mode\": \"<string>\",\n  \"minimumConfidenceRating\": \"<number>\",\n  \"selectedModelType\": \"<string>\",\n  \"script\": \"<string>\",\n  \"visualLayers\": [\n    {\n      \"type\": \"<string>\",\n      \"neurons\": \"<integer>\",\n      \"kernelSize\": \"<integer>\",\n      \"dropoutRate\": \"<number>\",\n      \"columns\": \"<integer>\",\n      \"stack\": \"<integer>\",\n      \"enabled\": \"<boolean>\",\n      \"organizationModelId\": \"<integer>\"\n    },\n    {\n      \"type\": \"<string>\",\n      \"neurons\": \"<integer>\",\n      \"kernelSize\": \"<integer>\",\n      \"dropoutRate\": \"<number>\",\n      \"columns\": \"<integer>\",\n      \"stack\": \"<integer>\",\n      \"enabled\": \"<boolean>\",\n      \"organizationModelId\": \"<integer>\"\n    }\n  ],\n  \"trainingCycles\": \"<integer>\",\n  \"learningRate\": \"<number>\",\n  \"batchSize\": \"<number>\",\n  \"trainTestSplit\": \"<number>\",\n  \"autoClassWeights\": \"<boolean>\",\n  \"useLearnedOptimizer\": \"<boolean>\",\n  \"augmentationPolicyImage\": \"<string>\",\n  \"augmentationPolicySpectrogram\": {\n    \"enabled\": \"<boolean>\",\n    \"warping\": \"<boolean>\",\n    \"freqMasking\": \"<string>\",\n    \"timeMasking\": \"<string>\",\n    \"gaussianNoise\": \"<string>\"\n  },\n  \"profileInt8\": \"<boolean>\",\n  \"skipEmbeddingsAndMemory\": \"<boolean>\",\n  \"akidaEdgeLearningConfig\": {\n    \"enabled\": \"<boolean>\",\n    \"additionalClasses\": \"<number>\",\n    \"neuronsPerClass\": \"<number>\"\n  },\n  \"customValidationMetadataKey\": \"<string>\",\n  \"showAdvancedTrainingSettings\": \"<boolean>\",\n  \"showAugmentationTrainingSettings\": \"<boolean>\",\n  \"customParameters\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\"\n  },\n  \"anomalyCapacity\": \"<string>\",\n  \"lastShownModelVariant\": \"<string>\",\n  \"lastShownModelEngine\": \"<string>\",\n  \"blockParameters\": {\n    \"backbone\": \"<string>\",\n    \"numLayers\": \"<integer>\",\n    \"poolSize\": \"<integer>\",\n    \"samplingRatio\": \"<number>\",\n    \"numNearestNeighbors\": \"<integer>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "453d89ca-1374-4dc6-b5c8-6acc2e7f2ac3",
+          "name": "Keras metadata",
+          "request": {
+            "name": "Keras metadata",
+            "description": {
+              "content": "Get metadata about a trained Keras block. Use the impulse blocks to find the learnId.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "training",
+                "keras",
+                ":learnId",
+                "metadata"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "excludeLabels",
+                  "value": "<boolean>",
+                  "description": "If set to \"true\", the \"labels\" field is left empty (which can be big on e.g. regression projects)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "learnId",
+                  "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bb86bbc9-90a2-450d-aa71-df7a86fd8e1f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "training",
+                    "keras",
+                    ":learnId",
+                    "metadata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "excludeLabels",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "learnId",
+                      "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"availableModelTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"classNames\": [\n    \"string\",\n    \"string\"\n  ],\n  \"created\": \"1979-08-04T11:55:08.789Z\",\n  \"hasTrainedModel\": true,\n  \"imageInputScaling\": \"bgr-subtract-imagenet-mean\",\n  \"labels\": [\n    \"string\",\n    \"string\"\n  ],\n  \"layers\": [\n    {\n      \"input\": {\n        \"shape\": 33,\n        \"name\": \"x_input:0\",\n        \"type\": \"<dtype: 'float32'>\"\n      },\n      \"output\": {\n        \"shape\": 20,\n        \"name\": \"dense_1/Relu:0\",\n        \"type\": \"<dtype: 'float32'>\"\n      }\n    },\n    {\n      \"input\": {\n        \"shape\": 33,\n        \"name\": \"x_input:0\",\n        \"type\": \"<dtype: 'float32'>\"\n      },\n      \"output\": {\n        \"shape\": 20,\n        \"name\": \"dense_1/Relu:0\",\n        \"type\": \"<dtype: 'float32'>\"\n      }\n    }\n  ],\n  \"mode\": \"classification\",\n  \"modelValidationMetrics\": [\n    {\n      \"type\": \"<string>\",\n      \"loss\": 3661.655525558123,\n      \"confusionMatrix\": [\n        [\n          1623.6310186839653,\n          5436.5597426380655\n        ],\n        [\n          5.883543142763958,\n          5257.921776711893\n        ]\n      ],\n      \"report\": {},\n      \"onDevicePerformance\": [\n        {\n          \"mcu\": \"string\",\n          \"name\": \"string\",\n          \"isDefault\": true,\n          \"latency\": 9088.782487448509,\n          \"tflite\": {\n            \"ramRequired\": 9431,\n            \"romRequired\": 1148,\n            \"arenaSize\": 1975,\n            \"modelSize\": 6844\n          },\n          \"eon\": {\n            \"ramRequired\": 4384,\n            \"romRequired\": 538,\n            \"arenaSize\": 5207,\n            \"modelSize\": 1907\n          },\n          \"eon_ram_optimized\": {\n            \"ramRequired\": 6077,\n            \"romRequired\": 3290,\n            \"arenaSize\": 4470,\n            \"modelSize\": 3440\n          },\n          \"customMetrics\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"mcu\": \"string\",\n          \"name\": \"string\",\n          \"isDefault\": true,\n          \"latency\": 1076.2169875761263,\n          \"tflite\": {\n            \"ramRequired\": 2222,\n            \"romRequired\": 4444,\n            \"arenaSize\": 7585,\n            \"modelSize\": 9663\n          },\n          \"eon\": {\n            \"ramRequired\": 1064,\n            \"romRequired\": 9856,\n            \"arenaSize\": 9534,\n            \"modelSize\": 6725\n          },\n          \"eon_ram_optimized\": {\n            \"ramRequired\": 2894,\n            \"romRequired\": 2635,\n            \"arenaSize\": 4619,\n            \"modelSize\": 7704\n          },\n          \"customMetrics\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"visualization\": \"dataExplorer\",\n      \"isSupportedOnMcu\": false,\n      \"additionalMetrics\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"fullPrecisionValue\": 9340.794187694084,\n          \"tooltipText\": \"string\",\n          \"link\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"fullPrecisionValue\": 9615.951858986682,\n          \"tooltipText\": \"string\",\n          \"link\": \"string\"\n        }\n      ],\n      \"accuracy\": 4650.554429009607,\n      \"predictions\": [\n        {\n          \"sampleId\": 9486,\n          \"startMs\": 1223.8843781371356,\n          \"endMs\": 8312.692715148443,\n          \"prediction\": \"string\",\n          \"label\": \"string\",\n          \"predictionCorrect\": false,\n          \"f1Score\": 5165.271411954534,\n          \"anomalyScores\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"sampleId\": 3123,\n          \"startMs\": 4455.440493442554,\n          \"endMs\": 2033.387014043061,\n          \"prediction\": \"string\",\n          \"label\": \"string\",\n          \"predictionCorrect\": true,\n          \"f1Score\": 2682.9311014736236,\n          \"anomalyScores\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"mcuSupportError\": \"string\",\n      \"profilingJobId\": 340,\n      \"profilingJobFailed\": false\n    },\n    {\n      \"type\": \"<string>\",\n      \"loss\": 1236.4060220932738,\n      \"confusionMatrix\": [\n        [\n          3708.576284332796,\n          8963.198885513775\n        ],\n        [\n          5130.6746595742125,\n          3305.8596245856265\n        ]\n      ],\n      \"report\": {},\n      \"onDevicePerformance\": [\n        {\n          \"mcu\": \"string\",\n          \"name\": \"string\",\n          \"isDefault\": false,\n          \"latency\": 9213.798987491642,\n          \"tflite\": {\n            \"ramRequired\": 7860,\n            \"romRequired\": 8961,\n            \"arenaSize\": 3291,\n            \"modelSize\": 196\n          },\n          \"eon\": {\n            \"ramRequired\": 4116,\n            \"romRequired\": 5898,\n            \"arenaSize\": 957,\n            \"modelSize\": 9963\n          },\n          \"eon_ram_optimized\": {\n            \"ramRequired\": 1038,\n            \"romRequired\": 5059,\n            \"arenaSize\": 1170,\n            \"modelSize\": 5414\n          },\n          \"customMetrics\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"mcu\": \"string\",\n          \"name\": \"string\",\n          \"isDefault\": false,\n          \"latency\": 1914.6163572429252,\n          \"tflite\": {\n            \"ramRequired\": 8054,\n            \"romRequired\": 8956,\n            \"arenaSize\": 7482,\n            \"modelSize\": 2727\n          },\n          \"eon\": {\n            \"ramRequired\": 3570,\n            \"romRequired\": 7600,\n            \"arenaSize\": 5309,\n            \"modelSize\": 722\n          },\n          \"eon_ram_optimized\": {\n            \"ramRequired\": 2963,\n            \"romRequired\": 3338,\n            \"arenaSize\": 6260,\n            \"modelSize\": 1494\n          },\n          \"customMetrics\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"visualization\": \"featureExplorer\",\n      \"isSupportedOnMcu\": false,\n      \"additionalMetrics\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"fullPrecisionValue\": 6876.949739414259,\n          \"tooltipText\": \"string\",\n          \"link\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"fullPrecisionValue\": 2834.0892005459305,\n          \"tooltipText\": \"string\",\n          \"link\": \"string\"\n        }\n      ],\n      \"accuracy\": 4870.776961813898,\n      \"predictions\": [\n        {\n          \"sampleId\": 4945,\n          \"startMs\": 1311.0805722237262,\n          \"endMs\": 8178.718453206918,\n          \"prediction\": \"string\",\n          \"label\": \"string\",\n          \"predictionCorrect\": false,\n          \"f1Score\": 618.7088491044102,\n          \"anomalyScores\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        },\n        {\n          \"sampleId\": 7147,\n          \"startMs\": 8220.364205815624,\n          \"endMs\": 4322.462832594869,\n          \"prediction\": \"string\",\n          \"label\": \"string\",\n          \"predictionCorrect\": false,\n          \"f1Score\": 1800.7163080679534,\n          \"anomalyScores\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ]\n        }\n      ],\n      \"mcuSupportError\": \"string\",\n      \"profilingJobId\": 9744,\n      \"profilingJobFailed\": true\n    }\n  ],\n  \"recommendedModelType\": \"<string>\",\n  \"success\": false,\n  \"error\": \"string\",\n  \"objectDetectionLastLayer\": \"yolov7\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "68fae54b-5ad1-4bec-bfd2-e6977aa3fa76",
+          "name": "Get data explorer features",
+          "request": {
+            "name": "Get data explorer features",
+            "description": {
+              "content": "t-SNE2 output of the raw dataset using embeddings from this Keras block",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "training",
+                "keras",
+                ":learnId",
+                "data-explorer",
+                "features"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "learnId",
+                  "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "729b0343-1edc-4269-bad7-d476059ead3a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "training",
+                    "keras",
+                    ":learnId",
+                    "data-explorer",
+                    "features"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "learnId",
+                      "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"X\": {\n        \"key_0\": 2090.008272178737,\n        \"key_1\": 7887.5946152636925\n      },\n      \"y\": 3157,\n      \"yLabel\": \"string\",\n      \"sample\": {\n        \"id\": 9553.604480204394,\n        \"name\": \"string\",\n        \"startMs\": 836.0951028693509,\n        \"endMs\": 5647.1504680996695,\n        \"category\": \"testing\"\n      }\n    },\n    {\n      \"X\": {\n        \"key_0\": 921.2662280429662,\n        \"key_1\": 5761.526846630388,\n        \"key_2\": 9107.138611413751,\n        \"key_3\": 9330.41340408287,\n        \"key_4\": 7192.5810405021175\n      },\n      \"y\": 1631,\n      \"yLabel\": \"string\",\n      \"sample\": {\n        \"id\": 895.2060745343604,\n        \"name\": \"string\",\n        \"startMs\": 1491.729665796765,\n        \"endMs\": 8892.039957280353,\n        \"category\": \"training\"\n      }\n    }\n  ],\n  \"hasFeatures\": true,\n  \"success\": true,\n  \"error\": \"string\",\n  \"inputBlock\": {\n    \"id\": 4628,\n    \"type\": \"time-series\",\n    \"name\": \"Time series\",\n    \"title\": \"Time series\",\n    \"windowSizeMs\": 2004,\n    \"windowIncreaseMs\": 9453,\n    \"frequencyHz\": 60,\n    \"classificationWindowIncreaseMs\": 4031,\n    \"padZeros\": true,\n    \"imageWidth\": 28,\n    \"imageHeight\": 28,\n    \"resizeMode\": \"squash\",\n    \"resizeMethod\": \"lanczos3\",\n    \"cropAnchor\": \"middle-center\",\n    \"description\": \"Reduced learning rate and more layers\",\n    \"createdBy\": \"createImpulse\",\n    \"createdAt\": \"1950-08-14T14:43:07.388Z\",\n    \"datasetSubset\": {\n      \"subsetModulo\": 3512.277405453522,\n      \"subsetSeed\": 313.6180300591418\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7bae431b-a66c-432b-b145-c9a710565966",
+          "name": "Upload Keras files",
+          "request": {
+            "name": "Upload Keras files",
+            "description": {
+              "content": "Replace Keras block files with the contents of a zip. This is an internal API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "training",
+                "keras",
+                ":learnId",
+                "files"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "learnId",
+                  "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "zip",
+                  "type": "file",
+                  "description": "(Required) "
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c93a83aa-d1c2-41d7-b4b6-31ee1be4e662",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "training",
+                    "keras",
+                    ":learnId",
+                    "files"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "learnId",
+                      "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "zip",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "33b53b93-8f2d-4513-b0c7-ff893bfe5a5e",
+          "name": "Add Keras files",
+          "request": {
+            "name": "Add Keras files",
+            "description": {
+              "content": "Add Keras block files with the contents of a zip. This is an internal API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "training",
+                "keras",
+                ":learnId",
+                "addFiles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "learnId",
+                  "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "zip",
+                  "type": "file",
+                  "description": "(Required) "
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3d3eec6d-6615-4756-a6b2-8fa7c44b9c3d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "training",
+                    "keras",
+                    ":learnId",
+                    "addFiles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "learnId",
+                      "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "zip",
+                      "type": "file"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8a8c9da7-1cdf-4339-a906-5d787d25bbe2",
+          "name": "Download Keras export",
+          "request": {
+            "name": "Download Keras export",
+            "description": {
+              "content": "Download an exported Keras block - needs to be exported via 'exportKerasBlock' first",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "training",
+                "keras",
+                ":learnId",
+                "download-export"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "learnId",
+                  "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/zip"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7608f117-776c-43e2-8787-1141f4d906ff",
+              "name": "File",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "training",
+                    "keras",
+                    ":learnId",
+                    "download-export"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "learnId",
+                      "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/zip"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/zip"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "93e81ba5-2d06-4060-9b01-60b35a387bfc",
+          "name": "Download Keras data export",
+          "request": {
+            "name": "Download Keras data export",
+            "description": {
+              "content": "Download the data of an exported Keras block - needs to be exported via 'exportKerasBlockData' first",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "training",
+                "keras",
+                ":learnId",
+                "download-data"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "learnId",
+                  "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/zip"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "33013c53-7035-432b-b01a-af47ae92f043",
+              "name": "File",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "training",
+                    "keras",
+                    ":learnId",
+                    "download-data"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "learnId",
+                      "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/zip"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/zip"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "80477fd9-76c0-4a38-b872-f00c05c4c090",
+          "name": "Download trained model",
+          "request": {
+            "name": "Download trained model",
+            "description": {
+              "content": "Download a trained model for a learning block. Depending on the block this can be a TensorFlow model, or the cluster centroids.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "learn-data",
+                ":learnId",
+                "model",
+                ":modelDownloadId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "learnId",
+                  "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "modelDownloadId",
+                  "description": "(Required) Model download ID, which can be obtained from the project information"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b2c44cb8-23e0-4c5d-840b-c9b290a8d204",
+              "name": "File",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "learn-data",
+                    ":learnId",
+                    "model",
+                    ":modelDownloadId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "learnId",
+                      "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "modelDownloadId",
+                      "description": "(Required) Model download ID, which can be obtained from the project information"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6843234c-b5a8-4cec-bdfe-f7b0255a3ea8",
+          "name": "Trained features",
+          "request": {
+            "name": "Trained features",
+            "description": {
+              "content": "Get a sample of trained features, this extracts a number of samples and their features.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "training",
+                "anomaly",
+                ":learnId",
+                "features",
+                "get-graph"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "featureAx1",
+                  "value": "<integer>",
+                  "description": "(Required) Feature axis 1"
+                },
+                {
+                  "disabled": false,
+                  "key": "featureAx2",
+                  "value": "<integer>",
+                  "description": "(Required) Feature axis 2"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "learnId",
+                  "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "60edccc3-1260-489c-a88a-04de3780a1ad",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "training",
+                    "anomaly",
+                    ":learnId",
+                    "features",
+                    "get-graph"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "featureAx1",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "featureAx2",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "learnId",
+                      "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"X\": {\n        \"0\": -2.17,\n        \"11\": 1.21,\n        \"22\": 0.79\n      },\n      \"label\": 4919.226947282818\n    },\n    {\n      \"X\": {\n        \"0\": -2.17,\n        \"11\": 1.21,\n        \"22\": 0.79\n      },\n      \"label\": 5978.582382865005\n    }\n  ],\n  \"success\": false,\n  \"totalSampleCount\": 4220,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6b8fcd56-9228-4755-ab24-4a2c2b37fa67",
+          "name": "Trained features for sample",
+          "request": {
+            "name": "Trained features for sample",
+            "description": {
+              "content": "Get trained features for a single sample. This runs both the DSP prerequisites and the anomaly classifier.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "training",
+                "anomaly",
+                ":learnId",
+                "features",
+                "get-graph",
+                "classification",
+                ":sampleId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "learnId",
+                  "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "sampleId",
+                  "description": "(Required) Sample ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6a02f7f2-44fb-4ae2-a764-ec61c4dba1b5",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "training",
+                    "anomaly",
+                    ":learnId",
+                    "features",
+                    "get-graph",
+                    "classification",
+                    ":sampleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "learnId",
+                      "description": "(Required) Learn Block ID, use the impulse functions to retrieve the ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "sampleId",
+                      "description": "(Required) Sample ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"X\": {\n        \"0\": -2.17,\n        \"11\": 1.21,\n        \"22\": 0.79\n      },\n      \"label\": 9679.131616973264\n    },\n    {\n      \"X\": {\n        \"0\": -2.17,\n        \"11\": 1.21,\n        \"22\": 0.79\n      },\n      \"label\": 1963.6570961702926\n    }\n  ],\n  \"success\": false,\n  \"totalSampleCount\": 6318,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1cc9d3e6-9f51-4c6a-9387-c43177a00ce6",
+          "name": "Get pretrained model",
+          "request": {
+            "name": "Get pretrained model",
+            "description": {
+              "content": "Receive info back about the earlier uploaded pretrained model (via `uploadPretrainedModel`) input/output tensors. If you want to deploy a pretrained model from the API, see `startDeployPretrainedModelJob`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "pretrained-model"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "60a34327-a53f-462c-981e-92fb6802b631",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "pretrained-model"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"availableModelTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"specificDeviceSelected\": false,\n  \"success\": true,\n  \"error\": \"string\",\n  \"model\": {\n    \"fileName\": \"string\",\n    \"inputs\": [\n      {\n        \"dataType\": \"float32\",\n        \"name\": \"string\",\n        \"shape\": [\n          7652,\n          3746\n        ],\n        \"quantizationScale\": 3877.037718959382,\n        \"quantizationZeroPoint\": 2241.017220790801\n      },\n      {\n        \"dataType\": \"int8\",\n        \"name\": \"string\",\n        \"shape\": [\n          225,\n          2316\n        ],\n        \"quantizationScale\": 8699.349930549313,\n        \"quantizationZeroPoint\": 9798.687615294182\n      }\n    ],\n    \"outputs\": [\n      {\n        \"dataType\": \"int8\",\n        \"name\": \"string\",\n        \"shape\": [\n          9135,\n          9657\n        ],\n        \"quantizationScale\": 2412.8392998448735,\n        \"quantizationZeroPoint\": 3173.5331965029345\n      },\n      {\n        \"dataType\": \"uint8\",\n        \"name\": \"string\",\n        \"shape\": [\n          5848,\n          6874\n        ],\n        \"quantizationScale\": 734.3077858326708,\n        \"quantizationZeroPoint\": 2365.564967748468\n      }\n    ],\n    \"profileInfo\": {\n      \"table\": {\n        \"variant\": \"float32\",\n        \"lowEndMcu\": {\n          \"description\": \"string\",\n          \"supported\": true,\n          \"timePerInferenceMs\": 157,\n          \"memory\": {\n            \"tflite\": {\n              \"ram\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rom\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"eon\": {\n              \"ram\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rom\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"eonRamOptimized\": {\n              \"ram\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rom\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          \"mcuSupportError\": \"string\"\n        },\n        \"highEndMcu\": {\n          \"description\": \"string\",\n          \"supported\": false,\n          \"timePerInferenceMs\": 4131,\n          \"memory\": {\n            \"tflite\": {\n              \"ram\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rom\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"eon\": {\n              \"ram\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rom\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"eonRamOptimized\": {\n              \"ram\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rom\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          \"mcuSupportError\": \"string\"\n        },\n        \"highEndMcuPlusAccelerator\": {\n          \"description\": \"string\",\n          \"supported\": false,\n          \"timePerInferenceMs\": 4773,\n          \"memory\": {\n            \"tflite\": {\n              \"ram\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rom\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"eon\": {\n              \"ram\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rom\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"eonRamOptimized\": {\n              \"ram\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"rom\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          },\n          \"mcuSupportError\": \"string\"\n        },\n        \"mpu\": {\n          \"description\": \"string\",\n          \"supported\": true,\n          \"timePerInferenceMs\": 616,\n          \"rom\": 5101.851761496486\n        },\n        \"gpuOrMpuAccelerator\": {\n          \"description\": \"string\",\n          \"supported\": true,\n          \"timePerInferenceMs\": 553,\n          \"rom\": 9214.939503447846\n        }\n      },\n      \"float32\": {\n        \"device\": \"string\",\n        \"tfliteFileSizeBytes\": 9279,\n        \"isSupportedOnMcu\": true,\n        \"memory\": {\n          \"tflite\": {\n            \"ram\": 7278,\n            \"rom\": 9413,\n            \"arenaSize\": 4336\n          },\n          \"eon\": {\n            \"ram\": 8359,\n            \"rom\": 7597,\n            \"arenaSize\": 2623\n          },\n          \"eonRamOptimized\": {\n            \"ram\": 5042,\n            \"rom\": 6037,\n            \"arenaSize\": 1688\n          }\n        },\n        \"timePerInferenceMs\": 6571,\n        \"mcuSupportError\": \"string\"\n      },\n      \"int8\": {\n        \"device\": \"string\",\n        \"tfliteFileSizeBytes\": 3726,\n        \"isSupportedOnMcu\": true,\n        \"memory\": {\n          \"tflite\": {\n            \"ram\": 5028,\n            \"rom\": 5903,\n            \"arenaSize\": 7142\n          },\n          \"eon\": {\n            \"ram\": 8531,\n            \"rom\": 3155,\n            \"arenaSize\": 5317\n          },\n          \"eonRamOptimized\": {\n            \"ram\": 2258,\n            \"rom\": 1825,\n            \"arenaSize\": 6968\n          }\n        },\n        \"timePerInferenceMs\": 2136,\n        \"mcuSupportError\": \"string\"\n      }\n    },\n    \"profileJobId\": 2285,\n    \"supportsTFLite\": false\n  },\n  \"modelInfo\": {\n    \"input\": {\n      \"inputType\": \"time-series\",\n      \"frequencyHz\": 9077.678738175475,\n      \"windowLengthMs\": 6580\n    },\n    \"model\": {\n      \"modelType\": \"classification\",\n      \"labels\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cf0c45e7-a871-4f78-8f7b-22bdd60846cc",
+          "name": "Upload a pretrained model",
+          "request": {
+            "name": "Upload a pretrained model",
+            "description": {
+              "content": "Upload a pretrained model and receive info back about the input/output tensors. If you want to deploy a pretrained model from the API, see `startDeployPretrainedModelJob`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "pretrained-model",
+                "upload"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "modelFile",
+                  "type": "file",
+                  "description": "(Required) "
+                },
+                {
+                  "key": "modelFileName",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required) "
+                },
+                {
+                  "key": "modelFileType",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required)  (This can only be one of tflite,onnx,saved_model)"
+                },
+                {
+                  "key": "representativeFeatures",
+                  "type": "file",
+                  "description": ""
+                },
+                {
+                  "key": "device",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "MCU used for calculating latency, query `latencyDevices` in `listProject` for a list of supported devices (and use the \"mcu\" property here). If this is kept empty then we'll show an overview of multiple devices."
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "bd0a15e9-dbd6-498c-8700-19276d1a5941",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "pretrained-model",
+                    "upload"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "modelFile",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "modelFileName",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required)  (This can only be one of tflite,onnx,saved_model)",
+                        "type": "text/plain"
+                      },
+                      "key": "modelFileType",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "representativeFeatures",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "MCU used for calculating latency, query `latencyDevices` in `listProject` for a list of supported devices (and use the \"mcu\" property here). If this is kept empty then we'll show an overview of multiple devices.",
+                        "type": "text/plain"
+                      },
+                      "key": "device",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 12873488112,\n  \"success\": true,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7ec6d3f5-b814-46d2-bf5f-f6a4686212cb",
+          "name": "Save parameters for pretrained model",
+          "request": {
+            "name": "Save parameters for pretrained model",
+            "description": {
+              "content": "Save input / model configuration for a pretrained model. This overrides the current impulse. If you want to deploy a pretrained model from the API, see `startDeployPretrainedModelJob`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "pretrained-model",
+                "save"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"input\": {\n    \"inputType\": \"<string>\",\n    \"frequencyHz\": \"<number>\",\n    \"windowLengthMs\": \"<integer>\"\n  },\n  \"model\": {\n    \"modelType\": \"<string>\",\n    \"labels\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5ef4110c-203e-4927-bdfd-267e39974559",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "pretrained-model",
+                    "save"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": {\n    \"inputType\": \"<string>\",\n    \"frequencyHz\": \"<number>\",\n    \"windowLengthMs\": \"<integer>\"\n  },\n  \"model\": {\n    \"modelType\": \"<string>\",\n    \"labels\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c57e7667-12fc-49c0-b30c-a6919e651230",
+          "name": "Test pretrained model",
+          "request": {
+            "name": "Test pretrained model",
+            "description": {
+              "content": "Test out a pretrained model (using raw features) - upload first via  `uploadPretrainedModel`. If you want to deploy a pretrained model from the API, see `startDeployPretrainedModelJob`.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "pretrained-model",
+                "test"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"features\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"modelInfo\": {\n    \"input\": {\n      \"inputType\": \"<string>\",\n      \"frequencyHz\": \"<number>\",\n      \"windowLengthMs\": \"<integer>\"\n    },\n    \"model\": {\n      \"modelType\": \"<string>\",\n      \"labels\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4c789104-e342-4ec6-90a0-22222392353a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "pretrained-model",
+                    "test"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"features\": [\n    \"<number>\",\n    \"<number>\"\n  ],\n  \"modelInfo\": {\n    \"input\": {\n      \"inputType\": \"<string>\",\n      \"frequencyHz\": \"<number>\",\n      \"windowLengthMs\": \"<integer>\"\n    },\n    \"model\": {\n      \"modelType\": \"<string>\",\n      \"labels\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\",\n  \"result\": {\n    \"key_0\": 7914.064896825599\n  },\n  \"boundingBoxes\": [\n    {\n      \"label\": \"string\",\n      \"x\": 8661.796971693198,\n      \"y\": 1138.341588525954,\n      \"width\": 1074.2037058785104,\n      \"height\": 9735.538773353299,\n      \"score\": 635.3777663572613\n    },\n    {\n      \"label\": \"string\",\n      \"x\": 3243.3251558596953,\n      \"y\": 7896.859347547395,\n      \"width\": 4314.109973941095,\n      \"height\": 6643.719912770974,\n      \"score\": 8885.809139616224\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3d2d1a24-d46d-4b60-9346-1e2458db0047",
+          "name": "Profile pretrained model",
+          "request": {
+            "name": "Profile pretrained model",
+            "description": {
+              "content": "Returns the latency, RAM and ROM used for the pretrained model - upload first via  `uploadPretrainedModel`. This is using the project's selected latency device. Updates are streamed over the websocket API (or can be retrieved through the /stdout endpoint). Use getProfileTfliteJobResult to get the results when the job is completed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "pretrained-model",
+                "profile"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "984731f7-11b2-4e00-b768-b193b4747b5f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "pretrained-model",
+                    "profile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 12873488112,\n  \"success\": true,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e536a07e-b926-490d-a710-cb4d38e7ffc3",
+          "name": "Download pretrained model",
+          "request": {
+            "name": "Download pretrained model",
+            "description": {
+              "content": "Download a pretrained model file",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "pretrained-model",
+                "download",
+                ":pretrainedModelDownloadType"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "pretrainedModelDownloadType",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5955e265-9d39-426e-9b7e-0312f7339989",
+              "name": "File",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "pretrained-model",
+                    "download",
+                    ":pretrainedModelDownloadType"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "pretrainedModelDownloadType",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://studio.edgeimpulse.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ecdb1bee-1b3c-46eb-8a9c-d8713a6d2449",
+    "name": "Edge Impulse Learn API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

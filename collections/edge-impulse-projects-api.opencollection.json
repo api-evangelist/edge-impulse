@@ -1,0 +1,1249 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edge Impulse Projects API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Projects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List active projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/projects"
+          },
+          "docs": "Retrieve list of active projects. If authenticating using JWT token this lists all the projects the user has access to, if authenticating using an API key, this only lists that project."
+        },
+        {
+          "info": {
+            "name": "Create new project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/projects/create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new project. This API can only be called using a JWT token."
+        },
+        {
+          "info": {
+            "name": "Get development keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/devkeys",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Retrieve the development API and HMAC keys for a project. These keys are specifically marked to be used during development. These keys can be `undefined` if no development keys are set."
+        },
+        {
+          "info": {
+            "name": "Get downloads",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/downloads",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "Retrieve the downloads for a project."
+        },
+        {
+          "info": {
+            "name": "Download CSV Wizard config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/csv-wizard/download-config",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Returns a JSON file with the current CSV wizard config. If there is no config this will throw a 5xx error."
+        },
+        {
+          "info": {
+            "name": "Get CSV Wizard uploaded file info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/csv-wizard/uploaded-file",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Returns whether the file that was uploaded when the CSV wizard was configured is available."
+        },
+        {
+          "info": {
+            "name": "Store CSV Wizard uploaded file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/csv-wizard/uploaded-file",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Asynchronously called in the CSV Wizard to store the file that the CSV wizard was based on."
+        },
+        {
+          "info": {
+            "name": "Download CSV Wizard uploaded file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/csv-wizard/uploaded-file/download",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Returns the file that was uploaded when the CSV wizard was configured. If there is no config this will throw a 5xx error."
+        },
+        {
+          "info": {
+            "name": "Add collaborator",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/collaborators/add",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a collaborator to a project."
+        },
+        {
+          "info": {
+            "name": "Remove collaborator",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/collaborators/remove",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove a collaborator to a project. Note that you cannot invoke this function if only a single collaborator is present."
+        },
+        {
+          "info": {
+            "name": "Transfer ownership (user)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/collaborators/transfer-ownership",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Transfer ownership of a project to another user."
+        },
+        {
+          "info": {
+            "name": "Transfer ownership (organization)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/collaborators/transfer-ownership-org",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Transfer ownership of a project to another organization."
+        },
+        {
+          "info": {
+            "name": "Get HMAC keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/hmackeys",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Retrieve all HMAC keys."
+        },
+        {
+          "info": {
+            "name": "Add HMAC key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/hmackeys",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add an HMAC key. If you set `developmentKey` to `true` this flag will be removed from the current development HMAC key."
+        },
+        {
+          "info": {
+            "name": "Remove HMAC key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/hmackeys/:hmacId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "hmacId",
+                "value": "",
+                "type": "path",
+                "description": "Hmac key ID"
+              }
+            ]
+          },
+          "docs": "Revoke an HMAC key. Note that if you revoke the development key some services (such as automatic provisioning of devices through the serial daemon) will no longer work."
+        },
+        {
+          "info": {
+            "name": "Get API keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/apikeys",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Retrieve all API keys. This does **not** return the full API key, but only a portion (for security purposes). The development key will be returned in full, as it'll be set in devices and is thus not private."
+        },
+        {
+          "info": {
+            "name": "Add API key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/apikeys",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add an API key. If you set `developmentKey` to `true` this flag will be removed from the current development API key."
+        },
+        {
+          "info": {
+            "name": "Revoke API key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/apikeys/:apiKeyId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "apiKeyId",
+                "value": "",
+                "type": "path",
+                "description": "API key ID"
+              }
+            ]
+          },
+          "docs": "Revoke an API key. Note that if you revoke the development API key some services (such as automatic provisioning of devices through the serial daemon) will no longer work."
+        },
+        {
+          "info": {
+            "name": "List emails",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/emails",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Get a list of all emails sent by Edge Impulse regarding this project."
+        },
+        {
+          "info": {
+            "name": "Get socket token",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/socket-token",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Get a token to authenticate with the web socket interface."
+        },
+        {
+          "info": {
+            "name": "Get data axes summary",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/data-axes",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "includeDisabled",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include disabled samples. Defaults to true"
+              },
+              {
+                "name": "includeNotProcessed",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include non-processed samples. Defaults to true"
+              }
+            ]
+          },
+          "docs": "Get a list of axes that are present in the training data."
+        },
+        {
+          "info": {
+            "name": "Get data summary",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/data-summary",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "includeDisabled",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include disabled samples. Defaults to true"
+              },
+              {
+                "name": "includeNotProcessed",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include non-processed samples. Defaults to true"
+              }
+            ]
+          },
+          "docs": "Get summary of all data present in the training set. This returns the number of data items, the total length of all data, and the labels. This is similar to `dataSummary` in `ProjectInfoResponse` but allows you to exclude disabled items or items that are still processing."
+        },
+        {
+          "info": {
+            "name": "Get the interval (in ms) of the training data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/data-interval",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Get the interval of the training data; if multiple intervals are present, the interval of the longest data item is returned."
+        },
+        {
+          "info": {
+            "name": "Set compute time limit",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/compute-time-limit",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Change the job compute time limit for the project. This function is only available through a JWT token, and is not available to all users."
+        },
+        {
+          "info": {
+            "name": "Set DSP file size limit",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/dsp-file-size-limit",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Change the DSP file size limit for the project. This function is only available through a JWT token, and is not available to all users."
+        },
+        {
+          "info": {
+            "name": "List versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/versions",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Get all versions for this project."
+        },
+        {
+          "info": {
+            "name": "List public versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/versions/public",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Get all public versions for this project. You don't need any authentication for this function."
+        },
+        {
+          "info": {
+            "name": "Update version",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/versions/:versionId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "Version ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a version, this only updates fields that were set in the body."
+        },
+        {
+          "info": {
+            "name": "Delete versions",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/versions/:versionId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "Version ID"
+              }
+            ]
+          },
+          "docs": "Delete a version. This does not delete the version from cold storage."
+        },
+        {
+          "info": {
+            "name": "Make version private",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/versions/:versionId/make-private",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "versionId",
+                "value": "",
+                "type": "path",
+                "description": "Version ID"
+              }
+            ]
+          },
+          "docs": "Make a public version private."
+        },
+        {
+          "info": {
+            "name": "Upload image for readme",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/readme/upload-image",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Uploads an image to the user CDN and returns the path."
+        },
+        {
+          "info": {
+            "name": "Launch getting started wizard",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/launch-getting-started",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "This clears out *all data in your project*, and is irrevocable. This function is only available through a JWT token, and is not available to all users."
+        },
+        {
+          "info": {
+            "name": "Last modification",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/last-modification",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Get the last modification date for a project (will be upped when data is modified, or when an impulse is trained)"
+        },
+        {
+          "info": {
+            "name": "Development boards",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/development-boards",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "List all development boards for a project"
+        },
+        {
+          "info": {
+            "name": "Get target constraints",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/target-constraints",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Retrieve target constraints for a project. The constraints object captures hardware attributes of your target device, along with an application budget to allow guidance on performance and resource usage"
+        },
+        {
+          "info": {
+            "name": "Set target constraints",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/target-constraints",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set target constraints for a project. Use the constraints object to capture hardware attributes of your target device, along with an application budget to allow guidance on performance and resource usage"
+        },
+        {
+          "info": {
+            "name": "Get a list of all model variants available for this project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/model-variants",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "Get a list of model variants applicable to all trained learn blocks in this project."
+        },
+        {
+          "info": {
+            "name": "Dismiss a notification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/dismiss-notification",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Dismiss a notification"
+        },
+        {
+          "info": {
+            "name": "Get synthetic data config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/synthetic-data",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Get the last used synthetic data config"
+        },
+        {
+          "info": {
+            "name": "List AI Actions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/ai-actions",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Get all AI actions."
+        },
+        {
+          "info": {
+            "name": "Set AI Actions order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/ai-actions/order",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Change the order of AI actions. Post the new order of all AI Actions by ID. You need to specify _all_ AI Actions here. If not, an error will be thrown."
+        },
+        {
+          "info": {
+            "name": "Create AI Action",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/ai-actions/create",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Create a new AI Action."
+        },
+        {
+          "info": {
+            "name": "Get new AI Actions config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/ai-actions/new",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Get the AI Actions config for a new action"
+        },
+        {
+          "info": {
+            "name": "Get AI Actions config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/ai-actions/:actionId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "actionId",
+                "value": "",
+                "type": "path",
+                "description": "AI Action ID"
+              }
+            ]
+          },
+          "docs": "Get an AI Actions config"
+        },
+        {
+          "info": {
+            "name": "Save AI Actions config",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/ai-actions/:actionId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "actionId",
+                "value": "",
+                "type": "path",
+                "description": "AI Action ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Store an AI Actions config. Use `createAIActionsJob` to run the job. Post the full AI Action here w/ all parameters."
+        },
+        {
+          "info": {
+            "name": "Delete AI Actions config",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/ai-actions/:actionId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "actionId",
+                "value": "",
+                "type": "path",
+                "description": "AI Action ID"
+              }
+            ]
+          },
+          "docs": "Deletes an AI Actions."
+        },
+        {
+          "info": {
+            "name": "Preview samples for AI Actions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/ai-actions/:actionId/preview-samples",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "actionId",
+                "value": "",
+                "type": "path",
+                "description": "AI Action ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get a number of random samples to show in the AI Actions screen. If `saveConfig` is passed in, then a valid actionId is required in the URL. If you don't need to save the config (e.g. when creating a new action), you can use -1."
+        },
+        {
+          "info": {
+            "name": "Clear AI Actions proposed changes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/ai-actions/:actionId/clear-proposed-changes",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "actionId",
+                "value": "",
+                "type": "path",
+                "description": "AI Action ID"
+              }
+            ]
+          },
+          "docs": "Remove all proposed changes for an AI Actions job."
+        },
+        {
+          "info": {
+            "name": "Update tags",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/tags",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the list of project tags."
+        },
+        {
+          "info": {
+            "name": "List public projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/projects/public",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "query",
+                "description": "Only include projects where the name or owner contains this string"
+              },
+              {
+                "name": "projectTypes",
+                "value": "accelerometer,audio,object-detection",
+                "type": "query",
+                "description": "Comma separated list of project types to filter on. Supported values are 'audio', 'object-detection', 'image', 'accelerometer', 'other'."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Fields and order to sort query by"
+              }
+            ]
+          },
+          "docs": "Retrieve the list of all public projects. You don't need any authentication for this method."
+        },
+        {
+          "info": {
+            "name": "List public project types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/projects/types"
+          },
+          "docs": "Retrieve the list of available public project types. You don't need any authentication for this method."
+        },
+        {
+          "info": {
+            "name": "Project information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "List all information about this project."
+        },
+        {
+          "info": {
+            "name": "Update project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update project properties such as name and logo."
+        },
+        {
+          "info": {
+            "name": "Remove project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Remove the current project, and all data associated with it. This is irrevocable!"
+        },
+        {
+          "info": {
+            "name": "Public project information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/public-info",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "List a summary about this project - available for public projects."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

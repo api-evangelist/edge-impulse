@@ -1,0 +1,423 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edge Impulse Optimization API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Optimization",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all tuner runs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/optimize/runs",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "List all the tuner runs for a project."
+        },
+        {
+          "info": {
+            "name": "Get config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/optimize/config",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Get config"
+        },
+        {
+          "info": {
+            "name": "Update config",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/optimize/config",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update config"
+        },
+        {
+          "info": {
+            "name": "Get all available learn blocks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/optimize/all-learn-blocks",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Get all available learn blocks"
+        },
+        {
+          "info": {
+            "name": "Get window settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/optimize/window-settings",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Get window settings"
+        },
+        {
+          "info": {
+            "name": "Score trial",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/optimize/score-trial",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Score trial"
+        },
+        {
+          "info": {
+            "name": "Create trial",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/optimize/:jobId/create-trial",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create trial"
+        },
+        {
+          "info": {
+            "name": "Complete EON tuner run",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/optimize/:jobId/complete-search",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Complete EON tuner run and mark it as succesful"
+        },
+        {
+          "info": {
+            "name": "Search space",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/optimize/space",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Search space"
+        },
+        {
+          "info": {
+            "name": "Retrieves the EON tuner state",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/optimize/state",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Retrieves the EON tuner state"
+        },
+        {
+          "info": {
+            "name": "Delete EON tuner state",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/optimize/state",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Completely clears the EON tuner state for this project."
+        },
+        {
+          "info": {
+            "name": "Retrieves DSP block parameters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/optimize/dsp-parameters",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "query",
+                "description": "Organization ID"
+              },
+              {
+                "name": "organizationDspId",
+                "value": "",
+                "type": "query",
+                "description": "Organization DSP ID"
+              }
+            ]
+          },
+          "docs": "Retrieves DSP block parameters"
+        },
+        {
+          "info": {
+            "name": "Retrieves available transfer learning models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/optimize/transfer-learning-models",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Retrieves available transfer learning models"
+        },
+        {
+          "info": {
+            "name": "Get trial logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/optimize/trial/:trialId/stdout",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "trialId",
+                "value": "",
+                "type": "path",
+                "description": "trial ID"
+              }
+            ]
+          },
+          "docs": "Get the logs for a trial."
+        },
+        {
+          "info": {
+            "name": "End EON tuner trial",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/optimize//:jobId/trial/:trialId/end-trial",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "trialId",
+                "value": "",
+                "type": "path",
+                "description": "trial ID"
+              }
+            ]
+          },
+          "docs": "End an EON trial early. This can for example be used to implement early stopping."
+        },
+        {
+          "info": {
+            "name": "Retrieves EON tuner state for a run.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/optimize/:tunerCoordinatorJobId/state",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "tunerCoordinatorJobId",
+                "value": "",
+                "type": "path",
+                "description": "Tuner coordinator job ID"
+              }
+            ]
+          },
+          "docs": "Retrieves the EON tuner state for a specific run."
+        },
+        {
+          "info": {
+            "name": "Update EON tuner state",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/optimize/:tunerCoordinatorJobId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "tunerCoordinatorJobId",
+                "value": "",
+                "type": "path",
+                "description": "Tuner coordinator job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the EON tuner state for a specific run."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

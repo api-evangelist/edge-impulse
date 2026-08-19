@@ -1,0 +1,331 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edge Impulse Deployment API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Deployment",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Deployment targets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/deployment/targets"
+          },
+          "docs": "List all deployment targets"
+        },
+        {
+          "info": {
+            "name": "Deployment targets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/deployment/targets",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "List deployment targets for a project"
+        },
+        {
+          "info": {
+            "name": "Deployment targets (data sources)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/deployment/targets/data-sources",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "List deployment targets for a project from data sources page  (it shows some things like all Linux deploys, and hides 'fake' deploy targets like mobile phone / computer)"
+        },
+        {
+          "info": {
+            "name": "Evaluate job result",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/deployment/evaluate",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "Get evaluate job result, containing detailed performance statistics for every possible variant of the impulse."
+        },
+        {
+          "info": {
+            "name": "Check evaluate job result (cache)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/deployment/evaluate/cache",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "Get evaluate job result, containing detailed performance statistics for every possible variant of the impulse. This only checks cache, and throws an error if there is no data in cache."
+        },
+        {
+          "info": {
+            "name": "Get deployment info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/deployment",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "The name of the built target. You can find this by listing all deployment targets through `listDeploymentTargetsForProject` (via `GET /v1/api/{projectId}/deployment/targets`) and see the `format` type."
+              },
+              {
+                "name": "modelType",
+                "value": "",
+                "type": "query",
+                "description": "Optional model type of the build (if not, it uses the settings in the Keras block)"
+              },
+              {
+                "name": "engine",
+                "value": "",
+                "type": "query",
+                "description": "Optional engine for the build (if not, it uses the default engine for the deployment target)"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "Gives information on whether a deployment was already built for a type"
+        },
+        {
+          "info": {
+            "name": "Download",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/deployment/download",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "The name of the built target. You can find this by listing all deployment targets through `listDeploymentTargetsForProject` (via `GET /v1/api/{projectId}/deployment/targets`) and see the `format` type."
+              },
+              {
+                "name": "modelType",
+                "value": "",
+                "type": "query",
+                "description": "Optional model type of the build (if not, it uses the settings in the Keras block)"
+              },
+              {
+                "name": "engine",
+                "value": "",
+                "type": "query",
+                "description": "Optional engine for the build (if not, it uses the default engine for the deployment target)"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "Download the build artefacts for a project"
+        },
+        {
+          "info": {
+            "name": "Get information on the last deployment build",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/deployment/last",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "Get information on the result of the last successful deployment job, including info on the build e.g. whether it is still valid."
+        },
+        {
+          "info": {
+            "name": "Get Syntiant posterior parameters",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/deployment/syntiant/posterior",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "Get the current posterior parameters for the Syntiant deployment target"
+        },
+        {
+          "info": {
+            "name": "Set Syntiant posterior parameters",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/deployment/syntiant/posterior",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set the current posterior parameters for the Syntiant deployment target"
+        },
+        {
+          "info": {
+            "name": "Find Syntiant posterior parameters",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/jobs/find-syntiant-posterior",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Automatically find the current posterior parameters for the Syntiant deployment target"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,1169 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edge Impulse OrganizationData API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OrganizationData",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List storage buckets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/buckets",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ]
+          },
+          "docs": "Retrieve all configured storage buckets. This does not list the secret key."
+        },
+        {
+          "info": {
+            "name": "Add a storage bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/buckets",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a storage bucket."
+        },
+        {
+          "info": {
+            "name": "Verify bucket connectivity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/buckets/verify",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Verify connectivity to a storage bucket and optionally list its contents. This endpoint allows you to:\n1. Check if the provided bucket credentials are valid and the bucket is accessible.\n2. Optionally list files in the bucket up to a specified limit.\n3. Validate the bucket configuration before adding it to the organization.\n\nThe request can include details such as the bucket name, region, credentials, and listing options.\nThe response provides information about the bucket's accessibility and, if"
+        },
+        {
+          "info": {
+            "name": "Get storage bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/buckets/:bucketId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Bucket ID"
+              }
+            ]
+          },
+          "docs": "Get storage bucket details."
+        },
+        {
+          "info": {
+            "name": "Update storage bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/buckets/:bucketId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Bucket ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates storage bucket details. This only updates fields that were set in the request body.\nBefore updating the bucket details, it is required to verify the connection using the\nPOST /api/organizations/{organizationId}/buckets/verify endpoint.\n\nThe verification process:\n1. Call the verify endpoint with the new bucket details.\n2. Poll the verify endpoint until it responds with `connectionStatus: connected`.\n3. If the endpoint responds with `connectionStatus: error`, the verification has failed.\n\n"
+        },
+        {
+          "info": {
+            "name": "Remove storage bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/buckets/:bucketId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Bucket ID"
+              }
+            ]
+          },
+          "docs": "Remove a storage bucket. This will render any data in this storage bucket unreachable."
+        },
+        {
+          "info": {
+            "name": "Verify existing bucket connectivity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/buckets/:bucketId/verify",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "bucketId",
+                "value": "",
+                "type": "path",
+                "description": "Bucket ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Verify whether we can reach a bucket before adding it."
+        },
+        {
+          "info": {
+            "name": "List data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/data",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataset",
+                "value": "activity data",
+                "type": "query",
+                "description": "Selected dataset"
+              },
+              {
+                "name": "filter",
+                "value": "dataset = 'activity data' AND (label = 'running' OR metadata->user = 'Jan Jongboom')",
+                "type": "query",
+                "description": "Data filter in SQL WHERE format, where you can reference 'dataset', 'bucket', 'name', 'total_file_count', 'total_file_size', 'created' and any metadata label through 'metadata->' (dots are replaced by underscore)."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              }
+            ]
+          },
+          "docs": "Lists all data items. This can be filtered by the ?filter parameter."
+        },
+        {
+          "info": {
+            "name": "Add new data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/data/add",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Add a new data item. You can add a maximum of 10000 files directly through this API. Use `addOrganizationDataFile` to add additional files."
+        },
+        {
+          "info": {
+            "name": "Add data items from bucket",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/data/add-folder",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk adds data items that already exist in a storage bucket. The bucket path specified should contain folders. Each folder is added as a data item in Edge Impulse."
+        },
+        {
+          "info": {
+            "name": "Download data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/data/download",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataset",
+                "value": "activity data",
+                "type": "query",
+                "description": "Selected dataset"
+              },
+              {
+                "name": "dataIds",
+                "value": "3,7",
+                "type": "query",
+                "description": "Data IDs as an Array"
+              },
+              {
+                "name": "filter",
+                "value": "dataset = 'activity data' AND (label = 'running' OR metadata->user = 'Jan Jongboom')",
+                "type": "query",
+                "description": "Data filter in SQL WHERE format, where you can reference 'dataset', 'bucket', 'name', 'total_file_count', 'total_file_size', 'created' and any metadata label through 'metadata->' (dots are replaced by underscore)."
+              }
+            ]
+          },
+          "docs": "Download all data for selected data items. This function does not query the underlying bucket."
+        },
+        {
+          "info": {
+            "name": "Delete data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/data/delete",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataset",
+                "value": "activity data",
+                "type": "query",
+                "description": "Selected dataset"
+              },
+              {
+                "name": "dataIds",
+                "value": "3,7",
+                "type": "query",
+                "description": "Data IDs as an Array"
+              },
+              {
+                "name": "filter",
+                "value": "dataset = 'activity data' AND (label = 'running' OR metadata->user = 'Jan Jongboom')",
+                "type": "query",
+                "description": "Data filter in SQL WHERE format, where you can reference 'dataset', 'bucket', 'name', 'total_file_count', 'total_file_size', 'created' and any metadata label through 'metadata->' (dots are replaced by underscore)."
+              }
+            ]
+          },
+          "docs": "Delete all data for selected data items. This removes all data in the underlying data bucket."
+        },
+        {
+          "info": {
+            "name": "Clear checklist for data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/data/clear-checklist",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataset",
+                "value": "activity data",
+                "type": "query",
+                "description": "Selected dataset"
+              },
+              {
+                "name": "dataIds",
+                "value": "3,7",
+                "type": "query",
+                "description": "Data IDs as an Array"
+              },
+              {
+                "name": "filter",
+                "value": "dataset = 'activity data' AND (label = 'running' OR metadata->user = 'Jan Jongboom')",
+                "type": "query",
+                "description": "Data filter in SQL WHERE format, where you can reference 'dataset', 'bucket', 'name', 'total_file_count', 'total_file_size', 'created' and any metadata label through 'metadata->' (dots are replaced by underscore)."
+              }
+            ]
+          },
+          "docs": "Clear all checklist flags for selected data items."
+        },
+        {
+          "info": {
+            "name": "Change dataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/data/change-dataset",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataset",
+                "value": "activity data",
+                "type": "query",
+                "description": "Selected dataset"
+              },
+              {
+                "name": "dataIds",
+                "value": "3,7",
+                "type": "query",
+                "description": "Data IDs as an Array"
+              },
+              {
+                "name": "filter",
+                "value": "dataset = 'activity data' AND (label = 'running' OR metadata->user = 'Jan Jongboom')",
+                "type": "query",
+                "description": "Data filter in SQL WHERE format, where you can reference 'dataset', 'bucket', 'name', 'total_file_count', 'total_file_size', 'created' and any metadata label through 'metadata->' (dots are replaced by underscore)."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Change the dataset for selected data items."
+        },
+        {
+          "info": {
+            "name": "List files",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/data/files",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataset",
+                "value": "activity data",
+                "type": "query",
+                "description": "Selected dataset"
+              },
+              {
+                "name": "filter",
+                "value": "dataset = 'activity data' AND (label = 'running' OR metadata->user = 'Jan Jongboom')",
+                "type": "query",
+                "description": "Data filter in SQL WHERE format, where you can reference 'dataset', 'bucket', 'name', 'total_file_count', 'total_file_size', 'created' and any metadata label through 'metadata->' (dots are replaced by underscore)."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              }
+            ]
+          },
+          "docs": "Lists all files included by the filter."
+        },
+        {
+          "info": {
+            "name": "Refresh data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/data/refresh",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataset",
+                "value": "activity data",
+                "type": "query",
+                "description": "Selected dataset"
+              }
+            ]
+          },
+          "docs": "Update all data items. HEADs all underlying buckets to retrieve the last file information. Use this API after uploading data directly to S3. If your dataset has bucketId and bucketPath set then this will also remove items that have been removed from S3."
+        },
+        {
+          "info": {
+            "name": "Bulk update metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/data/bulk-metadata",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Bulk update the metadata of many data items in one go. This requires you to submit a CSV file with headers, one of which the columns should be named 'name'. The other columns are used as metadata keys."
+        },
+        {
+          "info": {
+            "name": "Get data metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/data/:dataId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataId",
+                "value": "",
+                "type": "path",
+                "description": "Data ID"
+              },
+              {
+                "name": "filter",
+                "value": "dataset = 'activity data' AND (label = 'running' OR metadata->user = 'Jan Jongboom')",
+                "type": "query",
+                "description": "Data filter in SQL WHERE format, where you can reference 'dataset', 'bucket', 'name', 'total_file_count', 'total_file_size', 'created' and any metadata label through 'metadata->' (dots are replaced by underscore)."
+              }
+            ]
+          },
+          "docs": "Get a data item. This will HEAD the underlying bucket to retrieve the last file information."
+        },
+        {
+          "info": {
+            "name": "Update data metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/data/:dataId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataId",
+                "value": "",
+                "type": "path",
+                "description": "Data ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the data item metadata."
+        },
+        {
+          "info": {
+            "name": "Delete data",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/data/:dataId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataId",
+                "value": "",
+                "type": "path",
+                "description": "Data ID"
+              }
+            ]
+          },
+          "docs": "Delete a data item. This will remove items the items from the underlying storage if your dataset has \"bucketPath\" set."
+        },
+        {
+          "info": {
+            "name": "Add files",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/data/:dataId/add",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataId",
+                "value": "",
+                "type": "path",
+                "description": "Data ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Add a new file to an existing data item."
+        },
+        {
+          "info": {
+            "name": "Download data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/data/:dataId/download",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataId",
+                "value": "",
+                "type": "path",
+                "description": "Data ID"
+              },
+              {
+                "name": "filter",
+                "value": "dataset = 'activity data' AND (label = 'running' OR metadata->user = 'Jan Jongboom')",
+                "type": "query",
+                "description": "Data filter in SQL WHERE format, where you can reference 'dataset', 'bucket', 'name', 'total_file_count', 'total_file_size', 'created' and any metadata label through 'metadata->' (dots are replaced by underscore)."
+              }
+            ]
+          },
+          "docs": "Download all data for this data item."
+        },
+        {
+          "info": {
+            "name": "Delete file",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/data/:dataId/download",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataId",
+                "value": "",
+                "type": "path",
+                "description": "Data ID"
+              },
+              {
+                "name": "fileName",
+                "value": "",
+                "type": "query",
+                "description": "File name"
+              }
+            ]
+          },
+          "docs": "Delete a single file from a data item."
+        },
+        {
+          "info": {
+            "name": "Download file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/data/:dataId/files/download",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataId",
+                "value": "",
+                "type": "path",
+                "description": "Data ID"
+              },
+              {
+                "name": "fileName",
+                "value": "",
+                "type": "query",
+                "description": "File name"
+              }
+            ]
+          },
+          "docs": "Download a single file from a data item."
+        },
+        {
+          "info": {
+            "name": "Preview file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/data/:dataId/files/preview",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataId",
+                "value": "",
+                "type": "path",
+                "description": "Data ID"
+              },
+              {
+                "name": "fileName",
+                "value": "",
+                "type": "query",
+                "description": "File name"
+              }
+            ]
+          },
+          "docs": "Preview a single file from a data item (same as downloadOrganizationDataFile but w/ content-disposition inline and could be truncated)."
+        },
+        {
+          "info": {
+            "name": "Get transformation jobs for data item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/data/:dataId/transformation-jobs",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataId",
+                "value": "",
+                "type": "path",
+                "description": "Data ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              }
+            ]
+          },
+          "docs": "Get all transformation jobs that ran for a data item. If limit / offset is not provided then max. 20 results are returned."
+        },
+        {
+          "info": {
+            "name": "Add dataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/dataset",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new research dataset"
+        },
+        {
+          "info": {
+            "name": "Get dataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/dataset/:dataset",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              }
+            ]
+          },
+          "docs": "Get information about a dataset"
+        },
+        {
+          "info": {
+            "name": "Update dataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/dataset/:dataset",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set information about a dataset"
+        },
+        {
+          "info": {
+            "name": "Hide dataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/dataset/:dataset/hide",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              }
+            ]
+          },
+          "docs": "Hide a dataset (does not remove underlying data)"
+        },
+        {
+          "info": {
+            "name": "Create pre-signed S3 upload link",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/dataset/:dataset/upload-link",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a signed link to securely upload data to s3 bucket directly from the client."
+        },
+        {
+          "info": {
+            "name": "Verify dataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/dataset/:dataset/verify",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              }
+            ]
+          },
+          "docs": "Verify whether we can reach a dataset (and return some random files, used for data sources)"
+        },
+        {
+          "info": {
+            "name": "List files in dataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/dataset/:dataset/files",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List all files and directories in specified prefix."
+        },
+        {
+          "info": {
+            "name": "Delete file from dataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/dataset/:dataset/files/delete",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete a file from a dataset"
+        },
+        {
+          "info": {
+            "name": "Rename file from dataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/dataset/:dataset/files/rename",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rename a file in a dataset"
+        },
+        {
+          "info": {
+            "name": "Download file from dataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/dataset/:dataset/files/download",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Download a file from a dataset. Will return a signed URL to the bucket."
+        },
+        {
+          "info": {
+            "name": "Download folder from dataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/dataset/:dataset/files/download-folder",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query",
+                "description": "Path, relative to dataset"
+              }
+            ]
+          },
+          "docs": "Download all files in the given folder in a dataset, ignoring any subdirectories."
+        },
+        {
+          "info": {
+            "name": "View file from dataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/dataset/:dataset/files/view",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query",
+                "description": "Path to file in portal"
+              }
+            ]
+          },
+          "docs": "View a file that's located in a dataset (requires JWT auth). File might be converted (e.g. Parquet) or truncated (e.g. CSV)."
+        },
+        {
+          "info": {
+            "name": "Preview files in a default dataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/dataset/:dataset/files/preview",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dataset",
+                "value": "",
+                "type": "path",
+                "description": "Dataset name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Preview files and directories in a default dataset for the given prefix, with support for wildcards. This is an internal API used when starting a transformation job."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

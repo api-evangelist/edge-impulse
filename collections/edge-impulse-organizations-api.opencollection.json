@@ -1,0 +1,2171 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edge Impulse Organizations API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Organizations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List active organizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations"
+          },
+          "docs": "Retrieve list of organizations that a user is a part of. If authenticating using JWT token this lists all the organizations the user has access to, if authenticating using an API key, this only lists that organization."
+        },
+        {
+          "info": {
+            "name": "Create new organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new organization. This is an internal API."
+        },
+        {
+          "info": {
+            "name": "Organization information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ]
+          },
+          "docs": "List all information about this organization."
+        },
+        {
+          "info": {
+            "name": "Update organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update organization properties such as name and logo."
+        },
+        {
+          "info": {
+            "name": "Remove organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ]
+          },
+          "docs": "Remove the current organization, and all data associated with it. This is irrevocable!"
+        },
+        {
+          "info": {
+            "name": "Request trial extension",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/trial/request-extension",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Request an extension for an enterprise trial."
+        },
+        {
+          "info": {
+            "name": "Organization metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/metrics",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "excludeEdgeImpulseUsers",
+                "value": "",
+                "type": "query",
+                "description": "Whether to exclude Edge Impulse users when counting enterprise entitlements usage"
+              },
+              {
+                "name": "projectVisibility",
+                "value": "",
+                "type": "query",
+                "description": "What project visibility type to include when counting enterprise entitlements usage"
+              }
+            ]
+          },
+          "docs": "Get general metrics for this organization."
+        },
+        {
+          "info": {
+            "name": "Request HR block license",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/request-hr-block-license",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ]
+          },
+          "docs": "Request a license required for the deployment of an impulse containing the Edge Impulse HR block."
+        },
+        {
+          "info": {
+            "name": "Request organization limits increase",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/limits-request",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Request an increase in the limits for this organization. Available limits are: users, projects, compute, storage."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Get white label information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ]
+          },
+          "docs": "White label admin only API to get the white label information."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Update white label information",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "White label admin only API to update the white label information."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Update deployment targets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/deploymentTargets",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "White label admin only API to update some or all of the deployment targets enabled for this white label."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Update default deployment target",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/deploymentTargets/default",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "White label admin only API to update the default deployment target for this white label."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Update the order of deployment options in the deployment view",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/deploymentOptionsOrder",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "White label admin only API to customize the order of deployment options in the deployment view for this white label."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Update learning blocks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/learningBlocks",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "White label admin only API to update some or all of the learning blocks enabled for this white label."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Update theme logo",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/theme/logo",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "White label admin only API to update the white label theme logo."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Update theme device logo",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/theme/deviceLogo",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "White label admin only API to update the white label theme device logo."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Update theme colors",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/theme/colors",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "White label admin only API to update some or all theme colors."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Update theme favicon",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/theme/favicon",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "White label admin only API to update the theme favicon."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Get global white label metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/metrics",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ]
+          },
+          "docs": "White label admin only API to get global metrics."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Get all white label users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/users",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "active",
+                "value": "",
+                "type": "query",
+                "description": "Whether to search for entities (users, orgs) active in the last X days"
+              },
+              {
+                "name": "tier",
+                "value": "",
+                "type": "query",
+                "description": "Whether to search for free, community plus, professional, or enterprise entities (users, projects)"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma separated list of fields to fetch in a query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Fields and order to sort query by"
+              },
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query"
+              }
+            ]
+          },
+          "docs": "White label admin only API to get the list of all registered users."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Get a white label user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/users/:userId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "White label admin only API to get information about a user."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Update white label user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/users/:userId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "White label admin only API to update user properties."
+        },
+        {
+          "info": {
+            "name": "Delete a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/users/:userId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "White label admin only API to delete a user."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Get white label user metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/users/:userId/metrics",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "White label admin only API to get marketing metrics about a user."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Get user jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/users/:userId/jobs",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              }
+            ]
+          },
+          "docs": "White label admin only  API to get the list of all project jobs for a user."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Get all white label projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/projects",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "active",
+                "value": "",
+                "type": "query",
+                "description": "Whether to search for entities (users, orgs) active in the last X days"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Fields and order to sort query by"
+              },
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query"
+              }
+            ]
+          },
+          "docs": "White label admin only API to get the list of all projects."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Create a new project within white label context.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/projects",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new free tier project. This is an API only available to white label admins."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Get a white label project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/projects/:projectId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "White label admin only API to get project information."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Update white label project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/projects/:projectId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "White label admin only API to update project properties."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Delete a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/projects/:projectId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "White label admin only API to delete a project."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Add Project API key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/projects/:projectId/apiKeys",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "White label admin only API to add an API key to a project. Add a temporary API key that can be used to make Projects API (/api/projects/{projectId}/) requests on behalf of the project admin. These API keys are not visible to the project itself and have a customizable TTL defaulting to 1 minute."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Add user to a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/projects/:projectId/members",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "White label admin only API to add a user to a project. If no user is provided, the current user is used."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Remove user from a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/projects/:projectId/members/:userId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "White label admin only API to remove a user from a project."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Get project jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/projects/:projectId/jobs",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              }
+            ]
+          },
+          "docs": "White label admin only API to get the list of all jobs for a project."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Add a development board to a whitelabel",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/development-boards",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "White label admin only API to add a development board."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Update a development board in a whitelabel",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/development-boards/:developmentBoardId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "developmentBoardId",
+                "value": "",
+                "type": "path",
+                "description": "Development board ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "White label admin only API to update a development board."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Remove a development board from a whitelabel",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/development-boards/:developmentBoardId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "developmentBoardId",
+                "value": "",
+                "type": "path",
+                "description": "Development board ID."
+              }
+            ]
+          },
+          "docs": "White label admin only API to remove a development board."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Update the image of a whitelabel development board",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/development-boards/:developmentBoardId/image",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "developmentBoardId",
+                "value": "",
+                "type": "path",
+                "description": "Development board ID."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "White label admin only API to update the image of a development board."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Get all organizations within a white label",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/organizations",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "active",
+                "value": "",
+                "type": "query",
+                "description": "Whether to search for entities (users, orgs) active in the last X days"
+              },
+              {
+                "name": "includeDeleted",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include deleted entities (users, projects, orgs)"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Fields and order to sort query by"
+              },
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query"
+              }
+            ]
+          },
+          "docs": "White label admin only API to get the list of all organizations."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Create new organization within white label context",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/organizations",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new organization. This is an API only available to white label admins"
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Get organization compute time usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/organizations/:innerOrganizationId/usage/computeTime",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "innerOrganizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID within the context of a white label"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date"
+              }
+            ]
+          },
+          "docs": "Get compute time usage for an organization over a period of time. This is an API only available to white label admins"
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Get all usage reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/organizations/:innerOrganizationId/usage/reports",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "innerOrganizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID within the context of a white label"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              }
+            ]
+          },
+          "docs": "Get all usage reports for an organization. This is an API only available to white label admins."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Creates a new usage report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/organizations/:innerOrganizationId/usage/reports",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "innerOrganizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID within the context of a white label"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date"
+              }
+            ]
+          },
+          "docs": "Create a new usage report for an organization. A job is created to process the report request and the job details are returned in the response. This is an API only available to white label admins."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Get usage report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/organizations/:innerOrganizationId/usage/reports/:reportId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "innerOrganizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID within the context of a white label"
+              },
+              {
+                "name": "reportId",
+                "value": "",
+                "type": "path",
+                "description": "Report ID"
+              }
+            ]
+          },
+          "docs": "Get a usage report for an organization. This is an API only available to white label admins."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Delete usage report",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/organizations/:innerOrganizationId/usage/reports/:reportId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "innerOrganizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID within the context of a white label"
+              },
+              {
+                "name": "reportId",
+                "value": "",
+                "type": "path",
+                "description": "Report ID"
+              }
+            ]
+          },
+          "docs": "Delete a usage report for an organization. This is an API only available to white label admins."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Download usage report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/organizations/:innerOrganizationId/usage/reports/:reportId/download",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "innerOrganizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID within the context of a white label"
+              },
+              {
+                "name": "reportId",
+                "value": "",
+                "type": "path",
+                "description": "Report ID"
+              }
+            ]
+          },
+          "docs": "Download a usage report for an organization. This is an API only available to white label admins."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Get all organization data exports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/organizations/:innerOrganizationId/exports",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "innerOrganizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID within the context of a white label"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              }
+            ]
+          },
+          "docs": "Get all data exports for an organization. This is an API only available to white label admins."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Create a new organization data export",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/organizations/:innerOrganizationId/exports",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "innerOrganizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID within the context of a white label"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new data export for an organization.\nA job is created to process the export request and the job details are returned in the response.\nThis is an API only available to white label admins.\n"
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Get organization data export",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/organizations/:innerOrganizationId/exports/:exportId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "innerOrganizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID within the context of a white label"
+              },
+              {
+                "name": "exportId",
+                "value": "",
+                "type": "path",
+                "description": "Export ID"
+              }
+            ]
+          },
+          "docs": "Get a data export for an organization. This is an API only available to white label admins."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Update organization data export",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/organizations/:innerOrganizationId/exports/:exportId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "innerOrganizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID within the context of a white label"
+              },
+              {
+                "name": "exportId",
+                "value": "",
+                "type": "path",
+                "description": "Export ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a data export for an organization. This is an API only available to white label admins."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Delete organization data export",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/organizations/:innerOrganizationId/exports/:exportId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "innerOrganizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID within the context of a white label"
+              },
+              {
+                "name": "exportId",
+                "value": "",
+                "type": "path",
+                "description": "Export ID"
+              }
+            ]
+          },
+          "docs": "Delete a data export for an organization. This is an API only available to white label admins."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Add organization API key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/organizations/:innerOrganizationId/apiKeys",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "innerOrganizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID within the context of a white label"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "White label admin only API to add an API key to an organization. Add a temporary API key that can be used to make Organizations API (/api/organizations/{organizationId}/) requests on behalf of the organization. These API keys are not visible to the organization itself and have a customizable TTL defaulting to 1 minute."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Add user to an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/organizations/:innerOrganizationId/members",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "innerOrganizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID within the context of a white label"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "White label admin only API to add a user to an organization. If no user is provided, the current user is used."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Remove user from an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/organizations/:innerOrganizationId/members/:userId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "innerOrganizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID within the context of a white label"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "White label admin only API to remove a user from an organization."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Get organization information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/organizations/:innerOrganizationId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "innerOrganizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID within the context of a white label"
+              },
+              {
+                "name": "includeDeleted",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include deleted entities (users, projects, orgs)"
+              }
+            ]
+          },
+          "docs": "White label admin only API to list all information about an organization."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Update organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/organizations/:innerOrganizationId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "innerOrganizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID within the context of a white label"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "White label admin only API to update organization properties such as name and logo."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Delete an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/organizations/:innerOrganizationId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "innerOrganizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID within the context of a white label"
+              }
+            ]
+          },
+          "docs": "White label admin only API to delete an organization."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Restore an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/organizations/:innerOrganizationId/restore",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "innerOrganizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID within the context of a white label"
+              }
+            ]
+          },
+          "docs": "White label admin only API to restore a deleted organization. All organization projects sharing the same deletion date as that of the organization will also be restored. If this is a trial organization that was never upgraded to a paid plan then the organization will be restored to its original trial state.\n"
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Create a new organization project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/organizations/:innerOrganizationId/projects",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "innerOrganizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID within the context of a white label"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "White label admin only API to create a new project for an organization."
+        },
+        {
+          "info": {
+            "name": "White Label Admin - Get organization jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/whitelabel/organizations/:innerOrganizationId/jobs",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "innerOrganizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID within the context of a white label"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              }
+            ]
+          },
+          "docs": "White label admin only API to get the list of all jobs for a organization."
+        },
+        {
+          "info": {
+            "name": "Upload organization logo",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/logo",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Uploads and updates the organization logo"
+        },
+        {
+          "info": {
+            "name": "Upload organization header image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/header",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Uploads and updates the organization header image"
+        },
+        {
+          "info": {
+            "name": "Admin endpoint",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/test-admin",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ]
+          },
+          "docs": "Test endpoint that can only be reached with admin rights."
+        },
+        {
+          "info": {
+            "name": "Get projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/projects",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ]
+          },
+          "docs": "Retrieve all projects for the organization."
+        },
+        {
+          "info": {
+            "name": "Get API keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/apikeys",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ]
+          },
+          "docs": "Retrieve all API keys. This does **not** return the full API key, but only a portion (for security purposes)."
+        },
+        {
+          "info": {
+            "name": "Add API key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/apikeys",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add an API key."
+        },
+        {
+          "info": {
+            "name": "Revoke API key",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/apikeys/:apiKeyId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "apiKeyId",
+                "value": "",
+                "type": "path",
+                "description": "API key ID"
+              }
+            ]
+          },
+          "docs": "Revoke an API key."
+        },
+        {
+          "info": {
+            "name": "Add member",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/members/add",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a member to an organization."
+        },
+        {
+          "info": {
+            "name": "Invite member",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/members/invite",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Invite a member to an organization."
+        },
+        {
+          "info": {
+            "name": "Remove member",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/members/remove",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Remove a member from an organization. Note that you cannot invoke this function if only a single member is present to the organization."
+        },
+        {
+          "info": {
+            "name": "Set member role",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/members/:memberId/role",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path",
+                "description": "Member ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Change the role of a member in an organization."
+        },
+        {
+          "info": {
+            "name": "Set member datasets",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/members/:memberId/datasets",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path",
+                "description": "Member ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set the datasets a guest member has access to in an organization."
+        },
+        {
+          "info": {
+            "name": "Resend invitation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/members/:memberId/resend-invite",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "memberId",
+                "value": "",
+                "type": "path",
+                "description": "Member ID"
+              }
+            ]
+          },
+          "docs": "Resend an invitation to a member in an organization."
+        },
+        {
+          "info": {
+            "name": "Upload image for readme",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/readme/upload-image",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Uploads an image to the user CDN and returns the path."
+        },
+        {
+          "info": {
+            "name": "Get all organization data exports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/exports",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              }
+            ]
+          },
+          "docs": "Get all data exports for an organization."
+        },
+        {
+          "info": {
+            "name": "Get organization data export",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/exports/:exportId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "exportId",
+                "value": "",
+                "type": "path",
+                "description": "Export ID"
+              }
+            ]
+          },
+          "docs": "Get a data export for an organization."
+        },
+        {
+          "info": {
+            "name": "Download organization data export",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/exports/:exportId/download",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "exportId",
+                "value": "",
+                "type": "path",
+                "description": "Export ID"
+              }
+            ]
+          },
+          "docs": "Download a data export for an organization."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

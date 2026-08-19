@@ -1,0 +1,1531 @@
+{
+  "item": [
+    {
+      "id": "620735cb-1cb9-4df1-b9bd-2a96e02e641d",
+      "name": "OrganizationDataCampaigns",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "691677c4-548d-4f1c-8f2f-02290dc4422f",
+          "name": "Get data campaign dashboards",
+          "request": {
+            "name": "Get data campaign dashboards",
+            "description": {
+              "content": "List all data campaign dashboards",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "campaign-dashboards"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "631d8a6d-1993-4932-baea-af404d3c907d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "campaign-dashboards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"dashboards\": [\n    {\n      \"id\": 7236,\n      \"created\": \"2023-01-27T19:34:00.102Z\",\n      \"name\": \"string\",\n      \"emailRecipientUids\": [\n        4233,\n        2689\n      ],\n      \"whenToEmail\": \"on_changes\",\n      \"showNoOfDays\": 8874,\n      \"latestScreenshot\": \"string\"\n    },\n    {\n      \"id\": 9198,\n      \"created\": \"2005-08-05T03:16:40.033Z\",\n      \"name\": \"string\",\n      \"emailRecipientUids\": [\n        7621,\n        2475\n      ],\n      \"whenToEmail\": \"on_changes\",\n      \"showNoOfDays\": 2817,\n      \"latestScreenshot\": \"string\"\n    }\n  ],\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5f6bbf36-bddb-418a-8295-9fb57d0a0e3a",
+          "name": "Add data campaign dashboard",
+          "request": {
+            "name": "Add data campaign dashboard",
+            "description": {
+              "content": "Add a new data campaign dashboard",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "campaign-dashboards"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"emailRecipientUids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"whenToEmail\": \"<string>\",\n  \"showNoOfDays\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6edfebee-e83f-477b-b1ef-c46058cdad83",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "campaign-dashboards"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"emailRecipientUids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"whenToEmail\": \"<string>\",\n  \"showNoOfDays\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"dataCampaignDashboardId\": 7655,\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f62c2c00-6d73-4a20-b554-6e3ba6a98382",
+          "name": "Get data campaign dashboard",
+          "request": {
+            "name": "Get data campaign dashboard",
+            "description": {
+              "content": "Get a data campaign dashboard",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "campaign-dashboard",
+                ":campaignDashboardId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "campaignDashboardId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dda50073-415d-4828-8b85-fef7f7a4068b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "campaign-dashboard",
+                    ":campaignDashboardId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "campaignDashboardId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"dashboard\": {\n    \"id\": 8545,\n    \"created\": \"1982-11-27T21:42:18.115Z\",\n    \"name\": \"string\",\n    \"emailRecipientUids\": [\n      1032,\n      6392\n    ],\n    \"whenToEmail\": \"always\",\n    \"showNoOfDays\": 1239,\n    \"latestScreenshot\": \"string\"\n  },\n  \"success\": true,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "931963c0-8054-40d3-a8dc-2d61a7f35f9c",
+          "name": "Update data campaign dashboard",
+          "request": {
+            "name": "Update data campaign dashboard",
+            "description": {
+              "content": "Update a data campaign dashboard",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "campaign-dashboard",
+                ":campaignDashboardId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "campaignDashboardId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"emailRecipientUids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"whenToEmail\": \"<string>\",\n  \"showNoOfDays\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "279c1cd9-b923-41a5-a5f0-88d1f7fde7f3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "campaign-dashboard",
+                    ":campaignDashboardId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "campaignDashboardId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"emailRecipientUids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"whenToEmail\": \"<string>\",\n  \"showNoOfDays\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d7fac5ed-f664-4a95-8561-03ecc136bcbe",
+          "name": "Delete data campaign dashboard",
+          "request": {
+            "name": "Delete data campaign dashboard",
+            "description": {
+              "content": "Delete a data campaign dashboard",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "campaign-dashboard",
+                ":campaignDashboardId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "campaignDashboardId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "71cd363a-3693-4d18-aa7d-a153daec941e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "campaign-dashboard",
+                    ":campaignDashboardId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "campaignDashboardId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3368bcf2-f386-402b-8f57-bf00a1a3b5bf",
+          "name": "Get data campaigns",
+          "request": {
+            "name": "Get data campaigns",
+            "description": {
+              "content": "Get a list of all data campaigns for a dashboard",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "campaign-dashboard",
+                ":campaignDashboardId",
+                "campaigns"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "campaignDashboardId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5d3f3939-06bb-4e38-aeba-89d518f4396a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "campaign-dashboard",
+                    ":campaignDashboardId",
+                    "campaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "campaignDashboardId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"campaigns\": [\n    {\n      \"campaign\": {\n        \"id\": 8122,\n        \"dataCampaignDashboardId\": 178,\n        \"created\": \"1973-02-09T08:13:43.730Z\",\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"coordinatorUids\": [\n          1793,\n          4532\n        ],\n        \"pipelineIds\": [\n          548,\n          9323\n        ],\n        \"queries\": [\n          {\n            \"name\": \"string\",\n            \"dataset\": \"string\",\n            \"query\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"dataset\": \"string\",\n            \"query\": \"string\"\n          }\n        ],\n        \"links\": [\n          {\n            \"icon\": \"string\",\n            \"name\": \"string\",\n            \"link\": \"string\"\n          },\n          {\n            \"icon\": \"string\",\n            \"name\": \"string\",\n            \"link\": \"string\"\n          }\n        ],\n        \"datasets\": [\n          \"string\",\n          \"string\"\n        ],\n        \"projectIds\": [\n          7255,\n          9988\n        ],\n        \"logo\": \"string\"\n      },\n      \"graphs\": [\n        {\n          \"title\": \"string\",\n          \"link\": \"string\",\n          \"xData\": [\n            {\n              \"color\": \"string\",\n              \"popupText\": \"string\",\n              \"legendText\": \"string\",\n              \"values\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ],\n              \"dataType\": \"percentage\",\n              \"dataset\": \"string\",\n              \"query\": \"string\"\n            },\n            {\n              \"color\": \"string\",\n              \"popupText\": \"string\",\n              \"legendText\": \"string\",\n              \"values\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ],\n              \"dataType\": \"dataItems\",\n              \"dataset\": \"string\",\n              \"query\": \"string\"\n            }\n          ],\n          \"yTicks\": [\n            \"2013-01-24T11:57:17.174Z\",\n            \"2007-04-07T11:44:32.605Z\"\n          ],\n          \"nextUpdate\": \"2012-08-02T14:15:24.340Z\"\n        },\n        {\n          \"title\": \"string\",\n          \"link\": \"string\",\n          \"xData\": [\n            {\n              \"color\": \"string\",\n              \"popupText\": \"string\",\n              \"legendText\": \"string\",\n              \"values\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ],\n              \"dataType\": \"percentage\",\n              \"dataset\": \"string\",\n              \"query\": \"string\"\n            },\n            {\n              \"color\": \"string\",\n              \"popupText\": \"string\",\n              \"legendText\": \"string\",\n              \"values\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ],\n              \"dataType\": \"percentage\",\n              \"dataset\": \"string\",\n              \"query\": \"string\"\n            }\n          ],\n          \"yTicks\": [\n            \"1985-02-20T14:02:05.946Z\",\n            \"1948-07-21T11:34:17.803Z\"\n          ],\n          \"nextUpdate\": \"2018-04-25T06:59:50.326Z\"\n        }\n      ]\n    },\n    {\n      \"campaign\": {\n        \"id\": 5650,\n        \"dataCampaignDashboardId\": 8271,\n        \"created\": \"1971-12-18T10:00:03.084Z\",\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"coordinatorUids\": [\n          5751,\n          4938\n        ],\n        \"pipelineIds\": [\n          5312,\n          2763\n        ],\n        \"queries\": [\n          {\n            \"name\": \"string\",\n            \"dataset\": \"string\",\n            \"query\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"dataset\": \"string\",\n            \"query\": \"string\"\n          }\n        ],\n        \"links\": [\n          {\n            \"icon\": \"string\",\n            \"name\": \"string\",\n            \"link\": \"string\"\n          },\n          {\n            \"icon\": \"string\",\n            \"name\": \"string\",\n            \"link\": \"string\"\n          }\n        ],\n        \"datasets\": [\n          \"string\",\n          \"string\"\n        ],\n        \"projectIds\": [\n          3564,\n          4883\n        ],\n        \"logo\": \"string\"\n      },\n      \"graphs\": [\n        {\n          \"title\": \"string\",\n          \"link\": \"string\",\n          \"xData\": [\n            {\n              \"color\": \"string\",\n              \"popupText\": \"string\",\n              \"legendText\": \"string\",\n              \"values\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ],\n              \"dataType\": \"time\",\n              \"dataset\": \"string\",\n              \"query\": \"string\"\n            },\n            {\n              \"color\": \"string\",\n              \"popupText\": \"string\",\n              \"legendText\": \"string\",\n              \"values\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ],\n              \"dataType\": \"dataItems\",\n              \"dataset\": \"string\",\n              \"query\": \"string\"\n            }\n          ],\n          \"yTicks\": [\n            \"1989-11-05T19:10:31.966Z\",\n            \"1970-02-12T09:23:02.778Z\"\n          ],\n          \"nextUpdate\": \"2023-05-25T01:55:39.148Z\"\n        },\n        {\n          \"title\": \"string\",\n          \"link\": \"string\",\n          \"xData\": [\n            {\n              \"color\": \"string\",\n              \"popupText\": \"string\",\n              \"legendText\": \"string\",\n              \"values\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ],\n              \"dataType\": \"percentage\",\n              \"dataset\": \"string\",\n              \"query\": \"string\"\n            },\n            {\n              \"color\": \"string\",\n              \"popupText\": \"string\",\n              \"legendText\": \"string\",\n              \"values\": [\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              ],\n              \"dataType\": \"time\",\n              \"dataset\": \"string\",\n              \"query\": \"string\"\n            }\n          ],\n          \"yTicks\": [\n            \"1984-08-22T11:16:17.906Z\",\n            \"1963-02-17T23:14:42.421Z\"\n          ],\n          \"nextUpdate\": \"1988-12-13T14:36:03.786Z\"\n        }\n      ]\n    }\n  ],\n  \"success\": true,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ad1b42ad-6067-4a12-8d0a-fe4095ad6974",
+          "name": "Upload a dashboard screenshot",
+          "request": {
+            "name": "Upload a dashboard screenshot",
+            "description": {
+              "content": "Used internally to upload a picture of a screenshot",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "campaign-dashboard",
+                ":campaignDashboardId",
+                "screenshot"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "campaignDashboardId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "description": "(Required) "
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c31bd509-d588-4ab7-abf9-7f5cbc4fe672",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "campaign-dashboard",
+                    ":campaignDashboardId",
+                    "screenshot"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "campaignDashboardId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "image",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "baef4f0a-fa44-4ed5-aaf5-2aed77208c74",
+          "name": "Add a data campaign",
+          "request": {
+            "name": "Add a data campaign",
+            "description": {
+              "content": "Add a new data campaign to a data campaign dashboard",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "campaigns"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dataCampaignDashboardId\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"coordinatorUids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"queries\": [\n    {\n      \"name\": \"<string>\",\n      \"dataset\": \"<string>\",\n      \"query\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"dataset\": \"<string>\",\n      \"query\": \"<string>\"\n    }\n  ],\n  \"links\": [\n    {\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\",\n      \"link\": \"<string>\"\n    },\n    {\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\",\n      \"link\": \"<string>\"\n    }\n  ],\n  \"datasets\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"pipelineIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"id\": \"<integer>\",\n  \"created\": \"<dateTime>\",\n  \"logo\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "188b18b0-8168-418e-b0f6-39659b1e99fa",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "campaigns"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"dataCampaignDashboardId\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"coordinatorUids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"queries\": [\n    {\n      \"name\": \"<string>\",\n      \"dataset\": \"<string>\",\n      \"query\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"dataset\": \"<string>\",\n      \"query\": \"<string>\"\n    }\n  ],\n  \"links\": [\n    {\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\",\n      \"link\": \"<string>\"\n    },\n    {\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\",\n      \"link\": \"<string>\"\n    }\n  ],\n  \"datasets\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"pipelineIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"id\": \"<integer>\",\n  \"created\": \"<dateTime>\",\n  \"logo\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"dataCampaignId\": 9807,\n  \"success\": true,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6addfdb0-c0d3-4e7b-8a4d-c8959c0f045f",
+          "name": "Get data campaign",
+          "request": {
+            "name": "Get data campaign",
+            "description": {
+              "content": "Get a data campaign",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "campaigns",
+                ":campaignId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "campaignId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fc3346a8-f742-44c5-b485-900ba570fcc0",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "campaigns",
+                    ":campaignId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "campaignId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"campaign\": {\n    \"id\": 7159,\n    \"dataCampaignDashboardId\": 4115,\n    \"created\": \"1954-01-10T06:14:47.348Z\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"coordinatorUids\": [\n      3698,\n      3222\n    ],\n    \"pipelineIds\": [\n      8068,\n      6659\n    ],\n    \"queries\": [\n      {\n        \"name\": \"<string>\",\n        \"dataset\": \"<string>\",\n        \"query\": \"<string>\"\n      },\n      {\n        \"name\": \"<string>\",\n        \"dataset\": \"<string>\",\n        \"query\": \"<string>\"\n      }\n    ],\n    \"links\": [\n      {\n        \"icon\": \"<string>\",\n        \"name\": \"<string>\",\n        \"link\": \"<string>\"\n      },\n      {\n        \"icon\": \"<string>\",\n        \"name\": \"<string>\",\n        \"link\": \"<string>\"\n      }\n    ],\n    \"datasets\": [\n      \"string\",\n      \"string\"\n    ],\n    \"projectIds\": [\n      9595,\n      1897\n    ],\n    \"logo\": \"string\"\n  },\n  \"graphs\": [\n    {\n      \"title\": \"string\",\n      \"link\": \"string\",\n      \"xData\": [\n        {\n          \"color\": \"string\",\n          \"popupText\": \"string\",\n          \"legendText\": \"string\",\n          \"values\": [\n            {\n              \"id\": 3646,\n              \"value\": 8636.06005733818\n            },\n            {\n              \"id\": 7683,\n              \"value\": 1898.5054401581901\n            }\n          ],\n          \"dataType\": \"time\",\n          \"dataset\": \"string\",\n          \"query\": \"string\"\n        },\n        {\n          \"color\": \"string\",\n          \"popupText\": \"string\",\n          \"legendText\": \"string\",\n          \"values\": [\n            {\n              \"id\": 7510,\n              \"value\": 6251.027706319688\n            },\n            {\n              \"id\": 38,\n              \"value\": 1150.5561944645372\n            }\n          ],\n          \"dataType\": \"percentage\",\n          \"dataset\": \"string\",\n          \"query\": \"string\"\n        }\n      ],\n      \"yTicks\": [\n        \"1950-01-04T03:25:58.906Z\",\n        \"2023-11-19T10:41:22.504Z\"\n      ],\n      \"nextUpdate\": \"1997-11-09T19:55:25.788Z\"\n    },\n    {\n      \"title\": \"string\",\n      \"link\": \"string\",\n      \"xData\": [\n        {\n          \"color\": \"string\",\n          \"popupText\": \"string\",\n          \"legendText\": \"string\",\n          \"values\": [\n            {\n              \"id\": 1735,\n              \"value\": 1341.1859867068808\n            },\n            {\n              \"id\": 7825,\n              \"value\": 8562.978908833344\n            }\n          ],\n          \"dataType\": \"dataItems\",\n          \"dataset\": \"string\",\n          \"query\": \"string\"\n        },\n        {\n          \"color\": \"string\",\n          \"popupText\": \"string\",\n          \"legendText\": \"string\",\n          \"values\": [\n            {\n              \"id\": 4179,\n              \"value\": 1363.0691317357769\n            },\n            {\n              \"id\": 3819,\n              \"value\": 2016.6807737485426\n            }\n          ],\n          \"dataType\": \"percentage\",\n          \"dataset\": \"string\",\n          \"query\": \"string\"\n        }\n      ],\n      \"yTicks\": [\n        \"1951-05-21T20:59:39.709Z\",\n        \"2014-05-11T12:52:38.633Z\"\n      ],\n      \"nextUpdate\": \"1954-08-22T12:28:32.795Z\"\n    }\n  ],\n  \"success\": true,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "087478cd-4e9b-4de4-b4ea-8e575405a525",
+          "name": "Update data campaign",
+          "request": {
+            "name": "Update data campaign",
+            "description": {
+              "content": "Update a data campaign",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "campaigns",
+                ":campaignId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "campaignId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dataCampaignDashboardId\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"coordinatorUids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"logo\": \"<string>\",\n  \"description\": \"<string>\",\n  \"queries\": [\n    {\n      \"name\": \"<string>\",\n      \"dataset\": \"<string>\",\n      \"query\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"dataset\": \"<string>\",\n      \"query\": \"<string>\"\n    }\n  ],\n  \"links\": [\n    {\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\",\n      \"link\": \"<string>\"\n    },\n    {\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\",\n      \"link\": \"<string>\"\n    }\n  ],\n  \"datasets\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"pipelineIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cc273528-d381-4d1a-acdc-0a5f675bbda0",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "campaigns",
+                    ":campaignId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "campaignId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"dataCampaignDashboardId\": \"<integer>\",\n  \"name\": \"<string>\",\n  \"coordinatorUids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"logo\": \"<string>\",\n  \"description\": \"<string>\",\n  \"queries\": [\n    {\n      \"name\": \"<string>\",\n      \"dataset\": \"<string>\",\n      \"query\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"dataset\": \"<string>\",\n      \"query\": \"<string>\"\n    }\n  ],\n  \"links\": [\n    {\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\",\n      \"link\": \"<string>\"\n    },\n    {\n      \"icon\": \"<string>\",\n      \"name\": \"<string>\",\n      \"link\": \"<string>\"\n    }\n  ],\n  \"datasets\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"pipelineIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"projectIds\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "67e9d77c-8886-4c0b-98d8-04d8cbe93644",
+          "name": "Delete data campaign",
+          "request": {
+            "name": "Delete data campaign",
+            "description": {
+              "content": "Delete a data campaign",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "campaigns",
+                ":campaignId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "campaignId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "df85cb66-99e2-44c3-a17a-fa22d0f86caf",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "campaigns",
+                    ":campaignId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "campaignId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "82643b38-c2e7-448f-9362-61958ea3b9c0",
+          "name": "Get diff for data campaign",
+          "request": {
+            "name": "Get diff for data campaign",
+            "description": {
+              "content": "Get which items have changed for a data campaign. You post the data points and we'll return which data items are different in the past day.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "campaigns",
+                ":campaignId",
+                "diff"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "campaignId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"queries\": [\n    {\n      \"dataset\": \"<string>\",\n      \"query\": \"<string>\",\n      \"graphValueId\": \"<integer>\"\n    },\n    {\n      \"dataset\": \"<string>\",\n      \"query\": \"<string>\",\n      \"graphValueId\": \"<integer>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "03d6af63-49ec-4fda-b3e8-501c2802d207",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "campaigns",
+                    ":campaignId",
+                    "diff"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "campaignId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"queries\": [\n    {\n      \"dataset\": \"<string>\",\n      \"query\": \"<string>\",\n      \"graphValueId\": \"<integer>\"\n    },\n    {\n      \"dataset\": \"<string>\",\n      \"query\": \"<string>\",\n      \"graphValueId\": \"<integer>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"date\": \"1966-07-15T02:39:59.541Z\",\n  \"queries\": [\n    {\n      \"title\": \"string\",\n      \"dataset\": \"string\",\n      \"query\": \"string\",\n      \"newItems\": [\n        \"string\",\n        \"string\"\n      ],\n      \"deletedItems\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    {\n      \"title\": \"string\",\n      \"dataset\": \"string\",\n      \"query\": \"string\",\n      \"newItems\": [\n        \"string\",\n        \"string\"\n      ],\n      \"deletedItems\": [\n        \"string\",\n        \"string\"\n      ]\n    }\n  ],\n  \"success\": true,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://studio.edgeimpulse.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "57283a15-0d2e-4f93-a1a0-aa9fd9eeaf99",
+    "name": "Edge Impulse OrganizationDataCampaigns API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

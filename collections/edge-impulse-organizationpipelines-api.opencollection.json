@@ -1,0 +1,234 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edge Impulse OrganizationPipelines API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OrganizationPipelines",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List pipelines",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/pipelines",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "query",
+                "description": "If set, filters on pipelines which are attached to this project."
+              }
+            ]
+          },
+          "docs": "Retrieve all organizational pipelines"
+        },
+        {
+          "info": {
+            "name": "Create pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/pipelines",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an organizational pipelines"
+        },
+        {
+          "info": {
+            "name": "List archived pipelines",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/pipelines/archived",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "query",
+                "description": "If set, filters on pipelines which are attached to this project."
+              }
+            ]
+          },
+          "docs": "Retrieve all archived organizational pipelines"
+        },
+        {
+          "info": {
+            "name": "Get pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/pipelines/:pipelineId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "pipelineId",
+                "value": "",
+                "type": "path",
+                "description": "Pipeline ID"
+              }
+            ]
+          },
+          "docs": "Retrieve an organizational pipelines"
+        },
+        {
+          "info": {
+            "name": "Update pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/pipelines/:pipelineId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "pipelineId",
+                "value": "",
+                "type": "path",
+                "description": "Pipeline ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an organizational pipelines"
+        },
+        {
+          "info": {
+            "name": "Delete pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/pipelines/:pipelineId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "pipelineId",
+                "value": "",
+                "type": "path",
+                "description": "Pipeline ID"
+              }
+            ]
+          },
+          "docs": "Delete an organizational pipelines"
+        },
+        {
+          "info": {
+            "name": "Run pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/pipelines/:pipelineId/run",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "pipelineId",
+                "value": "",
+                "type": "path",
+                "description": "Pipeline ID"
+              },
+              {
+                "name": "ignoreLastSuccessfulRun",
+                "value": "",
+                "type": "query",
+                "description": "If set then `EI_LAST_SUCCESSFUL_RUN` is not set. You can use this to re-run a pipeline from scratch."
+              }
+            ]
+          },
+          "docs": "Run an organizational pipeline"
+        },
+        {
+          "info": {
+            "name": "Stop a running pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/pipelines/:pipelineId/stop",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "pipelineId",
+                "value": "",
+                "type": "path",
+                "description": "Pipeline ID"
+              }
+            ]
+          },
+          "docs": "Stops the pipeline, and marks it as failed."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

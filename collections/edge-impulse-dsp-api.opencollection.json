@@ -1,0 +1,643 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edge Impulse DSP API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "DSP",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/dsp/:dspId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "dspId",
+                "value": "",
+                "type": "path",
+                "description": "DSP Block ID, use the impulse functions to retrieve the ID"
+              }
+            ]
+          },
+          "docs": "Retrieve the configuration parameters for the DSP block. Use the impulse functions to retrieve all DSP blocks."
+        },
+        {
+          "info": {
+            "name": "Set config",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/dsp/:dspId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "dspId",
+                "value": "",
+                "type": "path",
+                "description": "DSP Block ID, use the impulse functions to retrieve the ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set configuration parameters for the DSP block. Only values set in the body will be overwritten."
+        },
+        {
+          "info": {
+            "name": "Clear DSP block",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/dsp/:dspId/clear",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "dspId",
+                "value": "",
+                "type": "path",
+                "description": "DSP Block ID, use the impulse functions to retrieve the ID"
+              }
+            ]
+          },
+          "docs": "Clear generated features for a DSP block (used in tests)."
+        },
+        {
+          "info": {
+            "name": "Get metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/dsp/:dspId/metadata",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "dspId",
+                "value": "",
+                "type": "path",
+                "description": "DSP Block ID, use the impulse functions to retrieve the ID"
+              },
+              {
+                "name": "excludeIncludedSamples",
+                "value": "",
+                "type": "query",
+                "description": "Whether to exclude 'includedSamples' in the response (as these can slow down requests significantly)."
+              }
+            ]
+          },
+          "docs": "Retrieve the metadata from a generated DSP block."
+        },
+        {
+          "info": {
+            "name": "Get raw sample",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/dsp/:dspId/raw-data/:sampleId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "dspId",
+                "value": "",
+                "type": "path",
+                "description": "DSP Block ID, use the impulse functions to retrieve the ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              },
+              {
+                "name": "limitPayloadValues",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of payload values in the response"
+              }
+            ]
+          },
+          "docs": "Get raw sample data, but with only the axes selected by the DSP block. E.g. if you have selected only accX and accY as inputs for the DSP block, but the raw sample also contains accZ, accZ is filtered out. If you pass dspId = 0 this will return a raw graph without any processing."
+        },
+        {
+          "info": {
+            "name": "Get raw sample (slice)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/dsp/:dspId/raw-data/:sampleId/slice",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "dspId",
+                "value": "",
+                "type": "path",
+                "description": "DSP Block ID, use the impulse functions to retrieve the ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              },
+              {
+                "name": "sliceStart",
+                "value": "",
+                "type": "query",
+                "description": "Begin index of the slice"
+              },
+              {
+                "name": "sliceEnd",
+                "value": "",
+                "type": "query",
+                "description": "End index of the slice. If not given, the sample will be sliced to the same length as the impulse input block window length."
+              }
+            ]
+          },
+          "docs": "Get slice of raw sample data, but with only the axes selected by the DSP block. E.g. if you have selected only accX and accY as inputs for the DSP block, but the raw sample also contains accZ, accZ is filtered out."
+        },
+        {
+          "info": {
+            "name": "Get processed sample (slice)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/dsp/:dspId/raw-data/:sampleId/slice/run",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "dspId",
+                "value": "",
+                "type": "path",
+                "description": "DSP Block ID, use the impulse functions to retrieve the ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              },
+              {
+                "name": "sliceStart",
+                "value": "",
+                "type": "query",
+                "description": "Begin index of the slice"
+              },
+              {
+                "name": "sliceEnd",
+                "value": "",
+                "type": "query",
+                "description": "End index of the slice. If not given, the sample will be sliced to the same length as the impulse input block window length."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get slice of sample data, and run it through the DSP block. This only the axes selected by the DSP block. E.g. if you have selected only accX and accY as inputs for the DSP block, but the raw sample also contains accZ, accZ is filtered out."
+        },
+        {
+          "info": {
+            "name": "Get processed sample (slice)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/dsp/:dspId/raw-data/:sampleId/slice/run/readonly",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "dspId",
+                "value": "",
+                "type": "path",
+                "description": "DSP Block ID, use the impulse functions to retrieve the ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              },
+              {
+                "name": "sliceStart",
+                "value": "",
+                "type": "query",
+                "description": "Begin index of the slice"
+              },
+              {
+                "name": "sliceEnd",
+                "value": "",
+                "type": "query",
+                "description": "End index of the slice. If not given, the sample will be sliced to the same length as the impulse input block window length."
+              }
+            ]
+          },
+          "docs": "Get slice of sample data, and run it through the DSP block. This only the axes selected by the DSP block. E.g. if you have selected only accX and accY as inputs for the DSP block, but the raw sample also contains accZ, accZ is filtered out."
+        },
+        {
+          "info": {
+            "name": "Feature labels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/dsp/:dspId/features/labels",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "dspId",
+                "value": "",
+                "type": "path",
+                "description": "DSP Block ID, use the impulse functions to retrieve the ID"
+              }
+            ]
+          },
+          "docs": "Retrieve the names of the features the DSP block generates"
+        },
+        {
+          "info": {
+            "name": "Sample of trained features",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/dsp/:dspId/features/get-graph/:category",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "dspId",
+                "value": "",
+                "type": "path",
+                "description": "DSP Block ID, use the impulse functions to retrieve the ID"
+              },
+              {
+                "name": "featureAx1",
+                "value": "",
+                "type": "query",
+                "description": "Feature axis 1"
+              },
+              {
+                "name": "featureAx2",
+                "value": "",
+                "type": "query",
+                "description": "Feature axis 2"
+              },
+              {
+                "name": "featureAx3",
+                "value": "",
+                "type": "query",
+                "description": "Feature axis 3"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "path",
+                "description": "Which of the three acquisition categories to download data from"
+              }
+            ]
+          },
+          "docs": "Get a sample of trained features, this extracts a number of samples and their labels. Used to visualize the current training set."
+        },
+        {
+          "info": {
+            "name": "Features for sample",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/dsp/:dspId/features/get-graph/classification/:sampleId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "dspId",
+                "value": "",
+                "type": "path",
+                "description": "DSP Block ID, use the impulse functions to retrieve the ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              }
+            ]
+          },
+          "docs": "Runs the DSP block against a sample. This will move the sliding window (dependent on the sliding window length and the sliding window increase parameters in the impulse) over the complete file, and run the DSP function for every window that is extracted."
+        },
+        {
+          "info": {
+            "name": "Feature importance",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/dsp/:dspId/features/importance",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "dspId",
+                "value": "",
+                "type": "path",
+                "description": "DSP Block ID, use the impulse functions to retrieve the ID"
+              }
+            ]
+          },
+          "docs": "Retrieve the feature importance for a DSP block (only available for blocks where dimensionalityReduction is not enabled)"
+        },
+        {
+          "info": {
+            "name": "Download DSP data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/dsp-data/:dspId/x/:category",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "dspId",
+                "value": "",
+                "type": "path",
+                "description": "DSP Block ID, use the impulse functions to retrieve the ID"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "path",
+                "description": "Which of the three acquisition categories to download data from"
+              },
+              {
+                "name": "raw",
+                "value": "",
+                "type": "query",
+                "description": "Whether to download raw data or processed data. Processed data is the default."
+              }
+            ]
+          },
+          "docs": "Download output from a DSP block over all data in the training set, already sliced in windows. In Numpy binary format."
+        },
+        {
+          "info": {
+            "name": "Download DSP labels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/dsp-data/:dspId/y/:category",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "dspId",
+                "value": "",
+                "type": "path",
+                "description": "DSP Block ID, use the impulse functions to retrieve the ID"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "path",
+                "description": "Which of the three acquisition categories to download data from"
+              }
+            ]
+          },
+          "docs": "Download labels for a DSP block over all data in the training set, already sliced in windows."
+        },
+        {
+          "info": {
+            "name": "Get results from DSP autotuner",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/dsp/:dspId/get-autotuner-results",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "dspId",
+                "value": "",
+                "type": "path",
+                "description": "DSP Block ID, use the impulse functions to retrieve the ID"
+              }
+            ]
+          },
+          "docs": "Get a set of parameters, found as a result of running the DSP autotuner."
+        },
+        {
+          "info": {
+            "name": "Download a DSP artifact",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/dsp-data/:dspId/artifact/:key",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "dspId",
+                "value": "",
+                "type": "path",
+                "description": "DSP Block ID, use the impulse functions to retrieve the ID"
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "path",
+                "description": "DSP artifact file key"
+              }
+            ]
+          },
+          "docs": "Download an artifact from a DSP block for debugging. This is an internal API."
+        },
+        {
+          "info": {
+            "name": "Profile custom DSP block",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/dsp/:dspId/profile",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "dspId",
+                "value": "",
+                "type": "path",
+                "description": "DSP Block ID, use the impulse functions to retrieve the ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns performance characteristics for a custom DSP block (needs `hasTfliteImplementation`). Updates are streamed over the websocket API (or can be retrieved through the /stdout endpoint). Use getProfileTfliteJobResult to get the results when the job is completed."
+        },
+        {
+          "info": {
+            "name": "Get DSP block performance for all latency devices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/dsp/:dspId/performance",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "dspId",
+                "value": "",
+                "type": "path",
+                "description": "DSP Block ID, use the impulse functions to retrieve the ID"
+              }
+            ]
+          },
+          "docs": "Get estimated performance (latency and RAM) for the DSP block, for all supported project latency devices."
+        },
+        {
+          "info": {
+            "name": "Get processed sample (from features array)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/dsp/:dspId/run",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "dspId",
+                "value": "",
+                "type": "path",
+                "description": "DSP Block ID, use the impulse functions to retrieve the ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Takes in a features array and runs it through the DSP block. This data should have the same frequency as set in the input block in your impulse."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

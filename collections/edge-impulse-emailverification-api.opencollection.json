@@ -1,0 +1,98 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edge Impulse EmailVerification API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "EmailVerification",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Request email verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/emails/:email/request-verification",
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "path",
+                "description": "Email address"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Request an email activation code to be sent to the specified email address."
+        },
+        {
+          "info": {
+            "name": "Verify email",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/emails/verify",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Verify an email address using the specified verification code."
+        },
+        {
+          "info": {
+            "name": "Validate email for account sign-up",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/emails/validate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Validate whether an email is valid for sign up. Using an email that fails this check can result in the associated account missing communications and features that are distributed through email."
+        },
+        {
+          "info": {
+            "name": "Get email verification status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/emails/:emailId",
+            "params": [
+              {
+                "name": "emailId",
+                "value": "",
+                "type": "path",
+                "description": "Unique identifier for an email verification request"
+              }
+            ]
+          },
+          "docs": "Get the status of an email verification."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

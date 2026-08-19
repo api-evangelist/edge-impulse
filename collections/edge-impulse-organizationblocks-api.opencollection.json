@@ -1,0 +1,746 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edge Impulse OrganizationBlocks API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OrganizationBlocks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get transformation blocks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/transformation",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ]
+          },
+          "docs": "Retrieve all transformation blocks."
+        },
+        {
+          "info": {
+            "name": "Add transformation block",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/transformation",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a transformation block."
+        },
+        {
+          "info": {
+            "name": "List public transformation blocks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/transformation/public",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ]
+          },
+          "docs": "Retrieve all transformation blocks published by other organizations, available for all organizations."
+        },
+        {
+          "info": {
+            "name": "Get public transformation block",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/transformation/public/:transformationId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "transformationId",
+                "value": "",
+                "type": "path",
+                "description": "Transformation block ID."
+              }
+            ]
+          },
+          "docs": "Retrieve a transformation blocks published by other organizations, available for all organizations."
+        },
+        {
+          "info": {
+            "name": "Get transformation block",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/transformation/:transformationId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "transformationId",
+                "value": "",
+                "type": "path",
+                "description": "Transformation block ID."
+              }
+            ]
+          },
+          "docs": "Get a transformation block."
+        },
+        {
+          "info": {
+            "name": "Update transformation block",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/transformation/:transformationId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "transformationId",
+                "value": "",
+                "type": "path",
+                "description": "Transformation block ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a transformation block. Only values in the body will be updated."
+        },
+        {
+          "info": {
+            "name": "Delete transformation block",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/transformation/:transformationId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "transformationId",
+                "value": "",
+                "type": "path",
+                "description": "Transformation block ID."
+              }
+            ]
+          },
+          "docs": "Deletes a transformation block."
+        },
+        {
+          "info": {
+            "name": "Export transformation block",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/transformation/:transformationId/export",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "transformationId",
+                "value": "",
+                "type": "path",
+                "description": "Transformation block ID."
+              }
+            ]
+          },
+          "docs": "Download the source code for this block."
+        },
+        {
+          "info": {
+            "name": "Get deploy blocks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/deploy",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ]
+          },
+          "docs": "Retrieve all deploy blocks."
+        },
+        {
+          "info": {
+            "name": "Add deploy block",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/deploy",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Adds a deploy block."
+        },
+        {
+          "info": {
+            "name": "Get deploy block",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/deploy/:deployId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "deployId",
+                "value": "",
+                "type": "path",
+                "description": "Deploy block ID."
+              }
+            ]
+          },
+          "docs": "Gets a deploy block."
+        },
+        {
+          "info": {
+            "name": "Update deploy block",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/deploy/:deployId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "deployId",
+                "value": "",
+                "type": "path",
+                "description": "Deploy block ID."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Updates a deploy block. Only values in the body will be updated."
+        },
+        {
+          "info": {
+            "name": "Delete deploy block",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/deploy/:deployId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "deployId",
+                "value": "",
+                "type": "path",
+                "description": "Deploy block ID."
+              }
+            ]
+          },
+          "docs": "Deletes a deploy block."
+        },
+        {
+          "info": {
+            "name": "Export deploy block",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/deploy/:deployId/export",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "deployId",
+                "value": "",
+                "type": "path",
+                "description": "Deploy block ID."
+              }
+            ]
+          },
+          "docs": "Download the source code for this block."
+        },
+        {
+          "info": {
+            "name": "Get dsp blocks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/dsp",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ]
+          },
+          "docs": "Retrieve all dsp blocks."
+        },
+        {
+          "info": {
+            "name": "Add dsp block",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/dsp",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a dsp block."
+        },
+        {
+          "info": {
+            "name": "Get dsp block",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/dsp/:dspId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dspId",
+                "value": "",
+                "type": "path",
+                "description": "DSP Block ID, use the impulse functions to retrieve the ID"
+              }
+            ]
+          },
+          "docs": "Gets a dsp block."
+        },
+        {
+          "info": {
+            "name": "Update dsp block",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/dsp/:dspId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dspId",
+                "value": "",
+                "type": "path",
+                "description": "DSP Block ID, use the impulse functions to retrieve the ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a dsp block. Only values in the body will be updated."
+        },
+        {
+          "info": {
+            "name": "Delete dsp block",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/dsp/:dspId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dspId",
+                "value": "",
+                "type": "path",
+                "description": "DSP Block ID, use the impulse functions to retrieve the ID"
+              }
+            ]
+          },
+          "docs": "Deletes a dsp block."
+        },
+        {
+          "info": {
+            "name": "Export dsp block",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/dsp/:dspId/export",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dspId",
+                "value": "",
+                "type": "path",
+                "description": "DSP Block ID, use the impulse functions to retrieve the ID"
+              }
+            ]
+          },
+          "docs": "Download the source code for this block."
+        },
+        {
+          "info": {
+            "name": "Retry connection to dsp block",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/dsp/:dspId/retry",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "dspId",
+                "value": "",
+                "type": "path",
+                "description": "DSP Block ID, use the impulse functions to retrieve the ID"
+              }
+            ]
+          },
+          "docs": "Retry launch a dsp block."
+        },
+        {
+          "info": {
+            "name": "Get transfer learning blocks",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/transfer-learning",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ]
+          },
+          "docs": "Retrieve all transfer learning blocks."
+        },
+        {
+          "info": {
+            "name": "Add transfer learning block",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/transfer-learning",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a transfer learning block."
+        },
+        {
+          "info": {
+            "name": "Get transfer learning block",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/transfer-learning/:transferLearningId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "transferLearningId",
+                "value": "",
+                "type": "path",
+                "description": "Transfer learning ID"
+              }
+            ]
+          },
+          "docs": "Gets a transfer learning block."
+        },
+        {
+          "info": {
+            "name": "Update transfer learning block",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/transfer-learning/:transferLearningId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "transferLearningId",
+                "value": "",
+                "type": "path",
+                "description": "Transfer learning ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a transfer learning block. Only values in the body will be updated."
+        },
+        {
+          "info": {
+            "name": "Delete transfer learning block",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/transfer-learning/:transferLearningId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "transferLearningId",
+                "value": "",
+                "type": "path",
+                "description": "Transfer learning ID"
+              }
+            ]
+          },
+          "docs": "Deletes a transfer learning block."
+        },
+        {
+          "info": {
+            "name": "Export transfer learning block",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/transfer-learning/:transferLearningId/export",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "transferLearningId",
+                "value": "",
+                "type": "path",
+                "description": "Transfer learning ID"
+              }
+            ]
+          },
+          "docs": "Download the source code for this block."
+        },
+        {
+          "info": {
+            "name": "Get secrets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/secrets",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ]
+          },
+          "docs": "Retrieve all secrets."
+        },
+        {
+          "info": {
+            "name": "Add secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/secrets",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a secret."
+        },
+        {
+          "info": {
+            "name": "Delete secret",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/secrets/:secretId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "secretId",
+                "value": "",
+                "type": "path",
+                "description": "Secret ID"
+              }
+            ]
+          },
+          "docs": "Deletes a secret"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

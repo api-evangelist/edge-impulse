@@ -1,0 +1,127 @@
+{
+  "item": [
+    {
+      "id": "9c91d9f6-36d1-4a84-b1e3-c25915e6e57f",
+      "name": "FeatureFlags",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "50cce1c7-77d7-48f4-be6b-996108278232",
+          "name": "Get the current global feature flags and whether they are enabled",
+          "request": {
+            "name": "Get the current global feature flags and whether they are enabled",
+            "description": {
+              "content": "Get the current global feature flags and whether they are enabled",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api-feature-flags"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6b0f66a0-0a89-4607-ada5-46b75569c583",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api-feature-flags"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"flags\": [\n    {\n      \"feature\": \"signup-thank-you-page\",\n      \"enabled\": false\n    },\n    {\n      \"feature\": \"stripe-live-mode\",\n      \"enabled\": true\n    }\n  ],\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://studio.edgeimpulse.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "869dde7c-dfd6-4616-8992-47e4124f0c9c",
+    "name": "Edge Impulse FeatureFlags API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,1424 @@
+{
+  "item": [
+    {
+      "id": "8e831576-414b-4cc1-a48d-b637834543fa",
+      "name": "Deployment",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2bf5492a-5e8b-465e-8cf9-3073852e5557",
+          "name": "Deployment targets",
+          "request": {
+            "name": "Deployment targets",
+            "description": {
+              "content": "List all deployment targets",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "deployment",
+                "targets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e6840463-d97d-4616-944c-aeff544a1058",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "deployment",
+                    "targets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"targets\": [\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"image\": \"string\",\n      \"imageClasses\": \"string\",\n      \"format\": \"string\",\n      \"hasEonCompiler\": false,\n      \"hasTensorRT\": true,\n      \"hasTensaiFlow\": false,\n      \"hasDRPAI\": true,\n      \"hasTIDL\": true,\n      \"hasAkida\": true,\n      \"hasMemryx\": false,\n      \"hasStAton\": true,\n      \"hideOptimizations\": true,\n      \"uiSection\": \"library\",\n      \"supportedEngines\": [\n        \"st-aton\",\n        \"ethos-linux\"\n      ],\n      \"preferredEngine\": \"tflite\",\n      \"docsUrl\": \"string\",\n      \"latencyDevice\": \"string\",\n      \"badge\": {\n        \"name\": \"string\",\n        \"description\": \"string\"\n      },\n      \"customDeployId\": 4358,\n      \"integrateUrl\": \"string\",\n      \"ownerOrganizationName\": \"string\",\n      \"url\": \"string\",\n      \"firmwareRepoUrl\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"image\": \"string\",\n      \"imageClasses\": \"string\",\n      \"format\": \"string\",\n      \"hasEonCompiler\": true,\n      \"hasTensorRT\": true,\n      \"hasTensaiFlow\": true,\n      \"hasDRPAI\": false,\n      \"hasTIDL\": true,\n      \"hasAkida\": true,\n      \"hasMemryx\": false,\n      \"hasStAton\": false,\n      \"hideOptimizations\": true,\n      \"uiSection\": \"firmware\",\n      \"supportedEngines\": [\n        \"tflite-eon-ram-optimized\",\n        \"tidl\"\n      ],\n      \"preferredEngine\": \"tensaiflow\",\n      \"docsUrl\": \"string\",\n      \"latencyDevice\": \"string\",\n      \"badge\": {\n        \"name\": \"string\",\n        \"description\": \"string\"\n      },\n      \"customDeployId\": 6585,\n      \"integrateUrl\": \"string\",\n      \"ownerOrganizationName\": \"string\",\n      \"url\": \"string\",\n      \"firmwareRepoUrl\": \"string\"\n    }\n  ],\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eef6217b-0c56-48b9-bc75-e12b1c85ab2f",
+          "name": "Deployment targets",
+          "request": {
+            "name": "Deployment targets",
+            "description": {
+              "content": "List deployment targets for a project",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "deployment",
+                "targets"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "67e47fa4-7359-4055-8497-b6f5301dcd65",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "deployment",
+                    "targets"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"targets\": [\n    {\n      \"description\": \"string\",\n      \"disabledForProject\": true,\n      \"docsUrl\": \"string\",\n      \"format\": \"string\",\n      \"hasAkida\": true,\n      \"hasDRPAI\": true,\n      \"hasEonCompiler\": true,\n      \"hasMemryx\": true,\n      \"hasStAton\": false,\n      \"hasTIDL\": true,\n      \"hasTensaiFlow\": false,\n      \"hasTensorRT\": false,\n      \"hideOptimizations\": true,\n      \"image\": \"string\",\n      \"imageClasses\": \"string\",\n      \"name\": \"string\",\n      \"preferredEngine\": \"ethos-linux\",\n      \"recommendedForProject\": false,\n      \"supportedEngines\": [\n        \"st-aton\",\n        \"tflite-eon-ram-optimized\"\n      ],\n      \"uiSection\": \"hidden\",\n      \"latencyDevice\": \"string\",\n      \"badge\": {\n        \"name\": \"string\",\n        \"description\": \"string\"\n      },\n      \"customDeployId\": 4641,\n      \"integrateUrl\": \"string\",\n      \"ownerOrganizationName\": \"string\",\n      \"url\": \"string\",\n      \"firmwareRepoUrl\": \"string\",\n      \"reasonTargetDisabled\": \"string\"\n    },\n    {\n      \"description\": \"string\",\n      \"disabledForProject\": true,\n      \"docsUrl\": \"string\",\n      \"format\": \"string\",\n      \"hasAkida\": false,\n      \"hasDRPAI\": true,\n      \"hasEonCompiler\": true,\n      \"hasMemryx\": false,\n      \"hasStAton\": true,\n      \"hasTIDL\": false,\n      \"hasTensaiFlow\": false,\n      \"hasTensorRT\": true,\n      \"hideOptimizations\": true,\n      \"image\": \"string\",\n      \"imageClasses\": \"string\",\n      \"name\": \"string\",\n      \"preferredEngine\": \"tflite\",\n      \"recommendedForProject\": false,\n      \"supportedEngines\": [\n        \"tensorrt\",\n        \"tflite-eon\"\n      ],\n      \"uiSection\": \"firmware\",\n      \"latencyDevice\": \"string\",\n      \"badge\": {\n        \"name\": \"string\",\n        \"description\": \"string\"\n      },\n      \"customDeployId\": 4352,\n      \"integrateUrl\": \"string\",\n      \"ownerOrganizationName\": \"string\",\n      \"url\": \"string\",\n      \"firmwareRepoUrl\": \"string\",\n      \"reasonTargetDisabled\": \"string\"\n    }\n  ],\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5432c3e1-e7f9-4795-853b-08ce92c278ba",
+          "name": "Deployment targets (data sources)",
+          "request": {
+            "name": "Deployment targets (data sources)",
+            "description": {
+              "content": "List deployment targets for a project from data sources page  (it shows some things like all Linux deploys, and hides 'fake' deploy targets like mobile phone / computer)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "deployment",
+                "targets",
+                "data-sources"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b7aca16f-0280-4d50-bb43-1540afb616ed",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "deployment",
+                    "targets",
+                    "data-sources"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"targets\": [\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"image\": \"string\",\n      \"imageClasses\": \"string\",\n      \"format\": \"string\",\n      \"hasEonCompiler\": true,\n      \"hasTensorRT\": false,\n      \"hasTensaiFlow\": false,\n      \"hasDRPAI\": true,\n      \"hasTIDL\": false,\n      \"hasAkida\": true,\n      \"hasMemryx\": false,\n      \"hasStAton\": true,\n      \"hideOptimizations\": false,\n      \"uiSection\": \"mobile\",\n      \"supportedEngines\": [\n        \"neox\",\n        \"tidl\"\n      ],\n      \"preferredEngine\": \"st-aton\",\n      \"docsUrl\": \"string\",\n      \"latencyDevice\": \"string\",\n      \"badge\": {\n        \"name\": \"string\",\n        \"description\": \"string\"\n      },\n      \"customDeployId\": 1393,\n      \"integrateUrl\": \"string\",\n      \"ownerOrganizationName\": \"string\",\n      \"url\": \"string\",\n      \"firmwareRepoUrl\": \"string\"\n    },\n    {\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"image\": \"string\",\n      \"imageClasses\": \"string\",\n      \"format\": \"string\",\n      \"hasEonCompiler\": true,\n      \"hasTensorRT\": true,\n      \"hasTensaiFlow\": false,\n      \"hasDRPAI\": true,\n      \"hasTIDL\": true,\n      \"hasAkida\": false,\n      \"hasMemryx\": false,\n      \"hasStAton\": true,\n      \"hideOptimizations\": false,\n      \"uiSection\": \"hidden\",\n      \"supportedEngines\": [\n        \"akida\",\n        \"memryx\"\n      ],\n      \"preferredEngine\": \"tensorrt\",\n      \"docsUrl\": \"string\",\n      \"latencyDevice\": \"string\",\n      \"badge\": {\n        \"name\": \"string\",\n        \"description\": \"string\"\n      },\n      \"customDeployId\": 4118,\n      \"integrateUrl\": \"string\",\n      \"ownerOrganizationName\": \"string\",\n      \"url\": \"string\",\n      \"firmwareRepoUrl\": \"string\"\n    }\n  ],\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c3d5fd1e-ea1d-4741-9605-bcf2acb48ef4",
+          "name": "Evaluate job result",
+          "request": {
+            "name": "Evaluate job result",
+            "description": {
+              "content": "Get evaluate job result, containing detailed performance statistics for every possible variant of the impulse.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "deployment",
+                "evaluate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f26f610b-53eb-4c8f-b143-a1e42d447428",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "deployment",
+                    "evaluate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": [\n    {\n      \"modelType\": \"float32\",\n      \"learnBlockType\": \"keras-transfer-image\",\n      \"learnBlockId\": 7799,\n      \"confusionMatrix\": {\n        \"key_0\": {\n          \"key_0\": {\n            \"raw\": 2994.4815259906454,\n            \"withAnomaly\": 5804.3194603528755\n          },\n          \"key_1\": {\n            \"raw\": 8871.049272759135,\n            \"withAnomaly\": 4572.904504028873\n          }\n        },\n        \"key_1\": {\n          \"key_0\": {\n            \"raw\": 4111.209416345167,\n            \"withAnomaly\": 9820.516969872297\n          },\n          \"key_1\": {\n            \"raw\": 7796.538723811561,\n            \"withAnomaly\": 4560.779349647167\n          }\n        },\n        \"key_2\": {\n          \"key_0\": {\n            \"raw\": 6819.873280710524,\n            \"withAnomaly\": 7528.312540037991\n          }\n        },\n        \"key_3\": {\n          \"key_0\": {\n            \"raw\": 3288.9356350840617,\n            \"withAnomaly\": 3098.3454891303654\n          }\n        },\n        \"key_4\": {\n          \"key_0\": {\n            \"raw\": 692.0038031602782,\n            \"withAnomaly\": 2831.358643036049\n          },\n          \"key_1\": {\n            \"raw\": 8052.252380485112,\n            \"withAnomaly\": 3408.931575667249\n          }\n        }\n      },\n      \"accuracy\": {\n        \"raw\": 9588.327946182895,\n        \"withAnomaly\": 1543.2775093898954\n      },\n      \"trainingLabels\": [\n        \"string\",\n        \"string\"\n      ],\n      \"classificationLabels\": [\n        \"string\",\n        \"string\"\n      ],\n      \"totalWindowCount\": 225,\n      \"totalCorrectWindowCount\": {\n        \"raw\": 1728.7316519574204,\n        \"withAnomaly\": 9441.630587082265\n      }\n    },\n    {\n      \"modelType\": \"akida\",\n      \"learnBlockType\": \"keras-transfer-image\",\n      \"learnBlockId\": 5399,\n      \"confusionMatrix\": {\n        \"key_0\": {\n          \"key_0\": {\n            \"raw\": 9332.068328256579,\n            \"withAnomaly\": 9917.139738033833\n          },\n          \"key_1\": {\n            \"raw\": 522.3149038695218,\n            \"withAnomaly\": 6689.559624807205\n          }\n        },\n        \"key_1\": {\n          \"key_0\": {\n            \"raw\": 5565.523018223891,\n            \"withAnomaly\": 8272.74833806728\n          },\n          \"key_1\": {\n            \"raw\": 9343.39667988624,\n            \"withAnomaly\": 5425.589705087926\n          },\n          \"key_2\": {\n            \"raw\": 679.1374692884833,\n            \"withAnomaly\": 3977.9543374746463\n          },\n          \"key_3\": {\n            \"raw\": 3173.5913525688643,\n            \"withAnomaly\": 474.1174629025713\n          }\n        },\n        \"key_2\": {\n          \"key_0\": {\n            \"raw\": 9096.433703435452,\n            \"withAnomaly\": 9977.815737271378\n          },\n          \"key_1\": {\n            \"raw\": 7874.238306349353,\n            \"withAnomaly\": 1758.149342189782\n          },\n          \"key_2\": {\n            \"raw\": 2857.144401713645,\n            \"withAnomaly\": 6194.034244506781\n          }\n        },\n        \"key_3\": {\n          \"key_0\": {\n            \"raw\": 6266.423663561394,\n            \"withAnomaly\": 6156.94453293288\n          }\n        }\n      },\n      \"accuracy\": {\n        \"raw\": 7917.415972491274,\n        \"withAnomaly\": 9229.151948263901\n      },\n      \"trainingLabels\": [\n        \"string\",\n        \"string\"\n      ],\n      \"classificationLabels\": [\n        \"string\",\n        \"string\"\n      ],\n      \"totalWindowCount\": 6349,\n      \"totalCorrectWindowCount\": {\n        \"raw\": 4517.0383860386155,\n        \"withAnomaly\": 3406.8913621682764\n      }\n    }\n  ],\n  \"success\": true,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8b0a1d71-8696-4df6-9e51-3621264ee5c1",
+          "name": "Check evaluate job result (cache)",
+          "request": {
+            "name": "Check evaluate job result (cache)",
+            "description": {
+              "content": "Get evaluate job result, containing detailed performance statistics for every possible variant of the impulse. This only checks cache, and throws an error if there is no data in cache.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "deployment",
+                "evaluate",
+                "cache"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "18b68780-bb7a-428c-8460-61286eb7ea52",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "deployment",
+                    "evaluate",
+                    "cache"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"result\": [\n    {\n      \"modelType\": \"float32\",\n      \"learnBlockType\": \"keras-object-detection\",\n      \"learnBlockId\": 8892,\n      \"confusionMatrix\": {\n        \"key_0\": {\n          \"key_0\": {\n            \"raw\": 9105.740772682639,\n            \"withAnomaly\": 1278.0926932985726\n          },\n          \"key_1\": {\n            \"raw\": 1453.8120872785687,\n            \"withAnomaly\": 9229.757577698245\n          }\n        },\n        \"key_1\": {\n          \"key_0\": {\n            \"raw\": 5180.656314583946,\n            \"withAnomaly\": 3842.5019374281987\n          },\n          \"key_1\": {\n            \"raw\": 2878.7550166669284,\n            \"withAnomaly\": 870.4530666372557\n          },\n          \"key_2\": {\n            \"raw\": 9674.576388062456,\n            \"withAnomaly\": 2540.80876951992\n          }\n        }\n      },\n      \"accuracy\": {\n        \"raw\": 9000.594010532377,\n        \"withAnomaly\": 6591.089116177257\n      },\n      \"trainingLabels\": [\n        \"string\",\n        \"string\"\n      ],\n      \"classificationLabels\": [\n        \"string\",\n        \"string\"\n      ],\n      \"totalWindowCount\": 2919,\n      \"totalCorrectWindowCount\": {\n        \"raw\": 9493.150218185252,\n        \"withAnomaly\": 3743.7806213945514\n      }\n    },\n    {\n      \"modelType\": \"akida\",\n      \"learnBlockType\": \"keras-visual-anomaly\",\n      \"learnBlockId\": 6194,\n      \"confusionMatrix\": {\n        \"key_0\": {\n          \"key_0\": {\n            \"raw\": 5513.99372243675,\n            \"withAnomaly\": 6677.235265174905\n          },\n          \"key_1\": {\n            \"raw\": 5872.22355179698,\n            \"withAnomaly\": 4332.310838497905\n          }\n        },\n        \"key_1\": {\n          \"key_0\": {\n            \"raw\": 9365.119916822012,\n            \"withAnomaly\": 9768.587016688256\n          },\n          \"key_1\": {\n            \"raw\": 2880.4289898783463,\n            \"withAnomaly\": 8485.24153468282\n          }\n        }\n      },\n      \"accuracy\": {\n        \"raw\": 1865.3315181657558,\n        \"withAnomaly\": 3677.302755467464\n      },\n      \"trainingLabels\": [\n        \"string\",\n        \"string\"\n      ],\n      \"classificationLabels\": [\n        \"string\",\n        \"string\"\n      ],\n      \"totalWindowCount\": 9066,\n      \"totalCorrectWindowCount\": {\n        \"raw\": 9533.187478468213,\n        \"withAnomaly\": 4944.289363065911\n      }\n    }\n  ],\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e0901430-8c31-4dff-9179-802930f78efa",
+          "name": "Get deployment info",
+          "request": {
+            "name": "Get deployment info",
+            "description": {
+              "content": "Gives information on whether a deployment was already built for a type",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "deployment"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "(Required) The name of the built target. You can find this by listing all deployment targets through `listDeploymentTargetsForProject` (via `GET /v1/api/{projectId}/deployment/targets`) and see the `format` type."
+                },
+                {
+                  "disabled": false,
+                  "key": "modelType",
+                  "value": "<string>",
+                  "description": "Optional model type of the build (if not, it uses the settings in the Keras block)"
+                },
+                {
+                  "disabled": false,
+                  "key": "engine",
+                  "value": "<string>",
+                  "description": "Optional engine for the build (if not, it uses the default engine for the deployment target)"
+                },
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3e22bd82-9769-442d-a2b4-0b599ea1d008",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "deployment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "modelType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "engine",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hasDeployment\": true,\n  \"success\": true,\n  \"error\": \"string\",\n  \"version\": 7628\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "29e8d548-9cd4-401e-bc94-ada4dce14696",
+          "name": "Download",
+          "request": {
+            "name": "Download",
+            "description": {
+              "content": "Download the build artefacts for a project",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "deployment",
+                "download"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "(Required) The name of the built target. You can find this by listing all deployment targets through `listDeploymentTargetsForProject` (via `GET /v1/api/{projectId}/deployment/targets`) and see the `format` type."
+                },
+                {
+                  "disabled": false,
+                  "key": "modelType",
+                  "value": "<string>",
+                  "description": "Optional model type of the build (if not, it uses the settings in the Keras block)"
+                },
+                {
+                  "disabled": false,
+                  "key": "engine",
+                  "value": "<string>",
+                  "description": "Optional engine for the build (if not, it uses the default engine for the deployment target)"
+                },
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/zip"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d4955297-8e75-4298-be2b-ae4c814c6995",
+              "name": "ZIP or BIN file",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "deployment",
+                    "download"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "modelType",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "engine",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/zip"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/zip"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8318c4c8-bd00-42ba-926b-50626fe796cb",
+          "name": "Get information on the last deployment build",
+          "request": {
+            "name": "Get information on the last deployment build",
+            "description": {
+              "content": "Get information on the result of the last successful deployment job, including info on the build e.g. whether it is still valid.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "deployment",
+                "last"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7702b5fb-10da-49dd-90a8-ce2b3505e9f0",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "deployment",
+                    "last"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hasBuild\": false,\n  \"success\": true,\n  \"error\": \"string\",\n  \"lastBuild\": {\n    \"version\": 8895,\n    \"deploymentType\": \"string\",\n    \"engine\": \"<string>\",\n    \"created\": \"2015-06-20T03:17:13.379Z\",\n    \"modelType\": \"<string>\"\n  },\n  \"lastDeploymentTarget\": {\n    \"description\": \"string\",\n    \"disabledForProject\": false,\n    \"docsUrl\": \"string\",\n    \"format\": \"string\",\n    \"hasAkida\": false,\n    \"hasDRPAI\": false,\n    \"hasEonCompiler\": true,\n    \"hasMemryx\": true,\n    \"hasStAton\": false,\n    \"hasTIDL\": true,\n    \"hasTensaiFlow\": false,\n    \"hasTensorRT\": false,\n    \"hideOptimizations\": true,\n    \"image\": \"string\",\n    \"imageClasses\": \"string\",\n    \"name\": \"string\",\n    \"preferredEngine\": \"<string>\",\n    \"recommendedForProject\": false,\n    \"supportedEngines\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"uiSection\": \"firmware\",\n    \"latencyDevice\": \"string\",\n    \"badge\": {\n      \"name\": \"string\",\n      \"description\": \"string\"\n    },\n    \"customDeployId\": 640,\n    \"integrateUrl\": \"string\",\n    \"ownerOrganizationName\": \"string\",\n    \"url\": \"string\",\n    \"firmwareRepoUrl\": \"string\",\n    \"reasonTargetDisabled\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3223d470-f920-44a3-a150-f5e06018dcb0",
+          "name": "Get Syntiant posterior parameters",
+          "request": {
+            "name": "Get Syntiant posterior parameters",
+            "description": {
+              "content": "Get the current posterior parameters for the Syntiant deployment target",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "deployment",
+                "syntiant",
+                "posterior"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a90ffa7a-b1ff-487b-abca-1c7cadc8e4f2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "deployment",
+                    "syntiant",
+                    "posterior"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hasPosteriorParameters\": true,\n  \"success\": false,\n  \"error\": \"string\",\n  \"parameters\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5c9919ac-6f3e-43d8-83fa-9a0dcabc64e0",
+          "name": "Set Syntiant posterior parameters",
+          "request": {
+            "name": "Set Syntiant posterior parameters",
+            "description": {
+              "content": "Set the current posterior parameters for the Syntiant deployment target",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "deployment",
+                "syntiant",
+                "posterior"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"parameters\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1f0e4203-2bd4-4601-87da-0ec1c0c7c308",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "deployment",
+                    "syntiant",
+                    "posterior"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"parameters\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "384ba4a4-8593-4cf2-ba50-a071da14b981",
+          "name": "Find Syntiant posterior parameters",
+          "request": {
+            "name": "Find Syntiant posterior parameters",
+            "description": {
+              "content": "Automatically find the current posterior parameters for the Syntiant deployment target",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "jobs",
+                "find-syntiant-posterior"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "targetWords",
+                  "value": "[\"<string>\",\"<string>\"]",
+                  "type": "text",
+                  "description": "(Required) "
+                },
+                {
+                  "key": "referenceSet",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required)  (This can only be one of 600_seconds,full,custom,no_calibration)"
+                },
+                {
+                  "key": "wavFile",
+                  "type": "file",
+                  "description": ""
+                },
+                {
+                  "key": "metaCsvFile",
+                  "type": "file",
+                  "description": ""
+                },
+                {
+                  "key": "deploymentTarget",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": " (This can only be one of syntiant-ndp101,syntiant-ndp101-lib,syntiant-ndp120-lib,syntiant-ndp120-lib-tdk-v14,syntiant-nicla-ndp120,syntiant-avnet-rasyn,syntiant-ndp120-lib-ndp-v1-15-0)"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f079a071-6f17-4ab3-8cfd-f5a34f8a7d2b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "jobs",
+                    "find-syntiant-posterior"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "targetWords",
+                      "value": "[\"<string>\",\"<string>\"]",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required)  (This can only be one of 600_seconds,full,custom,no_calibration)",
+                        "type": "text/plain"
+                      },
+                      "key": "referenceSet",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "wavFile",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "metaCsvFile",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": " (This can only be one of syntiant-ndp101,syntiant-ndp101-lib,syntiant-ndp120-lib,syntiant-ndp120-lib-tdk-v14,syntiant-nicla-ndp120,syntiant-avnet-rasyn,syntiant-ndp120-lib-ndp-v1-15-0)",
+                        "type": "text/plain"
+                      },
+                      "key": "deploymentTarget",
+                      "value": "<string>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 12873488112,\n  \"success\": true,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://studio.edgeimpulse.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "826d3d2e-78b4-483c-9d72-e54e20556486",
+    "name": "Edge Impulse Deployment API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

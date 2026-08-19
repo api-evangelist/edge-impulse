@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edge Impulse Auth API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Discourse",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/auth/discourse",
+            "params": [
+              {
+                "name": "sso",
+                "value": "",
+                "type": "query",
+                "description": "Single sign-on token"
+              },
+              {
+                "name": "sig",
+                "value": "",
+                "type": "query",
+                "description": "Verification signature"
+              }
+            ]
+          },
+          "docs": "Log in a user to the forum. This function is only available through a JWT token."
+        },
+        {
+          "info": {
+            "name": "Readme.io",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/auth/readme"
+          },
+          "docs": "Log in a user to the docs. This function is only available through a JWT token."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

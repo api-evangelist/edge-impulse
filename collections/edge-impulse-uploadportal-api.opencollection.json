@@ -1,0 +1,185 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edge Impulse UploadPortal API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "UploadPortal",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Portal info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/portals/:portalId",
+            "params": [
+              {
+                "name": "portalId",
+                "value": "",
+                "type": "path",
+                "description": "Portal ID"
+              }
+            ]
+          },
+          "docs": "Get information about a portal"
+        },
+        {
+          "info": {
+            "name": "Create pre-signed S3 upload link",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/portals/:portalId/upload-link",
+            "params": [
+              {
+                "name": "portalId",
+                "value": "",
+                "type": "path",
+                "description": "Portal ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a signed link to securely upload data to s3 bucket directly from the client."
+        },
+        {
+          "info": {
+            "name": "List files in portal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/portals/:portalId/files",
+            "params": [
+              {
+                "name": "portalId",
+                "value": "",
+                "type": "path",
+                "description": "Portal ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "List all files and directories in specified prefix."
+        },
+        {
+          "info": {
+            "name": "Delete file from portal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/portals/:portalId/files/delete",
+            "params": [
+              {
+                "name": "portalId",
+                "value": "",
+                "type": "path",
+                "description": "Portal ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete a file from an upload portal (requires JWT auth)."
+        },
+        {
+          "info": {
+            "name": "Rename file from portal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/portals/:portalId/files/rename",
+            "params": [
+              {
+                "name": "portalId",
+                "value": "",
+                "type": "path",
+                "description": "Portal ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Rename a file on an upload portal (requires JWT auth)."
+        },
+        {
+          "info": {
+            "name": "Download file from portal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/portals/:portalId/files/download",
+            "params": [
+              {
+                "name": "portalId",
+                "value": "",
+                "type": "path",
+                "description": "Portal ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Download a file from an upload portal (requires JWT auth). Will return a signed URL to the bucket."
+        },
+        {
+          "info": {
+            "name": "View file from portal",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/portals/:portalId/files/view",
+            "params": [
+              {
+                "name": "portalId",
+                "value": "",
+                "type": "path",
+                "description": "Portal ID"
+              },
+              {
+                "name": "path",
+                "value": "",
+                "type": "query",
+                "description": "Path to file in portal"
+              }
+            ]
+          },
+          "docs": "View a file that's located in an upload portal (requires JWT auth). File might be converted (e.g. Parquet) or truncated (e.g. CSV)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

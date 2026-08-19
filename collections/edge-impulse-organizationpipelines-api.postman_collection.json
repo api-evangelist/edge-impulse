@@ -1,0 +1,1013 @@
+{
+  "item": [
+    {
+      "id": "bd7615c8-3f75-4cf9-9ec4-d8b0c0d05364",
+      "name": "OrganizationPipelines",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f82783dd-7837-4469-9b0c-7f237368e73e",
+          "name": "List pipelines",
+          "request": {
+            "name": "List pipelines",
+            "description": {
+              "content": "Retrieve all organizational pipelines",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "pipelines"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "projectId",
+                  "value": "<integer>",
+                  "description": "If set, filters on pipelines which are attached to this project."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "26792e84-3809-457d-a957-0a1f5bc4fcb8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "pipelines"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "projectId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pipelines\": [\n    {\n      \"id\": 6891,\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"steps\": [\n        {\n          \"name\": \"string\",\n          \"filter\": \"string\",\n          \"pathFilters\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"uploadType\": \"dataset\",\n          \"projectId\": 8262,\n          \"newProjectName\": \"string\",\n          \"projectApiKey\": \"string\",\n          \"projectHmacKey\": \"string\",\n          \"transformationBlockId\": 6861,\n          \"builtinTransformationBlock\": {},\n          \"category\": \"split\",\n          \"outputDatasetName\": \"string\",\n          \"outputDatasetBucketId\": 7934,\n          \"outputDatasetBucketPath\": \"string\",\n          \"outputPathInDataset\": \"string\",\n          \"outputDatasetPathRule\": \"subfolder-per-item\",\n          \"label\": \"string\",\n          \"transformationParallel\": 874,\n          \"extraCliArguments\": \"string\",\n          \"parameters\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\"\n          }\n        },\n        {\n          \"name\": \"string\",\n          \"filter\": \"string\",\n          \"pathFilters\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"uploadType\": \"project\",\n          \"projectId\": 3780,\n          \"newProjectName\": \"string\",\n          \"projectApiKey\": \"string\",\n          \"projectHmacKey\": \"string\",\n          \"transformationBlockId\": 5081,\n          \"builtinTransformationBlock\": {},\n          \"category\": \"split\",\n          \"outputDatasetName\": \"string\",\n          \"outputDatasetBucketId\": 7078,\n          \"outputDatasetBucketPath\": \"string\",\n          \"outputPathInDataset\": \"string\",\n          \"outputDatasetPathRule\": \"use-full-path\",\n          \"label\": \"string\",\n          \"transformationParallel\": 3952,\n          \"extraCliArguments\": \"string\",\n          \"parameters\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\",\n            \"key_2\": \"string\"\n          }\n        }\n      ],\n      \"created\": \"1950-05-11T21:41:59.695Z\",\n      \"emailRecipientUids\": [\n        3363,\n        9897\n      ],\n      \"whenToEmail\": \"always\",\n      \"intervalStr\": \"string\",\n      \"nextRun\": \"1971-07-20T07:14:01.546Z\",\n      \"currentRun\": {\n        \"id\": 8982,\n        \"steps\": [\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationJob\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"filter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"uploadType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"newProjectName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectApiKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectHmacKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationBlockId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"builtinTransformationBlock\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"category\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketPath\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"extraCliArguments\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"parameters\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationJob\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"filter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"uploadType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"newProjectName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectApiKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectHmacKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationBlockId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"builtinTransformationBlock\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"category\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketPath\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"extraCliArguments\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"parameters\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"created\": \"1946-11-29T04:53:58.855Z\",\n        \"finished\": \"1993-07-10T09:07:37.477Z\",\n        \"itemCountBefore\": {\n          \"itemCount\": 2378,\n          \"itemCountChecklistOK\": 9868,\n          \"itemCountChecklistFailed\": 96\n        },\n        \"itemCountAfter\": {\n          \"itemCount\": 4294,\n          \"itemCountChecklistOK\": 2551,\n          \"itemCountChecklistFailed\": 7884\n        },\n        \"itemCountImportIntoProjectFailed\": 6234\n      },\n      \"lastRun\": {\n        \"id\": 5286,\n        \"steps\": [\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationJob\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"filter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"uploadType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"newProjectName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectApiKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectHmacKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationBlockId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"builtinTransformationBlock\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"category\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketPath\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"extraCliArguments\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"parameters\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationJob\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"filter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"uploadType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"newProjectName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectApiKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectHmacKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationBlockId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"builtinTransformationBlock\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"category\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketPath\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"extraCliArguments\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"parameters\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"created\": \"1982-08-21T01:27:36.273Z\",\n        \"finished\": \"1960-03-10T10:31:47.482Z\",\n        \"itemCountBefore\": {\n          \"itemCount\": 7105,\n          \"itemCountChecklistOK\": 1160,\n          \"itemCountChecklistFailed\": 5317\n        },\n        \"itemCountAfter\": {\n          \"itemCount\": 6413,\n          \"itemCountChecklistOK\": 8645,\n          \"itemCountChecklistFailed\": 3505\n        },\n        \"itemCountImportIntoProjectFailed\": 9493\n      },\n      \"feedingIntoDataset\": {\n        \"dataset\": \"string\",\n        \"datasetLink\": \"string\",\n        \"itemCount\": 1785,\n        \"itemCountChecklistOK\": 1473,\n        \"itemCountChecklistError\": 2706,\n        \"datasetType\": \"files\"\n      },\n      \"feedingIntoProject\": {\n        \"id\": 700,\n        \"name\": \"string\",\n        \"projectLink\": \"string\",\n        \"itemCount\": 4638\n      },\n      \"lastRunStartError\": \"string\",\n      \"notificationWebhook\": \"string\"\n    },\n    {\n      \"id\": 8064,\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"steps\": [\n        {\n          \"name\": \"string\",\n          \"filter\": \"string\",\n          \"pathFilters\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"uploadType\": \"dataset\",\n          \"projectId\": 6541,\n          \"newProjectName\": \"string\",\n          \"projectApiKey\": \"string\",\n          \"projectHmacKey\": \"string\",\n          \"transformationBlockId\": 7403,\n          \"builtinTransformationBlock\": {},\n          \"category\": \"training\",\n          \"outputDatasetName\": \"string\",\n          \"outputDatasetBucketId\": 1707,\n          \"outputDatasetBucketPath\": \"string\",\n          \"outputPathInDataset\": \"string\",\n          \"outputDatasetPathRule\": \"use-full-path\",\n          \"label\": \"string\",\n          \"transformationParallel\": 8564,\n          \"extraCliArguments\": \"string\",\n          \"parameters\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\",\n            \"key_2\": \"string\"\n          }\n        },\n        {\n          \"name\": \"string\",\n          \"filter\": \"string\",\n          \"pathFilters\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"uploadType\": \"project\",\n          \"projectId\": 7836,\n          \"newProjectName\": \"string\",\n          \"projectApiKey\": \"string\",\n          \"projectHmacKey\": \"string\",\n          \"transformationBlockId\": 6537,\n          \"builtinTransformationBlock\": {},\n          \"category\": \"split\",\n          \"outputDatasetName\": \"string\",\n          \"outputDatasetBucketId\": 4397,\n          \"outputDatasetBucketPath\": \"string\",\n          \"outputPathInDataset\": \"string\",\n          \"outputDatasetPathRule\": \"subfolder-per-item\",\n          \"label\": \"string\",\n          \"transformationParallel\": 2758,\n          \"extraCliArguments\": \"string\",\n          \"parameters\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\"\n          }\n        }\n      ],\n      \"created\": \"1964-11-04T11:29:20.980Z\",\n      \"emailRecipientUids\": [\n        5115,\n        8255\n      ],\n      \"whenToEmail\": \"always\",\n      \"intervalStr\": \"string\",\n      \"nextRun\": \"1951-05-29T18:06:44.926Z\",\n      \"currentRun\": {\n        \"id\": 1693,\n        \"steps\": [\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationJob\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"filter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"uploadType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"newProjectName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectApiKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectHmacKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationBlockId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"builtinTransformationBlock\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"category\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketPath\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"extraCliArguments\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"parameters\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationJob\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"filter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"uploadType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"newProjectName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectApiKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectHmacKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationBlockId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"builtinTransformationBlock\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"category\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketPath\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"extraCliArguments\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"parameters\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"created\": \"1963-06-07T08:19:19.553Z\",\n        \"finished\": \"1981-01-06T20:39:26.476Z\",\n        \"itemCountBefore\": {\n          \"itemCount\": 1208,\n          \"itemCountChecklistOK\": 7173,\n          \"itemCountChecklistFailed\": 712\n        },\n        \"itemCountAfter\": {\n          \"itemCount\": 3685,\n          \"itemCountChecklistOK\": 6372,\n          \"itemCountChecklistFailed\": 1833\n        },\n        \"itemCountImportIntoProjectFailed\": 8396\n      },\n      \"lastRun\": {\n        \"id\": 736,\n        \"steps\": [\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationJob\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"filter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"uploadType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"newProjectName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectApiKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectHmacKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationBlockId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"builtinTransformationBlock\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"category\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketPath\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"extraCliArguments\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"parameters\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationJob\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"filter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"uploadType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"newProjectName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectApiKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectHmacKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationBlockId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"builtinTransformationBlock\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"category\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketPath\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"extraCliArguments\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"parameters\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"created\": \"1973-08-15T14:43:12.209Z\",\n        \"finished\": \"1977-08-24T18:19:21.689Z\",\n        \"itemCountBefore\": {\n          \"itemCount\": 5432,\n          \"itemCountChecklistOK\": 3264,\n          \"itemCountChecklistFailed\": 241\n        },\n        \"itemCountAfter\": {\n          \"itemCount\": 8956,\n          \"itemCountChecklistOK\": 9695,\n          \"itemCountChecklistFailed\": 1099\n        },\n        \"itemCountImportIntoProjectFailed\": 9872\n      },\n      \"feedingIntoDataset\": {\n        \"dataset\": \"string\",\n        \"datasetLink\": \"string\",\n        \"itemCount\": 8231,\n        \"itemCountChecklistOK\": 155,\n        \"itemCountChecklistError\": 8058,\n        \"datasetType\": \"files\"\n      },\n      \"feedingIntoProject\": {\n        \"id\": 2699,\n        \"name\": \"string\",\n        \"projectLink\": \"string\",\n        \"itemCount\": 1066\n      },\n      \"lastRunStartError\": \"string\",\n      \"notificationWebhook\": \"string\"\n    }\n  ],\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5f128d60-3715-4c57-ab47-8db4e51b26d5",
+          "name": "Create pipeline",
+          "request": {
+            "name": "Create pipeline",
+            "description": {
+              "content": "Create an organizational pipelines",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "pipelines"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"steps\": [\n    {\n      \"name\": \"<string>\",\n      \"filter\": \"<string>\",\n      \"pathFilters\": [\n        {\n          \"dataset\": \"<string>\",\n          \"filter\": \"<string>\"\n        },\n        {\n          \"dataset\": \"<string>\",\n          \"filter\": \"<string>\"\n        }\n      ],\n      \"uploadType\": \"<string>\",\n      \"projectId\": \"<integer>\",\n      \"newProjectName\": \"<string>\",\n      \"projectApiKey\": \"<string>\",\n      \"projectHmacKey\": \"<string>\",\n      \"transformationBlockId\": \"<integer>\",\n      \"builtinTransformationBlock\": \"<object>\",\n      \"category\": \"<string>\",\n      \"outputDatasetName\": \"<string>\",\n      \"outputDatasetBucketId\": \"<integer>\",\n      \"outputDatasetBucketPath\": \"<string>\",\n      \"outputPathInDataset\": \"<string>\",\n      \"outputDatasetPathRule\": \"<string>\",\n      \"label\": \"<string>\",\n      \"transformationParallel\": \"<integer>\",\n      \"extraCliArguments\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\",\n        \"key_2\": \"<string>\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"filter\": \"<string>\",\n      \"pathFilters\": [\n        {\n          \"dataset\": \"<string>\",\n          \"filter\": \"<string>\"\n        },\n        {\n          \"dataset\": \"<string>\",\n          \"filter\": \"<string>\"\n        }\n      ],\n      \"uploadType\": \"<string>\",\n      \"projectId\": \"<integer>\",\n      \"newProjectName\": \"<string>\",\n      \"projectApiKey\": \"<string>\",\n      \"projectHmacKey\": \"<string>\",\n      \"transformationBlockId\": \"<integer>\",\n      \"builtinTransformationBlock\": \"<object>\",\n      \"category\": \"<string>\",\n      \"outputDatasetName\": \"<string>\",\n      \"outputDatasetBucketId\": \"<integer>\",\n      \"outputDatasetBucketPath\": \"<string>\",\n      \"outputPathInDataset\": \"<string>\",\n      \"outputDatasetPathRule\": \"<string>\",\n      \"label\": \"<string>\",\n      \"transformationParallel\": \"<integer>\",\n      \"extraCliArguments\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\"\n      }\n    }\n  ],\n  \"emailRecipientUids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"whenToEmail\": \"<string>\",\n  \"intervalStr\": \"<string>\",\n  \"dataset\": \"<string>\",\n  \"projectId\": \"<integer>\",\n  \"notificationWebhook\": \"<string>\",\n  \"archived\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "5edee9e2-1bd8-4a19-a6d3-41a6de2e5a70",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "pipelines"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"steps\": [\n    {\n      \"name\": \"<string>\",\n      \"filter\": \"<string>\",\n      \"pathFilters\": [\n        {\n          \"dataset\": \"<string>\",\n          \"filter\": \"<string>\"\n        },\n        {\n          \"dataset\": \"<string>\",\n          \"filter\": \"<string>\"\n        }\n      ],\n      \"uploadType\": \"<string>\",\n      \"projectId\": \"<integer>\",\n      \"newProjectName\": \"<string>\",\n      \"projectApiKey\": \"<string>\",\n      \"projectHmacKey\": \"<string>\",\n      \"transformationBlockId\": \"<integer>\",\n      \"builtinTransformationBlock\": \"<object>\",\n      \"category\": \"<string>\",\n      \"outputDatasetName\": \"<string>\",\n      \"outputDatasetBucketId\": \"<integer>\",\n      \"outputDatasetBucketPath\": \"<string>\",\n      \"outputPathInDataset\": \"<string>\",\n      \"outputDatasetPathRule\": \"<string>\",\n      \"label\": \"<string>\",\n      \"transformationParallel\": \"<integer>\",\n      \"extraCliArguments\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"<string>\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"filter\": \"<string>\",\n      \"pathFilters\": [\n        {\n          \"dataset\": \"<string>\",\n          \"filter\": \"<string>\"\n        },\n        {\n          \"dataset\": \"<string>\",\n          \"filter\": \"<string>\"\n        }\n      ],\n      \"uploadType\": \"<string>\",\n      \"projectId\": \"<integer>\",\n      \"newProjectName\": \"<string>\",\n      \"projectApiKey\": \"<string>\",\n      \"projectHmacKey\": \"<string>\",\n      \"transformationBlockId\": \"<integer>\",\n      \"builtinTransformationBlock\": \"<object>\",\n      \"category\": \"<string>\",\n      \"outputDatasetName\": \"<string>\",\n      \"outputDatasetBucketId\": \"<integer>\",\n      \"outputDatasetBucketPath\": \"<string>\",\n      \"outputPathInDataset\": \"<string>\",\n      \"outputDatasetPathRule\": \"<string>\",\n      \"label\": \"<string>\",\n      \"transformationParallel\": \"<integer>\",\n      \"extraCliArguments\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"<string>\"\n      }\n    }\n  ],\n  \"emailRecipientUids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"whenToEmail\": \"<string>\",\n  \"intervalStr\": \"<string>\",\n  \"dataset\": \"<string>\",\n  \"projectId\": \"<integer>\",\n  \"notificationWebhook\": \"<string>\",\n  \"archived\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 3231,\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4894aad5-3619-44b0-8f73-a5a5d981e28b",
+          "name": "List archived pipelines",
+          "request": {
+            "name": "List archived pipelines",
+            "description": {
+              "content": "Retrieve all archived organizational pipelines",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "pipelines",
+                "archived"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "projectId",
+                  "value": "<integer>",
+                  "description": "If set, filters on pipelines which are attached to this project."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d9d54e8a-3e6a-4dcf-ad41-48ba60853006",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "pipelines",
+                    "archived"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "projectId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pipelines\": [\n    {\n      \"id\": 4106,\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"steps\": [\n        {\n          \"name\": \"<string>\",\n          \"filter\": \"<string>\",\n          \"pathFilters\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"uploadType\": \"<string>\",\n          \"projectId\": \"<integer>\",\n          \"newProjectName\": \"<string>\",\n          \"projectApiKey\": \"<string>\",\n          \"projectHmacKey\": \"<string>\",\n          \"transformationBlockId\": \"<integer>\",\n          \"builtinTransformationBlock\": \"<object>\",\n          \"category\": \"<string>\",\n          \"outputDatasetName\": \"<string>\",\n          \"outputDatasetBucketId\": \"<integer>\",\n          \"outputDatasetBucketPath\": \"<string>\",\n          \"outputPathInDataset\": \"<string>\",\n          \"outputDatasetPathRule\": \"<string>\",\n          \"label\": \"<string>\",\n          \"transformationParallel\": \"<integer>\",\n          \"extraCliArguments\": \"<string>\",\n          \"parameters\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          }\n        },\n        {\n          \"name\": \"<string>\",\n          \"filter\": \"<string>\",\n          \"pathFilters\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"uploadType\": \"<string>\",\n          \"projectId\": \"<integer>\",\n          \"newProjectName\": \"<string>\",\n          \"projectApiKey\": \"<string>\",\n          \"projectHmacKey\": \"<string>\",\n          \"transformationBlockId\": \"<integer>\",\n          \"builtinTransformationBlock\": \"<object>\",\n          \"category\": \"<string>\",\n          \"outputDatasetName\": \"<string>\",\n          \"outputDatasetBucketId\": \"<integer>\",\n          \"outputDatasetBucketPath\": \"<string>\",\n          \"outputPathInDataset\": \"<string>\",\n          \"outputDatasetPathRule\": \"<string>\",\n          \"label\": \"<string>\",\n          \"transformationParallel\": \"<integer>\",\n          \"extraCliArguments\": \"<string>\",\n          \"parameters\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          }\n        }\n      ],\n      \"created\": \"2012-07-04T21:49:03.424Z\",\n      \"emailRecipientUids\": [\n        8687,\n        3529\n      ],\n      \"whenToEmail\": \"on_new_data\",\n      \"intervalStr\": \"string\",\n      \"nextRun\": \"2002-12-30T16:55:32.409Z\",\n      \"currentRun\": {\n        \"id\": 4814,\n        \"steps\": [\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationJob\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"filter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"uploadType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"newProjectName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectApiKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectHmacKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationBlockId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"builtinTransformationBlock\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"category\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketPath\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"extraCliArguments\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"parameters\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationJob\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"filter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"uploadType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"newProjectName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectApiKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectHmacKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationBlockId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"builtinTransformationBlock\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"category\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketPath\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"extraCliArguments\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"parameters\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"created\": \"1969-08-07T22:45:22.449Z\",\n        \"finished\": \"1975-10-23T08:40:29.830Z\",\n        \"itemCountBefore\": {\n          \"itemCount\": 3189,\n          \"itemCountChecklistOK\": 768,\n          \"itemCountChecklistFailed\": 218\n        },\n        \"itemCountAfter\": {\n          \"itemCount\": 7009,\n          \"itemCountChecklistOK\": 7584,\n          \"itemCountChecklistFailed\": 5362\n        },\n        \"itemCountImportIntoProjectFailed\": 6201\n      },\n      \"lastRun\": {\n        \"id\": 9791,\n        \"steps\": [\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationJob\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"filter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"uploadType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"newProjectName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectApiKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectHmacKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationBlockId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"builtinTransformationBlock\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"category\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketPath\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"extraCliArguments\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"parameters\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationJob\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"filter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"uploadType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"newProjectName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectApiKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectHmacKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationBlockId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"builtinTransformationBlock\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"category\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketPath\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"extraCliArguments\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"parameters\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"created\": \"1992-06-30T04:59:37.028Z\",\n        \"finished\": \"2008-06-18T17:40:46.085Z\",\n        \"itemCountBefore\": {\n          \"itemCount\": 7276,\n          \"itemCountChecklistOK\": 7042,\n          \"itemCountChecklistFailed\": 1158\n        },\n        \"itemCountAfter\": {\n          \"itemCount\": 1968,\n          \"itemCountChecklistOK\": 7743,\n          \"itemCountChecklistFailed\": 8210\n        },\n        \"itemCountImportIntoProjectFailed\": 6799\n      },\n      \"feedingIntoDataset\": {\n        \"dataset\": \"string\",\n        \"datasetLink\": \"string\",\n        \"itemCount\": 5456,\n        \"itemCountChecklistOK\": 8969,\n        \"itemCountChecklistError\": 9808,\n        \"datasetType\": \"clinical\"\n      },\n      \"feedingIntoProject\": {\n        \"id\": 656,\n        \"name\": \"string\",\n        \"projectLink\": \"string\",\n        \"itemCount\": 7398\n      },\n      \"lastRunStartError\": \"string\",\n      \"notificationWebhook\": \"string\"\n    },\n    {\n      \"id\": 9267,\n      \"name\": \"string\",\n      \"description\": \"string\",\n      \"steps\": [\n        {\n          \"name\": \"<string>\",\n          \"filter\": \"<string>\",\n          \"pathFilters\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"uploadType\": \"<string>\",\n          \"projectId\": \"<integer>\",\n          \"newProjectName\": \"<string>\",\n          \"projectApiKey\": \"<string>\",\n          \"projectHmacKey\": \"<string>\",\n          \"transformationBlockId\": \"<integer>\",\n          \"builtinTransformationBlock\": \"<object>\",\n          \"category\": \"<string>\",\n          \"outputDatasetName\": \"<string>\",\n          \"outputDatasetBucketId\": \"<integer>\",\n          \"outputDatasetBucketPath\": \"<string>\",\n          \"outputPathInDataset\": \"<string>\",\n          \"outputDatasetPathRule\": \"<string>\",\n          \"label\": \"<string>\",\n          \"transformationParallel\": \"<integer>\",\n          \"extraCliArguments\": \"<string>\",\n          \"parameters\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          }\n        },\n        {\n          \"name\": \"<string>\",\n          \"filter\": \"<string>\",\n          \"pathFilters\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"uploadType\": \"<string>\",\n          \"projectId\": \"<integer>\",\n          \"newProjectName\": \"<string>\",\n          \"projectApiKey\": \"<string>\",\n          \"projectHmacKey\": \"<string>\",\n          \"transformationBlockId\": \"<integer>\",\n          \"builtinTransformationBlock\": \"<object>\",\n          \"category\": \"<string>\",\n          \"outputDatasetName\": \"<string>\",\n          \"outputDatasetBucketId\": \"<integer>\",\n          \"outputDatasetBucketPath\": \"<string>\",\n          \"outputPathInDataset\": \"<string>\",\n          \"outputDatasetPathRule\": \"<string>\",\n          \"label\": \"<string>\",\n          \"transformationParallel\": \"<integer>\",\n          \"extraCliArguments\": \"<string>\",\n          \"parameters\": {\n            \"key_0\": \"<string>\",\n            \"key_1\": \"<string>\"\n          }\n        }\n      ],\n      \"created\": \"2021-03-21T07:37:39.586Z\",\n      \"emailRecipientUids\": [\n        5013,\n        8504\n      ],\n      \"whenToEmail\": \"on_new_data\",\n      \"intervalStr\": \"string\",\n      \"nextRun\": \"1954-07-25T11:23:48.604Z\",\n      \"currentRun\": {\n        \"id\": 3784,\n        \"steps\": [\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationJob\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"filter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"uploadType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"newProjectName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectApiKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectHmacKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationBlockId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"builtinTransformationBlock\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"category\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketPath\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"extraCliArguments\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"parameters\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationJob\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"filter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"uploadType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"newProjectName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectApiKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectHmacKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationBlockId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"builtinTransformationBlock\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"category\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketPath\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"extraCliArguments\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"parameters\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"created\": \"1999-05-04T07:09:02.108Z\",\n        \"finished\": \"2008-06-12T11:36:36.495Z\",\n        \"itemCountBefore\": {\n          \"itemCount\": 3997,\n          \"itemCountChecklistOK\": 429,\n          \"itemCountChecklistFailed\": 6408\n        },\n        \"itemCountAfter\": {\n          \"itemCount\": 767,\n          \"itemCountChecklistOK\": 1142,\n          \"itemCountChecklistFailed\": 1794\n        },\n        \"itemCountImportIntoProjectFailed\": 1751\n      },\n      \"lastRun\": {\n        \"id\": 6370,\n        \"steps\": [\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationJob\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"filter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"uploadType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"newProjectName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectApiKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectHmacKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationBlockId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"builtinTransformationBlock\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"category\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketPath\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"extraCliArguments\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"parameters\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationJob\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"filter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"uploadType\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"newProjectName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectApiKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"projectHmacKey\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"transformationBlockId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"builtinTransformationBlock\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"category\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetName\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketId\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"outputDatasetBucketPath\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"extraCliArguments\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"parameters\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"created\": \"1994-03-13T16:58:21.846Z\",\n        \"finished\": \"1981-05-16T12:43:52.482Z\",\n        \"itemCountBefore\": {\n          \"itemCount\": 1357,\n          \"itemCountChecklistOK\": 8356,\n          \"itemCountChecklistFailed\": 8905\n        },\n        \"itemCountAfter\": {\n          \"itemCount\": 7281,\n          \"itemCountChecklistOK\": 3548,\n          \"itemCountChecklistFailed\": 4564\n        },\n        \"itemCountImportIntoProjectFailed\": 4713\n      },\n      \"feedingIntoDataset\": {\n        \"dataset\": \"string\",\n        \"datasetLink\": \"string\",\n        \"itemCount\": 6064,\n        \"itemCountChecklistOK\": 1499,\n        \"itemCountChecklistError\": 4410,\n        \"datasetType\": \"clinical\"\n      },\n      \"feedingIntoProject\": {\n        \"id\": 1419,\n        \"name\": \"string\",\n        \"projectLink\": \"string\",\n        \"itemCount\": 5850\n      },\n      \"lastRunStartError\": \"string\",\n      \"notificationWebhook\": \"string\"\n    }\n  ],\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c6f8fcb2-4e57-4570-adcd-7916a9231553",
+          "name": "Get pipeline",
+          "request": {
+            "name": "Get pipeline",
+            "description": {
+              "content": "Retrieve an organizational pipelines",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "pipelines",
+                ":pipelineId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "pipelineId",
+                  "description": "(Required) Pipeline ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7c4c8271-3706-472f-8c79-51352950b231",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "pipelines",
+                    ":pipelineId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Pipeline ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pipeline\": {\n    \"id\": 3376,\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"steps\": [\n      {\n        \"name\": \"<string>\",\n        \"filter\": \"<string>\",\n        \"pathFilters\": [\n          {\n            \"dataset\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"filter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"dataset\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"filter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"uploadType\": \"<string>\",\n        \"projectId\": \"<integer>\",\n        \"newProjectName\": \"<string>\",\n        \"projectApiKey\": \"<string>\",\n        \"projectHmacKey\": \"<string>\",\n        \"transformationBlockId\": \"<integer>\",\n        \"builtinTransformationBlock\": \"<object>\",\n        \"category\": \"<string>\",\n        \"outputDatasetName\": \"<string>\",\n        \"outputDatasetBucketId\": \"<integer>\",\n        \"outputDatasetBucketPath\": \"<string>\",\n        \"outputPathInDataset\": \"<string>\",\n        \"outputDatasetPathRule\": \"<string>\",\n        \"label\": \"<string>\",\n        \"transformationParallel\": \"<integer>\",\n        \"extraCliArguments\": \"<string>\",\n        \"parameters\": {\n          \"key_0\": \"<string>\",\n          \"key_1\": \"<string>\",\n          \"key_2\": \"<string>\"\n        }\n      },\n      {\n        \"name\": \"<string>\",\n        \"filter\": \"<string>\",\n        \"pathFilters\": [\n          {\n            \"dataset\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"filter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"dataset\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"filter\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"uploadType\": \"<string>\",\n        \"projectId\": \"<integer>\",\n        \"newProjectName\": \"<string>\",\n        \"projectApiKey\": \"<string>\",\n        \"projectHmacKey\": \"<string>\",\n        \"transformationBlockId\": \"<integer>\",\n        \"builtinTransformationBlock\": \"<object>\",\n        \"category\": \"<string>\",\n        \"outputDatasetName\": \"<string>\",\n        \"outputDatasetBucketId\": \"<integer>\",\n        \"outputDatasetBucketPath\": \"<string>\",\n        \"outputPathInDataset\": \"<string>\",\n        \"outputDatasetPathRule\": \"<string>\",\n        \"label\": \"<string>\",\n        \"transformationParallel\": \"<integer>\",\n        \"extraCliArguments\": \"<string>\",\n        \"parameters\": {\n          \"key_0\": \"<string>\"\n        }\n      }\n    ],\n    \"created\": \"2004-03-06T19:16:48.346Z\",\n    \"emailRecipientUids\": [\n      967,\n      1420\n    ],\n    \"whenToEmail\": \"on_new_data\",\n    \"intervalStr\": \"string\",\n    \"nextRun\": \"1969-09-21T19:19:06.795Z\",\n    \"currentRun\": {\n      \"id\": 8774,\n      \"steps\": [\n        {\n          \"name\": \"string\",\n          \"transformationJob\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"filter\": \"string\",\n          \"uploadType\": \"project\",\n          \"projectId\": 3891,\n          \"newProjectName\": \"string\",\n          \"projectApiKey\": \"string\",\n          \"projectHmacKey\": \"string\",\n          \"transformationBlockId\": 3198,\n          \"builtinTransformationBlock\": {},\n          \"category\": \"testing\",\n          \"outputDatasetName\": \"string\",\n          \"outputDatasetBucketId\": 5965,\n          \"outputDatasetBucketPath\": \"string\",\n          \"label\": \"string\",\n          \"extraCliArguments\": \"string\",\n          \"parameters\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_2\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_3\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        {\n          \"name\": \"string\",\n          \"transformationJob\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"filter\": \"string\",\n          \"uploadType\": \"dataset\",\n          \"projectId\": 4096,\n          \"newProjectName\": \"string\",\n          \"projectApiKey\": \"string\",\n          \"projectHmacKey\": \"string\",\n          \"transformationBlockId\": 5369,\n          \"builtinTransformationBlock\": {},\n          \"category\": \"split\",\n          \"outputDatasetName\": \"string\",\n          \"outputDatasetBucketId\": 1510,\n          \"outputDatasetBucketPath\": \"string\",\n          \"label\": \"string\",\n          \"extraCliArguments\": \"string\",\n          \"parameters\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      ],\n      \"created\": \"2004-08-09T17:57:40.294Z\",\n      \"finished\": \"1979-11-26T18:28:07.134Z\",\n      \"itemCountBefore\": {\n        \"itemCount\": 756,\n        \"itemCountChecklistOK\": 4377,\n        \"itemCountChecklistFailed\": 2454\n      },\n      \"itemCountAfter\": {\n        \"itemCount\": 42,\n        \"itemCountChecklistOK\": 3163,\n        \"itemCountChecklistFailed\": 8531\n      },\n      \"itemCountImportIntoProjectFailed\": 1910\n    },\n    \"lastRun\": {\n      \"id\": 2122,\n      \"steps\": [\n        {\n          \"name\": \"string\",\n          \"transformationJob\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"filter\": \"string\",\n          \"uploadType\": \"dataset\",\n          \"projectId\": 1857,\n          \"newProjectName\": \"string\",\n          \"projectApiKey\": \"string\",\n          \"projectHmacKey\": \"string\",\n          \"transformationBlockId\": 8257,\n          \"builtinTransformationBlock\": {},\n          \"category\": \"split\",\n          \"outputDatasetName\": \"string\",\n          \"outputDatasetBucketId\": 9598,\n          \"outputDatasetBucketPath\": \"string\",\n          \"label\": \"string\",\n          \"extraCliArguments\": \"string\",\n          \"parameters\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_2\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        {\n          \"name\": \"string\",\n          \"transformationJob\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"filter\": \"string\",\n          \"uploadType\": \"project\",\n          \"projectId\": 3910,\n          \"newProjectName\": \"string\",\n          \"projectApiKey\": \"string\",\n          \"projectHmacKey\": \"string\",\n          \"transformationBlockId\": 1768,\n          \"builtinTransformationBlock\": {},\n          \"category\": \"testing\",\n          \"outputDatasetName\": \"string\",\n          \"outputDatasetBucketId\": 3651,\n          \"outputDatasetBucketPath\": \"string\",\n          \"label\": \"string\",\n          \"extraCliArguments\": \"string\",\n          \"parameters\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      ],\n      \"created\": \"1980-09-13T19:59:15.776Z\",\n      \"finished\": \"1965-09-18T11:01:50.628Z\",\n      \"itemCountBefore\": {\n        \"itemCount\": 4496,\n        \"itemCountChecklistOK\": 3059,\n        \"itemCountChecklistFailed\": 9021\n      },\n      \"itemCountAfter\": {\n        \"itemCount\": 6193,\n        \"itemCountChecklistOK\": 6111,\n        \"itemCountChecklistFailed\": 8861\n      },\n      \"itemCountImportIntoProjectFailed\": 1869\n    },\n    \"feedingIntoDataset\": {\n      \"dataset\": \"string\",\n      \"datasetLink\": \"string\",\n      \"itemCount\": 5685,\n      \"itemCountChecklistOK\": 9024,\n      \"itemCountChecklistError\": 7251,\n      \"datasetType\": \"files\"\n    },\n    \"feedingIntoProject\": {\n      \"id\": 5742,\n      \"name\": \"string\",\n      \"projectLink\": \"string\",\n      \"itemCount\": 258\n    },\n    \"lastRunStartError\": \"string\",\n    \"notificationWebhook\": \"string\"\n  },\n  \"success\": true,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "078a86b5-9d84-49dd-a4e3-96211ba0bbdc",
+          "name": "Update pipeline",
+          "request": {
+            "name": "Update pipeline",
+            "description": {
+              "content": "Update an organizational pipelines",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "pipelines",
+                ":pipelineId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "pipelineId",
+                  "description": "(Required) Pipeline ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"steps\": [\n    {\n      \"name\": \"<string>\",\n      \"filter\": \"<string>\",\n      \"pathFilters\": [\n        {\n          \"dataset\": \"<string>\",\n          \"filter\": \"<string>\"\n        },\n        {\n          \"dataset\": \"<string>\",\n          \"filter\": \"<string>\"\n        }\n      ],\n      \"uploadType\": \"<string>\",\n      \"projectId\": \"<integer>\",\n      \"newProjectName\": \"<string>\",\n      \"projectApiKey\": \"<string>\",\n      \"projectHmacKey\": \"<string>\",\n      \"transformationBlockId\": \"<integer>\",\n      \"builtinTransformationBlock\": \"<object>\",\n      \"category\": \"<string>\",\n      \"outputDatasetName\": \"<string>\",\n      \"outputDatasetBucketId\": \"<integer>\",\n      \"outputDatasetBucketPath\": \"<string>\",\n      \"outputPathInDataset\": \"<string>\",\n      \"outputDatasetPathRule\": \"<string>\",\n      \"label\": \"<string>\",\n      \"transformationParallel\": \"<integer>\",\n      \"extraCliArguments\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"<string>\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"filter\": \"<string>\",\n      \"pathFilters\": [\n        {\n          \"dataset\": \"<string>\",\n          \"filter\": \"<string>\"\n        },\n        {\n          \"dataset\": \"<string>\",\n          \"filter\": \"<string>\"\n        }\n      ],\n      \"uploadType\": \"<string>\",\n      \"projectId\": \"<integer>\",\n      \"newProjectName\": \"<string>\",\n      \"projectApiKey\": \"<string>\",\n      \"projectHmacKey\": \"<string>\",\n      \"transformationBlockId\": \"<integer>\",\n      \"builtinTransformationBlock\": \"<object>\",\n      \"category\": \"<string>\",\n      \"outputDatasetName\": \"<string>\",\n      \"outputDatasetBucketId\": \"<integer>\",\n      \"outputDatasetBucketPath\": \"<string>\",\n      \"outputPathInDataset\": \"<string>\",\n      \"outputDatasetPathRule\": \"<string>\",\n      \"label\": \"<string>\",\n      \"transformationParallel\": \"<integer>\",\n      \"extraCliArguments\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"<string>\",\n        \"key_1\": \"<string>\",\n        \"key_2\": \"<string>\"\n      }\n    }\n  ],\n  \"emailRecipientUids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"whenToEmail\": \"<string>\",\n  \"intervalStr\": \"<string>\",\n  \"dataset\": \"<string>\",\n  \"projectId\": \"<integer>\",\n  \"notificationWebhook\": \"<string>\",\n  \"archived\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "898f7f73-a156-452f-a115-c437e6593b71",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "pipelines",
+                    ":pipelineId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Pipeline ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"steps\": [\n    {\n      \"name\": \"<string>\",\n      \"filter\": \"<string>\",\n      \"pathFilters\": [\n        {\n          \"dataset\": \"<string>\",\n          \"filter\": \"<string>\"\n        },\n        {\n          \"dataset\": \"<string>\",\n          \"filter\": \"<string>\"\n        }\n      ],\n      \"uploadType\": \"<string>\",\n      \"projectId\": \"<integer>\",\n      \"newProjectName\": \"<string>\",\n      \"projectApiKey\": \"<string>\",\n      \"projectHmacKey\": \"<string>\",\n      \"transformationBlockId\": \"<integer>\",\n      \"builtinTransformationBlock\": \"<object>\",\n      \"category\": \"<string>\",\n      \"outputDatasetName\": \"<string>\",\n      \"outputDatasetBucketId\": \"<integer>\",\n      \"outputDatasetBucketPath\": \"<string>\",\n      \"outputPathInDataset\": \"<string>\",\n      \"outputDatasetPathRule\": \"<string>\",\n      \"label\": \"<string>\",\n      \"transformationParallel\": \"<integer>\",\n      \"extraCliArguments\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"<string>\"\n      }\n    },\n    {\n      \"name\": \"<string>\",\n      \"filter\": \"<string>\",\n      \"pathFilters\": [\n        {\n          \"dataset\": \"<string>\",\n          \"filter\": \"<string>\"\n        },\n        {\n          \"dataset\": \"<string>\",\n          \"filter\": \"<string>\"\n        }\n      ],\n      \"uploadType\": \"<string>\",\n      \"projectId\": \"<integer>\",\n      \"newProjectName\": \"<string>\",\n      \"projectApiKey\": \"<string>\",\n      \"projectHmacKey\": \"<string>\",\n      \"transformationBlockId\": \"<integer>\",\n      \"builtinTransformationBlock\": \"<object>\",\n      \"category\": \"<string>\",\n      \"outputDatasetName\": \"<string>\",\n      \"outputDatasetBucketId\": \"<integer>\",\n      \"outputDatasetBucketPath\": \"<string>\",\n      \"outputPathInDataset\": \"<string>\",\n      \"outputDatasetPathRule\": \"<string>\",\n      \"label\": \"<string>\",\n      \"transformationParallel\": \"<integer>\",\n      \"extraCliArguments\": \"<string>\",\n      \"parameters\": {\n        \"key_0\": \"<string>\"\n      }\n    }\n  ],\n  \"emailRecipientUids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"whenToEmail\": \"<string>\",\n  \"intervalStr\": \"<string>\",\n  \"dataset\": \"<string>\",\n  \"projectId\": \"<integer>\",\n  \"notificationWebhook\": \"<string>\",\n  \"archived\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "274570b9-a82b-4782-8252-5a15c7b44fd0",
+          "name": "Delete pipeline",
+          "request": {
+            "name": "Delete pipeline",
+            "description": {
+              "content": "Delete an organizational pipelines",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "pipelines",
+                ":pipelineId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "pipelineId",
+                  "description": "(Required) Pipeline ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "30d47e19-4766-4bab-9a4b-98af5caf331a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "pipelines",
+                    ":pipelineId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Pipeline ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "953dc9ed-0959-4226-81cd-3b849ed987c1",
+          "name": "Run pipeline",
+          "request": {
+            "name": "Run pipeline",
+            "description": {
+              "content": "Run an organizational pipeline",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "pipelines",
+                ":pipelineId",
+                "run"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "ignoreLastSuccessfulRun",
+                  "value": "<boolean>",
+                  "description": "If set then `EI_LAST_SUCCESSFUL_RUN` is not set. You can use this to re-run a pipeline from scratch."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "pipelineId",
+                  "description": "(Required) Pipeline ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0cb633d6-bc70-4c1e-9cc7-a55eccba9529",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "pipelines",
+                    ":pipelineId",
+                    "run"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "ignoreLastSuccessfulRun",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Pipeline ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"pipelineRun\": {\n    \"id\": 4244,\n    \"steps\": [\n      {\n        \"name\": \"string\",\n        \"transformationJob\": {\n          \"id\": 2567,\n          \"organizationId\": 5500,\n          \"name\": \"string\",\n          \"status\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"transformJobStatus\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"uploadJobStatus\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"uploadType\": \"dataset\",\n          \"category\": \"testing\",\n          \"created\": \"2017-10-08T23:33:51.310Z\",\n          \"totalDownloadFileCount\": 3586,\n          \"totalDownloadFileSize\": 7415,\n          \"totalDownloadFileSizeString\": \"string\",\n          \"totalUploadFileCount\": 2362,\n          \"transformationParallel\": 8863,\n          \"transformationSummary\": {\n            \"startedCount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"succeededCount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"finishedCount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"totalFileCount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"totalTimeSpentSeconds\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"inProgress\": false,\n          \"operatesOn\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"totalTimeSpentSeconds\": 266,\n          \"totalTimeSpentString\": \"string\",\n          \"uploadJobId\": 4961,\n          \"uploadJobFilesUploaded\": 6691,\n          \"projectOwner\": \"string\",\n          \"projectId\": 8020,\n          \"projectName\": \"string\",\n          \"transformationBlockId\": 7541,\n          \"builtinTransformationBlock\": {},\n          \"transformationBlockName\": \"string\",\n          \"outputDatasetName\": \"string\",\n          \"outputDatasetBucketId\": 953,\n          \"outputDatasetBucketPath\": \"string\",\n          \"label\": \"string\",\n          \"filterQuery\": \"string\",\n          \"emailRecipientUids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"pipelineId\": 8233,\n          \"pipelineName\": \"string\",\n          \"pipelineRunId\": 2847,\n          \"pipelineStep\": 8549,\n          \"createdByUser\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"filter\": \"string\",\n        \"uploadType\": \"dataset\",\n        \"projectId\": 3775,\n        \"newProjectName\": \"string\",\n        \"projectApiKey\": \"string\",\n        \"projectHmacKey\": \"string\",\n        \"transformationBlockId\": 3100,\n        \"builtinTransformationBlock\": {},\n        \"category\": \"split\",\n        \"outputDatasetName\": \"string\",\n        \"outputDatasetBucketId\": 8172,\n        \"outputDatasetBucketPath\": \"string\",\n        \"label\": \"string\",\n        \"extraCliArguments\": \"string\",\n        \"parameters\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\",\n          \"key_3\": \"string\"\n        }\n      },\n      {\n        \"name\": \"string\",\n        \"transformationJob\": {\n          \"id\": 4589,\n          \"organizationId\": 5599,\n          \"name\": \"string\",\n          \"status\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"transformJobStatus\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"uploadJobStatus\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"uploadType\": \"project\",\n          \"category\": \"training\",\n          \"created\": \"1976-01-17T18:06:24.291Z\",\n          \"totalDownloadFileCount\": 8877,\n          \"totalDownloadFileSize\": 5417,\n          \"totalDownloadFileSizeString\": \"string\",\n          \"totalUploadFileCount\": 8526,\n          \"transformationParallel\": 7537,\n          \"transformationSummary\": {\n            \"startedCount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"succeededCount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"finishedCount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"totalFileCount\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"totalTimeSpentSeconds\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"inProgress\": true,\n          \"operatesOn\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"totalTimeSpentSeconds\": 5808,\n          \"totalTimeSpentString\": \"string\",\n          \"uploadJobId\": 3211,\n          \"uploadJobFilesUploaded\": 565,\n          \"projectOwner\": \"string\",\n          \"projectId\": 3044,\n          \"projectName\": \"string\",\n          \"transformationBlockId\": 778,\n          \"builtinTransformationBlock\": {},\n          \"transformationBlockName\": \"string\",\n          \"outputDatasetName\": \"string\",\n          \"outputDatasetBucketId\": 7907,\n          \"outputDatasetBucketPath\": \"string\",\n          \"label\": \"string\",\n          \"filterQuery\": \"string\",\n          \"emailRecipientUids\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"pipelineId\": 1994,\n          \"pipelineName\": \"string\",\n          \"pipelineRunId\": 4473,\n          \"pipelineStep\": 6932,\n          \"createdByUser\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"filter\": \"string\",\n        \"uploadType\": \"dataset\",\n        \"projectId\": 5505,\n        \"newProjectName\": \"string\",\n        \"projectApiKey\": \"string\",\n        \"projectHmacKey\": \"string\",\n        \"transformationBlockId\": 1866,\n        \"builtinTransformationBlock\": {},\n        \"category\": \"testing\",\n        \"outputDatasetName\": \"string\",\n        \"outputDatasetBucketId\": 9809,\n        \"outputDatasetBucketPath\": \"string\",\n        \"label\": \"string\",\n        \"extraCliArguments\": \"string\",\n        \"parameters\": {\n          \"key_0\": \"string\"\n        }\n      }\n    ],\n    \"created\": \"1949-10-08T07:43:48.670Z\",\n    \"finished\": \"1965-03-21T05:17:45.032Z\",\n    \"itemCountBefore\": {\n      \"itemCount\": 4140,\n      \"itemCountChecklistOK\": 5403,\n      \"itemCountChecklistFailed\": 455\n    },\n    \"itemCountAfter\": {\n      \"itemCount\": 4147,\n      \"itemCountChecklistOK\": 5130,\n      \"itemCountChecklistFailed\": 1939\n    },\n    \"itemCountImportIntoProjectFailed\": 3325\n  },\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "56bf1e6c-d32a-4c4f-a12f-92fb791df859",
+          "name": "Stop a running pipeline",
+          "request": {
+            "name": "Stop a running pipeline",
+            "description": {
+              "content": "Stops the pipeline, and marks it as failed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "pipelines",
+                ":pipelineId",
+                "stop"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "pipelineId",
+                  "description": "(Required) Pipeline ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1852cab7-db8b-4575-90ee-3810d7152d5b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "pipelines",
+                    ":pipelineId",
+                    "stop"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "pipelineId",
+                      "description": "(Required) Pipeline ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://studio.edgeimpulse.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7321795b-2550-4986-bc26-c14405f977c5",
+    "name": "Edge Impulse OrganizationPipelines API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

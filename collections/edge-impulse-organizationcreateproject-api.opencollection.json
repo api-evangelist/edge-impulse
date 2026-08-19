@@ -1,0 +1,389 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edge Impulse OrganizationCreateProject API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OrganizationCreateProject",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List transformation jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/create-project",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              },
+              {
+                "name": "includePipelineJobs",
+                "value": "",
+                "type": "query",
+                "description": "If enabled, also includes jobs that are part of a pipeline"
+              }
+            ]
+          },
+          "docs": "Get list of transformation jobs."
+        },
+        {
+          "info": {
+            "name": "Start transformation job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/create-project",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start a transformation job to fetch data from the organization and put it in a project, or transform into new data."
+        },
+        {
+          "info": {
+            "name": "Get transformation job status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/create-project/:createProjectId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "createProjectId",
+                "value": "",
+                "type": "path",
+                "description": "Create project job ID."
+              },
+              {
+                "name": "transformLimit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results of transformation jobs"
+              },
+              {
+                "name": "transformOffset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results of transformation jobs, can be used in conjunction with TransformLimitResultsParameter to implement paging."
+              },
+              {
+                "name": "selection",
+                "value": "",
+                "type": "query",
+                "description": "Type of selected rows, either 'all', 'created', 'in-progress' or 'failed' (defaults to 'all')"
+              }
+            ]
+          },
+          "docs": "Get the current status of a transformation job job."
+        },
+        {
+          "info": {
+            "name": "Update transformation job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/create-project/:createProjectId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "createProjectId",
+                "value": "",
+                "type": "path",
+                "description": "Create project job ID."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the properties of a transformation job."
+        },
+        {
+          "info": {
+            "name": "Delete transformation job",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/create-project/:createProjectId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "createProjectId",
+                "value": "",
+                "type": "path",
+                "description": "Create project job ID."
+              }
+            ]
+          },
+          "docs": "Remove a transformation job. This will stop all running jobs."
+        },
+        {
+          "info": {
+            "name": "Retry failed transform jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/create-project/:createProjectId/transform/retry",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "createProjectId",
+                "value": "",
+                "type": "path",
+                "description": "Create project job ID."
+              }
+            ]
+          },
+          "docs": "Retry all failed transform job from a transformation job. Only jobs that have failed will be retried."
+        },
+        {
+          "info": {
+            "name": "Clear failed transform jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/create-project/:createProjectId/transform/clear",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "createProjectId",
+                "value": "",
+                "type": "path",
+                "description": "Create project job ID."
+              }
+            ]
+          },
+          "docs": "Clear all failed transform job from a create project job. Only jobs that have failed will be cleared."
+        },
+        {
+          "info": {
+            "name": "Retry transformation upload job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/create-project/:createProjectId/upload/retry",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "createProjectId",
+                "value": "",
+                "type": "path",
+                "description": "Create project job ID."
+              }
+            ]
+          },
+          "docs": "Retry the upload job from a transformation job. Only jobs that have failed can be retried."
+        },
+        {
+          "info": {
+            "name": "Delete create project file",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/create-project/:createProjectId/files/:createProjectFileId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "createProjectId",
+                "value": "",
+                "type": "path",
+                "description": "Create project job ID."
+              },
+              {
+                "name": "createProjectFileId",
+                "value": "",
+                "type": "path",
+                "description": "Create project job file ID."
+              }
+            ]
+          },
+          "docs": "Remove a file from a create project job. Only files for which no jobs are running can be deleted."
+        },
+        {
+          "info": {
+            "name": "Retry transformation file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/create-project/:createProjectId/files/:createProjectFileId/retry",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "createProjectId",
+                "value": "",
+                "type": "path",
+                "description": "Create project job ID."
+              },
+              {
+                "name": "createProjectFileId",
+                "value": "",
+                "type": "path",
+                "description": "Create project job file ID."
+              }
+            ]
+          },
+          "docs": "Retry a transformation action on a file from a transformation job. Only files that have failed can be retried."
+        },
+        {
+          "info": {
+            "name": "Upload a custom block",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/custom-block",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Upload a zip file containing a custom transformation or deployment block."
+        },
+        {
+          "info": {
+            "name": "Create new empty project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/new-project",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new empty project within an organization."
+        },
+        {
+          "info": {
+            "name": "Add a collaborator to a project within an organisation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/organizations/:organizationId/add-project-collaborator",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new collaborator to a project owned by an organisation."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

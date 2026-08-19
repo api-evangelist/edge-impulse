@@ -1,0 +1,1732 @@
+{
+  "item": [
+    {
+      "id": "e325f8c7-9744-4212-9d4a-b265ab88f5d5",
+      "name": "OrganizationCreateProject",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "24064fa6-615b-4477-80a4-3d4dd27fbfbd",
+          "name": "List transformation jobs",
+          "request": {
+            "name": "List transformation jobs",
+            "description": {
+              "content": "Get list of transformation jobs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "create-project"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of results"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+                },
+                {
+                  "disabled": false,
+                  "key": "includePipelineJobs",
+                  "value": "<boolean>",
+                  "description": "If enabled, also includes jobs that are part of a pipeline"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d5d9b22c-b519-45a8-a46e-3a3eaea2490a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "create-project"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "includePipelineJobs",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"jobs\": [\n    {\n      \"id\": 9712,\n      \"name\": \"string\",\n      \"transformJobStatus\": \"waiting\",\n      \"uploadJobStatus\": \"failed\",\n      \"uploadType\": \"project\",\n      \"created\": \"1998-05-21T17:03:08.367Z\",\n      \"totalDownloadFileCount\": 4503,\n      \"totalDownloadFileSize\": 8532,\n      \"totalDownloadFileSizeString\": \"string\",\n      \"totalTimeSpentString\": \"string\",\n      \"organizationId\": 2926,\n      \"uploadJobId\": 4306,\n      \"projectOwner\": \"string\",\n      \"projectId\": 4889,\n      \"projectName\": \"string\",\n      \"transformationBlockId\": 5478,\n      \"builtinTransformationBlock\": {},\n      \"transformationBlockName\": \"string\",\n      \"transformationOperatesOn\": \"file\",\n      \"outputDatasetName\": \"string\",\n      \"outputDatasetBucketId\": 5498,\n      \"outputDatasetBucketPath\": \"string\",\n      \"totalUploadFileCount\": 1102,\n      \"totalTimeSpentSeconds\": 7882,\n      \"createdByUser\": {\n        \"id\": 6485,\n        \"name\": \"string\",\n        \"username\": \"string\",\n        \"photo\": \"string\"\n      }\n    },\n    {\n      \"id\": 1064,\n      \"name\": \"string\",\n      \"transformJobStatus\": \"finished\",\n      \"uploadJobStatus\": \"waiting\",\n      \"uploadType\": \"dataset\",\n      \"created\": \"2024-09-26T02:25:40.949Z\",\n      \"totalDownloadFileCount\": 840,\n      \"totalDownloadFileSize\": 9543,\n      \"totalDownloadFileSizeString\": \"string\",\n      \"totalTimeSpentString\": \"string\",\n      \"organizationId\": 7326,\n      \"uploadJobId\": 9153,\n      \"projectOwner\": \"string\",\n      \"projectId\": 3667,\n      \"projectName\": \"string\",\n      \"transformationBlockId\": 1032,\n      \"builtinTransformationBlock\": {},\n      \"transformationBlockName\": \"string\",\n      \"transformationOperatesOn\": \"standalone\",\n      \"outputDatasetName\": \"string\",\n      \"outputDatasetBucketId\": 3520,\n      \"outputDatasetBucketPath\": \"string\",\n      \"totalUploadFileCount\": 1965,\n      \"totalTimeSpentSeconds\": 3744,\n      \"createdByUser\": {\n        \"id\": 6531,\n        \"name\": \"string\",\n        \"username\": \"string\",\n        \"photo\": \"string\"\n      }\n    }\n  ],\n  \"success\": true,\n  \"totalJobCount\": 997,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a6a296ab-4967-4a1f-b169-c83308bd8320",
+          "name": "Start transformation job",
+          "request": {
+            "name": "Start transformation job",
+            "description": {
+              "content": "Start a transformation job to fetch data from the organization and put it in a project, or transform into new data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "create-project"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"filter\": \"<string>\",\n  \"pathFilters\": [\n    {\n      \"dataset\": \"<string>\",\n      \"filter\": \"<string>\"\n    },\n    {\n      \"dataset\": \"<string>\",\n      \"filter\": \"<string>\"\n    }\n  ],\n  \"uploadType\": \"<string>\",\n  \"projectId\": \"<integer>\",\n  \"projectVisibility\": \"<string>\",\n  \"newProjectName\": \"<string>\",\n  \"projectApiKey\": \"<string>\",\n  \"projectHmacKey\": \"<string>\",\n  \"transformationBlockId\": \"<integer>\",\n  \"builtinTransformationBlock\": \"<object>\",\n  \"category\": \"<string>\",\n  \"outputDatasetName\": \"<string>\",\n  \"outputDatasetBucketId\": \"<integer>\",\n  \"outputDatasetBucketPath\": \"<string>\",\n  \"outputPathInDataset\": \"<string>\",\n  \"outputDatasetPathRule\": \"<string>\",\n  \"label\": \"<string>\",\n  \"emailRecipientUids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"transformationParallel\": \"<integer>\",\n  \"extraCliArguments\": \"<string>\",\n  \"parameters\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c7383d70-9965-49a5-b796-ee6a37fe6fc3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "create-project"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"filter\": \"<string>\",\n  \"pathFilters\": [\n    {\n      \"dataset\": \"<string>\",\n      \"filter\": \"<string>\"\n    },\n    {\n      \"dataset\": \"<string>\",\n      \"filter\": \"<string>\"\n    }\n  ],\n  \"uploadType\": \"<string>\",\n  \"projectId\": \"<integer>\",\n  \"projectVisibility\": \"<string>\",\n  \"newProjectName\": \"<string>\",\n  \"projectApiKey\": \"<string>\",\n  \"projectHmacKey\": \"<string>\",\n  \"transformationBlockId\": \"<integer>\",\n  \"builtinTransformationBlock\": \"<object>\",\n  \"category\": \"<string>\",\n  \"outputDatasetName\": \"<string>\",\n  \"outputDatasetBucketId\": \"<integer>\",\n  \"outputDatasetBucketPath\": \"<string>\",\n  \"outputPathInDataset\": \"<string>\",\n  \"outputDatasetPathRule\": \"<string>\",\n  \"label\": \"<string>\",\n  \"emailRecipientUids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"transformationParallel\": \"<integer>\",\n  \"extraCliArguments\": \"<string>\",\n  \"parameters\": {\n    \"key_0\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiKey\": \"string\",\n  \"createProjectId\": 6603,\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "db6bf458-c44d-4889-8e16-54913430894f",
+          "name": "Get transformation job status",
+          "request": {
+            "name": "Get transformation job status",
+            "description": {
+              "content": "Get the current status of a transformation job job.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "create-project",
+                ":createProjectId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "transformLimit",
+                  "value": "<integer>",
+                  "description": "(Required) Maximum number of results of transformation jobs"
+                },
+                {
+                  "disabled": false,
+                  "key": "transformOffset",
+                  "value": "<integer>",
+                  "description": "(Required) Offset in results of transformation jobs, can be used in conjunction with TransformLimitResultsParameter to implement paging."
+                },
+                {
+                  "disabled": false,
+                  "key": "selection",
+                  "value": "<string>",
+                  "description": "Type of selected rows, either 'all', 'created', 'in-progress' or 'failed' (defaults to 'all')"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "createProjectId",
+                  "description": "(Required) Create project job ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ba139767-5604-4a45-b306-6fd84ef423de",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "create-project",
+                    ":createProjectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "transformLimit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "transformOffset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "selection",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "createProjectId",
+                      "description": "(Required) Create project job ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"error\": \"string\",\n  \"status\": {\n    \"category\": \"split\",\n    \"created\": \"2003-12-09T20:31:29.786Z\",\n    \"fileCountForFilter\": 2850,\n    \"files\": [\n      {\n        \"id\": 9489,\n        \"fileName\": \"string\",\n        \"bucketPath\": \"string\",\n        \"transformationJobStatus\": \"waiting\",\n        \"linkToDataItem\": \"string\",\n        \"lengthString\": \"string\",\n        \"sourceDatasetType\": \"clinical\",\n        \"transformationJobId\": 5439\n      },\n      {\n        \"id\": 4626,\n        \"fileName\": \"string\",\n        \"bucketPath\": \"string\",\n        \"transformationJobStatus\": \"finished\",\n        \"linkToDataItem\": \"string\",\n        \"lengthString\": \"string\",\n        \"sourceDatasetType\": \"files\",\n        \"transformationJobId\": 8364\n      }\n    ],\n    \"id\": 8002,\n    \"inProgress\": true,\n    \"name\": \"string\",\n    \"operatesOn\": \"directory\",\n    \"organizationId\": 7798,\n    \"status\": \"failed\",\n    \"totalDownloadFileCount\": 6695,\n    \"totalDownloadFileSize\": 8487,\n    \"totalDownloadFileSizeString\": \"string\",\n    \"totalTimeSpentSeconds\": 2759,\n    \"totalTimeSpentString\": \"string\",\n    \"totalUploadFileCount\": 2373,\n    \"transformJobStatus\": \"created\",\n    \"transformationParallel\": 7807,\n    \"transformationSummary\": {\n      \"startedCount\": 3352,\n      \"succeededCount\": 3605,\n      \"finishedCount\": 5518,\n      \"totalFileCount\": 5785,\n      \"totalTimeSpentSeconds\": 2281\n    },\n    \"uploadJobStatus\": \"failed\",\n    \"uploadType\": \"project\",\n    \"uploadJobId\": 4762,\n    \"uploadJobFilesUploaded\": 7273,\n    \"projectOwner\": \"string\",\n    \"projectId\": 1834,\n    \"projectName\": \"string\",\n    \"transformationBlockId\": 3310,\n    \"builtinTransformationBlock\": {},\n    \"transformationBlockName\": \"string\",\n    \"outputDatasetName\": \"string\",\n    \"outputDatasetBucketId\": 7333,\n    \"outputDatasetBucketPath\": \"string\",\n    \"label\": \"string\",\n    \"filterQuery\": \"string\",\n    \"emailRecipientUids\": [\n      5139,\n      2686\n    ],\n    \"pipelineId\": 4404,\n    \"pipelineName\": \"string\",\n    \"pipelineRunId\": 2639,\n    \"pipelineStep\": 7321,\n    \"createdByUser\": {\n      \"id\": 3545,\n      \"name\": \"string\",\n      \"username\": \"string\",\n      \"photo\": \"string\"\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "38f76f6f-b49d-48e9-875e-40d2036868b2",
+          "name": "Update transformation job",
+          "request": {
+            "name": "Update transformation job",
+            "description": {
+              "content": "Update the properties of a transformation job.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "create-project",
+                ":createProjectId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "createProjectId",
+                  "description": "(Required) Create project job ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"transformationParallel\": \"<integer>\",\n  \"emailRecipientUids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "aa2ccde6-fe42-421f-ad7c-7b215b4b3e99",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "create-project",
+                    ":createProjectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "createProjectId",
+                      "description": "(Required) Create project job ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"transformationParallel\": \"<integer>\",\n  \"emailRecipientUids\": [\n    \"<integer>\",\n    \"<integer>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "172605ab-275a-43a2-b464-9d4592474c07",
+          "name": "Delete transformation job",
+          "request": {
+            "name": "Delete transformation job",
+            "description": {
+              "content": "Remove a transformation job. This will stop all running jobs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "create-project",
+                ":createProjectId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "createProjectId",
+                  "description": "(Required) Create project job ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e0a1de02-e92e-4064-8ba6-b69699b4370c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "create-project",
+                    ":createProjectId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "createProjectId",
+                      "description": "(Required) Create project job ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6c30a2e4-dddb-4ee5-919d-5372d6890aae",
+          "name": "Retry failed transform jobs",
+          "request": {
+            "name": "Retry failed transform jobs",
+            "description": {
+              "content": "Retry all failed transform job from a transformation job. Only jobs that have failed will be retried.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "create-project",
+                ":createProjectId",
+                "transform",
+                "retry"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "createProjectId",
+                  "description": "(Required) Create project job ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7f738163-ae76-48bf-ad58-1ccfd1dfb641",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "create-project",
+                    ":createProjectId",
+                    "transform",
+                    "retry"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "createProjectId",
+                      "description": "(Required) Create project job ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4a075a96-e669-4efa-8fec-4264db237ba0",
+          "name": "Clear failed transform jobs",
+          "request": {
+            "name": "Clear failed transform jobs",
+            "description": {
+              "content": "Clear all failed transform job from a create project job. Only jobs that have failed will be cleared.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "create-project",
+                ":createProjectId",
+                "transform",
+                "clear"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "createProjectId",
+                  "description": "(Required) Create project job ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "de289389-cb65-4072-8cd8-58c5c6bc6546",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "create-project",
+                    ":createProjectId",
+                    "transform",
+                    "clear"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "createProjectId",
+                      "description": "(Required) Create project job ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c4469a40-cc10-4df1-a125-f615c1bbeb74",
+          "name": "Retry transformation upload job",
+          "request": {
+            "name": "Retry transformation upload job",
+            "description": {
+              "content": "Retry the upload job from a transformation job. Only jobs that have failed can be retried.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "create-project",
+                ":createProjectId",
+                "upload",
+                "retry"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "createProjectId",
+                  "description": "(Required) Create project job ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d6889d79-3555-4b30-bdf8-3958ad6f98dc",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "create-project",
+                    ":createProjectId",
+                    "upload",
+                    "retry"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "createProjectId",
+                      "description": "(Required) Create project job ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "21625490-74cd-4169-9db3-9a8d42d59162",
+          "name": "Delete create project file",
+          "request": {
+            "name": "Delete create project file",
+            "description": {
+              "content": "Remove a file from a create project job. Only files for which no jobs are running can be deleted.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "create-project",
+                ":createProjectId",
+                "files",
+                ":createProjectFileId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "createProjectId",
+                  "description": "(Required) Create project job ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "createProjectFileId",
+                  "description": "(Required) Create project job file ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "56564bbd-577c-4c37-92fb-19ee8a80f5bd",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "create-project",
+                    ":createProjectId",
+                    "files",
+                    ":createProjectFileId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "createProjectId",
+                      "description": "(Required) Create project job ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "createProjectFileId",
+                      "description": "(Required) Create project job file ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9e386951-b87c-49db-8a57-711cf38ed63c",
+          "name": "Retry transformation file",
+          "request": {
+            "name": "Retry transformation file",
+            "description": {
+              "content": "Retry a transformation action on a file from a transformation job. Only files that have failed can be retried.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "create-project",
+                ":createProjectId",
+                "files",
+                ":createProjectFileId",
+                "retry"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "createProjectId",
+                  "description": "(Required) Create project job ID."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "createProjectFileId",
+                  "description": "(Required) Create project job file ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "85da9b54-245a-4bf6-b629-23e99b87f657",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "create-project",
+                    ":createProjectId",
+                    "files",
+                    ":createProjectFileId",
+                    "retry"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "createProjectId",
+                      "description": "(Required) Create project job ID."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "createProjectFileId",
+                      "description": "(Required) Create project job file ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a9b12793-8234-47f0-b6e6-39cf6021a77e",
+          "name": "Upload a custom block",
+          "request": {
+            "name": "Upload a custom block",
+            "description": {
+              "content": "Upload a zip file containing a custom transformation or deployment block.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "custom-block"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "tar",
+                  "type": "file",
+                  "description": "(Required) "
+                },
+                {
+                  "key": "type",
+                  "value": "<string>",
+                  "type": "text",
+                  "description": "(Required)  (This can only be one of transform,deploy,dsp,transferLearning)"
+                },
+                {
+                  "key": "blockId",
+                  "value": "<integer>",
+                  "type": "text",
+                  "description": "(Required) "
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "7dda941d-c612-4171-b2dd-892e972ec71c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "custom-block"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "tar",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required)  (This can only be one of transform,deploy,dsp,transferLearning)",
+                        "type": "text/plain"
+                      },
+                      "key": "type",
+                      "value": "<string>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "blockId",
+                      "value": "<integer>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 12873488112,\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a2b3c5ab-2232-440c-939b-11b93662cdb3",
+          "name": "Create new empty project",
+          "request": {
+            "name": "Create new empty project",
+            "description": {
+              "content": "Create a new empty project within an organization.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "new-project"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"projectName\": \"<string>\",\n  \"projectVisibility\": \"<string>\",\n  \"projectOwnerUsernameOrEmail\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "414832db-d20e-4e86-ba71-9c116c02adf8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "new-project"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"projectName\": \"EEG trials\",\n  \"projectVisibility\": \"<string>\",\n  \"projectOwnerUsernameOrEmail\": \"jan@edgeimpulse.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiKey\": \"string\",\n  \"id\": 1302,\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "89f20794-e3a9-4ed8-8b90-a86ede53f520",
+          "name": "Add a collaborator to a project within an organisation",
+          "request": {
+            "name": "Add a collaborator to a project within an organisation",
+            "description": {
+              "content": "Add a new collaborator to a project owned by an organisation.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "organizations",
+                ":organizationId",
+                "add-project-collaborator"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "organizationId",
+                  "description": "(Required) Organization ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"projectId\": \"<integer>\",\n  \"userId\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "05216ec8-15c1-446c-a538-4fc4855ea570",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "organizations",
+                    ":organizationId",
+                    "add-project-collaborator"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "organizationId",
+                      "description": "(Required) Organization ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"projectId\": \"<integer>\",\n  \"userId\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://studio.edgeimpulse.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f2839522-e97a-4619-85fb-b6f19c4064bb",
+    "name": "Edge Impulse OrganizationCreateProject API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

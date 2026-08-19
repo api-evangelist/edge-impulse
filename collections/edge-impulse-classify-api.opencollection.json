@@ -1,0 +1,388 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edge Impulse Classify API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Classify",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Classify sample (deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/classify/:sampleId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              },
+              {
+                "name": "includeDebugInfo",
+                "value": "",
+                "type": "query",
+                "description": "Whether to return the debug information from FOMO classification."
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "This API is deprecated, use classifySampleV2 instead (`/v1/api/{projectId}/classify/v2/{sampleId}`). Classify a complete file against the current impulse. This will move the sliding window (dependent on the sliding window length and the sliding window increase parameters in the impulse) over the complete file, and classify for every window that is extracted."
+        },
+        {
+          "info": {
+            "name": "Classify sample",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/classify/v2/:sampleId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              },
+              {
+                "name": "includeDebugInfo",
+                "value": "",
+                "type": "query",
+                "description": "Whether to return the debug information from FOMO classification."
+              },
+              {
+                "name": "variant",
+                "value": "",
+                "type": "query",
+                "description": "Keras model variant"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "Classify a complete file against the current impulse. This will move the sliding window (dependent on\nthe sliding window length and the sliding window increase parameters in the impulse) over the complete\nfile, and classify for every window that is extracted. Depending on the size of your file, whether your\nsample is resampled, and whether the result is cached you'll get either the result or a job back. If\nyou receive a job, then wait for the completion of the job, and then call this function ag"
+        },
+        {
+          "info": {
+            "name": "Classify sample for the given set of variants",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/classify/v2/:sampleId/variants",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              },
+              {
+                "name": "includeDebugInfo",
+                "value": "",
+                "type": "query",
+                "description": "Whether to return the debug information from FOMO classification."
+              },
+              {
+                "name": "variants",
+                "value": "",
+                "type": "query",
+                "description": "List of keras model variants, given as a JSON string"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "Classify a complete file against the current impulse, for all given variants.\nDepending on the size of your file and whether the sample is resampled, you may get a job ID in\nthe response.\n"
+        },
+        {
+          "info": {
+            "name": "Get a window of raw sample features from cache, after a live classification job has completed.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/classify/v2/:sampleId/raw-data/:windowIndex",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              },
+              {
+                "name": "windowIndex",
+                "value": "",
+                "type": "path",
+                "description": "Sample window index"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "Get raw sample features for a particular window. This is only available after a live classification job\nhas completed and raw features have been cached.\n"
+        },
+        {
+          "info": {
+            "name": "Classify job result",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/classify/all/result",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "featureExplorerOnly",
+                "value": "",
+                "type": "query",
+                "description": "Whether to get only the classification results relevant to the feature explorer."
+              },
+              {
+                "name": "variant",
+                "value": "",
+                "type": "query",
+                "description": "Keras model variant"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "Get classify job result, containing the result for the complete testing dataset."
+        },
+        {
+          "info": {
+            "name": "Single page of a classify job result",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/classify/all/result/page",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              },
+              {
+                "name": "variant",
+                "value": "",
+                "type": "query",
+                "description": "Keras model variant"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "Get classify job result, containing the predictions for a given page."
+        },
+        {
+          "info": {
+            "name": "Get metrics for all available model variants",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/classify/all/metrics",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "Get metrics, calculated during a classify all job, for all available model variants. This is experimental and may change in the future."
+        },
+        {
+          "info": {
+            "name": "Classify sample by learn block",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/classify/anomaly-gmm/:blockId/:sampleId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              },
+              {
+                "name": "blockId",
+                "value": "",
+                "type": "path",
+                "description": "Block ID"
+              }
+            ]
+          },
+          "docs": "This API is deprecated, use classifySampleByLearnBlockV2 (`/v1/api/{projectId}/classify/anomaly-gmm/v2/{blockId}/{sampleId}`) instead. Classify a complete file against the specified learn block. This will move the sliding window (dependent on the sliding window length and the sliding window increase parameters in the impulse) over the complete file, and classify for every window that is extracted."
+        },
+        {
+          "info": {
+            "name": "Classify sample by learn block",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/classify/anomaly-gmm/v2/:blockId/:sampleId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              },
+              {
+                "name": "blockId",
+                "value": "",
+                "type": "path",
+                "description": "Block ID"
+              },
+              {
+                "name": "variant",
+                "value": "",
+                "type": "query",
+                "description": "Keras model variant"
+              }
+            ]
+          },
+          "docs": "Classify a complete file against the specified learn block. This will move the sliding window\n(dependent on the sliding window length and the sliding window increase parameters in the impulse)\nover the complete file, and classify for every window that is extracted. Depending on the size of your\nfile, whether your sample is resampled, and whether the result is cached you'll get either the result\nor a job back. If you receive a job, then wait for the completion of the job, and then call this\nfunct"
+        },
+        {
+          "info": {
+            "name": "Classify an image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/classify/image",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Test out a trained impulse (using a posted image)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

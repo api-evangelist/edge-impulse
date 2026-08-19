@@ -1,0 +1,1440 @@
+{
+  "item": [
+    {
+      "id": "04fa7a32-b090-4e2a-acd1-fb2585199432",
+      "name": "Classify",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c2c0b4d9-4501-4d39-bd58-1795138cd00e",
+          "name": "Classify sample (deprecated)",
+          "request": {
+            "name": "Classify sample (deprecated)",
+            "description": {
+              "content": "This API is deprecated, use classifySampleV2 instead (`/v1/api/{projectId}/classify/v2/{sampleId}`). Classify a complete file against the current impulse. This will move the sliding window (dependent on the sliding window length and the sliding window increase parameters in the impulse) over the complete file, and classify for every window that is extracted.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "classify",
+                ":sampleId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "includeDebugInfo",
+                  "value": "<boolean>",
+                  "description": "Whether to return the debug information from FOMO classification."
+                },
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "sampleId",
+                  "description": "(Required) Sample ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d0a7c5ab-580f-414e-bccc-81de89d2cf11",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "classify",
+                    ":sampleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeDebugInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "sampleId",
+                      "description": "(Required) Sample ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"alreadyInDatabase\": true,\n  \"classifications\": [\n    {\n      \"learnBlock\": {\n        \"id\": 4729,\n        \"type\": \"keras-akida-object-detection\",\n        \"name\": \"NN Classifier\",\n        \"dsp\": [\n          27,\n          27\n        ],\n        \"title\": \"Classification (Keras)\",\n        \"description\": \"Reduced learning rate and more layers\",\n        \"createdBy\": \"createImpulse\",\n        \"createdAt\": \"1999-03-26T15:51:12.994Z\"\n      },\n      \"result\": [\n        {\n          \"idle\": 0.0002,\n          \"wave\": 0.9998,\n          \"anomaly\": -0.42\n        }\n      ],\n      \"expectedLabels\": [\n        {\n          \"startIndex\": 4609,\n          \"endIndex\": 6448,\n          \"label\": \"string\"\n        },\n        {\n          \"startIndex\": 2195,\n          \"endIndex\": 9827,\n          \"label\": \"string\"\n        }\n      ],\n      \"minimumConfidenceRating\": 735.3211860570152,\n      \"anomalyResult\": [\n        {\n          \"boxes\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"scores\": [\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          ],\n          \"meanScore\": 900.6800116645652,\n          \"maxScore\": 4548.098217614584\n        },\n        {\n          \"boxes\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"scores\": [\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          ],\n          \"meanScore\": 1127.0097999060147,\n          \"maxScore\": 1750.5182916777717\n        }\n      ],\n      \"structuredResult\": [\n        {\n          \"boxes\": [\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          ],\n          \"scores\": [\n            6591.381768028583,\n            3741.927120575275\n          ],\n          \"mAP\": 1467.9373147316387,\n          \"f1\": 3482.056451119915,\n          \"precision\": 5291.131966233754,\n          \"recall\": 6932.788724590842,\n          \"labels\": [\n            \"string\",\n            \"string\"\n          ],\n          \"debugInfoJson\": \"{\\n    \\\"y_trues\\\": [\\n        {\\\"x\\\": 0.854, \\\"y\\\": 0.453125, \\\"label\\\": 1},\\n        {\\\"x\\\": 0.197, \\\"y\\\": 0.53125, \\\"label\\\": 2}\\n    ],\\n    \\\"y_preds\\\": [\\n        {\\\"x\\\": 0.916, \\\"y\\\": 0.875, \\\"label\\\": 1},\\n        {\\\"x\\\": 0.25, \\\"y\\\": 0.541, \\\"label\\\": 2}\\n    ],\\n    \\\"assignments\\\": [\\n        {\\\"yp\\\": 1, \\\"yt\\\": 1, \\\"label\\\": 2, \\\"distance\\\": 0.053}\\n    ],\\n    \\\"normalised_min_distance\\\": 0.2,\\n    \\\"all_pairwise_distances\\\": [\\n        [0, 0, 0.426],\\n        [1, 1, 0.053]\\n    ],\\n    \\\"unassigned_y_true_idxs\\\": [0],\\n    \\\"unassigned_y_pred_idxs\\\": [0]\\n}\\n\"\n        },\n        {\n          \"boxes\": [\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          ],\n          \"scores\": [\n            2088.552127418514,\n            4775.797191591158\n          ],\n          \"mAP\": 8472.605429677715,\n          \"f1\": 6730.041040456331,\n          \"precision\": 171.79204915194978,\n          \"recall\": 2048.0742107797955,\n          \"labels\": [\n            \"string\",\n            \"string\"\n          ],\n          \"debugInfoJson\": \"{\\n    \\\"y_trues\\\": [\\n        {\\\"x\\\": 0.854, \\\"y\\\": 0.453125, \\\"label\\\": 1},\\n        {\\\"x\\\": 0.197, \\\"y\\\": 0.53125, \\\"label\\\": 2}\\n    ],\\n    \\\"y_preds\\\": [\\n        {\\\"x\\\": 0.916, \\\"y\\\": 0.875, \\\"label\\\": 1},\\n        {\\\"x\\\": 0.25, \\\"y\\\": 0.541, \\\"label\\\": 2}\\n    ],\\n    \\\"assignments\\\": [\\n        {\\\"yp\\\": 1, \\\"yt\\\": 1, \\\"label\\\": 2, \\\"distance\\\": 0.053}\\n    ],\\n    \\\"normalised_min_distance\\\": 0.2,\\n    \\\"all_pairwise_distances\\\": [\\n        [0, 0, 0.426],\\n        [1, 1, 0.053]\\n    ],\\n    \\\"unassigned_y_true_idxs\\\": [0],\\n    \\\"unassigned_y_pred_idxs\\\": [0]\\n}\\n\"\n        }\n      ],\n      \"details\": [\n        {\n          \"boxes\": [\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          ],\n          \"labels\": [\n            4457.4021041511705,\n            618.4726298411081\n          ],\n          \"scores\": [\n            3182.3754179770212,\n            8749.111669356624\n          ],\n          \"mAP\": 9715.916246460918,\n          \"f1\": 9604.945245580431\n        },\n        {\n          \"boxes\": [\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          ],\n          \"labels\": [\n            8697.518015738442,\n            5373.874114862317\n          ],\n          \"scores\": [\n            2793.768063565902,\n            7475.74560288328\n          ],\n          \"mAP\": 9728.91325272887,\n          \"f1\": 4508.7003056435115\n        }\n      ],\n      \"objectDetectionLastLayer\": \"fomo\"\n    },\n    {\n      \"learnBlock\": {\n        \"id\": 1204,\n        \"type\": \"keras\",\n        \"name\": \"NN Classifier\",\n        \"dsp\": [\n          27,\n          27\n        ],\n        \"title\": \"Classification (Keras)\",\n        \"description\": \"Reduced learning rate and more layers\",\n        \"createdBy\": \"createImpulse\",\n        \"createdAt\": \"2010-06-25T18:20:25.782Z\"\n      },\n      \"result\": [\n        {\n          \"idle\": 0.0002,\n          \"wave\": 0.9998,\n          \"anomaly\": -0.42\n        }\n      ],\n      \"expectedLabels\": [\n        {\n          \"startIndex\": 8004,\n          \"endIndex\": 4807,\n          \"label\": \"string\"\n        },\n        {\n          \"startIndex\": 5092,\n          \"endIndex\": 5332,\n          \"label\": \"string\"\n        }\n      ],\n      \"minimumConfidenceRating\": 7199.566629278561,\n      \"anomalyResult\": [\n        {\n          \"boxes\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"scores\": [\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          ],\n          \"meanScore\": 2264.876998157477,\n          \"maxScore\": 3721.636454203564\n        },\n        {\n          \"boxes\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"scores\": [\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          ],\n          \"meanScore\": 5646.529385945109,\n          \"maxScore\": 1240.3307043797674\n        }\n      ],\n      \"structuredResult\": [\n        {\n          \"boxes\": [\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          ],\n          \"scores\": [\n            7498.076083942054,\n            6067.672742295324\n          ],\n          \"mAP\": 3437.699031350272,\n          \"f1\": 7440.818036857504,\n          \"precision\": 1094.3956498633045,\n          \"recall\": 2502.1876317347114,\n          \"labels\": [\n            \"string\",\n            \"string\"\n          ],\n          \"debugInfoJson\": \"{\\n    \\\"y_trues\\\": [\\n        {\\\"x\\\": 0.854, \\\"y\\\": 0.453125, \\\"label\\\": 1},\\n        {\\\"x\\\": 0.197, \\\"y\\\": 0.53125, \\\"label\\\": 2}\\n    ],\\n    \\\"y_preds\\\": [\\n        {\\\"x\\\": 0.916, \\\"y\\\": 0.875, \\\"label\\\": 1},\\n        {\\\"x\\\": 0.25, \\\"y\\\": 0.541, \\\"label\\\": 2}\\n    ],\\n    \\\"assignments\\\": [\\n        {\\\"yp\\\": 1, \\\"yt\\\": 1, \\\"label\\\": 2, \\\"distance\\\": 0.053}\\n    ],\\n    \\\"normalised_min_distance\\\": 0.2,\\n    \\\"all_pairwise_distances\\\": [\\n        [0, 0, 0.426],\\n        [1, 1, 0.053]\\n    ],\\n    \\\"unassigned_y_true_idxs\\\": [0],\\n    \\\"unassigned_y_pred_idxs\\\": [0]\\n}\\n\"\n        },\n        {\n          \"boxes\": [\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          ],\n          \"scores\": [\n            8110.406247144304,\n            7624.807987588298\n          ],\n          \"mAP\": 5090.15143879445,\n          \"f1\": 8307.499688501815,\n          \"precision\": 2287.2772069338275,\n          \"recall\": 4308.179617623731,\n          \"labels\": [\n            \"string\",\n            \"string\"\n          ],\n          \"debugInfoJson\": \"{\\n    \\\"y_trues\\\": [\\n        {\\\"x\\\": 0.854, \\\"y\\\": 0.453125, \\\"label\\\": 1},\\n        {\\\"x\\\": 0.197, \\\"y\\\": 0.53125, \\\"label\\\": 2}\\n    ],\\n    \\\"y_preds\\\": [\\n        {\\\"x\\\": 0.916, \\\"y\\\": 0.875, \\\"label\\\": 1},\\n        {\\\"x\\\": 0.25, \\\"y\\\": 0.541, \\\"label\\\": 2}\\n    ],\\n    \\\"assignments\\\": [\\n        {\\\"yp\\\": 1, \\\"yt\\\": 1, \\\"label\\\": 2, \\\"distance\\\": 0.053}\\n    ],\\n    \\\"normalised_min_distance\\\": 0.2,\\n    \\\"all_pairwise_distances\\\": [\\n        [0, 0, 0.426],\\n        [1, 1, 0.053]\\n    ],\\n    \\\"unassigned_y_true_idxs\\\": [0],\\n    \\\"unassigned_y_pred_idxs\\\": [0]\\n}\\n\"\n        }\n      ],\n      \"details\": [\n        {\n          \"boxes\": [\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          ],\n          \"labels\": [\n            5472.178494999991,\n            7455.502834137078\n          ],\n          \"scores\": [\n            8146.6172518341455,\n            8124.594640526945\n          ],\n          \"mAP\": 5302.1476870671395,\n          \"f1\": 1119.844434058199\n        },\n        {\n          \"boxes\": [\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          ],\n          \"labels\": [\n            2889.0200230972396,\n            406.7973243150191\n          ],\n          \"scores\": [\n            3685.989588394033,\n            1097.3327036774106\n          ],\n          \"mAP\": 7123.799035065597,\n          \"f1\": 1614.5671258832272\n        }\n      ],\n      \"objectDetectionLastLayer\": \"yolox\"\n    }\n  ],\n  \"sample\": {\n    \"sample\": {\n      \"id\": 2,\n      \"filename\": \"idle01.d8Ae\",\n      \"signatureValidate\": true,\n      \"created\": \"1960-04-27T09:28:30.806Z\",\n      \"lastModified\": \"1959-06-07T15:54:47.769Z\",\n      \"category\": \"training\",\n      \"coldstorageFilename\": \"string\",\n      \"label\": \"healthy-machine\",\n      \"intervalMs\": 16,\n      \"frequency\": 62.5,\n      \"originalIntervalMs\": 16,\n      \"originalFrequency\": 62.5,\n      \"deviceType\": \"string\",\n      \"sensors\": [\n        {\n          \"name\": \"accX\",\n          \"units\": \"string\"\n        },\n        {\n          \"name\": \"accX\",\n          \"units\": \"string\"\n        }\n      ],\n      \"valuesCount\": 4366,\n      \"added\": \"1957-05-11T19:15:36.885Z\",\n      \"boundingBoxes\": [\n        {\n          \"label\": \"string\",\n          \"x\": 3684,\n          \"y\": 5823,\n          \"width\": 1441,\n          \"height\": 8167\n        },\n        {\n          \"label\": \"string\",\n          \"x\": 3825,\n          \"y\": 4878,\n          \"width\": 3875,\n          \"height\": 8273\n        }\n      ],\n      \"boundingBoxesType\": \"constrained_object_detection\",\n      \"chartType\": \"image\",\n      \"isDisabled\": true,\n      \"isProcessing\": false,\n      \"processingError\": false,\n      \"isCropped\": false,\n      \"projectId\": 5013,\n      \"sha256Hash\": \"string\",\n      \"signatureMethod\": \"HS256\",\n      \"signatureKey\": \"string\",\n      \"deviceName\": \"string\",\n      \"totalLengthMs\": 1346.1476681165564,\n      \"thumbnailVideo\": \"string\",\n      \"thumbnailVideoFull\": \"string\",\n      \"processingJobId\": 227,\n      \"processingErrorString\": \"string\",\n      \"metadata\": {\n        \"key_0\": \"string\"\n      },\n      \"projectOwnerName\": \"string\",\n      \"projectName\": \"string\",\n      \"projectLabelingMethod\": \"object_detection\",\n      \"structuredLabels\": [\n        {\n          \"startIndex\": 9829,\n          \"endIndex\": 732,\n          \"label\": \"string\"\n        },\n        {\n          \"startIndex\": 9669,\n          \"endIndex\": 66,\n          \"label\": \"string\"\n        }\n      ],\n      \"structuredLabelsList\": [\n        \"string\",\n        \"string\"\n      ],\n      \"createdBySyntheticDataJobId\": 3641,\n      \"imageDimensions\": {\n        \"width\": 9997,\n        \"height\": 7214\n      }\n    },\n    \"payload\": {\n      \"device_type\": \"DISCO-L475VG-IOT01A\",\n      \"sensors\": [\n        {\n          \"name\": \"accX\",\n          \"units\": \"string\"\n        },\n        {\n          \"name\": \"accX\",\n          \"units\": \"string\"\n        }\n      ],\n      \"values\": [\n        [\n          5.83416131727188,\n          6603.475276979588\n        ],\n        [\n          2649.070394300126,\n          4466.161749669263\n        ]\n      ],\n      \"device_name\": \"ac:87:a3:0a:2d:1b\",\n      \"cropStart\": 0,\n      \"cropEnd\": 128\n    },\n    \"totalPayloadLength\": 7230\n  },\n  \"success\": true,\n  \"windowIncreaseMs\": 10,\n  \"windowSizeMs\": 2996,\n  \"error\": \"string\",\n  \"warning\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ce4cff34-8dc7-47b4-84f9-09971fd5e048",
+          "name": "Classify sample",
+          "request": {
+            "name": "Classify sample",
+            "description": {
+              "content": "Classify a complete file against the current impulse. This will move the sliding window (dependent on\nthe sliding window length and the sliding window increase parameters in the impulse) over the complete\nfile, and classify for every window that is extracted. Depending on the size of your file, whether your\nsample is resampled, and whether the result is cached you'll get either the result or a job back. If\nyou receive a job, then wait for the completion of the job, and then call this function again to receive\nthe results. The unoptimized (float32) model is used by default, and classification with an optimized\n(int8) model can be slower.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "classify",
+                "v2",
+                ":sampleId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "includeDebugInfo",
+                  "value": "<boolean>",
+                  "description": "Whether to return the debug information from FOMO classification."
+                },
+                {
+                  "disabled": false,
+                  "key": "variant",
+                  "value": "<string>",
+                  "description": "Keras model variant"
+                },
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "sampleId",
+                  "description": "(Required) Sample ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fc4b7ac5-28ec-4629-b793-baf2bee2156a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "classify",
+                    "v2",
+                    ":sampleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeDebugInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "variant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "sampleId",
+                      "description": "(Required) Sample ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"alreadyInDatabase\": false,\n  \"classifications\": [\n    {\n      \"learnBlock\": {\n        \"id\": 9673,\n        \"type\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": \"NN Classifier\",\n        \"dsp\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"title\": \"Classification (Keras)\",\n        \"description\": \"Reduced learning rate and more layers\",\n        \"createdBy\": \"createImpulse\",\n        \"createdAt\": \"1983-04-19T02:31:17.287Z\"\n      },\n      \"result\": [\n        {\n          \"idle\": 0.0002,\n          \"wave\": 0.9998,\n          \"anomaly\": -0.42\n        }\n      ],\n      \"expectedLabels\": [\n        {\n          \"startIndex\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"endIndex\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"label\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"startIndex\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"endIndex\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"label\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"minimumConfidenceRating\": 4003.840154793795,\n      \"anomalyResult\": [\n        {\n          \"boxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"scores\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"meanScore\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"maxScore\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"boxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"scores\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"meanScore\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"maxScore\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"structuredResult\": [\n        {\n          \"boxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"scores\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mAP\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"f1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"precision\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"recall\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"labels\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"debugInfoJson\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"boxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"scores\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mAP\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"f1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"precision\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"recall\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"labels\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"debugInfoJson\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"details\": [\n        {\n          \"boxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"labels\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"scores\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mAP\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"f1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"boxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"labels\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"scores\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mAP\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"f1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"objectDetectionLastLayer\": \"tao-retinanet\"\n    },\n    {\n      \"learnBlock\": {\n        \"id\": 9108,\n        \"type\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": \"NN Classifier\",\n        \"dsp\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"title\": \"Classification (Keras)\",\n        \"description\": \"Reduced learning rate and more layers\",\n        \"createdBy\": \"createImpulse\",\n        \"createdAt\": \"2009-07-20T01:23:04.191Z\"\n      },\n      \"result\": [\n        {\n          \"idle\": 0.0002,\n          \"wave\": 0.9998,\n          \"anomaly\": -0.42\n        }\n      ],\n      \"expectedLabels\": [\n        {\n          \"startIndex\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"endIndex\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"label\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"startIndex\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"endIndex\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"label\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"minimumConfidenceRating\": 592.0315649431784,\n      \"anomalyResult\": [\n        {\n          \"boxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"scores\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"meanScore\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"maxScore\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"boxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"scores\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"meanScore\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"maxScore\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"structuredResult\": [\n        {\n          \"boxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"scores\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mAP\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"f1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"precision\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"recall\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"labels\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"debugInfoJson\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"boxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"scores\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mAP\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"f1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"precision\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"recall\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"labels\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"debugInfoJson\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"details\": [\n        {\n          \"boxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"labels\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"scores\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mAP\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"f1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"boxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"labels\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"scores\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mAP\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"f1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"objectDetectionLastLayer\": \"yolov5v5-drpai\"\n    }\n  ],\n  \"sample\": {\n    \"sample\": {\n      \"id\": 2,\n      \"filename\": \"idle01.d8Ae\",\n      \"signatureValidate\": true,\n      \"created\": \"1948-10-06T15:52:59.319Z\",\n      \"lastModified\": \"1996-09-03T00:43:59.535Z\",\n      \"category\": \"training\",\n      \"coldstorageFilename\": \"string\",\n      \"label\": \"healthy-machine\",\n      \"intervalMs\": 16,\n      \"frequency\": 62.5,\n      \"originalIntervalMs\": 16,\n      \"originalFrequency\": 62.5,\n      \"deviceType\": \"string\",\n      \"sensors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"valuesCount\": 134,\n      \"added\": \"1948-01-12T22:58:55.149Z\",\n      \"boundingBoxes\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"boundingBoxesType\": \"object_detection\",\n      \"chartType\": \"table\",\n      \"isDisabled\": true,\n      \"isProcessing\": false,\n      \"processingError\": true,\n      \"isCropped\": false,\n      \"projectId\": 3205,\n      \"sha256Hash\": \"string\",\n      \"signatureMethod\": \"HS256\",\n      \"signatureKey\": \"string\",\n      \"deviceName\": \"string\",\n      \"totalLengthMs\": 7370.544624488239,\n      \"thumbnailVideo\": \"string\",\n      \"thumbnailVideoFull\": \"string\",\n      \"processingJobId\": 2610,\n      \"processingErrorString\": \"string\",\n      \"metadata\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"projectOwnerName\": \"string\",\n      \"projectName\": \"string\",\n      \"projectLabelingMethod\": \"single_label\",\n      \"structuredLabels\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"structuredLabelsList\": [\n        \"string\",\n        \"string\"\n      ],\n      \"createdBySyntheticDataJobId\": 2021,\n      \"imageDimensions\": {\n        \"width\": 8774,\n        \"height\": 9452\n      }\n    },\n    \"payload\": {\n      \"device_type\": \"DISCO-L475VG-IOT01A\",\n      \"sensors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"values\": [\n        [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      ],\n      \"device_name\": \"ac:87:a3:0a:2d:1b\",\n      \"cropStart\": 0,\n      \"cropEnd\": 128\n    },\n    \"totalPayloadLength\": 355\n  },\n  \"success\": true,\n  \"windowIncreaseMs\": 10,\n  \"windowSizeMs\": 2996,\n  \"error\": \"string\",\n  \"warning\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b105e85b-2165-4408-b413-beaf1c343d92",
+          "name": "Classify sample for the given set of variants",
+          "request": {
+            "name": "Classify sample for the given set of variants",
+            "description": {
+              "content": "Classify a complete file against the current impulse, for all given variants.\nDepending on the size of your file and whether the sample is resampled, you may get a job ID in\nthe response.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "classify",
+                "v2",
+                ":sampleId",
+                "variants"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "includeDebugInfo",
+                  "value": "<boolean>",
+                  "description": "Whether to return the debug information from FOMO classification."
+                },
+                {
+                  "disabled": false,
+                  "key": "variants",
+                  "value": "<string>",
+                  "description": "(Required) List of keras model variants, given as a JSON string"
+                },
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "sampleId",
+                  "description": "(Required) Sample ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cf19cefe-b59f-4098-afc3-7577c963030e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "classify",
+                    "v2",
+                    ":sampleId",
+                    "variants"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeDebugInfo",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "variants",
+                      "value": "[\"int8\", \"float32\"]"
+                    },
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "sampleId",
+                      "description": "(Required) Sample ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"alreadyInDatabase\": true,\n  \"sample\": {\n    \"sample\": {\n      \"id\": 2,\n      \"filename\": \"idle01.d8Ae\",\n      \"signatureValidate\": true,\n      \"created\": \"2019-08-24T18:52:12.573Z\",\n      \"lastModified\": \"2017-02-23T23:13:01.828Z\",\n      \"category\": \"training\",\n      \"coldstorageFilename\": \"string\",\n      \"label\": \"healthy-machine\",\n      \"intervalMs\": 16,\n      \"frequency\": 62.5,\n      \"originalIntervalMs\": 16,\n      \"originalFrequency\": 62.5,\n      \"deviceType\": \"string\",\n      \"sensors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"valuesCount\": 3390,\n      \"added\": \"2002-10-29T02:28:17.495Z\",\n      \"boundingBoxes\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"boundingBoxesType\": \"constrained_object_detection\",\n      \"chartType\": \"chart\",\n      \"isDisabled\": true,\n      \"isProcessing\": false,\n      \"processingError\": true,\n      \"isCropped\": true,\n      \"projectId\": 9058,\n      \"sha256Hash\": \"string\",\n      \"signatureMethod\": \"HS256\",\n      \"signatureKey\": \"string\",\n      \"deviceName\": \"string\",\n      \"totalLengthMs\": 6969.6529426213065,\n      \"thumbnailVideo\": \"string\",\n      \"thumbnailVideoFull\": \"string\",\n      \"processingJobId\": 3537,\n      \"processingErrorString\": \"string\",\n      \"metadata\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"projectOwnerName\": \"string\",\n      \"projectName\": \"string\",\n      \"projectLabelingMethod\": \"single_label\",\n      \"structuredLabels\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"structuredLabelsList\": [\n        \"string\",\n        \"string\"\n      ],\n      \"createdBySyntheticDataJobId\": 1554,\n      \"imageDimensions\": {\n        \"width\": 5931,\n        \"height\": 9944\n      }\n    },\n    \"payload\": {\n      \"device_type\": \"DISCO-L475VG-IOT01A\",\n      \"sensors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"values\": [\n        [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      ],\n      \"device_name\": \"ac:87:a3:0a:2d:1b\",\n      \"cropStart\": 0,\n      \"cropEnd\": 128\n    },\n    \"totalPayloadLength\": 2284\n  },\n  \"success\": false,\n  \"windowIncreaseMs\": 10,\n  \"windowSizeMs\": 2996,\n  \"error\": \"string\",\n  \"results\": [\n    {\n      \"variant\": \"<string>\",\n      \"classifications\": [\n        {\n          \"learnBlock\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"result\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"expectedLabels\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"minimumConfidenceRating\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"anomalyResult\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"structuredResult\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"details\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"objectDetectionLastLayer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"learnBlock\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"result\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"expectedLabels\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"minimumConfidenceRating\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"anomalyResult\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"structuredResult\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"details\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"objectDetectionLastLayer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ]\n    },\n    {\n      \"variant\": \"<string>\",\n      \"classifications\": [\n        {\n          \"learnBlock\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"result\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"expectedLabels\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"minimumConfidenceRating\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"anomalyResult\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"structuredResult\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"details\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"objectDetectionLastLayer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"learnBlock\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"result\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"expectedLabels\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"minimumConfidenceRating\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"anomalyResult\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"structuredResult\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"details\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"objectDetectionLastLayer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "11427b09-329e-4d99-af15-5524a1bd42c8",
+          "name": "Get a window of raw sample features from cache, after a live classification job has completed.",
+          "request": {
+            "name": "Get a window of raw sample features from cache, after a live classification job has completed.",
+            "description": {
+              "content": "Get raw sample features for a particular window. This is only available after a live classification job\nhas completed and raw features have been cached.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "classify",
+                "v2",
+                ":sampleId",
+                "raw-data",
+                ":windowIndex"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "sampleId",
+                  "description": "(Required) Sample ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "windowIndex",
+                  "description": "(Required) Sample window index"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0519b381-a033-4754-9d36-cf47b53a2faf",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "classify",
+                    "v2",
+                    ":sampleId",
+                    "raw-data",
+                    ":windowIndex"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "sampleId",
+                      "description": "(Required) Sample ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "windowIndex",
+                      "description": "(Required) Sample window index"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"payload\": {\n    \"device_type\": \"DISCO-L475VG-IOT01A\",\n    \"sensors\": [\n      {\n        \"name\": \"accX\",\n        \"units\": \"string\"\n      },\n      {\n        \"name\": \"accX\",\n        \"units\": \"string\"\n      }\n    ],\n    \"values\": [\n      [\n        16.874943282111367,\n        3433.969880009168\n      ],\n      [\n        804.8231631179115,\n        4568.358215492821\n      ]\n    ],\n    \"device_name\": \"ac:87:a3:0a:2d:1b\",\n    \"cropStart\": 0,\n    \"cropEnd\": 128\n  },\n  \"sample\": {\n    \"id\": 2,\n    \"filename\": \"idle01.d8Ae\",\n    \"signatureValidate\": true,\n    \"created\": \"1968-12-21T04:49:00.242Z\",\n    \"lastModified\": \"1962-02-05T12:25:37.303Z\",\n    \"category\": \"training\",\n    \"coldstorageFilename\": \"string\",\n    \"label\": \"healthy-machine\",\n    \"intervalMs\": 16,\n    \"frequency\": 62.5,\n    \"originalIntervalMs\": 16,\n    \"originalFrequency\": 62.5,\n    \"deviceType\": \"string\",\n    \"sensors\": [\n      {\n        \"name\": \"accX\",\n        \"units\": \"string\"\n      },\n      {\n        \"name\": \"accX\",\n        \"units\": \"string\"\n      }\n    ],\n    \"valuesCount\": 8378,\n    \"added\": \"1966-08-16T20:28:24.163Z\",\n    \"boundingBoxes\": [\n      {\n        \"label\": \"string\",\n        \"x\": 5079,\n        \"y\": 237,\n        \"width\": 1760,\n        \"height\": 6319\n      },\n      {\n        \"label\": \"string\",\n        \"x\": 53,\n        \"y\": 2975,\n        \"width\": 6644,\n        \"height\": 2800\n      }\n    ],\n    \"boundingBoxesType\": \"constrained_object_detection\",\n    \"chartType\": \"image\",\n    \"isDisabled\": false,\n    \"isProcessing\": true,\n    \"processingError\": false,\n    \"isCropped\": false,\n    \"projectId\": 5880,\n    \"sha256Hash\": \"string\",\n    \"signatureMethod\": \"HS256\",\n    \"signatureKey\": \"string\",\n    \"deviceName\": \"string\",\n    \"totalLengthMs\": 169.4925915684853,\n    \"thumbnailVideo\": \"string\",\n    \"thumbnailVideoFull\": \"string\",\n    \"processingJobId\": 4831,\n    \"processingErrorString\": \"string\",\n    \"metadata\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"projectOwnerName\": \"string\",\n    \"projectName\": \"string\",\n    \"projectLabelingMethod\": \"single_label\",\n    \"structuredLabels\": [\n      {\n        \"startIndex\": 8781,\n        \"endIndex\": 1967,\n        \"label\": \"string\"\n      },\n      {\n        \"startIndex\": 6150,\n        \"endIndex\": 2497,\n        \"label\": \"string\"\n      }\n    ],\n    \"structuredLabelsList\": [\n      \"string\",\n      \"string\"\n    ],\n    \"createdBySyntheticDataJobId\": 6517,\n    \"imageDimensions\": {\n      \"width\": 8414,\n      \"height\": 8431\n    }\n  },\n  \"success\": false,\n  \"totalPayloadLength\": 3482,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "99664239-a926-490e-8bb0-e6c72e537960",
+          "name": "Classify job result",
+          "request": {
+            "name": "Classify job result",
+            "description": {
+              "content": "Get classify job result, containing the result for the complete testing dataset.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "classify",
+                "all",
+                "result"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "featureExplorerOnly",
+                  "value": "<boolean>",
+                  "description": "Whether to get only the classification results relevant to the feature explorer."
+                },
+                {
+                  "disabled": false,
+                  "key": "variant",
+                  "value": "<string>",
+                  "description": "Keras model variant"
+                },
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2935b1b0-68fe-4c3d-bf81-7bd96c1a3a17",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "classify",
+                    "all",
+                    "result"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "featureExplorerOnly",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "variant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accuracy\": {\n    \"totalSummary\": {\n      \"good\": 6910,\n      \"bad\": 3315\n    },\n    \"summaryPerClass\": {\n      \"key_0\": {\n        \"good\": 3845,\n        \"bad\": 5150\n      }\n    },\n    \"confusionMatrixValues\": {\n      \"key_0\": {\n        \"key_0\": 468.1908520150546\n      },\n      \"key_1\": {\n        \"key_0\": 1684.5418098106147\n      }\n    },\n    \"allLabels\": [\n      \"string\",\n      \"string\"\n    ],\n    \"accuracyScore\": 8046.681172170659,\n    \"mseScore\": 513.247338531072\n  },\n  \"additionalMetricsByLearnBlock\": [\n    {\n      \"learnBlockId\": 3985,\n      \"learnBlockName\": \"string\",\n      \"additionalMetrics\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"fullPrecisionValue\": 7641.202604122437,\n          \"tooltipText\": \"string\",\n          \"link\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"fullPrecisionValue\": 6306.230225224488,\n          \"tooltipText\": \"string\",\n          \"link\": \"string\"\n        }\n      ]\n    },\n    {\n      \"learnBlockId\": 4894,\n      \"learnBlockName\": \"string\",\n      \"additionalMetrics\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"fullPrecisionValue\": 8338.408840674101,\n          \"tooltipText\": \"string\",\n          \"link\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"value\": \"string\",\n          \"fullPrecisionValue\": 4709.792428567112,\n          \"tooltipText\": \"string\",\n          \"link\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"availableVariants\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"predictions\": [\n    {\n      \"sampleId\": 5181,\n      \"startMs\": 2303.4386380142123,\n      \"endMs\": 9680.315328255414,\n      \"prediction\": \"string\",\n      \"label\": \"string\",\n      \"predictionCorrect\": true,\n      \"f1Score\": 2592.70100483863,\n      \"anomalyScores\": [\n        [\n          4820.099907158653,\n          2171.4439130206542\n        ],\n        [\n          8396.490332351927,\n          368.5325932426631\n        ]\n      ]\n    },\n    {\n      \"sampleId\": 8004,\n      \"startMs\": 3045.2425714740016,\n      \"endMs\": 1289.174307328732,\n      \"prediction\": \"string\",\n      \"label\": \"string\",\n      \"predictionCorrect\": true,\n      \"f1Score\": 918.3150682476315,\n      \"anomalyScores\": [\n        [\n          9559.086808711088,\n          1607.0636832135365\n        ],\n        [\n          5861.1653398943945,\n          4637.1273946567335\n        ]\n      ]\n    }\n  ],\n  \"result\": [\n    {\n      \"sampleId\": 9358,\n      \"sample\": {\n        \"id\": 2,\n        \"filename\": \"idle01.d8Ae\",\n        \"signatureValidate\": true,\n        \"created\": \"1982-07-24T07:27:52.680Z\",\n        \"lastModified\": \"2001-04-24T22:10:37.213Z\",\n        \"category\": \"training\",\n        \"coldstorageFilename\": \"string\",\n        \"label\": \"healthy-machine\",\n        \"intervalMs\": 16,\n        \"frequency\": 62.5,\n        \"originalIntervalMs\": 16,\n        \"originalFrequency\": 62.5,\n        \"deviceType\": \"string\",\n        \"sensors\": [\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"units\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"units\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"valuesCount\": 704,\n        \"added\": \"1984-09-14T08:11:07.102Z\",\n        \"boundingBoxes\": [\n          {\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"x\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"y\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"width\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"height\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"x\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"y\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"width\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"height\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"boundingBoxesType\": \"object_detection\",\n        \"chartType\": \"image\",\n        \"isDisabled\": true,\n        \"isProcessing\": true,\n        \"processingError\": false,\n        \"isCropped\": true,\n        \"projectId\": 9510,\n        \"sha256Hash\": \"string\",\n        \"signatureMethod\": \"HS256\",\n        \"signatureKey\": \"string\",\n        \"deviceName\": \"string\",\n        \"totalLengthMs\": 9040.373164968198,\n        \"thumbnailVideo\": \"string\",\n        \"thumbnailVideoFull\": \"string\",\n        \"processingJobId\": 5010,\n        \"processingErrorString\": \"string\",\n        \"metadata\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"projectOwnerName\": \"string\",\n        \"projectName\": \"string\",\n        \"projectLabelingMethod\": \"single_label\",\n        \"structuredLabels\": [\n          {\n            \"startIndex\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"endIndex\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"startIndex\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"endIndex\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"structuredLabelsList\": [\n          \"string\",\n          \"string\"\n        ],\n        \"createdBySyntheticDataJobId\": 6393,\n        \"imageDimensions\": {\n          \"width\": 5569,\n          \"height\": 8799\n        }\n      },\n      \"classifications\": [\n        {\n          \"learnBlock\": {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dsp\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"title\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdBy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"result\": [\n            {\n              \"idle\": 0.0002,\n              \"wave\": 0.9998,\n              \"anomaly\": -0.42\n            }\n          ],\n          \"expectedLabels\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"minimumConfidenceRating\": 2837.551721885011,\n          \"anomalyResult\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"structuredResult\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"details\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"objectDetectionLastLayer\": \"mobilenet-ssd\"\n        },\n        {\n          \"learnBlock\": {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dsp\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"title\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdBy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"result\": [\n            {\n              \"idle\": 0.0002,\n              \"wave\": 0.9998,\n              \"anomaly\": -0.42\n            }\n          ],\n          \"expectedLabels\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"minimumConfidenceRating\": 130.85052065339164,\n          \"anomalyResult\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"structuredResult\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"details\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"objectDetectionLastLayer\": \"yolov5\"\n        }\n      ]\n    },\n    {\n      \"sampleId\": 3649,\n      \"sample\": {\n        \"id\": 2,\n        \"filename\": \"idle01.d8Ae\",\n        \"signatureValidate\": true,\n        \"created\": \"1995-02-09T10:14:06.892Z\",\n        \"lastModified\": \"1995-02-04T05:47:32.183Z\",\n        \"category\": \"training\",\n        \"coldstorageFilename\": \"string\",\n        \"label\": \"healthy-machine\",\n        \"intervalMs\": 16,\n        \"frequency\": 62.5,\n        \"originalIntervalMs\": 16,\n        \"originalFrequency\": 62.5,\n        \"deviceType\": \"string\",\n        \"sensors\": [\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"units\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"units\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"valuesCount\": 2650,\n        \"added\": \"1965-02-06T19:37:44.874Z\",\n        \"boundingBoxes\": [\n          {\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"x\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"y\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"width\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"height\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"x\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"y\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"width\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"height\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"boundingBoxesType\": \"object_detection\",\n        \"chartType\": \"image\",\n        \"isDisabled\": true,\n        \"isProcessing\": false,\n        \"processingError\": false,\n        \"isCropped\": true,\n        \"projectId\": 1736,\n        \"sha256Hash\": \"string\",\n        \"signatureMethod\": \"HS256\",\n        \"signatureKey\": \"string\",\n        \"deviceName\": \"string\",\n        \"totalLengthMs\": 5156.095637787918,\n        \"thumbnailVideo\": \"string\",\n        \"thumbnailVideoFull\": \"string\",\n        \"processingJobId\": 8343,\n        \"processingErrorString\": \"string\",\n        \"metadata\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"projectOwnerName\": \"string\",\n        \"projectName\": \"string\",\n        \"projectLabelingMethod\": \"single_label\",\n        \"structuredLabels\": [\n          {\n            \"startIndex\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"endIndex\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"startIndex\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"endIndex\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"structuredLabelsList\": [\n          \"string\",\n          \"string\"\n        ],\n        \"createdBySyntheticDataJobId\": 2846,\n        \"imageDimensions\": {\n          \"width\": 7903,\n          \"height\": 2405\n        }\n      },\n      \"classifications\": [\n        {\n          \"learnBlock\": {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dsp\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"title\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdBy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"result\": [\n            {\n              \"idle\": 0.0002,\n              \"wave\": 0.9998,\n              \"anomaly\": -0.42\n            }\n          ],\n          \"expectedLabels\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"minimumConfidenceRating\": 7760.928393149973,\n          \"anomalyResult\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"structuredResult\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"details\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"objectDetectionLastLayer\": \"tao-ssd\"\n        },\n        {\n          \"learnBlock\": {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dsp\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"title\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdBy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"result\": [\n            {\n              \"idle\": 0.0002,\n              \"wave\": 0.9998,\n              \"anomaly\": -0.42\n            }\n          ],\n          \"expectedLabels\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"minimumConfidenceRating\": 9253.090820375466,\n          \"anomalyResult\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"structuredResult\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"details\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"objectDetectionLastLayer\": \"mobilenet-ssd\"\n        }\n      ]\n    }\n  ],\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0ed5de3e-a7bc-4966-aeb9-9ab56f9f997c",
+          "name": "Single page of a classify job result",
+          "request": {
+            "name": "Single page of a classify job result",
+            "description": {
+              "content": "Get classify job result, containing the predictions for a given page.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "classify",
+                "all",
+                "result",
+                "page"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of results"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<integer>",
+                  "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+                },
+                {
+                  "disabled": false,
+                  "key": "variant",
+                  "value": "<string>",
+                  "description": "Keras model variant"
+                },
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "893c03da-3b89-4d17-a6ac-e9319aa1f8f5",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "classify",
+                    "all",
+                    "result",
+                    "page"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "variant",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"predictions\": [\n    {\n      \"sampleId\": 7587,\n      \"startMs\": 4896.9112502608195,\n      \"endMs\": 7696.7662413898115,\n      \"prediction\": \"string\",\n      \"label\": \"string\",\n      \"predictionCorrect\": true,\n      \"f1Score\": 5013.627275507294,\n      \"anomalyScores\": [\n        [\n          8136.0965184420675,\n          8173.689038921501\n        ],\n        [\n          2114.9419294808704,\n          2059.5683576523215\n        ]\n      ]\n    },\n    {\n      \"sampleId\": 5655,\n      \"startMs\": 7763.510686405485,\n      \"endMs\": 5633.683005830582,\n      \"prediction\": \"string\",\n      \"label\": \"string\",\n      \"predictionCorrect\": false,\n      \"f1Score\": 1505.6202820653664,\n      \"anomalyScores\": [\n        [\n          1179.6922405651644,\n          1783.3538232025292\n        ],\n        [\n          8446.30584604213,\n          4566.048805796726\n        ]\n      ]\n    }\n  ],\n  \"result\": [\n    {\n      \"sampleId\": 7757,\n      \"sample\": {\n        \"id\": 2,\n        \"filename\": \"idle01.d8Ae\",\n        \"signatureValidate\": true,\n        \"created\": \"1947-01-15T15:36:19.758Z\",\n        \"lastModified\": \"1989-10-13T18:35:21.620Z\",\n        \"category\": \"training\",\n        \"coldstorageFilename\": \"string\",\n        \"label\": \"healthy-machine\",\n        \"intervalMs\": 16,\n        \"frequency\": 62.5,\n        \"originalIntervalMs\": 16,\n        \"originalFrequency\": 62.5,\n        \"deviceType\": \"string\",\n        \"sensors\": [\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"units\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"units\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"valuesCount\": 1701,\n        \"added\": \"1950-06-14T08:18:57.037Z\",\n        \"boundingBoxes\": [\n          {\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"x\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"y\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"width\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"height\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"x\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"y\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"width\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"height\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"boundingBoxesType\": \"constrained_object_detection\",\n        \"chartType\": \"table\",\n        \"isDisabled\": true,\n        \"isProcessing\": false,\n        \"processingError\": false,\n        \"isCropped\": false,\n        \"projectId\": 9347,\n        \"sha256Hash\": \"string\",\n        \"signatureMethod\": \"HS256\",\n        \"signatureKey\": \"string\",\n        \"deviceName\": \"string\",\n        \"totalLengthMs\": 6360.862376894025,\n        \"thumbnailVideo\": \"string\",\n        \"thumbnailVideoFull\": \"string\",\n        \"processingJobId\": 3679,\n        \"processingErrorString\": \"string\",\n        \"metadata\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"projectOwnerName\": \"string\",\n        \"projectName\": \"string\",\n        \"projectLabelingMethod\": \"single_label\",\n        \"structuredLabels\": [\n          {\n            \"startIndex\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"endIndex\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"startIndex\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"endIndex\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"structuredLabelsList\": [\n          \"string\",\n          \"string\"\n        ],\n        \"createdBySyntheticDataJobId\": 251,\n        \"imageDimensions\": {\n          \"width\": 6798,\n          \"height\": 4047\n        }\n      },\n      \"classifications\": [\n        {\n          \"learnBlock\": {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dsp\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"title\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdBy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"result\": [\n            {\n              \"idle\": 0.0002,\n              \"wave\": 0.9998,\n              \"anomaly\": -0.42\n            }\n          ],\n          \"expectedLabels\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"minimumConfidenceRating\": 8971.21570324888,\n          \"anomalyResult\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"structuredResult\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"details\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"objectDetectionLastLayer\": \"tao-yolov4\"\n        },\n        {\n          \"learnBlock\": {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dsp\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"title\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdBy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"result\": [\n            {\n              \"idle\": 0.0002,\n              \"wave\": 0.9998,\n              \"anomaly\": -0.42\n            }\n          ],\n          \"expectedLabels\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"minimumConfidenceRating\": 8989.553494416363,\n          \"anomalyResult\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"structuredResult\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"details\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"objectDetectionLastLayer\": \"yolov5\"\n        }\n      ]\n    },\n    {\n      \"sampleId\": 3560,\n      \"sample\": {\n        \"id\": 2,\n        \"filename\": \"idle01.d8Ae\",\n        \"signatureValidate\": true,\n        \"created\": \"2017-03-11T18:49:04.626Z\",\n        \"lastModified\": \"2025-07-19T03:07:49.857Z\",\n        \"category\": \"training\",\n        \"coldstorageFilename\": \"string\",\n        \"label\": \"healthy-machine\",\n        \"intervalMs\": 16,\n        \"frequency\": 62.5,\n        \"originalIntervalMs\": 16,\n        \"originalFrequency\": 62.5,\n        \"deviceType\": \"string\",\n        \"sensors\": [\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"units\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"units\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"valuesCount\": 6296,\n        \"added\": \"1991-04-08T20:43:36.610Z\",\n        \"boundingBoxes\": [\n          {\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"x\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"y\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"width\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"height\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"x\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"y\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"width\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"height\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"boundingBoxesType\": \"object_detection\",\n        \"chartType\": \"chart\",\n        \"isDisabled\": false,\n        \"isProcessing\": false,\n        \"processingError\": false,\n        \"isCropped\": false,\n        \"projectId\": 155,\n        \"sha256Hash\": \"string\",\n        \"signatureMethod\": \"HS256\",\n        \"signatureKey\": \"string\",\n        \"deviceName\": \"string\",\n        \"totalLengthMs\": 7794.805013794962,\n        \"thumbnailVideo\": \"string\",\n        \"thumbnailVideoFull\": \"string\",\n        \"processingJobId\": 6580,\n        \"processingErrorString\": \"string\",\n        \"metadata\": {\n          \"key_0\": \"string\"\n        },\n        \"projectOwnerName\": \"string\",\n        \"projectName\": \"string\",\n        \"projectLabelingMethod\": \"object_detection\",\n        \"structuredLabels\": [\n          {\n            \"startIndex\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"endIndex\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"startIndex\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"endIndex\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"label\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"structuredLabelsList\": [\n          \"string\",\n          \"string\"\n        ],\n        \"createdBySyntheticDataJobId\": 9770,\n        \"imageDimensions\": {\n          \"width\": 2296,\n          \"height\": 7781\n        }\n      },\n      \"classifications\": [\n        {\n          \"learnBlock\": {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dsp\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"title\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdBy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"result\": [\n            {\n              \"idle\": 0.0002,\n              \"wave\": 0.9998,\n              \"anomaly\": -0.42\n            }\n          ],\n          \"expectedLabels\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"minimumConfidenceRating\": 8701.742357597856,\n          \"anomalyResult\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"structuredResult\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"details\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"objectDetectionLastLayer\": \"fomo\"\n        },\n        {\n          \"learnBlock\": {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dsp\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"title\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdBy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"result\": [\n            {\n              \"idle\": 0.0002,\n              \"wave\": 0.9998,\n              \"anomaly\": -0.42\n            }\n          ],\n          \"expectedLabels\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"minimumConfidenceRating\": 1749.7368921462876,\n          \"anomalyResult\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"structuredResult\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"details\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"objectDetectionLastLayer\": \"tao-retinanet\"\n        }\n      ]\n    }\n  ],\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5261a34d-e383-4eb3-b152-52c21825da6d",
+          "name": "Get metrics for all available model variants",
+          "request": {
+            "name": "Get metrics for all available model variants",
+            "description": {
+              "content": "Get metrics, calculated during a classify all job, for all available model variants. This is experimental and may change in the future.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "classify",
+                "all",
+                "metrics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7b991de4-cea2-4ebf-8a09-d0756a589cf5",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "classify",
+                    "all",
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\",\n  \"metrics\": [\n    {\n      \"variant\": \"<string>\",\n      \"accuracy\": 3740.3191531431903\n    },\n    {\n      \"variant\": \"<string>\",\n      \"accuracy\": 1337.7334553725307\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3f3f49bc-b847-4e19-aa9f-d9f6d017863e",
+          "name": "Classify sample by learn block",
+          "request": {
+            "name": "Classify sample by learn block",
+            "description": {
+              "content": "This API is deprecated, use classifySampleByLearnBlockV2 (`/v1/api/{projectId}/classify/anomaly-gmm/v2/{blockId}/{sampleId}`) instead. Classify a complete file against the specified learn block. This will move the sliding window (dependent on the sliding window length and the sliding window increase parameters in the impulse) over the complete file, and classify for every window that is extracted.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "classify",
+                "anomaly-gmm",
+                ":blockId",
+                ":sampleId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "sampleId",
+                  "description": "(Required) Sample ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "blockId",
+                  "description": "(Required) Block ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0abd6994-9cb7-49d0-b3ce-4f47d9a68956",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "classify",
+                    "anomaly-gmm",
+                    ":blockId",
+                    ":sampleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "sampleId",
+                      "description": "(Required) Sample ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "blockId",
+                      "description": "(Required) Block ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"alreadyInDatabase\": true,\n  \"classifications\": [\n    {\n      \"learnBlock\": {\n        \"id\": 8932,\n        \"type\": \"keras-regression\",\n        \"name\": \"NN Classifier\",\n        \"dsp\": [\n          27,\n          27\n        ],\n        \"title\": \"Classification (Keras)\",\n        \"description\": \"Reduced learning rate and more layers\",\n        \"createdBy\": \"createImpulse\",\n        \"createdAt\": \"1958-02-06T20:24:19.839Z\"\n      },\n      \"result\": [\n        {\n          \"idle\": 0.0002,\n          \"wave\": 0.9998,\n          \"anomaly\": -0.42\n        }\n      ],\n      \"expectedLabels\": [\n        {\n          \"startIndex\": 8203,\n          \"endIndex\": 46,\n          \"label\": \"string\"\n        },\n        {\n          \"startIndex\": 4607,\n          \"endIndex\": 1340,\n          \"label\": \"string\"\n        }\n      ],\n      \"minimumConfidenceRating\": 4964.08374093397,\n      \"anomalyResult\": [\n        {\n          \"boxes\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"scores\": [\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          ],\n          \"meanScore\": 4819.49974298243,\n          \"maxScore\": 484.48482253066527\n        },\n        {\n          \"boxes\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"scores\": [\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          ],\n          \"meanScore\": 2532.9453696998617,\n          \"maxScore\": 379.81825581410055\n        }\n      ],\n      \"structuredResult\": [\n        {\n          \"boxes\": [\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          ],\n          \"scores\": [\n            3602.0341236829145,\n            1166.5736602622424\n          ],\n          \"mAP\": 5890.380689821513,\n          \"f1\": 9020.436563247305,\n          \"precision\": 7980.247719619579,\n          \"recall\": 5333.748959964779,\n          \"labels\": [\n            \"string\",\n            \"string\"\n          ],\n          \"debugInfoJson\": \"{\\n    \\\"y_trues\\\": [\\n        {\\\"x\\\": 0.854, \\\"y\\\": 0.453125, \\\"label\\\": 1},\\n        {\\\"x\\\": 0.197, \\\"y\\\": 0.53125, \\\"label\\\": 2}\\n    ],\\n    \\\"y_preds\\\": [\\n        {\\\"x\\\": 0.916, \\\"y\\\": 0.875, \\\"label\\\": 1},\\n        {\\\"x\\\": 0.25, \\\"y\\\": 0.541, \\\"label\\\": 2}\\n    ],\\n    \\\"assignments\\\": [\\n        {\\\"yp\\\": 1, \\\"yt\\\": 1, \\\"label\\\": 2, \\\"distance\\\": 0.053}\\n    ],\\n    \\\"normalised_min_distance\\\": 0.2,\\n    \\\"all_pairwise_distances\\\": [\\n        [0, 0, 0.426],\\n        [1, 1, 0.053]\\n    ],\\n    \\\"unassigned_y_true_idxs\\\": [0],\\n    \\\"unassigned_y_pred_idxs\\\": [0]\\n}\\n\"\n        },\n        {\n          \"boxes\": [\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          ],\n          \"scores\": [\n            6125.667923093901,\n            7036.572504448228\n          ],\n          \"mAP\": 4305.824480926539,\n          \"f1\": 6576.734914222208,\n          \"precision\": 3750.6173427654153,\n          \"recall\": 1881.7419926684054,\n          \"labels\": [\n            \"string\",\n            \"string\"\n          ],\n          \"debugInfoJson\": \"{\\n    \\\"y_trues\\\": [\\n        {\\\"x\\\": 0.854, \\\"y\\\": 0.453125, \\\"label\\\": 1},\\n        {\\\"x\\\": 0.197, \\\"y\\\": 0.53125, \\\"label\\\": 2}\\n    ],\\n    \\\"y_preds\\\": [\\n        {\\\"x\\\": 0.916, \\\"y\\\": 0.875, \\\"label\\\": 1},\\n        {\\\"x\\\": 0.25, \\\"y\\\": 0.541, \\\"label\\\": 2}\\n    ],\\n    \\\"assignments\\\": [\\n        {\\\"yp\\\": 1, \\\"yt\\\": 1, \\\"label\\\": 2, \\\"distance\\\": 0.053}\\n    ],\\n    \\\"normalised_min_distance\\\": 0.2,\\n    \\\"all_pairwise_distances\\\": [\\n        [0, 0, 0.426],\\n        [1, 1, 0.053]\\n    ],\\n    \\\"unassigned_y_true_idxs\\\": [0],\\n    \\\"unassigned_y_pred_idxs\\\": [0]\\n}\\n\"\n        }\n      ],\n      \"details\": [\n        {\n          \"boxes\": [\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          ],\n          \"labels\": [\n            494.7420891117149,\n            9927.173760840891\n          ],\n          \"scores\": [\n            4133.076840107055,\n            8732.02093313311\n          ],\n          \"mAP\": 7084.373460038809,\n          \"f1\": 5608.386618245587\n        },\n        {\n          \"boxes\": [\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          ],\n          \"labels\": [\n            9884.487325550806,\n            3368.8877730524223\n          ],\n          \"scores\": [\n            1036.6564923021626,\n            6337.476282483262\n          ],\n          \"mAP\": 6703.7222580075895,\n          \"f1\": 7754.4460414650985\n        }\n      ],\n      \"objectDetectionLastLayer\": \"yolov5v5-drpai\"\n    },\n    {\n      \"learnBlock\": {\n        \"id\": 152,\n        \"type\": \"keras-regression\",\n        \"name\": \"NN Classifier\",\n        \"dsp\": [\n          27,\n          27\n        ],\n        \"title\": \"Classification (Keras)\",\n        \"description\": \"Reduced learning rate and more layers\",\n        \"createdBy\": \"createImpulse\",\n        \"createdAt\": \"1958-03-19T20:56:50.115Z\"\n      },\n      \"result\": [\n        {\n          \"idle\": 0.0002,\n          \"wave\": 0.9998,\n          \"anomaly\": -0.42\n        }\n      ],\n      \"expectedLabels\": [\n        {\n          \"startIndex\": 2490,\n          \"endIndex\": 5167,\n          \"label\": \"string\"\n        },\n        {\n          \"startIndex\": 2459,\n          \"endIndex\": 4469,\n          \"label\": \"string\"\n        }\n      ],\n      \"minimumConfidenceRating\": 2948.3776508684077,\n      \"anomalyResult\": [\n        {\n          \"boxes\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"scores\": [\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          ],\n          \"meanScore\": 4054.186081608874,\n          \"maxScore\": 1566.9795146895449\n        },\n        {\n          \"boxes\": [\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          ],\n          \"scores\": [\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          ],\n          \"meanScore\": 1226.1527684653283,\n          \"maxScore\": 1758.006644875657\n        }\n      ],\n      \"structuredResult\": [\n        {\n          \"boxes\": [\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          ],\n          \"scores\": [\n            3088.726775238767,\n            3225.5016785906478\n          ],\n          \"mAP\": 5925.536679677963,\n          \"f1\": 9970.048971529137,\n          \"precision\": 2206.5714048379614,\n          \"recall\": 9024.034186377277,\n          \"labels\": [\n            \"string\",\n            \"string\"\n          ],\n          \"debugInfoJson\": \"{\\n    \\\"y_trues\\\": [\\n        {\\\"x\\\": 0.854, \\\"y\\\": 0.453125, \\\"label\\\": 1},\\n        {\\\"x\\\": 0.197, \\\"y\\\": 0.53125, \\\"label\\\": 2}\\n    ],\\n    \\\"y_preds\\\": [\\n        {\\\"x\\\": 0.916, \\\"y\\\": 0.875, \\\"label\\\": 1},\\n        {\\\"x\\\": 0.25, \\\"y\\\": 0.541, \\\"label\\\": 2}\\n    ],\\n    \\\"assignments\\\": [\\n        {\\\"yp\\\": 1, \\\"yt\\\": 1, \\\"label\\\": 2, \\\"distance\\\": 0.053}\\n    ],\\n    \\\"normalised_min_distance\\\": 0.2,\\n    \\\"all_pairwise_distances\\\": [\\n        [0, 0, 0.426],\\n        [1, 1, 0.053]\\n    ],\\n    \\\"unassigned_y_true_idxs\\\": [0],\\n    \\\"unassigned_y_pred_idxs\\\": [0]\\n}\\n\"\n        },\n        {\n          \"boxes\": [\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          ],\n          \"scores\": [\n            4101.385558409828,\n            9236.395143746768\n          ],\n          \"mAP\": 8400.589412088728,\n          \"f1\": 4395.2549946071085,\n          \"precision\": 5638.284637182046,\n          \"recall\": 1938.8203949411297,\n          \"labels\": [\n            \"string\",\n            \"string\"\n          ],\n          \"debugInfoJson\": \"{\\n    \\\"y_trues\\\": [\\n        {\\\"x\\\": 0.854, \\\"y\\\": 0.453125, \\\"label\\\": 1},\\n        {\\\"x\\\": 0.197, \\\"y\\\": 0.53125, \\\"label\\\": 2}\\n    ],\\n    \\\"y_preds\\\": [\\n        {\\\"x\\\": 0.916, \\\"y\\\": 0.875, \\\"label\\\": 1},\\n        {\\\"x\\\": 0.25, \\\"y\\\": 0.541, \\\"label\\\": 2}\\n    ],\\n    \\\"assignments\\\": [\\n        {\\\"yp\\\": 1, \\\"yt\\\": 1, \\\"label\\\": 2, \\\"distance\\\": 0.053}\\n    ],\\n    \\\"normalised_min_distance\\\": 0.2,\\n    \\\"all_pairwise_distances\\\": [\\n        [0, 0, 0.426],\\n        [1, 1, 0.053]\\n    ],\\n    \\\"unassigned_y_true_idxs\\\": [0],\\n    \\\"unassigned_y_pred_idxs\\\": [0]\\n}\\n\"\n        }\n      ],\n      \"details\": [\n        {\n          \"boxes\": [\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          ],\n          \"labels\": [\n            3311.2528849568257,\n            756.0323996964979\n          ],\n          \"scores\": [\n            6895.2822992202855,\n            9010.813867238046\n          ],\n          \"mAP\": 4170.717957229871,\n          \"f1\": 3517.0183193938033\n        },\n        {\n          \"boxes\": [\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          ],\n          \"labels\": [\n            4577.099938316727,\n            3787.3952566137627\n          ],\n          \"scores\": [\n            231.98387796880436,\n            5676.779196795222\n          ],\n          \"mAP\": 1051.005809097425,\n          \"f1\": 975.2401664375254\n        }\n      ],\n      \"objectDetectionLastLayer\": \"yolox\"\n    }\n  ],\n  \"sample\": {\n    \"sample\": {\n      \"id\": 2,\n      \"filename\": \"idle01.d8Ae\",\n      \"signatureValidate\": true,\n      \"created\": \"2021-12-16T07:16:27.102Z\",\n      \"lastModified\": \"1978-04-24T07:58:09.784Z\",\n      \"category\": \"training\",\n      \"coldstorageFilename\": \"string\",\n      \"label\": \"healthy-machine\",\n      \"intervalMs\": 16,\n      \"frequency\": 62.5,\n      \"originalIntervalMs\": 16,\n      \"originalFrequency\": 62.5,\n      \"deviceType\": \"string\",\n      \"sensors\": [\n        {\n          \"name\": \"accX\",\n          \"units\": \"string\"\n        },\n        {\n          \"name\": \"accX\",\n          \"units\": \"string\"\n        }\n      ],\n      \"valuesCount\": 591,\n      \"added\": \"1977-03-21T14:43:42.599Z\",\n      \"boundingBoxes\": [\n        {\n          \"label\": \"string\",\n          \"x\": 2711,\n          \"y\": 5201,\n          \"width\": 9690,\n          \"height\": 6098\n        },\n        {\n          \"label\": \"string\",\n          \"x\": 1689,\n          \"y\": 758,\n          \"width\": 6522,\n          \"height\": 5623\n        }\n      ],\n      \"boundingBoxesType\": \"constrained_object_detection\",\n      \"chartType\": \"chart\",\n      \"isDisabled\": true,\n      \"isProcessing\": false,\n      \"processingError\": true,\n      \"isCropped\": false,\n      \"projectId\": 8728,\n      \"sha256Hash\": \"string\",\n      \"signatureMethod\": \"HS256\",\n      \"signatureKey\": \"string\",\n      \"deviceName\": \"string\",\n      \"totalLengthMs\": 6024.617747372857,\n      \"thumbnailVideo\": \"string\",\n      \"thumbnailVideoFull\": \"string\",\n      \"processingJobId\": 6896,\n      \"processingErrorString\": \"string\",\n      \"metadata\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": \"string\",\n        \"key_3\": \"string\"\n      },\n      \"projectOwnerName\": \"string\",\n      \"projectName\": \"string\",\n      \"projectLabelingMethod\": \"object_detection\",\n      \"structuredLabels\": [\n        {\n          \"startIndex\": 6512,\n          \"endIndex\": 5163,\n          \"label\": \"string\"\n        },\n        {\n          \"startIndex\": 2850,\n          \"endIndex\": 3655,\n          \"label\": \"string\"\n        }\n      ],\n      \"structuredLabelsList\": [\n        \"string\",\n        \"string\"\n      ],\n      \"createdBySyntheticDataJobId\": 1188,\n      \"imageDimensions\": {\n        \"width\": 8338,\n        \"height\": 9773\n      }\n    },\n    \"payload\": {\n      \"device_type\": \"DISCO-L475VG-IOT01A\",\n      \"sensors\": [\n        {\n          \"name\": \"accX\",\n          \"units\": \"string\"\n        },\n        {\n          \"name\": \"accX\",\n          \"units\": \"string\"\n        }\n      ],\n      \"values\": [\n        [\n          3520.085917077992,\n          2802.3100603563144\n        ],\n        [\n          4390.607510645259,\n          131.71663200729267\n        ]\n      ],\n      \"device_name\": \"ac:87:a3:0a:2d:1b\",\n      \"cropStart\": 0,\n      \"cropEnd\": 128\n    },\n    \"totalPayloadLength\": 7825\n  },\n  \"success\": false,\n  \"windowIncreaseMs\": 10,\n  \"windowSizeMs\": 2996,\n  \"error\": \"string\",\n  \"warning\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c4c05f5c-5e9d-481f-8c5d-18e23d50b3eb",
+          "name": "Classify sample by learn block",
+          "request": {
+            "name": "Classify sample by learn block",
+            "description": {
+              "content": "Classify a complete file against the specified learn block. This will move the sliding window\n(dependent on the sliding window length and the sliding window increase parameters in the impulse)\nover the complete file, and classify for every window that is extracted. Depending on the size of your\nfile, whether your sample is resampled, and whether the result is cached you'll get either the result\nor a job back. If you receive a job, then wait for the completion of the job, and then call this\nfunction again to receive the results. The unoptimized (float32) model is used by default, and\nclassification with an optimized (int8) model can be slower.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "classify",
+                "anomaly-gmm",
+                "v2",
+                ":blockId",
+                ":sampleId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "variant",
+                  "value": "<string>",
+                  "description": "Keras model variant"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "sampleId",
+                  "description": "(Required) Sample ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "blockId",
+                  "description": "(Required) Block ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9c691f69-346d-4a66-80ac-db9d6dd93a4c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "classify",
+                    "anomaly-gmm",
+                    "v2",
+                    ":blockId",
+                    ":sampleId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "variant",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "sampleId",
+                      "description": "(Required) Sample ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "blockId",
+                      "description": "(Required) Block ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"alreadyInDatabase\": false,\n  \"classifications\": [\n    {\n      \"learnBlock\": {\n        \"id\": 9673,\n        \"type\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": \"NN Classifier\",\n        \"dsp\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"title\": \"Classification (Keras)\",\n        \"description\": \"Reduced learning rate and more layers\",\n        \"createdBy\": \"createImpulse\",\n        \"createdAt\": \"1983-04-19T02:31:17.287Z\"\n      },\n      \"result\": [\n        {\n          \"idle\": 0.0002,\n          \"wave\": 0.9998,\n          \"anomaly\": -0.42\n        }\n      ],\n      \"expectedLabels\": [\n        {\n          \"startIndex\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"endIndex\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"label\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"startIndex\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"endIndex\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"label\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"minimumConfidenceRating\": 4003.840154793795,\n      \"anomalyResult\": [\n        {\n          \"boxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"scores\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"meanScore\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"maxScore\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"boxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"scores\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"meanScore\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"maxScore\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"structuredResult\": [\n        {\n          \"boxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"scores\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mAP\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"f1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"precision\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"recall\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"labels\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"debugInfoJson\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"boxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"scores\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mAP\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"f1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"precision\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"recall\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"labels\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"debugInfoJson\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"details\": [\n        {\n          \"boxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"labels\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"scores\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mAP\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"f1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"boxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"labels\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"scores\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mAP\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"f1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"objectDetectionLastLayer\": \"tao-retinanet\"\n    },\n    {\n      \"learnBlock\": {\n        \"id\": 9108,\n        \"type\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"name\": \"NN Classifier\",\n        \"dsp\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"title\": \"Classification (Keras)\",\n        \"description\": \"Reduced learning rate and more layers\",\n        \"createdBy\": \"createImpulse\",\n        \"createdAt\": \"2009-07-20T01:23:04.191Z\"\n      },\n      \"result\": [\n        {\n          \"idle\": 0.0002,\n          \"wave\": 0.9998,\n          \"anomaly\": -0.42\n        }\n      ],\n      \"expectedLabels\": [\n        {\n          \"startIndex\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"endIndex\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"label\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"startIndex\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"endIndex\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"label\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"minimumConfidenceRating\": 592.0315649431784,\n      \"anomalyResult\": [\n        {\n          \"boxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"scores\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"meanScore\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"maxScore\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"boxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"scores\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"meanScore\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"maxScore\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"structuredResult\": [\n        {\n          \"boxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"scores\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mAP\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"f1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"precision\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"recall\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"labels\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"debugInfoJson\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"boxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"scores\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mAP\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"f1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"precision\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"recall\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"labels\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"debugInfoJson\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"details\": [\n        {\n          \"boxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"labels\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"scores\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mAP\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"f1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"boxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"labels\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"scores\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mAP\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"f1\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"objectDetectionLastLayer\": \"yolov5v5-drpai\"\n    }\n  ],\n  \"sample\": {\n    \"sample\": {\n      \"id\": 2,\n      \"filename\": \"idle01.d8Ae\",\n      \"signatureValidate\": true,\n      \"created\": \"1948-10-06T15:52:59.319Z\",\n      \"lastModified\": \"1996-09-03T00:43:59.535Z\",\n      \"category\": \"training\",\n      \"coldstorageFilename\": \"string\",\n      \"label\": \"healthy-machine\",\n      \"intervalMs\": 16,\n      \"frequency\": 62.5,\n      \"originalIntervalMs\": 16,\n      \"originalFrequency\": 62.5,\n      \"deviceType\": \"string\",\n      \"sensors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"valuesCount\": 134,\n      \"added\": \"1948-01-12T22:58:55.149Z\",\n      \"boundingBoxes\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"boundingBoxesType\": \"object_detection\",\n      \"chartType\": \"table\",\n      \"isDisabled\": true,\n      \"isProcessing\": false,\n      \"processingError\": true,\n      \"isCropped\": false,\n      \"projectId\": 3205,\n      \"sha256Hash\": \"string\",\n      \"signatureMethod\": \"HS256\",\n      \"signatureKey\": \"string\",\n      \"deviceName\": \"string\",\n      \"totalLengthMs\": 7370.544624488239,\n      \"thumbnailVideo\": \"string\",\n      \"thumbnailVideoFull\": \"string\",\n      \"processingJobId\": 2610,\n      \"processingErrorString\": \"string\",\n      \"metadata\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\"\n      },\n      \"projectOwnerName\": \"string\",\n      \"projectName\": \"string\",\n      \"projectLabelingMethod\": \"single_label\",\n      \"structuredLabels\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"structuredLabelsList\": [\n        \"string\",\n        \"string\"\n      ],\n      \"createdBySyntheticDataJobId\": 2021,\n      \"imageDimensions\": {\n        \"width\": 8774,\n        \"height\": 9452\n      }\n    },\n    \"payload\": {\n      \"device_type\": \"DISCO-L475VG-IOT01A\",\n      \"sensors\": [\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        }\n      ],\n      \"values\": [\n        [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ]\n      ],\n      \"device_name\": \"ac:87:a3:0a:2d:1b\",\n      \"cropStart\": 0,\n      \"cropEnd\": 128\n    },\n    \"totalPayloadLength\": 355\n  },\n  \"success\": true,\n  \"windowIncreaseMs\": 10,\n  \"windowSizeMs\": 2996,\n  \"error\": \"string\",\n  \"warning\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eb0252c0-6369-44ec-a63b-3f864fe1433d",
+          "name": "Classify an image",
+          "request": {
+            "name": "Classify an image",
+            "description": {
+              "content": "Test out a trained impulse (using a posted image).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "classify",
+                "image"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "description": "(Required) "
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e11b9113-1ef4-4901-b967-ac7a2f4112e2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "classify",
+                    "image"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "image",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"error\": \"string\",\n  \"result\": {\n    \"key_0\": 4248.7360823937715,\n    \"key_1\": 3191.025030202099,\n    \"key_2\": 9173.196863763007\n  },\n  \"boundingBoxes\": [\n    {\n      \"label\": \"string\",\n      \"x\": 3716.910521286314,\n      \"y\": 7508.280803723212,\n      \"width\": 9765.137809353519,\n      \"height\": 154.9578109255334,\n      \"score\": 3383.5815640952815\n    },\n    {\n      \"label\": \"string\",\n      \"x\": 2395.5341840006495,\n      \"y\": 8209.532557750226,\n      \"width\": 2867.296451447019,\n      \"height\": 9425.258311830854,\n      \"score\": 3704.515325321055\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://studio.edgeimpulse.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "fa27d735-cbfb-475c-bd78-367747927629",
+    "name": "Edge Impulse Classify API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

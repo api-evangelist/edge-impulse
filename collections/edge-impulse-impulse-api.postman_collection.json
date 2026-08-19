@@ -1,0 +1,1804 @@
+{
+  "item": [
+    {
+      "id": "54b7d053-ae96-4818-993d-f8a0622844da",
+      "name": "Impulse",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a609b864-e1dd-4753-9fe8-54e27e88498e",
+          "name": "Get impulse",
+          "request": {
+            "name": "Get impulse",
+            "description": {
+              "content": "Retrieve the impulse for this project. If you specify `impulseId` then that impulse is returned, otherwise the default impulse is returned.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "impulse"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "698a0822-f554-456b-a0d1-4be9baab458a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "impulse"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"error\": \"string\",\n  \"impulse\": {\n    \"id\": 2503,\n    \"name\": \"string\",\n    \"inputBlocks\": [\n      {\n        \"id\": 5018,\n        \"type\": \"time-series\",\n        \"name\": \"Time series\",\n        \"title\": \"Time series\",\n        \"windowSizeMs\": 2004,\n        \"windowIncreaseMs\": 3211,\n        \"frequencyHz\": 60,\n        \"classificationWindowIncreaseMs\": 6990,\n        \"padZeros\": false,\n        \"imageWidth\": 28,\n        \"imageHeight\": 28,\n        \"resizeMode\": \"squash\",\n        \"resizeMethod\": \"nearest\",\n        \"cropAnchor\": \"middle-center\",\n        \"description\": \"Reduced learning rate and more layers\",\n        \"createdBy\": \"createImpulse\",\n        \"createdAt\": \"1999-04-12T10:56:12.686Z\",\n        \"datasetSubset\": {\n          \"subsetModulo\": 431.5929341093316,\n          \"subsetSeed\": 8911.29463295778\n        }\n      },\n      {\n        \"id\": 4376,\n        \"type\": \"time-series\",\n        \"name\": \"Time series\",\n        \"title\": \"Time series\",\n        \"windowSizeMs\": 2004,\n        \"windowIncreaseMs\": 7401,\n        \"frequencyHz\": 60,\n        \"classificationWindowIncreaseMs\": 3124,\n        \"padZeros\": true,\n        \"imageWidth\": 28,\n        \"imageHeight\": 28,\n        \"resizeMode\": \"squash\",\n        \"resizeMethod\": \"nearest\",\n        \"cropAnchor\": \"middle-center\",\n        \"description\": \"Reduced learning rate and more layers\",\n        \"createdBy\": \"createImpulse\",\n        \"createdAt\": \"1989-12-13T17:23:46.642Z\",\n        \"datasetSubset\": {\n          \"subsetModulo\": 7487.888067429854,\n          \"subsetSeed\": 7700.710649432977\n        }\n      }\n    ],\n    \"dspBlocks\": [\n      {\n        \"id\": 2477,\n        \"type\": \"spectral-analysis\",\n        \"name\": \"Spectral features\",\n        \"axes\": [\n          \"accX\",\n          \"accX\"\n        ],\n        \"title\": \"Spectral Analysis\",\n        \"implementationVersion\": 2492,\n        \"valuesPerAxis\": 11,\n        \"input\": 1,\n        \"description\": \"Reduced learning rate and more layers\",\n        \"createdBy\": \"createImpulse\",\n        \"createdAt\": \"2005-06-04T16:30:20.898Z\",\n        \"organization\": {\n          \"id\": 2284,\n          \"dspId\": 4499\n        },\n        \"customUrl\": \"string\",\n        \"namedAxes\": [\n          {\n            \"name\": \"string\",\n            \"description\": \"string\",\n            \"required\": false,\n            \"selectedAxis\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"description\": \"string\",\n            \"required\": true,\n            \"selectedAxis\": \"string\"\n          }\n        ]\n      },\n      {\n        \"id\": 6626,\n        \"type\": \"spectral-analysis\",\n        \"name\": \"Spectral features\",\n        \"axes\": [\n          \"accX\",\n          \"accX\"\n        ],\n        \"title\": \"Spectral Analysis\",\n        \"implementationVersion\": 1857,\n        \"valuesPerAxis\": 11,\n        \"input\": 1,\n        \"description\": \"Reduced learning rate and more layers\",\n        \"createdBy\": \"createImpulse\",\n        \"createdAt\": \"1963-06-21T22:50:36.116Z\",\n        \"organization\": {\n          \"id\": 284,\n          \"dspId\": 5006\n        },\n        \"customUrl\": \"string\",\n        \"namedAxes\": [\n          {\n            \"name\": \"string\",\n            \"description\": \"string\",\n            \"required\": false,\n            \"selectedAxis\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"description\": \"string\",\n            \"required\": true,\n            \"selectedAxis\": \"string\"\n          }\n        ]\n      }\n    ],\n    \"learnBlocks\": [\n      {\n        \"id\": 7230,\n        \"type\": \"keras-transfer-image\",\n        \"name\": \"NN Classifier\",\n        \"dsp\": [\n          27,\n          27\n        ],\n        \"title\": \"Classification (Keras)\",\n        \"description\": \"Reduced learning rate and more layers\",\n        \"createdBy\": \"createImpulse\",\n        \"createdAt\": \"1966-06-13T19:39:28.420Z\"\n      },\n      {\n        \"id\": 7645,\n        \"type\": \"keras-transfer-image\",\n        \"name\": \"NN Classifier\",\n        \"dsp\": [\n          27,\n          27\n        ],\n        \"title\": \"Classification (Keras)\",\n        \"description\": \"Reduced learning rate and more layers\",\n        \"createdBy\": \"createImpulse\",\n        \"createdAt\": \"1979-11-01T02:38:00.490Z\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f1f94b0c-781e-4bca-8c29-de31ba04391b",
+          "name": "Create impulse",
+          "request": {
+            "name": "Create impulse",
+            "description": {
+              "content": "Sets the impulse for this project.  If you specify `impulseId` then that impulse is created/updated, otherwise the default impulse is created/updated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "impulse"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"inputBlocks\": [\n    {\n      \"id\": \"<integer>\",\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"title\": \"<string>\",\n      \"windowSizeMs\": \"<integer>\",\n      \"windowIncreaseMs\": \"<integer>\",\n      \"frequencyHz\": \"<number>\",\n      \"classificationWindowIncreaseMs\": \"<integer>\",\n      \"padZeros\": \"<boolean>\",\n      \"imageWidth\": \"<integer>\",\n      \"imageHeight\": \"<integer>\",\n      \"resizeMode\": \"<string>\",\n      \"resizeMethod\": \"<string>\",\n      \"cropAnchor\": \"<string>\",\n      \"description\": \"<string>\",\n      \"createdBy\": \"<string>\",\n      \"createdAt\": \"<dateTime>\",\n      \"datasetSubset\": {\n        \"subsetModulo\": \"<number>\",\n        \"subsetSeed\": \"<number>\"\n      }\n    },\n    {\n      \"id\": \"<integer>\",\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"title\": \"<string>\",\n      \"windowSizeMs\": \"<integer>\",\n      \"windowIncreaseMs\": \"<integer>\",\n      \"frequencyHz\": \"<number>\",\n      \"classificationWindowIncreaseMs\": \"<integer>\",\n      \"padZeros\": \"<boolean>\",\n      \"imageWidth\": \"<integer>\",\n      \"imageHeight\": \"<integer>\",\n      \"resizeMode\": \"<string>\",\n      \"resizeMethod\": \"<string>\",\n      \"cropAnchor\": \"<string>\",\n      \"description\": \"<string>\",\n      \"createdBy\": \"<string>\",\n      \"createdAt\": \"<dateTime>\",\n      \"datasetSubset\": {\n        \"subsetModulo\": \"<number>\",\n        \"subsetSeed\": \"<number>\"\n      }\n    }\n  ],\n  \"dspBlocks\": [\n    {\n      \"id\": \"<integer>\",\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"axes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"title\": \"<string>\",\n      \"implementationVersion\": \"<integer>\",\n      \"valuesPerAxis\": \"<integer>\",\n      \"input\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"createdBy\": \"<string>\",\n      \"createdAt\": \"<dateTime>\",\n      \"organization\": {\n        \"id\": \"<integer>\",\n        \"dspId\": \"<integer>\"\n      },\n      \"customUrl\": \"<string>\",\n      \"namedAxes\": [\n        {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"required\": \"<boolean>\",\n          \"selectedAxis\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"required\": \"<boolean>\",\n          \"selectedAxis\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<integer>\",\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"axes\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"title\": \"<string>\",\n      \"implementationVersion\": \"<integer>\",\n      \"valuesPerAxis\": \"<integer>\",\n      \"input\": \"<integer>\",\n      \"description\": \"<string>\",\n      \"createdBy\": \"<string>\",\n      \"createdAt\": \"<dateTime>\",\n      \"organization\": {\n        \"id\": \"<integer>\",\n        \"dspId\": \"<integer>\"\n      },\n      \"customUrl\": \"<string>\",\n      \"namedAxes\": [\n        {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"required\": \"<boolean>\",\n          \"selectedAxis\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"required\": \"<boolean>\",\n          \"selectedAxis\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"learnBlocks\": [\n    {\n      \"id\": \"<integer>\",\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"dsp\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"createdBy\": \"<string>\",\n      \"createdAt\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"dsp\": [\n        \"<integer>\",\n        \"<integer>\"\n      ],\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"createdBy\": \"<string>\",\n      \"createdAt\": \"<dateTime>\"\n    }\n  ],\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8d4651e5-1cd2-4564-8af2-2d9aa776155d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "impulse"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"inputBlocks\": [\n    {\n      \"id\": \"<integer>\",\n      \"type\": \"time-series\",\n      \"name\": \"Time series\",\n      \"title\": \"Time series\",\n      \"windowSizeMs\": 2004,\n      \"windowIncreaseMs\": \"<integer>\",\n      \"frequencyHz\": 60,\n      \"classificationWindowIncreaseMs\": \"<integer>\",\n      \"padZeros\": \"<boolean>\",\n      \"imageWidth\": 28,\n      \"imageHeight\": 28,\n      \"resizeMode\": \"squash\",\n      \"resizeMethod\": \"<string>\",\n      \"cropAnchor\": \"middle-center\",\n      \"description\": \"Reduced learning rate and more layers\",\n      \"createdBy\": \"createImpulse\",\n      \"createdAt\": \"<dateTime>\",\n      \"datasetSubset\": {\n        \"subsetModulo\": \"<number>\",\n        \"subsetSeed\": \"<number>\"\n      }\n    },\n    {\n      \"id\": \"<integer>\",\n      \"type\": \"time-series\",\n      \"name\": \"Time series\",\n      \"title\": \"Time series\",\n      \"windowSizeMs\": 2004,\n      \"windowIncreaseMs\": \"<integer>\",\n      \"frequencyHz\": 60,\n      \"classificationWindowIncreaseMs\": \"<integer>\",\n      \"padZeros\": \"<boolean>\",\n      \"imageWidth\": 28,\n      \"imageHeight\": 28,\n      \"resizeMode\": \"squash\",\n      \"resizeMethod\": \"<string>\",\n      \"cropAnchor\": \"middle-center\",\n      \"description\": \"Reduced learning rate and more layers\",\n      \"createdBy\": \"createImpulse\",\n      \"createdAt\": \"<dateTime>\",\n      \"datasetSubset\": {\n        \"subsetModulo\": \"<number>\",\n        \"subsetSeed\": \"<number>\"\n      }\n    }\n  ],\n  \"dspBlocks\": [\n    {\n      \"id\": \"<integer>\",\n      \"type\": \"spectral-analysis\",\n      \"name\": \"Spectral features\",\n      \"axes\": [\n        \"accX\",\n        \"accX\"\n      ],\n      \"title\": \"Spectral Analysis\",\n      \"implementationVersion\": \"<integer>\",\n      \"valuesPerAxis\": 11,\n      \"input\": 1,\n      \"description\": \"Reduced learning rate and more layers\",\n      \"createdBy\": \"createImpulse\",\n      \"createdAt\": \"<dateTime>\",\n      \"organization\": {\n        \"id\": \"<integer>\",\n        \"dspId\": \"<integer>\"\n      },\n      \"customUrl\": \"<string>\",\n      \"namedAxes\": [\n        {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"required\": \"<boolean>\",\n          \"selectedAxis\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"required\": \"<boolean>\",\n          \"selectedAxis\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<integer>\",\n      \"type\": \"spectral-analysis\",\n      \"name\": \"Spectral features\",\n      \"axes\": [\n        \"accX\",\n        \"accX\"\n      ],\n      \"title\": \"Spectral Analysis\",\n      \"implementationVersion\": \"<integer>\",\n      \"valuesPerAxis\": 11,\n      \"input\": 1,\n      \"description\": \"Reduced learning rate and more layers\",\n      \"createdBy\": \"createImpulse\",\n      \"createdAt\": \"<dateTime>\",\n      \"organization\": {\n        \"id\": \"<integer>\",\n        \"dspId\": \"<integer>\"\n      },\n      \"customUrl\": \"<string>\",\n      \"namedAxes\": [\n        {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"required\": \"<boolean>\",\n          \"selectedAxis\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"required\": \"<boolean>\",\n          \"selectedAxis\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"learnBlocks\": [\n    {\n      \"id\": \"<integer>\",\n      \"type\": \"<string>\",\n      \"name\": \"NN Classifier\",\n      \"dsp\": [\n        27,\n        27\n      ],\n      \"title\": \"Classification (Keras)\",\n      \"description\": \"Reduced learning rate and more layers\",\n      \"createdBy\": \"createImpulse\",\n      \"createdAt\": \"<dateTime>\"\n    },\n    {\n      \"id\": \"<integer>\",\n      \"type\": \"<string>\",\n      \"name\": \"NN Classifier\",\n      \"dsp\": [\n        27,\n        27\n      ],\n      \"title\": \"Classification (Keras)\",\n      \"description\": \"Reduced learning rate and more layers\",\n      \"createdBy\": \"createImpulse\",\n      \"createdAt\": \"<dateTime>\"\n    }\n  ],\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 3887,\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b06a66c6-5304-4cd6-b4ef-c42cd13d4be4",
+          "name": "Delete impulse",
+          "request": {
+            "name": "Delete impulse",
+            "description": {
+              "content": "Clears the impulse and all associated blocks for this project.  If you specify `impulseId` then that impulse is cleared, otherwise the default impulse is cleared.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "impulse"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "aff8760f-358e-4f74-aee9-91c250f9e904",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "impulse"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f0d11398-cb97-4df7-80a2-edbcaad5318f",
+          "name": "Create new empty impulse",
+          "request": {
+            "name": "Create new empty impulse",
+            "description": {
+              "content": "Create a new empty impulse, and return the ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "impulse",
+                "new"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6ed9c8a8-fc84-43dd-addc-1be28371ec25",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "impulse",
+                    "new"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 9716,\n  \"redirectUrl\": \"string\",\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f6751bcc-d321-4334-94df-57c08411236c",
+          "name": "Update impulse",
+          "request": {
+            "name": "Update impulse",
+            "description": {
+              "content": "Update the impulse for this project.  If you specify `impulseId` then that impulse is created/updated, otherwise the default impulse is created/updated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "impulse",
+                "update"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "82be1edd-2986-4257-b280-4d0f35096698",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "impulse",
+                    "update"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6c771e81-759b-40f1-8ee6-253b157c7ccd",
+          "name": "Get impulse including disabled blocks",
+          "request": {
+            "name": "Get impulse including disabled blocks",
+            "description": {
+              "content": "Retrieve the impulse for this project including disabled blocks. If you specify `impulseId` then that impulse is returned, otherwise the default impulse is returned.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "impulse",
+                "all"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "impulseId",
+                  "value": "<integer>",
+                  "description": "Impulse ID. If this is unset then the default impulse is used."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0b21e28d-6345-4a1b-8153-e243697585ef",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "impulse",
+                    "all"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "impulseId",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error\": \"string\",\n  \"impulse\": {\n    \"id\": 9859,\n    \"name\": \"string\",\n    \"inputBlocks\": [\n      {\n        \"id\": \"<integer>\",\n        \"type\": \"time-series\",\n        \"name\": \"Time series\",\n        \"title\": \"Time series\",\n        \"windowSizeMs\": 2004,\n        \"windowIncreaseMs\": \"<integer>\",\n        \"frequencyHz\": 60,\n        \"classificationWindowIncreaseMs\": \"<integer>\",\n        \"padZeros\": \"<boolean>\",\n        \"imageWidth\": 28,\n        \"imageHeight\": 28,\n        \"resizeMode\": \"squash\",\n        \"resizeMethod\": \"<string>\",\n        \"cropAnchor\": \"middle-center\",\n        \"description\": \"Reduced learning rate and more layers\",\n        \"createdBy\": \"createImpulse\",\n        \"createdAt\": \"<dateTime>\",\n        \"datasetSubset\": {\n          \"subsetModulo\": \"<number>\",\n          \"subsetSeed\": \"<number>\"\n        }\n      },\n      {\n        \"id\": \"<integer>\",\n        \"type\": \"time-series\",\n        \"name\": \"Time series\",\n        \"title\": \"Time series\",\n        \"windowSizeMs\": 2004,\n        \"windowIncreaseMs\": \"<integer>\",\n        \"frequencyHz\": 60,\n        \"classificationWindowIncreaseMs\": \"<integer>\",\n        \"padZeros\": \"<boolean>\",\n        \"imageWidth\": 28,\n        \"imageHeight\": 28,\n        \"resizeMode\": \"squash\",\n        \"resizeMethod\": \"<string>\",\n        \"cropAnchor\": \"middle-center\",\n        \"description\": \"Reduced learning rate and more layers\",\n        \"createdBy\": \"createImpulse\",\n        \"createdAt\": \"<dateTime>\",\n        \"datasetSubset\": {\n          \"subsetModulo\": \"<number>\",\n          \"subsetSeed\": \"<number>\"\n        }\n      }\n    ],\n    \"dspBlocks\": [\n      {\n        \"id\": \"<integer>\",\n        \"type\": \"spectral-analysis\",\n        \"name\": \"Spectral features\",\n        \"axes\": [\n          \"accX\",\n          \"accX\"\n        ],\n        \"title\": \"Spectral Analysis\",\n        \"implementationVersion\": \"<integer>\",\n        \"valuesPerAxis\": 11,\n        \"input\": 1,\n        \"description\": \"Reduced learning rate and more layers\",\n        \"createdBy\": \"createImpulse\",\n        \"createdAt\": \"<dateTime>\",\n        \"organization\": {\n          \"id\": \"<integer>\",\n          \"dspId\": \"<integer>\"\n        },\n        \"customUrl\": \"<string>\",\n        \"namedAxes\": [\n          {\n            \"name\": \"<string>\",\n            \"description\": \"<string>\",\n            \"required\": \"<boolean>\",\n            \"selectedAxis\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"description\": \"<string>\",\n            \"required\": \"<boolean>\",\n            \"selectedAxis\": \"<string>\"\n          }\n        ]\n      },\n      {\n        \"id\": \"<integer>\",\n        \"type\": \"spectral-analysis\",\n        \"name\": \"Spectral features\",\n        \"axes\": [\n          \"accX\",\n          \"accX\"\n        ],\n        \"title\": \"Spectral Analysis\",\n        \"implementationVersion\": \"<integer>\",\n        \"valuesPerAxis\": 11,\n        \"input\": 1,\n        \"description\": \"Reduced learning rate and more layers\",\n        \"createdBy\": \"createImpulse\",\n        \"createdAt\": \"<dateTime>\",\n        \"organization\": {\n          \"id\": \"<integer>\",\n          \"dspId\": \"<integer>\"\n        },\n        \"customUrl\": \"<string>\",\n        \"namedAxes\": [\n          {\n            \"name\": \"<string>\",\n            \"description\": \"<string>\",\n            \"required\": \"<boolean>\",\n            \"selectedAxis\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"description\": \"<string>\",\n            \"required\": \"<boolean>\",\n            \"selectedAxis\": \"<string>\"\n          }\n        ]\n      }\n    ],\n    \"learnBlocks\": [\n      {\n        \"id\": \"<integer>\",\n        \"type\": \"<string>\",\n        \"name\": \"NN Classifier\",\n        \"dsp\": [\n          27,\n          27\n        ],\n        \"title\": \"Classification (Keras)\",\n        \"description\": \"Reduced learning rate and more layers\",\n        \"createdBy\": \"createImpulse\",\n        \"createdAt\": \"<dateTime>\"\n      },\n      {\n        \"id\": \"<integer>\",\n        \"type\": \"<string>\",\n        \"name\": \"NN Classifier\",\n        \"dsp\": [\n          27,\n          27\n        ],\n        \"title\": \"Classification (Keras)\",\n        \"description\": \"Reduced learning rate and more layers\",\n        \"createdBy\": \"createImpulse\",\n        \"createdAt\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "05cea763-49e4-40c7-b70e-b55c3da9fced",
+          "name": "Get new block ID",
+          "request": {
+            "name": "Get new block ID",
+            "description": {
+              "content": "Returns an unused block ID. Use this function to determine new block IDs when you construct an impulse; so you won't accidentally re-use block IDs.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "impulse",
+                "get-new-block-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e6e90a97-8bd5-4f79-9063-01d0b6dcc67f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "impulse",
+                    "get-new-block-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"blockId\": 6463,\n  \"success\": true,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f44e8f1f-6d08-4b7c-9c72-35a5404835de",
+          "name": "Get impulse blocks",
+          "request": {
+            "name": "Get impulse blocks",
+            "description": {
+              "content": "Lists all possible blocks that can be used in the impulse",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "impulse",
+                "blocks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0c7c099e-71c0-4dcc-b566-4e0746385a1a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "impulse",
+                    "blocks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"dspBlocks\": [\n    {\n      \"type\": \"spectral-analysis\",\n      \"title\": \"Spectral features\",\n      \"author\": \"Edge Impulse Inc.\",\n      \"description\": \"string\",\n      \"name\": \"Spectral analysis\",\n      \"experimental\": false,\n      \"latestImplementationVersion\": 572,\n      \"blockType\": \"community\",\n      \"recommended\": false,\n      \"organizationId\": 6954,\n      \"organizationDspId\": 9760,\n      \"namedAxes\": [\n        {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"required\": false\n        },\n        {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"required\": false\n        }\n      ]\n    },\n    {\n      \"type\": \"spectral-analysis\",\n      \"title\": \"Spectral features\",\n      \"author\": \"Edge Impulse Inc.\",\n      \"description\": \"string\",\n      \"name\": \"Spectral analysis\",\n      \"experimental\": false,\n      \"latestImplementationVersion\": 7097,\n      \"blockType\": \"official\",\n      \"recommended\": false,\n      \"organizationId\": 9419,\n      \"organizationDspId\": 8687,\n      \"namedAxes\": [\n        {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"required\": false\n        },\n        {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"required\": false\n        }\n      ]\n    }\n  ],\n  \"inputBlocks\": [\n    {\n      \"type\": \"time-series\",\n      \"title\": \"Time series\",\n      \"author\": \"Edge Impulse Inc.\",\n      \"description\": \"string\",\n      \"name\": \"Time series\",\n      \"blockType\": \"enterprise\",\n      \"recommended\": false\n    },\n    {\n      \"type\": \"image\",\n      \"title\": \"Time series\",\n      \"author\": \"Edge Impulse Inc.\",\n      \"description\": \"string\",\n      \"name\": \"Time series\",\n      \"blockType\": \"official\",\n      \"recommended\": false\n    }\n  ],\n  \"learnBlocks\": [\n    {\n      \"type\": \"spectral-analysis\",\n      \"title\": \"Spectral features\",\n      \"author\": \"Edge Impulse Inc.\",\n      \"description\": \"string\",\n      \"name\": \"Spectral analysis\",\n      \"blockType\": \"community\",\n      \"recommended\": true,\n      \"organizationModelId\": 2727,\n      \"publicProjectTierAvailability\": \"enterprise-only\",\n      \"isPublicEnterpriseOnly\": false,\n      \"displayCategory\": \"classical\"\n    },\n    {\n      \"type\": \"spectral-analysis\",\n      \"title\": \"Spectral features\",\n      \"author\": \"Edge Impulse Inc.\",\n      \"description\": \"string\",\n      \"name\": \"Spectral analysis\",\n      \"blockType\": \"official\",\n      \"recommended\": false,\n      \"organizationModelId\": 3105,\n      \"publicProjectTierAvailability\": \"pro-or-enterprise\",\n      \"isPublicEnterpriseOnly\": true,\n      \"displayCategory\": \"classical\"\n    }\n  ],\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f5a2c92d-015a-4b0b-ad9b-8d23870aaec2",
+          "name": "Verify custom DSP block",
+          "request": {
+            "name": "Verify custom DSP block",
+            "description": {
+              "content": "Verify the validity of a custom DSP block",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "verify-dsp-block",
+                "url"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"url\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ffd0f7be-eca0-4e0b-842c-efe0610ad784",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "verify-dsp-block",
+                    "url"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"error\": \"string\",\n  \"block\": {\n    \"title\": \"string\",\n    \"author\": \"string\",\n    \"description\": \"string\",\n    \"name\": \"string\",\n    \"latestImplementationVersion\": 9199,\n    \"namedAxes\": [\n      {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"required\": false\n      },\n      {\n        \"name\": \"string\",\n        \"description\": \"string\",\n        \"required\": true\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "00e709c2-b746-4427-a0e0-053fd92dcb15",
+          "name": "Get all impulses",
+          "request": {
+            "name": "Get all impulses",
+            "description": {
+              "content": "Retrieve all impulse for a project",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "impulses"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "13fc6a6e-cd88-4e5f-9824-188d562c5c39",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "impulses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"impulses\": [\n    {\n      \"id\": 2369,\n      \"name\": \"string\",\n      \"inputBlocks\": [\n        {\n          \"id\": \"<integer>\",\n          \"type\": \"time-series\",\n          \"name\": \"Time series\",\n          \"title\": \"Time series\",\n          \"windowSizeMs\": 2004,\n          \"windowIncreaseMs\": \"<integer>\",\n          \"frequencyHz\": 60,\n          \"classificationWindowIncreaseMs\": \"<integer>\",\n          \"padZeros\": \"<boolean>\",\n          \"imageWidth\": 28,\n          \"imageHeight\": 28,\n          \"resizeMode\": \"squash\",\n          \"resizeMethod\": \"<string>\",\n          \"cropAnchor\": \"middle-center\",\n          \"description\": \"Reduced learning rate and more layers\",\n          \"createdBy\": \"createImpulse\",\n          \"createdAt\": \"<dateTime>\",\n          \"datasetSubset\": {\n            \"subsetModulo\": \"<number>\",\n            \"subsetSeed\": \"<number>\"\n          }\n        },\n        {\n          \"id\": \"<integer>\",\n          \"type\": \"time-series\",\n          \"name\": \"Time series\",\n          \"title\": \"Time series\",\n          \"windowSizeMs\": 2004,\n          \"windowIncreaseMs\": \"<integer>\",\n          \"frequencyHz\": 60,\n          \"classificationWindowIncreaseMs\": \"<integer>\",\n          \"padZeros\": \"<boolean>\",\n          \"imageWidth\": 28,\n          \"imageHeight\": 28,\n          \"resizeMode\": \"squash\",\n          \"resizeMethod\": \"<string>\",\n          \"cropAnchor\": \"middle-center\",\n          \"description\": \"Reduced learning rate and more layers\",\n          \"createdBy\": \"createImpulse\",\n          \"createdAt\": \"<dateTime>\",\n          \"datasetSubset\": {\n            \"subsetModulo\": \"<number>\",\n            \"subsetSeed\": \"<number>\"\n          }\n        }\n      ],\n      \"dspBlocks\": [\n        {\n          \"id\": \"<integer>\",\n          \"type\": \"spectral-analysis\",\n          \"name\": \"Spectral features\",\n          \"axes\": [\n            \"accX\",\n            \"accX\"\n          ],\n          \"title\": \"Spectral Analysis\",\n          \"implementationVersion\": \"<integer>\",\n          \"valuesPerAxis\": 11,\n          \"input\": 1,\n          \"description\": \"Reduced learning rate and more layers\",\n          \"createdBy\": \"createImpulse\",\n          \"createdAt\": \"<dateTime>\",\n          \"organization\": {\n            \"id\": \"<integer>\",\n            \"dspId\": \"<integer>\"\n          },\n          \"customUrl\": \"<string>\",\n          \"namedAxes\": [\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"description\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"required\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"selectedAxis\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"description\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"required\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"selectedAxis\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"id\": \"<integer>\",\n          \"type\": \"spectral-analysis\",\n          \"name\": \"Spectral features\",\n          \"axes\": [\n            \"accX\",\n            \"accX\"\n          ],\n          \"title\": \"Spectral Analysis\",\n          \"implementationVersion\": \"<integer>\",\n          \"valuesPerAxis\": 11,\n          \"input\": 1,\n          \"description\": \"Reduced learning rate and more layers\",\n          \"createdBy\": \"createImpulse\",\n          \"createdAt\": \"<dateTime>\",\n          \"organization\": {\n            \"id\": \"<integer>\",\n            \"dspId\": \"<integer>\"\n          },\n          \"customUrl\": \"<string>\",\n          \"namedAxes\": [\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"description\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"required\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"selectedAxis\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"description\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"required\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"selectedAxis\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ],\n      \"learnBlocks\": [\n        {\n          \"id\": \"<integer>\",\n          \"type\": \"<string>\",\n          \"name\": \"NN Classifier\",\n          \"dsp\": [\n            27,\n            27\n          ],\n          \"title\": \"Classification (Keras)\",\n          \"description\": \"Reduced learning rate and more layers\",\n          \"createdBy\": \"createImpulse\",\n          \"createdAt\": \"<dateTime>\"\n        },\n        {\n          \"id\": \"<integer>\",\n          \"type\": \"<string>\",\n          \"name\": \"NN Classifier\",\n          \"dsp\": [\n            27,\n            27\n          ],\n          \"title\": \"Classification (Keras)\",\n          \"description\": \"Reduced learning rate and more layers\",\n          \"createdBy\": \"createImpulse\",\n          \"createdAt\": \"<dateTime>\"\n        }\n      ]\n    },\n    {\n      \"id\": 568,\n      \"name\": \"string\",\n      \"inputBlocks\": [\n        {\n          \"id\": \"<integer>\",\n          \"type\": \"time-series\",\n          \"name\": \"Time series\",\n          \"title\": \"Time series\",\n          \"windowSizeMs\": 2004,\n          \"windowIncreaseMs\": \"<integer>\",\n          \"frequencyHz\": 60,\n          \"classificationWindowIncreaseMs\": \"<integer>\",\n          \"padZeros\": \"<boolean>\",\n          \"imageWidth\": 28,\n          \"imageHeight\": 28,\n          \"resizeMode\": \"squash\",\n          \"resizeMethod\": \"<string>\",\n          \"cropAnchor\": \"middle-center\",\n          \"description\": \"Reduced learning rate and more layers\",\n          \"createdBy\": \"createImpulse\",\n          \"createdAt\": \"<dateTime>\",\n          \"datasetSubset\": {\n            \"subsetModulo\": \"<number>\",\n            \"subsetSeed\": \"<number>\"\n          }\n        },\n        {\n          \"id\": \"<integer>\",\n          \"type\": \"time-series\",\n          \"name\": \"Time series\",\n          \"title\": \"Time series\",\n          \"windowSizeMs\": 2004,\n          \"windowIncreaseMs\": \"<integer>\",\n          \"frequencyHz\": 60,\n          \"classificationWindowIncreaseMs\": \"<integer>\",\n          \"padZeros\": \"<boolean>\",\n          \"imageWidth\": 28,\n          \"imageHeight\": 28,\n          \"resizeMode\": \"squash\",\n          \"resizeMethod\": \"<string>\",\n          \"cropAnchor\": \"middle-center\",\n          \"description\": \"Reduced learning rate and more layers\",\n          \"createdBy\": \"createImpulse\",\n          \"createdAt\": \"<dateTime>\",\n          \"datasetSubset\": {\n            \"subsetModulo\": \"<number>\",\n            \"subsetSeed\": \"<number>\"\n          }\n        }\n      ],\n      \"dspBlocks\": [\n        {\n          \"id\": \"<integer>\",\n          \"type\": \"spectral-analysis\",\n          \"name\": \"Spectral features\",\n          \"axes\": [\n            \"accX\",\n            \"accX\"\n          ],\n          \"title\": \"Spectral Analysis\",\n          \"implementationVersion\": \"<integer>\",\n          \"valuesPerAxis\": 11,\n          \"input\": 1,\n          \"description\": \"Reduced learning rate and more layers\",\n          \"createdBy\": \"createImpulse\",\n          \"createdAt\": \"<dateTime>\",\n          \"organization\": {\n            \"id\": \"<integer>\",\n            \"dspId\": \"<integer>\"\n          },\n          \"customUrl\": \"<string>\",\n          \"namedAxes\": [\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"description\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"required\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"selectedAxis\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"description\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"required\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"selectedAxis\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"id\": \"<integer>\",\n          \"type\": \"spectral-analysis\",\n          \"name\": \"Spectral features\",\n          \"axes\": [\n            \"accX\",\n            \"accX\"\n          ],\n          \"title\": \"Spectral Analysis\",\n          \"implementationVersion\": \"<integer>\",\n          \"valuesPerAxis\": 11,\n          \"input\": 1,\n          \"description\": \"Reduced learning rate and more layers\",\n          \"createdBy\": \"createImpulse\",\n          \"createdAt\": \"<dateTime>\",\n          \"organization\": {\n            \"id\": \"<integer>\",\n            \"dspId\": \"<integer>\"\n          },\n          \"customUrl\": \"<string>\",\n          \"namedAxes\": [\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"description\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"required\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"selectedAxis\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"name\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"description\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"required\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"selectedAxis\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ],\n      \"learnBlocks\": [\n        {\n          \"id\": \"<integer>\",\n          \"type\": \"<string>\",\n          \"name\": \"NN Classifier\",\n          \"dsp\": [\n            27,\n            27\n          ],\n          \"title\": \"Classification (Keras)\",\n          \"description\": \"Reduced learning rate and more layers\",\n          \"createdBy\": \"createImpulse\",\n          \"createdAt\": \"<dateTime>\"\n        },\n        {\n          \"id\": \"<integer>\",\n          \"type\": \"<string>\",\n          \"name\": \"NN Classifier\",\n          \"dsp\": [\n            27,\n            27\n          ],\n          \"title\": \"Classification (Keras)\",\n          \"description\": \"Reduced learning rate and more layers\",\n          \"createdBy\": \"createImpulse\",\n          \"createdAt\": \"<dateTime>\"\n        }\n      ]\n    }\n  ],\n  \"success\": true,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1501c260-4cac-45f9-abb5-2859e77c2d98",
+          "name": "Get all impulses (incl. metrics)",
+          "request": {
+            "name": "Get all impulses (incl. metrics)",
+            "description": {
+              "content": "Retrieve all impulse for a project, including accuracy and performance metrics.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "impulses-detailed"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cad966f9-0487-4fef-b107-656b02a74804",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "impulses-detailed"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"extraTableColumns\": [\n    \"string\",\n    \"string\"\n  ],\n  \"impulses\": [\n    {\n      \"impulse\": {\n        \"id\": 7977,\n        \"name\": \"string\",\n        \"inputBlocks\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"title\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"windowSizeMs\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"windowIncreaseMs\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"frequencyHz\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"classificationWindowIncreaseMs\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"padZeros\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"imageWidth\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"imageHeight\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resizeMode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resizeMethod\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"cropAnchor\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdBy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"datasetSubset\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"title\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"windowSizeMs\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"windowIncreaseMs\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"frequencyHz\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"classificationWindowIncreaseMs\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"padZeros\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"imageWidth\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"imageHeight\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resizeMode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resizeMethod\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"cropAnchor\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdBy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"datasetSubset\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"dspBlocks\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"axes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"title\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"implementationVersion\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"valuesPerAxis\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"input\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdBy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"organization\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"customUrl\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"namedAxes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"axes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"title\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"implementationVersion\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"valuesPerAxis\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"input\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdBy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"organization\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"customUrl\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"namedAxes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"learnBlocks\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dsp\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"title\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdBy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dsp\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"title\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdBy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"metrics\": [\n        {\n          \"name\": \"string\",\n          \"type\": \"additional\",\n          \"category\": \"impulseMetrics\",\n          \"description\": \"string\",\n          \"value\": \"string\",\n          \"filteringType\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"options\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"title\": \"string\",\n          \"valueForSorting\": 9922,\n          \"valueHint\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"type\": \"additional\",\n          \"category\": \"inputBlockConfig\",\n          \"description\": \"string\",\n          \"value\": \"string\",\n          \"filteringType\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"options\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"title\": \"string\",\n          \"valueForSorting\": 1186,\n          \"valueHint\": \"string\"\n        }\n      ],\n      \"dspBlockConfigs\": [\n        {\n          \"blockId\": 5747,\n          \"config\": {\n            \"dsp\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"config\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"configError\": \"string\"\n          },\n          \"metadata\": {\n            \"created\": \"2006-10-09T00:26:25.324Z\",\n            \"dspConfig\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"labels\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"featureCount\": 9593,\n            \"windowCount\": 2747,\n            \"includedSamples\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"windowSizeMs\": 8742,\n            \"windowIncreaseMs\": 2843,\n            \"padZeros\": true,\n            \"frequency\": 6488.964933125032,\n            \"outputConfig\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"shape\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"featureLabels\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"fftUsed\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"resamplingAlgorithmVersion\": 5349.443687829201\n          }\n        },\n        {\n          \"blockId\": 243,\n          \"config\": {\n            \"dsp\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"config\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"configError\": \"string\"\n          },\n          \"metadata\": {\n            \"created\": \"2000-01-04T13:58:37.426Z\",\n            \"dspConfig\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_1\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"labels\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"featureCount\": 5727,\n            \"windowCount\": 1030,\n            \"includedSamples\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"windowSizeMs\": 2560,\n            \"windowIncreaseMs\": 2567,\n            \"padZeros\": false,\n            \"frequency\": 5649.064078880122,\n            \"outputConfig\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"shape\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"featureLabels\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"fftUsed\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"resamplingAlgorithmVersion\": 4388.9035745917045\n          }\n        }\n      ],\n      \"learnBlockKerasConfigs\": {},\n      \"learnBlockAnomalyConfigs\": {},\n      \"isStale\": true,\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"pretrainedModelInfo\": {\n        \"fileName\": \"string\"\n      },\n      \"createdFromTunerTrialId\": 1091.5205757063738\n    },\n    {\n      \"impulse\": {\n        \"id\": 7429,\n        \"name\": \"string\",\n        \"inputBlocks\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"title\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"windowSizeMs\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"windowIncreaseMs\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"frequencyHz\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"classificationWindowIncreaseMs\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"padZeros\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"imageWidth\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"imageHeight\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resizeMode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resizeMethod\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"cropAnchor\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdBy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"datasetSubset\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"title\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"windowSizeMs\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"windowIncreaseMs\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"frequencyHz\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"classificationWindowIncreaseMs\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"padZeros\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"imageWidth\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"imageHeight\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resizeMode\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"resizeMethod\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"cropAnchor\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdBy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"datasetSubset\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"dspBlocks\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"axes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"title\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"implementationVersion\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"valuesPerAxis\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"input\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdBy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"organization\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"customUrl\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"namedAxes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"axes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"title\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"implementationVersion\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"valuesPerAxis\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"input\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdBy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"organization\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"customUrl\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"namedAxes\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ],\n        \"learnBlocks\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dsp\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"title\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdBy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"dsp\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"title\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"description\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdBy\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"createdAt\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"metrics\": [\n        {\n          \"name\": \"string\",\n          \"type\": \"core\",\n          \"category\": \"impulseMetrics\",\n          \"description\": \"string\",\n          \"value\": \"string\",\n          \"filteringType\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"options\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"title\": \"string\",\n          \"valueForSorting\": 8693,\n          \"valueHint\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"type\": \"additional\",\n          \"category\": \"learnBlockConfig\",\n          \"description\": \"string\",\n          \"value\": \"string\",\n          \"filteringType\": {\n            \"type\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"options\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          \"title\": \"string\",\n          \"valueForSorting\": 3478,\n          \"valueHint\": \"string\"\n        }\n      ],\n      \"dspBlockConfigs\": [\n        {\n          \"blockId\": 5037,\n          \"config\": {\n            \"dsp\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"config\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"configError\": \"string\"\n          },\n          \"metadata\": {\n            \"created\": \"1997-01-12T05:02:56.919Z\",\n            \"dspConfig\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"labels\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"featureCount\": 692,\n            \"windowCount\": 5328,\n            \"includedSamples\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"windowSizeMs\": 1613,\n            \"windowIncreaseMs\": 7588,\n            \"padZeros\": false,\n            \"frequency\": 7422.07472793571,\n            \"outputConfig\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"shape\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"featureLabels\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"fftUsed\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"resamplingAlgorithmVersion\": 2092.96737817372\n          }\n        },\n        {\n          \"blockId\": 3798,\n          \"config\": {\n            \"dsp\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"config\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"configError\": \"string\"\n          },\n          \"metadata\": {\n            \"created\": \"1995-06-26T10:16:14.674Z\",\n            \"dspConfig\": {\n              \"key_0\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_1\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_2\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"key_3\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"labels\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"featureCount\": 5281,\n            \"windowCount\": 1514,\n            \"includedSamples\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"windowSizeMs\": 2396,\n            \"windowIncreaseMs\": 2437,\n            \"padZeros\": true,\n            \"frequency\": 5537.089406593762,\n            \"outputConfig\": {\n              \"type\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"shape\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            \"featureLabels\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"fftUsed\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ],\n            \"resamplingAlgorithmVersion\": 4194.447639204351\n          }\n        }\n      ],\n      \"learnBlockKerasConfigs\": {},\n      \"learnBlockAnomalyConfigs\": {},\n      \"isStale\": false,\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"pretrainedModelInfo\": {\n        \"fileName\": \"string\"\n      },\n      \"createdFromTunerTrialId\": 5639.216183632587\n    }\n  ],\n  \"metricKeysByCategory\": [\n    {\n      \"category\": \"learnBlockMetrics\",\n      \"metricKeys\": [\n        {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"type\": \"core\",\n          \"showInTable\": false,\n          \"filteringType\": {\n            \"type\": \"select\",\n            \"options\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        },\n        {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"type\": \"additional\",\n          \"showInTable\": true,\n          \"filteringType\": {\n            \"type\": \"numeric\",\n            \"options\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        }\n      ]\n    },\n    {\n      \"category\": \"inputBlockConfig\",\n      \"metricKeys\": [\n        {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"type\": \"core\",\n          \"showInTable\": false,\n          \"filteringType\": {\n            \"type\": \"list\",\n            \"options\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        },\n        {\n          \"name\": \"string\",\n          \"description\": \"string\",\n          \"type\": \"core\",\n          \"showInTable\": true,\n          \"filteringType\": {\n            \"type\": \"numeric\",\n            \"options\": [\n              \"string\",\n              \"string\"\n            ]\n          }\n        }\n      ]\n    }\n  ],\n  \"success\": true,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6494a943-8908-4fee-9ccb-d13b3f30745a",
+          "name": "Download all impulses (incl. metrics), as JSON or CSV.",
+          "request": {
+            "name": "Download all impulses (incl. metrics), as JSON or CSV.",
+            "description": {
+              "content": "Download all impulse for a project, including accuracy and performance metrics, as JSON or CSV.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "download-impulses-detailed"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "<string>",
+                  "description": "Format of the detailed impulses response, either 'json' or 'csv'. If not set, defaults to 'json'."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/octet-stream"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1904b7ab-89e8-4b3b-8c8d-ff51e16880f7",
+              "name": "File",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "download-impulses-detailed"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/octet-stream"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/octet-stream"
+                }
+              ],
+              "body": "string",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "251346e8-31a7-4aaf-9179-64df59a0c5de",
+          "name": "Set legacy impulse",
+          "request": {
+            "name": "Set legacy impulse",
+            "description": {
+              "content": "Set the complete impulse state for a project, writing impulses in the old (pre-impulse experiments) format. This completely clears out all files on FSx for this project. This is an internal API.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "impulse",
+                "legacy-set-impulse"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "zip",
+                  "type": "file",
+                  "description": "(Required) "
+                },
+                {
+                  "key": "impulse",
+                  "type": "file",
+                  "description": "(Required) "
+                },
+                {
+                  "key": "config",
+                  "type": "file",
+                  "description": "(Required) "
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fa64500f-a594-47c1-bdd9-e6809f6ab52b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "impulse",
+                    "legacy-set-impulse"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "zip",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "impulse",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "(Required) ",
+                        "type": "text/plain"
+                      },
+                      "key": "config",
+                      "value": "<binary>",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e09e4bd2-0dce-4056-a6b4-2142cac5602b",
+          "name": "Clone impulse (structure)",
+          "request": {
+            "name": "Clone impulse (structure)",
+            "description": {
+              "content": "Clones the complete structure (incl. config) of an impulse. Does not copy data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "impulse",
+                ":impulseId",
+                "clone",
+                "structure"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "impulseId",
+                  "description": "(Required) Impulse ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "2770ae54-daff-4618-84e6-74546c797d03",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "impulse",
+                    ":impulseId",
+                    "clone",
+                    "structure"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "impulseId",
+                      "description": "(Required) Impulse ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 3887,\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "30eca068-3e34-4edb-ab08-61c76fbbc850",
+          "name": "Clone impulse (complete)",
+          "request": {
+            "name": "Clone impulse (complete)",
+            "description": {
+              "content": "Clones the complete impulse (incl. config and data) of an existing impulse.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                ":projectId",
+                "impulse",
+                ":impulseId",
+                "clone",
+                "complete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "projectId",
+                  "description": "(Required) Project ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "impulseId",
+                  "description": "(Required) Impulse ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "82e79b55-29c8-4b77-86ea-cd771db4f173",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    ":projectId",
+                    "impulse",
+                    ":impulseId",
+                    "clone",
+                    "complete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "projectId",
+                      "description": "(Required) Project ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "impulseId",
+                      "description": "(Required) Impulse ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "x-api-key",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 12873488112,\n  \"success\": false,\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://studio.edgeimpulse.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "x-api-key"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c5305564-0e8d-42b0-83aa-426efb232c46",
+    "name": "Edge Impulse API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

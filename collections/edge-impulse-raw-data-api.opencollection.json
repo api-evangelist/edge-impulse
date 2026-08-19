@@ -1,0 +1,2310 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edge Impulse Raw data API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Raw data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List samples",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Which of the three acquisition categories to retrieve data from"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              },
+              {
+                "name": "excludeSensors",
+                "value": "",
+                "type": "query",
+                "description": "Whether to exclude sensors in the response (as these can slow down requests when you have large pages)."
+              },
+              {
+                "name": "labels",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label within the given list of labels, given as a JSON string"
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples whose filename includes the given filename"
+              },
+              {
+                "name": "maxLength",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples shorter than the given length, in milliseconds"
+              },
+              {
+                "name": "minLength",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples longer than the given length, in milliseconds"
+              },
+              {
+                "name": "minFrequency",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with higher frequency than given frequency, in hertz"
+              },
+              {
+                "name": "maxFrequency",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with lower frequency than given frequency, in hertz"
+              },
+              {
+                "name": "signatureValidity",
+                "value": "",
+                "type": "query",
+                "description": "Include samples with either valid or invalid signatures"
+              },
+              {
+                "name": "includeDisabled",
+                "value": "",
+                "type": "query",
+                "description": "Include only enabled or disabled samples (or both)"
+              },
+              {
+                "name": "minLabel",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label >= this value"
+              },
+              {
+                "name": "maxLabel",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label < this value"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query"
+              },
+              {
+                "name": "proposedActionsJobId",
+                "value": "",
+                "type": "query",
+                "description": "Pass this parameter when querying samples from inside an AI Action job. If you pass this parameter in a multi-stage AI Action, previous proposed changes (from an earlier step) will be applied to the returned dataset."
+              }
+            ]
+          },
+          "docs": "Retrieve all raw data by category."
+        },
+        {
+          "info": {
+            "name": "Count samples",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/count",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Which of the three acquisition categories to retrieve data from"
+              },
+              {
+                "name": "labels",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label within the given list of labels, given as a JSON string"
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples whose filename includes the given filename"
+              },
+              {
+                "name": "maxLength",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples shorter than the given length, in milliseconds"
+              },
+              {
+                "name": "minLength",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples longer than the given length, in milliseconds"
+              },
+              {
+                "name": "minFrequency",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with higher frequency than given frequency, in hertz"
+              },
+              {
+                "name": "maxFrequency",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with lower frequency than given frequency, in hertz"
+              },
+              {
+                "name": "signatureValidity",
+                "value": "",
+                "type": "query",
+                "description": "Include samples with either valid or invalid signatures"
+              },
+              {
+                "name": "includeDisabled",
+                "value": "",
+                "type": "query",
+                "description": "Include only enabled or disabled samples (or both)"
+              },
+              {
+                "name": "minLabel",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label >= this value"
+              },
+              {
+                "name": "maxLabel",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label < this value"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query"
+              }
+            ]
+          },
+          "docs": "Count all raw data by category."
+        },
+        {
+          "info": {
+            "name": "Object detection label queue",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/label-object-detection-queue",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Get all unlabeled items from the object detection queue."
+        },
+        {
+          "info": {
+            "name": "Object detection label queue count",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/label-object-detection-queue/count",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Get count for unlabeled items from the object detection queue."
+        },
+        {
+          "info": {
+            "name": "Rebalance dataset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/rebalance",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Rebalances the dataset over training / testing categories. This resets the category for all data and splits it 80%/20% between training and testing. This is a deterministic process based on the hash of the name of the data."
+        },
+        {
+          "info": {
+            "name": "Clear all object detection labels",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/clear-all-object-detection-labels",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Clears all object detection labels for this dataset, and places all images back in the labeling queue."
+        },
+        {
+          "info": {
+            "name": "Remove all samples",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/delete-all",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Deletes all samples for this project over all categories. This also invalidates all DSP and learn blocks. Note that this does not delete the data from cold storage."
+        },
+        {
+          "info": {
+            "name": "Remove all samples by category",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/delete-all/:category",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "path",
+                "description": "Which of the three acquisition categories to download data from"
+              }
+            ]
+          },
+          "docs": "Deletes all samples for this project over a single category. Note that this does not delete the data from cold storage."
+        },
+        {
+          "info": {
+            "name": "Get project sample metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/metadata",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Which of the three acquisition categories to retrieve data from"
+              }
+            ]
+          },
+          "docs": "Get metadata for all samples in a project."
+        },
+        {
+          "info": {
+            "name": "List data with \"imported from\" metadata key",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/imported-from",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              }
+            ]
+          },
+          "docs": "Lists all data with an 'imported from' metadata key. Used to check in a data source which items are already in a project."
+        },
+        {
+          "info": {
+            "name": "Get sample",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/:sampleId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              },
+              {
+                "name": "limitPayloadValues",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of payload values in the response"
+              },
+              {
+                "name": "cacheKey",
+                "value": "",
+                "type": "query",
+                "description": "If set, then a long cache header is sent. If this is omitted then a no-cache header is sent. You can use this if you f.e. know the last modified date of a sample. Stick the last modified date in the cache key, so the sample can be stored in browser cache (and will automatically be invalidated if the modified date changes)."
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              },
+              {
+                "name": "proposedActionsJobId",
+                "value": "",
+                "type": "query",
+                "description": "Pass this parameter when querying samples from inside an AI Action job. If you pass this parameter in a multi-stage AI Action, previous proposed changes (from an earlier step) will be applied to the returned dataset."
+              }
+            ]
+          },
+          "docs": "Get a sample."
+        },
+        {
+          "info": {
+            "name": "Remove sample",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/:sampleId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              }
+            ]
+          },
+          "docs": "Deletes the sample. Note that this does not delete the data from cold storage."
+        },
+        {
+          "info": {
+            "name": "Download file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/:sampleId/raw",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              }
+            ]
+          },
+          "docs": "Download a sample in it's original format as uploaded to the ingestion service."
+        },
+        {
+          "info": {
+            "name": "Get WAV file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/:sampleId/wav",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              },
+              {
+                "name": "axisIx",
+                "value": "",
+                "type": "query",
+                "description": "Axis index"
+              },
+              {
+                "name": "sliceStart",
+                "value": "",
+                "type": "query",
+                "description": "Begin index of the slice. If not given, the whole sample is used."
+              },
+              {
+                "name": "sliceEnd",
+                "value": "",
+                "type": "query",
+                "description": "End index of the slice. If not given, the whole sample is used."
+              },
+              {
+                "name": "cacheKey",
+                "value": "",
+                "type": "query",
+                "description": "If set, then a long cache header is sent. If this is omitted then a no-cache header is sent. You can use this if you f.e. know the last modified date of a sample. Stick the last modified date in the cache key, so the sample can be stored in browser cache (and will automatically be invalidated if the modified date changes)."
+              }
+            ]
+          },
+          "docs": "Get a sample as a WAV file. This only applies to samples with an audio axis."
+        },
+        {
+          "info": {
+            "name": "Get image file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/:sampleId/image",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              },
+              {
+                "name": "afterInputBlock",
+                "value": "",
+                "type": "query",
+                "description": "Whether to process the image through the input block first"
+              },
+              {
+                "name": "cacheKey",
+                "value": "",
+                "type": "query",
+                "description": "If set, then a long cache header is sent. If this is omitted then a no-cache header is sent. You can use this if you f.e. know the last modified date of a sample. Stick the last modified date in the cache key, so the sample can be stored in browser cache (and will automatically be invalidated if the modified date changes)."
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "Get a sample as an image file. This only applies to samples with RGBA data."
+        },
+        {
+          "info": {
+            "name": "Get video file",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/:sampleId/video",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              },
+              {
+                "name": "afterInputBlock",
+                "value": "",
+                "type": "query",
+                "description": "Whether to process the image through the input block first"
+              },
+              {
+                "name": "cacheKey",
+                "value": "",
+                "type": "query",
+                "description": "If set, then a long cache header is sent. If this is omitted then a no-cache header is sent. You can use this if you f.e. know the last modified date of a sample. Stick the last modified date in the cache key, so the sample can be stored in browser cache (and will automatically be invalidated if the modified date changes)."
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "Get a sample as an video file. This only applies to samples with video data."
+        },
+        {
+          "info": {
+            "name": "Get sample slice",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/:sampleId/slice",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              },
+              {
+                "name": "sliceStart",
+                "value": "",
+                "type": "query",
+                "description": "Begin index of the slice"
+              },
+              {
+                "name": "sliceEnd",
+                "value": "",
+                "type": "query",
+                "description": "End index of the slice. If not given, the sample will be sliced to the same length as the impulse input block window length."
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "Get a slice of a sample."
+        },
+        {
+          "info": {
+            "name": "Rename sample",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/:sampleId/rename",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets the file name of the sample. This name does not need to be unique, but it's highly recommended to do so."
+        },
+        {
+          "info": {
+            "name": "Edit label",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/:sampleId/edit-label",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets the label (also known as class) of the sample. Use the same label for similar types of data, as they are used during training."
+        },
+        {
+          "info": {
+            "name": "Move sample",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/:sampleId/move",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Move a sample to another category (e.g. from test to training)."
+        },
+        {
+          "info": {
+            "name": "Crop sample",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/:sampleId/crop",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Crop a sample to within a new range."
+        },
+        {
+          "info": {
+            "name": "Split sample into frames",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/:sampleId/split",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Split a video sample into individual frames.\nDepending on the length of the video sample this will either execute immediately or return the ID of a job that will perform this action.\n"
+        },
+        {
+          "info": {
+            "name": "Find segments",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/:sampleId/find-segments",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Find start and end times for all non-noise events in a sample"
+        },
+        {
+          "info": {
+            "name": "Segment sample",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/:sampleId/segment",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Slice a sample into multiple segments. The original file will be marked as deleted, but you can crop any created segment to retrieve the original file."
+        },
+        {
+          "info": {
+            "name": "Set bounding boxes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/:sampleId/bounding-boxes",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set the bounding boxes for a sample"
+        },
+        {
+          "info": {
+            "name": "Update structured labels",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/:sampleId/structured-labels",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set structured labels for a sample. If a sample has structured labels the `label` column is ignored, and the sample is allowed to have multiple labels. An array of { startIndex, endIndex, label } needs to be passed in with labels for the complete sample (see `valuesCount` to get the upper bound). endIndex is _inclusive_. If you pass in an incorrect array (e.g. missing values) you'll get an error back."
+        },
+        {
+          "info": {
+            "name": "Store the last segment length",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/store-segment-length",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "When segmenting a sample into smaller segments, store the segment length to ensure uniform segment lengths."
+        },
+        {
+          "info": {
+            "name": "Get the original downsampled data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/:sampleId/original",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              },
+              {
+                "name": "limitPayloadValues",
+                "value": "",
+                "type": "query",
+                "description": "Limit the number of payload values in the response"
+              },
+              {
+                "name": "zoomStart",
+                "value": "",
+                "type": "query",
+                "description": "Zoom into the sample, with the focus starting at this index"
+              },
+              {
+                "name": "zoomEnd",
+                "value": "",
+                "type": "query",
+                "description": "Zoom into the sample, with the focus ending at this index"
+              },
+              {
+                "name": "impulseId",
+                "value": "",
+                "type": "query",
+                "description": "Impulse ID. If this is unset then the default impulse is used."
+              }
+            ]
+          },
+          "docs": "Get the original, uncropped, downsampled data."
+        },
+        {
+          "info": {
+            "name": "Retry processing",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/:sampleId/retry-processing",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              }
+            ]
+          },
+          "docs": "If a sample failed processing, retry the processing operation."
+        },
+        {
+          "info": {
+            "name": "Enable sample",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/:sampleId/enable",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              }
+            ]
+          },
+          "docs": "Enable a sample, ensuring that it is not excluded from the dataset."
+        },
+        {
+          "info": {
+            "name": "Disable sample",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/:sampleId/disable",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              }
+            ]
+          },
+          "docs": "Disable a sample, ensuring that it is excluded from the dataset."
+        },
+        {
+          "info": {
+            "name": "Auto-label an image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/:sampleId/autolabel",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Classify an image using another neural network."
+        },
+        {
+          "info": {
+            "name": "Set sample metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/:sampleId/metadata",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds or updates the metadata associated to a sample."
+        },
+        {
+          "info": {
+            "name": "Move sample to labeling queue",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/:sampleId/to-labeling-queue",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              }
+            ]
+          },
+          "docs": "Clears the bounding box labels and moves item back to labeling queue"
+        },
+        {
+          "info": {
+            "name": "Propose changes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/:sampleId/propose-changes",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "sampleId",
+                "value": "",
+                "type": "path",
+                "description": "Sample ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Queue up changes to an object as part of the AI Actions flow. This overwrites any previous proposed changes."
+        },
+        {
+          "info": {
+            "name": "Edit labels for multiple samples",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/batch/edit-labels",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Which of the three acquisition categories to retrieve data from"
+              },
+              {
+                "name": "labels",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label within the given list of labels, given as a JSON string"
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples whose filename includes the given filename"
+              },
+              {
+                "name": "maxLength",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples shorter than the given length, in milliseconds"
+              },
+              {
+                "name": "minLength",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples longer than the given length, in milliseconds"
+              },
+              {
+                "name": "minFrequency",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with higher frequency than given frequency, in hertz"
+              },
+              {
+                "name": "maxFrequency",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with lower frequency than given frequency, in hertz"
+              },
+              {
+                "name": "signatureValidity",
+                "value": "",
+                "type": "query",
+                "description": "Include samples with either valid or invalid signatures"
+              },
+              {
+                "name": "includeDisabled",
+                "value": "",
+                "type": "query",
+                "description": "Include only enabled or disabled samples (or both)"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with an ID within the given list of IDs, given as a JSON string"
+              },
+              {
+                "name": "excludeIds",
+                "value": "",
+                "type": "query",
+                "description": "Exclude samples with an ID within the given list of IDs, given as a JSON string"
+              },
+              {
+                "name": "minLabel",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label >= this value"
+              },
+              {
+                "name": "maxLabel",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label < this value"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sets the label (also known as class) of multiple samples.\nDepending on the number of affected samples this will either execute immediately or return the ID of a job that will perform this action in batches.\n"
+        },
+        {
+          "info": {
+            "name": "Remove multiple samples",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/batch/delete",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Which of the three acquisition categories to retrieve data from"
+              },
+              {
+                "name": "labels",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label within the given list of labels, given as a JSON string"
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples whose filename includes the given filename"
+              },
+              {
+                "name": "maxLength",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples shorter than the given length, in milliseconds"
+              },
+              {
+                "name": "minLength",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples longer than the given length, in milliseconds"
+              },
+              {
+                "name": "minFrequency",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with higher frequency than given frequency, in hertz"
+              },
+              {
+                "name": "maxFrequency",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with lower frequency than given frequency, in hertz"
+              },
+              {
+                "name": "signatureValidity",
+                "value": "",
+                "type": "query",
+                "description": "Include samples with either valid or invalid signatures"
+              },
+              {
+                "name": "includeDisabled",
+                "value": "",
+                "type": "query",
+                "description": "Include only enabled or disabled samples (or both)"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with an ID within the given list of IDs, given as a JSON string"
+              },
+              {
+                "name": "excludeIds",
+                "value": "",
+                "type": "query",
+                "description": "Exclude samples with an ID within the given list of IDs, given as a JSON string"
+              },
+              {
+                "name": "minLabel",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label >= this value"
+              },
+              {
+                "name": "maxLabel",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label < this value"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query"
+              }
+            ]
+          },
+          "docs": "Deletes samples. Note that this does not delete the data from cold storage.\nDepending on the number of affected samples this will either execute immediately or return the ID of a job that will perform this action in batches.\n"
+        },
+        {
+          "info": {
+            "name": "Move multiple samples",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/batch/moveSamples",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Which of the three acquisition categories to retrieve data from"
+              },
+              {
+                "name": "labels",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label within the given list of labels, given as a JSON string"
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples whose filename includes the given filename"
+              },
+              {
+                "name": "maxLength",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples shorter than the given length, in milliseconds"
+              },
+              {
+                "name": "minLength",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples longer than the given length, in milliseconds"
+              },
+              {
+                "name": "minFrequency",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with higher frequency than given frequency, in hertz"
+              },
+              {
+                "name": "maxFrequency",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with lower frequency than given frequency, in hertz"
+              },
+              {
+                "name": "signatureValidity",
+                "value": "",
+                "type": "query",
+                "description": "Include samples with either valid or invalid signatures"
+              },
+              {
+                "name": "includeDisabled",
+                "value": "",
+                "type": "query",
+                "description": "Include only enabled or disabled samples (or both)"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with an ID within the given list of IDs, given as a JSON string"
+              },
+              {
+                "name": "excludeIds",
+                "value": "",
+                "type": "query",
+                "description": "Exclude samples with an ID within the given list of IDs, given as a JSON string"
+              },
+              {
+                "name": "minLabel",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label >= this value"
+              },
+              {
+                "name": "maxLabel",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label < this value"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Move multiple samples to another category (e.g. from test to training).\nDepending on the number of affected samples this will either execute immediately or return the ID of a job that will perform this action in batches.\n"
+        },
+        {
+          "info": {
+            "name": "Enable multiple samples",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/batch/enable-samples",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Which of the three acquisition categories to retrieve data from"
+              },
+              {
+                "name": "labels",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label within the given list of labels, given as a JSON string"
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples whose filename includes the given filename"
+              },
+              {
+                "name": "maxLength",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples shorter than the given length, in milliseconds"
+              },
+              {
+                "name": "minLength",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples longer than the given length, in milliseconds"
+              },
+              {
+                "name": "minFrequency",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with higher frequency than given frequency, in hertz"
+              },
+              {
+                "name": "maxFrequency",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with lower frequency than given frequency, in hertz"
+              },
+              {
+                "name": "signatureValidity",
+                "value": "",
+                "type": "query",
+                "description": "Include samples with either valid or invalid signatures"
+              },
+              {
+                "name": "includeDisabled",
+                "value": "",
+                "type": "query",
+                "description": "Include only enabled or disabled samples (or both)"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with an ID within the given list of IDs, given as a JSON string"
+              },
+              {
+                "name": "excludeIds",
+                "value": "",
+                "type": "query",
+                "description": "Exclude samples with an ID within the given list of IDs, given as a JSON string"
+              },
+              {
+                "name": "minLabel",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label >= this value"
+              },
+              {
+                "name": "maxLabel",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label < this value"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query"
+              }
+            ]
+          },
+          "docs": "Enables samples, ensuring that they are not excluded from the dataset.\nDepending on the number of affected samples this will either execute immediately or return the ID of a job that will perform this action in batches.\n"
+        },
+        {
+          "info": {
+            "name": "Disable multiple samples",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/batch/disable-samples",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Which of the three acquisition categories to retrieve data from"
+              },
+              {
+                "name": "labels",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label within the given list of labels, given as a JSON string"
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples whose filename includes the given filename"
+              },
+              {
+                "name": "maxLength",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples shorter than the given length, in milliseconds"
+              },
+              {
+                "name": "minLength",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples longer than the given length, in milliseconds"
+              },
+              {
+                "name": "minFrequency",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with higher frequency than given frequency, in hertz"
+              },
+              {
+                "name": "maxFrequency",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with lower frequency than given frequency, in hertz"
+              },
+              {
+                "name": "signatureValidity",
+                "value": "",
+                "type": "query",
+                "description": "Include samples with either valid or invalid signatures"
+              },
+              {
+                "name": "includeDisabled",
+                "value": "",
+                "type": "query",
+                "description": "Include only enabled or disabled samples (or both)"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with an ID within the given list of IDs, given as a JSON string"
+              },
+              {
+                "name": "excludeIds",
+                "value": "",
+                "type": "query",
+                "description": "Exclude samples with an ID within the given list of IDs, given as a JSON string"
+              },
+              {
+                "name": "minLabel",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label >= this value"
+              },
+              {
+                "name": "maxLabel",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label < this value"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query"
+              }
+            ]
+          },
+          "docs": "Disables samples, ensuring that they are excluded from the dataset.\nDepending on the number of affected samples this will either execute immediately or return the ID of a job that will perform this action in batches.\n"
+        },
+        {
+          "info": {
+            "name": "Add metadata (multiple samples)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/batch/add-metadata",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Which of the three acquisition categories to retrieve data from"
+              },
+              {
+                "name": "labels",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label within the given list of labels, given as a JSON string"
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples whose filename includes the given filename"
+              },
+              {
+                "name": "maxLength",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples shorter than the given length, in milliseconds"
+              },
+              {
+                "name": "minLength",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples longer than the given length, in milliseconds"
+              },
+              {
+                "name": "minFrequency",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with higher frequency than given frequency, in hertz"
+              },
+              {
+                "name": "maxFrequency",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with lower frequency than given frequency, in hertz"
+              },
+              {
+                "name": "signatureValidity",
+                "value": "",
+                "type": "query",
+                "description": "Include samples with either valid or invalid signatures"
+              },
+              {
+                "name": "includeDisabled",
+                "value": "",
+                "type": "query",
+                "description": "Include only enabled or disabled samples (or both)"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with an ID within the given list of IDs, given as a JSON string"
+              },
+              {
+                "name": "excludeIds",
+                "value": "",
+                "type": "query",
+                "description": "Exclude samples with an ID within the given list of IDs, given as a JSON string"
+              },
+              {
+                "name": "minLabel",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label >= this value"
+              },
+              {
+                "name": "maxLabel",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label < this value"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add specific metadata for multiple samples."
+        },
+        {
+          "info": {
+            "name": "Clear metadata by key (multiple samples)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/batch/clear-metadata-by-key",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Which of the three acquisition categories to retrieve data from"
+              },
+              {
+                "name": "labels",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label within the given list of labels, given as a JSON string"
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples whose filename includes the given filename"
+              },
+              {
+                "name": "maxLength",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples shorter than the given length, in milliseconds"
+              },
+              {
+                "name": "minLength",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples longer than the given length, in milliseconds"
+              },
+              {
+                "name": "minFrequency",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with higher frequency than given frequency, in hertz"
+              },
+              {
+                "name": "maxFrequency",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with lower frequency than given frequency, in hertz"
+              },
+              {
+                "name": "signatureValidity",
+                "value": "",
+                "type": "query",
+                "description": "Include samples with either valid or invalid signatures"
+              },
+              {
+                "name": "includeDisabled",
+                "value": "",
+                "type": "query",
+                "description": "Include only enabled or disabled samples (or both)"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with an ID within the given list of IDs, given as a JSON string"
+              },
+              {
+                "name": "excludeIds",
+                "value": "",
+                "type": "query",
+                "description": "Exclude samples with an ID within the given list of IDs, given as a JSON string"
+              },
+              {
+                "name": "minLabel",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label >= this value"
+              },
+              {
+                "name": "maxLabel",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label < this value"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Clears a specific metadata field (by key) for multiple samples."
+        },
+        {
+          "info": {
+            "name": "Clear all metadata (multiple samples)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/batch/clear-metadata",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "Which of the three acquisition categories to retrieve data from"
+              },
+              {
+                "name": "labels",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label within the given list of labels, given as a JSON string"
+              },
+              {
+                "name": "filename",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples whose filename includes the given filename"
+              },
+              {
+                "name": "maxLength",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples shorter than the given length, in milliseconds"
+              },
+              {
+                "name": "minLength",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples longer than the given length, in milliseconds"
+              },
+              {
+                "name": "minFrequency",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with higher frequency than given frequency, in hertz"
+              },
+              {
+                "name": "maxFrequency",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with lower frequency than given frequency, in hertz"
+              },
+              {
+                "name": "signatureValidity",
+                "value": "",
+                "type": "query",
+                "description": "Include samples with either valid or invalid signatures"
+              },
+              {
+                "name": "includeDisabled",
+                "value": "",
+                "type": "query",
+                "description": "Include only enabled or disabled samples (or both)"
+              },
+              {
+                "name": "ids",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with an ID within the given list of IDs, given as a JSON string"
+              },
+              {
+                "name": "excludeIds",
+                "value": "",
+                "type": "query",
+                "description": "Exclude samples with an ID within the given list of IDs, given as a JSON string"
+              },
+              {
+                "name": "minLabel",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label >= this value"
+              },
+              {
+                "name": "maxLabel",
+                "value": "",
+                "type": "query",
+                "description": "Only include samples with a label < this value"
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query"
+              }
+            ]
+          },
+          "docs": "Clears all metadata for multiple samples."
+        },
+        {
+          "info": {
+            "name": "Track objects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/track-objects",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Track objects between two samples. Source sample should have bounding boxes set."
+        },
+        {
+          "info": {
+            "name": "Get data explorer features",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/data-explorer/features",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "t-SNE2 output of the raw dataset"
+        },
+        {
+          "info": {
+            "name": "Check data explorer features",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/data-explorer/has-features",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "t-SNE2 output of the raw dataset"
+        },
+        {
+          "info": {
+            "name": "Get data explorer predictions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/data-explorer/predictions",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Predictions for every data explorer point (only available when using current impulse to populate data explorer)"
+        },
+        {
+          "info": {
+            "name": "Clear data explorer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/data-explorer/clear",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Remove the current data explorer state"
+        },
+        {
+          "info": {
+            "name": "Get data explorer settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/data-explorer/settings",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Get data explorer configuration, like the type of data, and the input / dsp block to use."
+        },
+        {
+          "info": {
+            "name": "Set data explorer settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/data-explorer/settings",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set data explorer configuration, like the type of data, and the input / dsp block to use."
+        },
+        {
+          "info": {
+            "name": "Upload a data explorer screenshot",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/data-explorer/screenshot",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Used internally (from a data pipeline) to upload a picture of the data explorer"
+        },
+        {
+          "info": {
+            "name": "Check if data diversity metrics exist",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/data-quality/diversity/exists",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Determine if data diversity metrics have been calculated. To calculate these metrics, use the `calculateDataQualityMetrics` endpoint."
+        },
+        {
+          "info": {
+            "name": "Get diversity metrics data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/data-quality/diversity",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Obtain metrics that describe the similarity and diversity of a dataset. To calculate these metrics, use the `calculateDataQualityMetrics` endpoint."
+        },
+        {
+          "info": {
+            "name": "Check if label noise metrics exist",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/data-quality/label-noise/exists",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Determine if label noise metrics have been calculated. To calculate these metrics, use the `calculateDataQualityMetrics` endpoint."
+        },
+        {
+          "info": {
+            "name": "Get label noise data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/data-quality/label-noise",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Obtain metrics that describe potential label noise issues in the dataset. To calculate these metrics, use the `calculateDataQualityMetrics` endpoint."
+        },
+        {
+          "info": {
+            "name": "Get AI Actions proposed changes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/raw-data/ai-actions-preview/:jobId/proposed-changes",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              }
+            ]
+          },
+          "docs": "Get proposed changes from an AI Actions job."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

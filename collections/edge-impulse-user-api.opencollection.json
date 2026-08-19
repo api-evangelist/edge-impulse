@@ -1,0 +1,794 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edge Impulse User API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api-user-create",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new user and project"
+        },
+        {
+          "info": {
+            "name": "Create evaluation user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api-user-create-evaluate"
+          },
+          "docs": "Creates an evaluation user and a new project, and redirects the user to the new project."
+        },
+        {
+          "info": {
+            "name": "Create Professional Tier user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api-create-pro-user",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new user for the Professional Plan and a new project. Note that the Professional plan will not be enabled until the payment is successful."
+        },
+        {
+          "info": {
+            "name": "Create enterprise trial user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api-user-create-enterprise-trial",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an enterprise trial user and a new trial organization, and redirects the user to the new organization."
+        },
+        {
+          "info": {
+            "name": "Get user registration state",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api-user-need-to-set-password/:usernameOrEmail",
+            "params": [
+              {
+                "name": "usernameOrEmail",
+                "value": "",
+                "type": "path",
+                "description": "Username or email"
+              }
+            ]
+          },
+          "docs": "Tells whether a user is registered and whether it needs to set its password."
+        },
+        {
+          "info": {
+            "name": "Get current user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/user",
+            "params": [
+              {
+                "name": "excludeProjects",
+                "value": "",
+                "type": "query",
+                "description": "If set to \"true\", the \"projects\" field is left empty (will be faster if you call this function a lot). Use `getCurrentUserProjects` to get the project list in a separate call."
+              }
+            ]
+          },
+          "docs": "Get information about the current user. This function is only available through a JWT token."
+        },
+        {
+          "info": {
+            "name": "Update current user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/user",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update user properties such as name. This function is only available through a JWT token."
+        },
+        {
+          "info": {
+            "name": "Delete current user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/user",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete a user. This function is only available through a JWT token, and can only remove the current user."
+        },
+        {
+          "info": {
+            "name": "Get current user projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/user/projects"
+          },
+          "docs": "Get projects for the current user. This returns all projects regardless of whitelabel. This function is only available through a JWT token."
+        },
+        {
+          "info": {
+            "name": "Convert current evaluation user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/user/convert",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Convert current evaluation user account to regular account."
+        },
+        {
+          "info": {
+            "name": "Activate current user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/user/activate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Activate the current user account (requires an activation code). This function is only available through a JWT token."
+        },
+        {
+          "info": {
+            "name": "Request activation code",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/user/request-activation"
+          },
+          "docs": "Request a new activation code for the current user. This function is only available through a JWT token."
+        },
+        {
+          "info": {
+            "name": "Create developer profile",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/user/create-developer-profile"
+          },
+          "docs": "Create a developer profile for the current active user."
+        },
+        {
+          "info": {
+            "name": "Start enterprise trial",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/user/trial",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an enterprise trial for the current user. Users can only go through a trial once."
+        },
+        {
+          "info": {
+            "name": "List emails",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/user/emails"
+          },
+          "docs": "Get a list of all emails sent by Edge Impulse to the current user. This function is only available through a JWT token, and is not available for all users."
+        },
+        {
+          "info": {
+            "name": "Upload photo",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/user/photo",
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Upload a photo for the current user. This function is only available through a JWT token."
+        },
+        {
+          "info": {
+            "name": "Delete photo",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/user/photo"
+          },
+          "docs": "Delete user profile photo. This function is only available through a JWT token."
+        },
+        {
+          "info": {
+            "name": "Change password current user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/user/change-password",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Change the password for the current user account. This function is only available through a JWT token."
+        },
+        {
+          "info": {
+            "name": "Get organizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/user/organizations"
+          },
+          "docs": "List all organizations that the current user is a member of. This function is only available through a JWT token."
+        },
+        {
+          "info": {
+            "name": "Get buckets current user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/users/buckets"
+          },
+          "docs": "List all organizational storage buckets that the current user has access to. This function is only available through a JWT token."
+        },
+        {
+          "info": {
+            "name": "Get user by third party activation code",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/user/by-third-party-activation-code",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Get information about a user through an activation code. This function is only available through a JWT token."
+        },
+        {
+          "info": {
+            "name": "Activate user by third party activation code",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/user/activate-by-third-party-activation-code",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Activate a user that was created by a third party. This function is only available through a JWT token."
+        },
+        {
+          "info": {
+            "name": "Accept Terms of Service",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/user/accept-tos"
+          },
+          "docs": "Accept Terms of Service."
+        },
+        {
+          "info": {
+            "name": "Dismiss a notification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/user/dismiss-notification",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Dismiss a notification"
+        },
+        {
+          "info": {
+            "name": "Generate a new TOTP MFA key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/user/mfa/totp/create-key"
+          },
+          "docs": "Creates a new MFA key, only allowed if the user has no MFA configured. TOTP tokens use SHA-1 algorithm."
+        },
+        {
+          "info": {
+            "name": "Set TOTP MFA key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/user/mfa/totp/set-key",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Enable MFA on this account using an TOTP token. First create a new key via `userGenerateNewTotpMfaKey`."
+        },
+        {
+          "info": {
+            "name": "Remove TOTP MFA key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/user/mfa/totp/clear",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Disable MFA on this account using an TOTP token."
+        },
+        {
+          "info": {
+            "name": "Upgrade subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/user/subscription/upgrade",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Upgrade the current subscription."
+        },
+        {
+          "info": {
+            "name": "Cancel subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/user/subscription/cancel",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Cancel the current subscription."
+        },
+        {
+          "info": {
+            "name": "Undo subscription cancellation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/user/subscription/undo-cancel"
+          },
+          "docs": "Stop a pending cancellation. If you schedule a subscription to be canceled, and\nthe subscription hasn't yet reached the end of the billing period, you can stop\nthe cancellation. After a subscription has been canceled, you can't reactivate it.\n"
+        },
+        {
+          "info": {
+            "name": "Get user billable compute metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/user/subscription/metrics"
+          },
+          "docs": "Get billable compute metrics for a user. This function is only available to users with an active subscription."
+        },
+        {
+          "info": {
+            "name": "Get user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/users/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "Get information about a user. This function is only available through a JWT token."
+        },
+        {
+          "info": {
+            "name": "Update user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/users/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update user properties such as name. This function is only available through a JWT token."
+        },
+        {
+          "info": {
+            "name": "Delete user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/users/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete a user. This function is only available through a JWT token, and can only remove the current user."
+        },
+        {
+          "info": {
+            "name": "Activate user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/users/:userId/activate",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Activate a user account (requires an activation code). This function is only available through a JWT token."
+        },
+        {
+          "info": {
+            "name": "Request activation code",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/users/:userId/request-activation",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "Request a new activation code. This function is only available through a JWT token."
+        },
+        {
+          "info": {
+            "name": "List emails",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/users/:userId/emails",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "Get a list of all emails sent by Edge Impulse to a user. This function is only available through a JWT token, and is not available for all users."
+        },
+        {
+          "info": {
+            "name": "Upload photo",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/users/:userId/photo",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Upload a photo for a user. This function is only available through a JWT token, and is not available for all users."
+        },
+        {
+          "info": {
+            "name": "Change password",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/users/:userId/change-password",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Change the password for a user account. This function is only available through a JWT token."
+        },
+        {
+          "info": {
+            "name": "Set password for SSO user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/users/:userId/set-password",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Set the password for a new SSO user. This function is only available through an SSO access token."
+        },
+        {
+          "info": {
+            "name": "Get organizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/users/:userId/organizations",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "List all organizations for a user. This function is only available through a JWT token."
+        },
+        {
+          "info": {
+            "name": "Get buckets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/users/:userId/buckets",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "List all organizational storage buckets that a user has access to. This function is only available through a JWT token."
+        },
+        {
+          "info": {
+            "name": "Send feedback",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/users/:userId/feedback",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send feedback to Edge Impulse or get in touch with sales."
+        },
+        {
+          "info": {
+            "name": "Send upgrade request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/users/:userId/upgrade",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Send an upgrade to Enterprise request to Edge Impulse."
+        },
+        {
+          "info": {
+            "name": "Get enterprise trials",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/users/:userId/trials",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "Get a list of all enterprise trials for a user. This function is only available through a JWT token."
+        },
+        {
+          "info": {
+            "name": "Request reset password",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api-user-request-reset-password",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Request a password reset link for a user."
+        },
+        {
+          "info": {
+            "name": "Reset password",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api-user-reset-password",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Reset the password for a user."
+        },
+        {
+          "info": {
+            "name": "Verify reset password code",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api-user-verify-reset-password-code",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Verify whether the reset password code for the user is valid."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

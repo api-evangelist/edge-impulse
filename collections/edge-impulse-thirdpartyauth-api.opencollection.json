@@ -1,0 +1,165 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edge Impulse ThirdPartyAuth API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ThirdPartyAuth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all third party auth",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/third-party-auth"
+          },
+          "docs": "Get information about all third party authentication partners"
+        },
+        {
+          "info": {
+            "name": "Create third party auth",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/third-party-auth",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new third party authentication partner"
+        },
+        {
+          "info": {
+            "name": "Get third party auth",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/third-party-auth/:authId",
+            "params": [
+              {
+                "name": "authId",
+                "value": "",
+                "type": "path",
+                "description": "Auth ID"
+              }
+            ]
+          },
+          "docs": "Get information about a third party authentication partner"
+        },
+        {
+          "info": {
+            "name": "Update third party auth",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/third-party-auth/:authId",
+            "params": [
+              {
+                "name": "authId",
+                "value": "",
+                "type": "path",
+                "description": "Auth ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a third party authentication partner"
+        },
+        {
+          "info": {
+            "name": "Delete third party auth",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/third-party-auth/:authId",
+            "params": [
+              {
+                "name": "authId",
+                "value": "",
+                "type": "path",
+                "description": "Auth ID"
+              }
+            ]
+          },
+          "docs": "Delete a third party authentication partner"
+        },
+        {
+          "info": {
+            "name": "Give access to project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/:projectId/third-party-auth/:authId/authorize",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "authId",
+                "value": "",
+                "type": "path",
+                "description": "Auth ID"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": []
+            }
+          },
+          "docs": "Authorize a third party to access a project"
+        },
+        {
+          "info": {
+            "name": "Create or login a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/third-party-auth/:authId/login",
+            "params": [
+              {
+                "name": "authId",
+                "value": "",
+                "type": "path",
+                "description": "Auth ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Login as a user as a third-party authentication provider. If the user does not exists, it's automatically created. You can only log in as users that were previously created by you."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

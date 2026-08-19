@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edge Impulse Canary API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Canary",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the decision to whether the requested URL goes on canary deployment or not",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/canary",
+            "params": [
+              {
+                "name": "requestedUrl",
+                "value": "",
+                "type": "query",
+                "description": "Full url (host included) that is requested"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "jwt",
+              "value": "{{jwt}}",
+              "placement": "query"
+            }
+          },
+          "docs": "Get the decision to whether the requested URL goes on canary deployment or not"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,45 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edge Impulse CDN API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CDN",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "User CDN resource",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api-usercdn",
+            "params": [
+              {
+                "name": "path",
+                "value": "",
+                "type": "query",
+                "description": "CDN Path"
+              }
+            ]
+          },
+          "docs": "Proxy function to retrieve data from the user CDN. This function is only used during development."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,64 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edge Impulse Health API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Health",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get studio web containers health",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api-health",
+            "params": [
+              {
+                "name": "requester",
+                "value": "",
+                "type": "query",
+                "description": "Health check requester"
+              }
+            ]
+          },
+          "docs": "Get studio web containers health."
+        },
+        {
+          "info": {
+            "name": "Get studio api containers health",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/api-health",
+            "params": [
+              {
+                "name": "requester",
+                "value": "",
+                "type": "query",
+                "description": "Health check requester"
+              }
+            ]
+          },
+          "docs": "Get studio api containers health."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

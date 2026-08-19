@@ -1,0 +1,1663 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Edge Impulse Admin API",
+    "version": "1.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "x-api-key",
+      "value": "{{x-api-key}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Admin",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get global metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/metrics"
+          },
+          "docs": "Admin-only API to get global metrics."
+        },
+        {
+          "info": {
+            "name": "Get global metrics reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/metrics/reports",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              }
+            ]
+          },
+          "docs": "Admin-only API to get global metrics reports."
+        },
+        {
+          "info": {
+            "name": "Create a new global metrics report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/metrics/reports",
+            "params": [
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date"
+              }
+            ]
+          },
+          "docs": "Admin-only API to create a new global metrics report.\nA job is created to process the report request and the job details are returned in the response.\n"
+        },
+        {
+          "info": {
+            "name": "Get global metrics report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/metrics/reports/:reportId",
+            "params": [
+              {
+                "name": "reportId",
+                "value": "",
+                "type": "path",
+                "description": "Report ID"
+              }
+            ]
+          },
+          "docs": "Admin-only API to get a global metrics report."
+        },
+        {
+          "info": {
+            "name": "Delete global metrics report",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/metrics/reports/:reportId",
+            "params": [
+              {
+                "name": "reportId",
+                "value": "",
+                "type": "path",
+                "description": "Report ID"
+              }
+            ]
+          },
+          "docs": "Admin-only API to delete a global metrics report."
+        },
+        {
+          "info": {
+            "name": "Download global metrics report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/metrics/reports/:reportId/download",
+            "params": [
+              {
+                "name": "reportId",
+                "value": "",
+                "type": "path",
+                "description": "Report ID"
+              }
+            ]
+          },
+          "docs": "Admin-only API to download a global metrics report."
+        },
+        {
+          "info": {
+            "name": "Get data migrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/infra/migrations"
+          },
+          "docs": "Admin-only API to get data migrations."
+        },
+        {
+          "info": {
+            "name": "Get data migration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/infra/migrations/:migrationId",
+            "params": [
+              {
+                "name": "migrationId",
+                "value": "",
+                "type": "path",
+                "description": "Data migration ID"
+              }
+            ]
+          },
+          "docs": "Admin-only API to get a data migration."
+        },
+        {
+          "info": {
+            "name": "Run or pause a data migration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/infra/migrations/:migrationId",
+            "params": [
+              {
+                "name": "migrationId",
+                "value": "",
+                "type": "path",
+                "description": "Data migration ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin-only API to run or pause a data migration."
+        },
+        {
+          "info": {
+            "name": "Get the list of disallowed email domains",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/infra/disallowedEmailDomains"
+          },
+          "docs": "Admin-only API to get the list of disallowed email domains."
+        },
+        {
+          "info": {
+            "name": "Add a disallowed email domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/infra/disallowedEmailDomains",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin-only API to add an email domain to the list of disallowed email domains."
+        },
+        {
+          "info": {
+            "name": "Delete disallowed email domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/infra/disallowedEmailDomains/:domainName",
+            "params": [
+              {
+                "name": "domainName",
+                "value": "",
+                "type": "path",
+                "description": "Email domain name"
+              }
+            ]
+          },
+          "docs": "Admin-only API to delete an email domain from the list of disallowed email domains."
+        },
+        {
+          "info": {
+            "name": "Get all feature flags",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/infra/featureFlags"
+          },
+          "docs": "Admin-only API to get all feature flags."
+        },
+        {
+          "info": {
+            "name": "Set a feature flag ON",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/infra/featureFlags/:featureId",
+            "params": [
+              {
+                "name": "featureId",
+                "value": "",
+                "type": "path",
+                "description": "Feature ID."
+              }
+            ]
+          },
+          "docs": "Admin-only API to set a feature flag ON. Setting a feature flag ON essentially enables the feature for all users."
+        },
+        {
+          "info": {
+            "name": "Set a feature flag OFF",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/infra/featureFlags/:featureId",
+            "params": [
+              {
+                "name": "featureId",
+                "value": "",
+                "type": "path",
+                "description": "Feature ID."
+              }
+            ]
+          },
+          "docs": "Admin-only API to delete a feature flag. Deleting a feature flag essentially disables the feature for all users."
+        },
+        {
+          "info": {
+            "name": "Get all studio config",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/infra/config"
+          },
+          "docs": "Admin-only API to get all studio config."
+        },
+        {
+          "info": {
+            "name": "Update studio config",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/infra/config/:configKey",
+            "params": [
+              {
+                "name": "configKey",
+                "value": "",
+                "type": "path",
+                "description": "Config Key"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin-only API to update a studio config item."
+        },
+        {
+          "info": {
+            "name": "Delete a studio config item",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/infra/config/:configKey",
+            "params": [
+              {
+                "name": "configKey",
+                "value": "",
+                "type": "path",
+                "description": "Config Key"
+              }
+            ]
+          },
+          "docs": "Admin-only API to delete a studio config item."
+        },
+        {
+          "info": {
+            "name": "Get all users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/users",
+            "params": [
+              {
+                "name": "active",
+                "value": "",
+                "type": "query",
+                "description": "Whether to search for entities (users, orgs) active in the last X days"
+              },
+              {
+                "name": "tier",
+                "value": "",
+                "type": "query",
+                "description": "Whether to search for free, community plus, professional, or enterprise entities (users, projects)"
+              },
+              {
+                "name": "fields",
+                "value": "",
+                "type": "query",
+                "description": "Comma separated list of fields to fetch in a query"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Fields and order to sort query by"
+              },
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query"
+              }
+            ]
+          },
+          "docs": "Admin-only API to get the list of all registered users."
+        },
+        {
+          "info": {
+            "name": "Get user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/users/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "Admin-only API to get information about a user."
+        },
+        {
+          "info": {
+            "name": "Update user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/users/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin-only API to update user properties."
+        },
+        {
+          "info": {
+            "name": "Delete a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/users/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "Admin-only API to delete a user."
+        },
+        {
+          "info": {
+            "name": "Get user metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/users/:userId/metrics",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "Admin-only API to get marketing metrics about a user."
+        },
+        {
+          "info": {
+            "name": "Update user permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/users/:userId/permissions",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin-only API to update the list of permissions for a user."
+        },
+        {
+          "info": {
+            "name": "Get user jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/users/:userId/jobs",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              }
+            ]
+          },
+          "docs": "Admin-only API to get the list of all project jobs for a user."
+        },
+        {
+          "info": {
+            "name": "Create user enterprise trial",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/trials",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin-only API to create an enterprise trial for a user."
+        },
+        {
+          "info": {
+            "name": "Get enterprise trial",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/trials/:enterpriseTrialId",
+            "params": [
+              {
+                "name": "enterpriseTrialId",
+                "value": "",
+                "type": "path",
+                "description": "Enterprise trial ID"
+              }
+            ]
+          },
+          "docs": "Admin-only API to get a specific enterprise trial."
+        },
+        {
+          "info": {
+            "name": "Update enterprise trial",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/trials/:enterpriseTrialId",
+            "params": [
+              {
+                "name": "enterpriseTrialId",
+                "value": "",
+                "type": "path",
+                "description": "Enterprise trial ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin-only API to update an enterprise trial."
+        },
+        {
+          "info": {
+            "name": "Delete enterprise trial",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/trials/:enterpriseTrialId",
+            "params": [
+              {
+                "name": "enterpriseTrialId",
+                "value": "",
+                "type": "path",
+                "description": "Enterprise trial ID"
+              }
+            ]
+          },
+          "docs": "Admin-only API to delete an enterprise trial."
+        },
+        {
+          "info": {
+            "name": "Upgrade enterprise trial to a full enterprise account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/trials/:enterpriseTrialId/upgrade",
+            "params": [
+              {
+                "name": "enterpriseTrialId",
+                "value": "",
+                "type": "path",
+                "description": "Enterprise trial ID"
+              }
+            ]
+          },
+          "docs": "Admin-only API to upgrade a specific enterprise trial to a full enterprise account."
+        },
+        {
+          "info": {
+            "name": "Get all projects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/projects",
+            "params": [
+              {
+                "name": "active",
+                "value": "",
+                "type": "query",
+                "description": "Whether to search for entities (users, orgs) active in the last X days"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Fields and order to sort query by"
+              },
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query"
+              }
+            ]
+          },
+          "docs": "Admin-only API to get the list of all projects."
+        },
+        {
+          "info": {
+            "name": "Create a new project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/projects",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin-only API to create a new free tier project."
+        },
+        {
+          "info": {
+            "name": "Get project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/projects/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Admin-only API to get project information."
+        },
+        {
+          "info": {
+            "name": "Update project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/projects/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin-only API to update project properties."
+        },
+        {
+          "info": {
+            "name": "Delete a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/projects/:projectId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "Admin-only API to delete a project."
+        },
+        {
+          "info": {
+            "name": "Add user to a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/projects/:projectId/members",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin-only API to add a user to a project. If no user is provided, the current user is used."
+        },
+        {
+          "info": {
+            "name": "Remove user from a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/projects/:projectId/members/:userId",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "Admin-only API to remove a user from a project."
+        },
+        {
+          "info": {
+            "name": "Get project jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/projects/:projectId/jobs",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              }
+            ]
+          },
+          "docs": "Admin-only API to get the list of all jobs for a project."
+        },
+        {
+          "info": {
+            "name": "Get all organizations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/organizations",
+            "params": [
+              {
+                "name": "active",
+                "value": "",
+                "type": "query",
+                "description": "Whether to search for entities (users, orgs) active in the last X days"
+              },
+              {
+                "name": "includeDeleted",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include deleted entities (users, projects, orgs)"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Fields and order to sort query by"
+              },
+              {
+                "name": "filters",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search query"
+              }
+            ]
+          },
+          "docs": "Admin-only API to get the list of all organizations."
+        },
+        {
+          "info": {
+            "name": "Create a new organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/organizations",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin-only API to create a new organization."
+        },
+        {
+          "info": {
+            "name": "Organization information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/organizations/:organizationId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "includeDeleted",
+                "value": "",
+                "type": "query",
+                "description": "Whether to include deleted entities (users, projects, orgs)"
+              }
+            ]
+          },
+          "docs": "Admin-only API to list all information about this organization."
+        },
+        {
+          "info": {
+            "name": "Update organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/organizations/:organizationId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin-only API to update organization properties such as name and logo."
+        },
+        {
+          "info": {
+            "name": "Delete an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/organizations/:organizationId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "fullDeletion",
+                "value": "",
+                "type": "query",
+                "description": "Set to true for full deletion"
+              }
+            ]
+          },
+          "docs": "Admin-only API to delete an organization. If `fullDeletion` is set, it deletes the organization's identifiable information and files. Otherwise, it soft deletes the organization by setting its `delete_date` value."
+        },
+        {
+          "info": {
+            "name": "Restore an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/organizations/:organizationId/restore",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ]
+          },
+          "docs": "Admin-only API to restore a soft deleted organization. All organization projects sharing the same deletion date as that of the organization will also be restored. If this is a trial organization that was never upgraded to a paid plan then the organization will be restored to its original trial state.\n"
+        },
+        {
+          "info": {
+            "name": "Get organization compute time usage",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/organizations/:organizationId/usage/computeTime",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date"
+              }
+            ]
+          },
+          "docs": "Admin-only API to get compute time usage for an organization over a period of time."
+        },
+        {
+          "info": {
+            "name": "Get all usage reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/organizations/:organizationId/usage/reports",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              }
+            ]
+          },
+          "docs": "Admin-only API to get all usage reports for an organization."
+        },
+        {
+          "info": {
+            "name": "Creates a new usage report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/organizations/:organizationId/usage/reports",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "End date"
+              }
+            ]
+          },
+          "docs": "Admin-only API to create a new usage report for an organization. A job is created to process the report request and the job details are returned in the response."
+        },
+        {
+          "info": {
+            "name": "Get usage report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/organizations/:organizationId/usage/reports/:reportId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "reportId",
+                "value": "",
+                "type": "path",
+                "description": "Report ID"
+              }
+            ]
+          },
+          "docs": "Admin-only API to get a usage report for an organization."
+        },
+        {
+          "info": {
+            "name": "Delete usage report",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/organizations/:organizationId/usage/reports/:reportId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "reportId",
+                "value": "",
+                "type": "path",
+                "description": "Report ID"
+              }
+            ]
+          },
+          "docs": "Admin-only API to delete a usage report for an organization."
+        },
+        {
+          "info": {
+            "name": "Download usage report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/organizations/:organizationId/usage/reports/:reportId/download",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "reportId",
+                "value": "",
+                "type": "path",
+                "description": "Report ID"
+              }
+            ]
+          },
+          "docs": "Admin-only API to download a usage report for an organization."
+        },
+        {
+          "info": {
+            "name": "Add user to an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/organizations/:organizationId/members",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin-only API to add a user to an organization. If no user is provided, the current user is used."
+        },
+        {
+          "info": {
+            "name": "Remove user from an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/organizations/:organizationId/members/:userId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path",
+                "description": "User ID"
+              }
+            ]
+          },
+          "docs": "Admin-only API to remove a user from an organization."
+        },
+        {
+          "info": {
+            "name": "Create a new organization project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/organizations/:organizationId/projects",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin-only API to create a new project for an organization."
+        },
+        {
+          "info": {
+            "name": "Get all organization data exports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/organizations/:organizationId/exports",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              }
+            ]
+          },
+          "docs": "Admin-only API to get the list of all data exports for an organization."
+        },
+        {
+          "info": {
+            "name": "Create a new organization data export",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/organizations/:organizationId/exports",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin-only API to create a new data export for an organization.\nA job is created to process the export request and the job details are returned in the response.\n"
+        },
+        {
+          "info": {
+            "name": "Get organization data export",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/organizations/:organizationId/exports/:exportId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "exportId",
+                "value": "",
+                "type": "path",
+                "description": "Export ID"
+              }
+            ]
+          },
+          "docs": "Admin-only API to get a data export for an organization."
+        },
+        {
+          "info": {
+            "name": "Update organization data export",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/organizations/:organizationId/exports/:exportId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "exportId",
+                "value": "",
+                "type": "path",
+                "description": "Export ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin-only API to update a data export for an organization."
+        },
+        {
+          "info": {
+            "name": "Delete organization data export",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/organizations/:organizationId/exports/:exportId",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "exportId",
+                "value": "",
+                "type": "path",
+                "description": "Export ID"
+              }
+            ]
+          },
+          "docs": "Admin-only API to delete a data export for an organization."
+        },
+        {
+          "info": {
+            "name": "Get organization jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/organizations/:organizationId/jobs",
+            "params": [
+              {
+                "name": "organizationId",
+                "value": "",
+                "type": "path",
+                "description": "Organization ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Offset in results, can be used in conjunction with LimitResultsParameter to implement paging."
+              }
+            ]
+          },
+          "docs": "Admin-only API to get the list of all jobs for a organization."
+        },
+        {
+          "info": {
+            "name": "Get SSO settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/sso"
+          },
+          "docs": "Admin-only API to get the SSO settings."
+        },
+        {
+          "info": {
+            "name": "Get SSO settings for a domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/sso/:domainName",
+            "params": [
+              {
+                "name": "domainName",
+                "value": "",
+                "type": "path",
+                "description": "Email domain name"
+              }
+            ]
+          },
+          "docs": "Admin-only API to get the list of identity providers enabled for a given domain."
+        },
+        {
+          "info": {
+            "name": "Add or update SSO settings for a domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/sso/:domainName",
+            "params": [
+              {
+                "name": "domainName",
+                "value": "",
+                "type": "path",
+                "description": "Email domain name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Admin-only API to set the list of identity provider for a given domain."
+        },
+        {
+          "info": {
+            "name": "Delete SSO settings for a domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/sso/:domainName",
+            "params": [
+              {
+                "name": "domainName",
+                "value": "",
+                "type": "path",
+                "description": "Email domain name"
+              }
+            ]
+          },
+          "docs": "Admin-only API to delete the list of identity providers for a given domain."
+        },
+        {
+          "info": {
+            "name": "Get job execution details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/jobs/:jobId/details",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "parentType",
+                "value": "",
+                "type": "query",
+                "description": "Job parent type (project, organization, or standalone)"
+              },
+              {
+                "name": "includeChildrenJobs",
+                "value": "",
+                "type": "query",
+                "description": "Include the details of each of the children jobs (recursively)"
+              }
+            ]
+          },
+          "docs": "Get the job execution details including inner jobs"
+        },
+        {
+          "info": {
+            "name": "Get job logs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/jobs/:jobId/logs",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "parentType",
+                "value": "",
+                "type": "query",
+                "description": "Job parent type (project, organization, or standalone)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of logs"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Start fetching logs from this offset"
+              }
+            ]
+          },
+          "docs": "Get the logs for a job."
+        },
+        {
+          "info": {
+            "name": "Get job usage metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/jobs/:jobId/metrics",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "Job ID"
+              },
+              {
+                "name": "parentType",
+                "value": "",
+                "type": "query",
+                "description": "Job parent type (project, organization, or standalone)"
+              }
+            ]
+          },
+          "docs": "Get cpu/memory usage metrics, if the job is a Kubernetes job"
+        },
+        {
+          "info": {
+            "name": "Get enterprise trial email verification code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/emails/:email/verification-code",
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "path",
+                "description": "Email address"
+              }
+            ]
+          },
+          "docs": "Get the enterprise trial verification code of the specified email."
+        },
+        {
+          "info": {
+            "name": "Find a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/find-user",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Part of e-mail address or username"
+              }
+            ]
+          },
+          "docs": "DEPRECATED. Admin-only API to find a user by username or email address."
+        },
+        {
+          "info": {
+            "name": "Get all user IDs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/users-ids"
+          },
+          "docs": "DEPRECATED. Admin-only API to get list of all users."
+        },
+        {
+          "info": {
+            "name": "Get all user IDs (active last 30 days)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/users-ids/active"
+          },
+          "docs": "DEPRECATED. Admin-only API to get list of all users that have been active in the past 30 days."
+        },
+        {
+          "info": {
+            "name": "Add current user to a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/projects/:projectId/add",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "DEPRECATED. Admin-only API to add the current user to a project."
+        },
+        {
+          "info": {
+            "name": "Remove current user from a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://studio.edgeimpulse.com/v1/api/admin/projects/:projectId/remove",
+            "params": [
+              {
+                "name": "projectId",
+                "value": "",
+                "type": "path",
+                "description": "Project ID"
+              }
+            ]
+          },
+          "docs": "DEPRECATED. Admin-only API to remove the current user from a project."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
