@@ -1,0 +1,90 @@
+slug: edge-impulse
+provider: Edge Impulse
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 7
+edges:
+- tag: Learn
+  spec_file: edge-impulse-learn-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.9
+  evidence: GET /api/{projectId}/training/keras/{learnId} getKeras Keras information; POST /api/{projectId}/training/keras/{learnId}
+    setKeras Keras settings; GET /api/{projectId}/training/anomaly/{learnId}/metadata getAnomalyMetadata
+  reason: Model training configuration, Keras/anomaly model settings, training data and metadata retrieval
+    — squarely ML model lifecycle / MLOps under Artificial Intelligence Management.
+- tag: Classify
+  spec_file: edge-impulse-classify-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.85
+  evidence: POST /api/{projectId}/classify/v2/{sampleId} classifySampleV2 Classify sample; GET /api/{projectId}/classify/all/metrics
+    getClassifyMetricsAllVariants Get metrics for all available model variants; schemas ModelPrediction,
+    BoundingBoxWithScore
+  reason: Operations run trained ML models against samples and return predictions/metrics per model variant
+    — inference and model evaluation within the ML model lifecycle (BC-610.60 Artificial Intelligence
+    Management).
+- tag: Optimization
+  spec_file: edge-impulse-optimization-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.82
+  evidence: POST /api/{projectId}/optimize/{jobId}/create-trial  createTrial  Create trial; GET /api/{projectId}/optimize/space  getSpace  Search
+    space; 'Retrieves the EON tuner state'
+  reason: Hyperparameter/architecture search over learn blocks and DSP blocks with trials, scoring and
+    search space — ML model lifecycle work, i.e. AI/ML management, not generic optimisation.
+- tag: DSP
+  spec_file: edge-impulse-dsp-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.8
+  evidence: GET /api/{projectId}/dsp/{dspId}/features/importance getDspFeatureImportance Feature importance;
+    GET .../features/labels Feature labels; POST .../raw-data/{sampleId}/slice/run Get processed sample
+    (slice)
+  reason: Configuration and execution of signal-processing/feature-extraction blocks in the ML pipeline
+    — feature engineering, part of ML model lifecycle / MLOps under Artificial Intelligence Management.
+- tag: Impulse
+  spec_file: edge-impulse-impulse-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.8
+  evidence: POST /api/{projectId}/impulse createImpulse Create impulse; GET /api/{projectId}/impulses-detailed
+    getAllDetailedImpulses Get all impulses (incl. metrics); schemas ImpulseDspBlock, TransferLearningModel,
+    KerasModelMetadataMetrics
+  reason: An 'impulse' is Edge Impulse's ML pipeline definition (DSP + learn blocks). CRUD over pipeline
+    configurations and their metrics is ML model lifecycle management.
+- tag: PerformanceCalibration
+  spec_file: edge-impulse-performancecalibration-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.78
+  evidence: POST /api/{projectId}/performance-calibration/parameters  setPerformanceCalibrationSavedParameters  Save
+    performance calibration parameters; schemas PerformanceCalibrationGroundTruth, PerformanceCalibrationFalsePositive
+  reason: Tunes and stores model post-processing parameters against ground truth and false-positive measurements
+    — evaluation and tuning within the ML model lifecycle.
+- tag: Deployment
+  spec_file: edge-impulse-deployment-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.7
+  evidence: GET /api/deployment/targets listAllDeploymentTargets Deployment targets; GET /api/{projectId}/deployment/download
+    downloadBuild Download; GetLastDeploymentBuildResponse
+  reason: Builds and downloads a trained model artefact for a chosen hardware deployment target — model
+    packaging/deployment stage of the ML lifecycle. Could also read as software release engineering, hence
+    moderated confidence; the artefact deployed is an ML model, so AI Management is the better fit.
