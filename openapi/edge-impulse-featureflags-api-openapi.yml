@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Edge Impulse FeatureFlags API
+  title: Edge Impulse Feature Flags API
   version: 1.0.0
 servers:
 - url: https://studio.edgeimpulse.com/v1
@@ -50,6 +50,13 @@ components:
                 enabled:
                   type: boolean
                   description: Whether the feature is enabled.
+    Feature:
+      type: string
+      enum:
+      - signup-thank-you-page
+      - stripe-live-mode
+      - azure-storage
+      description: Known feature identifiers.
     GenericApiResponse:
       type: object
       required:
@@ -61,13 +68,6 @@ components:
         error:
           type: string
           description: Optional error description (set if 'success' was false)
-    Feature:
-      type: string
-      enum:
-      - signup-thank-you-page
-      - stripe-live-mode
-      - azure-storage
-      description: Known feature identifiers.
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey

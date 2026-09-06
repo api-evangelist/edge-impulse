@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Edge Impulse Deployment API
   version: 1.0.0
@@ -223,50 +223,48 @@ paths:
                 $ref: '#/components/schemas/StartJobResponse'
 components:
   schemas:
-    FindSyntiantPosteriorRequest:
+    SetSyntiantPosteriorRequest:
       type: object
       required:
-      - targetWords
-      - referenceSet
+      - parameters
       properties:
-        targetWords:
-          type: array
-          items:
-            type: string
-        referenceSet:
-          type: string
-          enum:
-          - 600_seconds
-          - full
-          - custom
-          - no_calibration
-        wavFile:
-          type: string
-          format: binary
-        metaCsvFile:
-          type: string
-          format: binary
-        deploymentTarget:
-          type: string
-          enum:
-          - syntiant-ndp101
-          - syntiant-ndp101-lib
-          - syntiant-ndp120-lib
-          - syntiant-ndp120-lib-tdk-v14
-          - syntiant-nicla-ndp120
-          - syntiant-avnet-rasyn
-          - syntiant-ndp120-lib-ndp-v1-15-0
-    StartJobResponse:
+        parameters:
+          type: object
+    ProjectDeploymentTargetsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - id
+        - targets
         properties:
-          id:
-            type: integer
-            description: Job identifier. Status updates will include this identifier.
-            example: 12873488112
+          targets:
+            type: array
+            items:
+              $ref: '#/components/schemas/ProjectDeploymentTarget'
+    LearnBlockType:
+      type: string
+      description: The type of learning block (anomaly, keras, keras-transfer-image, keras-transfer-kws, keras-object-detection, keras-regression). Each behaves differently.
+      enum:
+      - anomaly
+      - anomaly-gmm
+      - keras
+      - keras-transfer-image
+      - keras-transfer-kws
+      - keras-object-detection
+      - keras-regression
+      - keras-akida
+      - keras-akida-transfer-image
+      - keras-akida-object-detection
+      - keras-visual-anomaly
+    EvaluateResultValue:
+      type: object
+      properties:
+        raw:
+          description: The value based on the model alone
+          type: number
+        withAnomaly:
+          description: The value including the result of anomaly detection
+          type: number
     ProjectDeploymentTarget:
       allOf:
       - $ref: '#/components/schemas/DeploymentTarget'
@@ -284,135 +282,6 @@ components:
           reasonTargetDisabled:
             type: string
             description: If the deployment target is disabled for the project, this gives the reason why.
-    GetLastDeploymentBuildResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - hasBuild
-        properties:
-          hasBuild:
-            type: boolean
-            description: Does the deployment build still exist? (Builds are deleted if they are no longer valid for the project)
-          lastBuild:
-            type: object
-            required:
-            - version
-            - deploymentType
-            - engine
-            - created
-            properties:
-              version:
-                type: integer
-                description: The build version, incremented after each deployment build
-              deploymentType:
-                type: string
-                description: Deployment type of the build
-              engine:
-                $ref: '#/components/schemas/DeploymentTargetEngine'
-              modelType:
-                $ref: '#/components/schemas/KerasModelTypeEnum'
-              created:
-                type: string
-                format: date-time
-                description: The time this build was created
-          lastDeploymentTarget:
-            $ref: '#/components/schemas/ProjectDeploymentTarget'
-    ProjectDeploymentTargetsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - targets
-        properties:
-          targets:
-            type: array
-            items:
-              $ref: '#/components/schemas/ProjectDeploymentTarget'
-    EvaluateResultValue:
-      type: object
-      properties:
-        raw:
-          description: The value based on the model alone
-          type: number
-        withAnomaly:
-          description: The value including the result of anomaly detection
-          type: number
-    ModelVariantStats:
-      type: object
-      required:
-      - modelType
-      - learnBlockType
-      - learnBlockId
-      - confusionMatrix
-      - confusionMatrixRowHeaders
-      - confusionMatrixColumnHeaders
-      - accuracy
-      - trainingLabels
-      - classificationLabels
-      properties:
-        modelType:
-          description: The type of model
-          $ref: '#/components/schemas/KerasModelTypeEnum'
-        learnBlockId:
-          description: The learning block this model variant is from
-          type: integer
-        learnBlockType:
-          $ref: '#/components/schemas/LearnBlockType'
-        confusionMatrix:
-          description: A map from actual labels to predicted labels, where actual labels are listed in `trainingLabels` and possible predicted labels are listed in `classificationLabels`.
-          type: object
-          additionalProperties:
-            type: object
-            additionalProperties:
-              type: object
-              $ref: '#/components/schemas/EvaluateResultValue'
-        trainingLabels:
-          description: The labels present in the model's training data. These are all present in the first dimension of the confusion matrix.
-          type: array
-          items:
-            type: string
-        classificationLabels:
-          description: The possible labels resulting from classification. These may be present in the second dimension of the confusion matrix.
-          type: array
-          items:
-            type: string
-        totalWindowCount:
-          description: The total number of windows that were evaluated
-          type: integer
-        totalCorrectWindowCount:
-          description: The total number of windows that the model classified correctly
-          $ref: '#/components/schemas/EvaluateResultValue'
-        accuracy:
-          description: The model's accuracy as a percentage
-          $ref: '#/components/schemas/EvaluateResultValue'
-    DeploymentTargetEngine:
-      type: string
-      enum:
-      - tflite
-      - tflite-eon
-      - tflite-eon-ram-optimized
-      - tensorrt
-      - tensaiflow
-      - drp-ai
-      - tidl
-      - akida
-      - syntiant
-      - memryx
-      - neox
-      - ethos-linux
-      - st-aton
-    GetSyntiantPosteriorResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - hasPosteriorParameters
-        properties:
-          hasPosteriorParameters:
-            type: boolean
-          parameters:
-            type: object
     EvaluateJobResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -424,24 +293,6 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/ModelVariantStats'
-    SetSyntiantPosteriorRequest:
-      type: object
-      required:
-      - parameters
-      properties:
-        parameters:
-          type: object
-    DeploymentTargetsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - targets
-        properties:
-          targets:
-            type: array
-            items:
-              $ref: '#/components/schemas/DeploymentTarget'
     DeploymentTarget:
       type: object
       required:
@@ -537,6 +388,132 @@ components:
           type: string
         firmwareRepoUrl:
           type: string
+    FindSyntiantPosteriorRequest:
+      type: object
+      required:
+      - targetWords
+      - referenceSet
+      properties:
+        targetWords:
+          type: array
+          items:
+            type: string
+        referenceSet:
+          type: string
+          enum:
+          - 600_seconds
+          - full
+          - custom
+          - no_calibration
+        wavFile:
+          type: string
+          format: binary
+        metaCsvFile:
+          type: string
+          format: binary
+        deploymentTarget:
+          type: string
+          enum:
+          - syntiant-ndp101
+          - syntiant-ndp101-lib
+          - syntiant-ndp120-lib
+          - syntiant-ndp120-lib-tdk-v14
+          - syntiant-nicla-ndp120
+          - syntiant-avnet-rasyn
+          - syntiant-ndp120-lib-ndp-v1-15-0
+    GetLastDeploymentBuildResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - hasBuild
+        properties:
+          hasBuild:
+            type: boolean
+            description: Does the deployment build still exist? (Builds are deleted if they are no longer valid for the project)
+          lastBuild:
+            type: object
+            required:
+            - version
+            - deploymentType
+            - engine
+            - created
+            properties:
+              version:
+                type: integer
+                description: The build version, incremented after each deployment build
+              deploymentType:
+                type: string
+                description: Deployment type of the build
+              engine:
+                $ref: '#/components/schemas/DeploymentTargetEngine'
+              modelType:
+                $ref: '#/components/schemas/KerasModelTypeEnum'
+              created:
+                type: string
+                format: date-time
+                description: The time this build was created
+          lastDeploymentTarget:
+            $ref: '#/components/schemas/ProjectDeploymentTarget'
+    ModelVariantStats:
+      type: object
+      required:
+      - modelType
+      - learnBlockType
+      - learnBlockId
+      - confusionMatrix
+      - confusionMatrixRowHeaders
+      - confusionMatrixColumnHeaders
+      - accuracy
+      - trainingLabels
+      - classificationLabels
+      properties:
+        modelType:
+          description: The type of model
+          $ref: '#/components/schemas/KerasModelTypeEnum'
+        learnBlockId:
+          description: The learning block this model variant is from
+          type: integer
+        learnBlockType:
+          $ref: '#/components/schemas/LearnBlockType'
+        confusionMatrix:
+          description: A map from actual labels to predicted labels, where actual labels are listed in `trainingLabels` and possible predicted labels are listed in `classificationLabels`.
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: object
+              $ref: '#/components/schemas/EvaluateResultValue'
+        trainingLabels:
+          description: The labels present in the model's training data. These are all present in the first dimension of the confusion matrix.
+          type: array
+          items:
+            type: string
+        classificationLabels:
+          description: The possible labels resulting from classification. These may be present in the second dimension of the confusion matrix.
+          type: array
+          items:
+            type: string
+        totalWindowCount:
+          description: The total number of windows that were evaluated
+          type: integer
+        totalCorrectWindowCount:
+          description: The total number of windows that the model classified correctly
+          $ref: '#/components/schemas/EvaluateResultValue'
+        accuracy:
+          description: The model's accuracy as a percentage
+          $ref: '#/components/schemas/EvaluateResultValue'
+    StartJobResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: Job identifier. Status updates will include this identifier.
+            example: 12873488112
     KerasModelTypeEnum:
       type: string
       enum:
@@ -544,21 +521,44 @@ components:
       - float32
       - akida
       - requiresRetrain
-    LearnBlockType:
+    DeploymentTargetsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - targets
+        properties:
+          targets:
+            type: array
+            items:
+              $ref: '#/components/schemas/DeploymentTarget'
+    GetSyntiantPosteriorResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - hasPosteriorParameters
+        properties:
+          hasPosteriorParameters:
+            type: boolean
+          parameters:
+            type: object
+    DeploymentTargetEngine:
       type: string
-      description: The type of learning block (anomaly, keras, keras-transfer-image, keras-transfer-kws, keras-object-detection, keras-regression). Each behaves differently.
       enum:
-      - anomaly
-      - anomaly-gmm
-      - keras
-      - keras-transfer-image
-      - keras-transfer-kws
-      - keras-object-detection
-      - keras-regression
-      - keras-akida
-      - keras-akida-transfer-image
-      - keras-akida-object-detection
-      - keras-visual-anomaly
+      - tflite
+      - tflite-eon
+      - tflite-eon-ram-optimized
+      - tensorrt
+      - tensaiflow
+      - drp-ai
+      - tidl
+      - akida
+      - syntiant
+      - memryx
+      - neox
+      - ethos-linux
+      - st-aton
     GenericApiResponse:
       type: object
       required:
@@ -582,13 +582,13 @@ components:
           version:
             type: integer
   parameters:
-    ModelEngineParameter:
-      name: engine
+    DeploymentTypeParameter:
+      name: type
       in: query
-      required: false
-      description: Optional engine for the build (if not, it uses the default engine for the deployment target)
+      required: true
+      description: The name of the built target. You can find this by listing all deployment targets through `listDeploymentTargetsForProject` (via `GET /v1/api/{projectId}/deployment/targets`) and see the `format` type.
       schema:
-        $ref: '#/components/schemas/DeploymentTargetEngine'
+        type: string
     ModelTypeParameter:
       name: modelType
       in: query
@@ -596,6 +596,13 @@ components:
       description: Optional model type of the build (if not, it uses the settings in the Keras block)
       schema:
         $ref: '#/components/schemas/KerasModelTypeEnum'
+    ModelEngineParameter:
+      name: engine
+      in: query
+      required: false
+      description: Optional engine for the build (if not, it uses the default engine for the deployment target)
+      schema:
+        $ref: '#/components/schemas/DeploymentTargetEngine'
     ProjectIdParameter:
       name: projectId
       in: path
@@ -610,13 +617,6 @@ components:
       description: Impulse ID. If this is unset then the default impulse is used.
       schema:
         type: integer
-    DeploymentTypeParameter:
-      name: type
-      in: query
-      required: true
-      description: The name of the built target. You can find this by listing all deployment targets through `listDeploymentTargetsForProject` (via `GET /v1/api/{projectId}/deployment/targets`) and see the `format` type.
-      schema:
-        type: string
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey

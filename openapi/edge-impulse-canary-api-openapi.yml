@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Edge Impulse Canary API
   version: 1.0.0
@@ -34,17 +34,6 @@ paths:
                 $ref: '#/components/schemas/CanaryResponse'
 components:
   schemas:
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
     CanaryResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -56,6 +45,17 @@ components:
             type: boolean
             description: Whether the request should be routed to the canary or not.
             example: true
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
   parameters:
     RequestedUrlParameter:
       name: requestedUrl

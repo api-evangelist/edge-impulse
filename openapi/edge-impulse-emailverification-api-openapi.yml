@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Edge Impulse EmailVerification API
+  title: Edge Impulse Email Verification API
   version: 1.0.0
 servers:
 - url: https://studio.edgeimpulse.com/v1
@@ -97,31 +97,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetEmailVerificationStatusResponse'
 components:
-  parameters:
-    EmailIdParameter:
-      name: emailId
-      in: path
-      required: true
-      description: Unique identifier for an email verification request
-      schema:
-        type: integer
-    EmailParameter:
-      name: email
-      in: path
-      required: true
-      description: Email address
-      schema:
-        type: string
   schemas:
-    EmailValidationRequest:
-      type: object
-      required:
-      - email
-      properties:
-        email:
-          type: string
-          description: E-mail address to validate
-          example: jan@edgeimpulse.com
     RequestEmailVerificationRequest:
       type: object
       required:
@@ -130,6 +106,14 @@ components:
         redirectUrl:
           type: string
           description: URL to redirect the user after email verification.
+    ActivateUserOrVerifyEmailRequest:
+      type: object
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          description: Activation or verification code (sent via email)
     EntityCreatedResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -140,14 +124,31 @@ components:
           id:
             type: integer
             description: Unique identifier of the created entity.
-    ActivateUserOrVerifyEmailRequest:
+    GenericApiResponse:
       type: object
       required:
-      - code
+      - success
       properties:
-        code:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
           type: string
-          description: Activation or verification code (sent via email)
+          description: Optional error description (set if 'success' was false)
+    VerifyEmailResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          email:
+            type: string
+            description: Email address that was verified.
+          userId:
+            type: number
+            description: ID of the user associated with the verified email address, if any.
+          redirectUrl:
+            type: string
+            description: URL to redirect the user to after email verification.
     ValidateEmailResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -183,20 +184,6 @@ components:
             type: string
             example: edgeimpulse.com
             description: The second part of the email address (after the @ sign)
-    VerifyEmailResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        properties:
-          email:
-            type: string
-            description: Email address that was verified.
-          userId:
-            type: number
-            description: ID of the user associated with the verified email address, if any.
-          redirectUrl:
-            type: string
-            description: URL to redirect the user to after email verification.
     GetEmailVerificationStatusResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -207,17 +194,30 @@ components:
           verified:
             type: boolean
             description: Whether the email address has been verified.
-    GenericApiResponse:
+    EmailValidationRequest:
       type: object
       required:
-      - success
+      - email
       properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
+        email:
           type: string
-          description: Optional error description (set if 'success' was false)
+          description: E-mail address to validate
+          example: jan@edgeimpulse.com
+  parameters:
+    EmailIdParameter:
+      name: emailId
+      in: path
+      required: true
+      description: Unique identifier for an email verification request
+      schema:
+        type: integer
+    EmailParameter:
+      name: email
+      in: path
+      required: true
+      description: Email address
+      schema:
+        type: string
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey

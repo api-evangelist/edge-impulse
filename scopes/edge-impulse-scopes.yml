@@ -1,0 +1,47 @@
+generated: '2026-09-06'
+method: searched
+source: https://studio.edgeimpulse.com/openapi.yml (components.securitySchemes.OAuth2)
+docs: https://docs.edgeimpulse.com/apis/studio#api-authentication-types
+provider: Edge Impulse
+providerId: edge-impulse
+description: 'OAuth 2.0 scopes declared by the Edge Impulse Studio API. There are exactly three, and all
+  three are OIDC identity scopes — openid, email, profile. Edge Impulse declares NO resource or permission
+  scopes: nothing in the scope set distinguishes reading a project from deleting one, or a dataset from
+  an organization. Authorization is carried entirely by the credential type instead (project API key vs
+  user JWT) and by per-operation checks, which is why the OAuth surface cannot be used to hand an agent
+  a least-privilege token.'
+authorization_url: https://studio.edgeimpulse.com/v1/oauth/authorize
+token_url: https://studio.edgeimpulse.com/v1/oauth/token
+flows:
+- authorizationCode
+- implicit
+- password
+- clientCredentials
+scope_count: 3
+scopes:
+- name: openid
+  description: Access to basic profile information.
+  category: identity
+- name: email
+  description: Access to email address.
+  category: identity
+- name: profile
+  description: Access to full profile information.
+  category: identity
+resource_scopes: []
+findings:
+- All four OAuth flows advertise the same three scopes — including implicit and password, which are discouraged
+  by OAuth 2.1.
+- The authorizationUrl and tokenUrl are declared as relative paths (/v1/oauth/authorize, /v1/oauth/token)
+  in the spec; resolved against the declared server they are https://studio.edgeimpulse.com/v1/oauth/*.
+- No /.well-known/openid-configuration or /.well-known/oauth-authorization-server document is served on
+  any Edge Impulse host (probed 2026-09-06, all 404), so an OAuth client cannot discover these endpoints
+  automatically.
+- The OAuth2 scheme is absent from the specs harvested into this repo and present in the live published
+  spec, so it is a recent addition.
+related:
+  authentication: authentication/edge-impulse-authentication.yml
+  well_known: well-known/edge-impulse-well-known.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

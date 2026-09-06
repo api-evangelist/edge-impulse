@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Edge Impulse OrganizationPipelines API
+  title: Edge Impulse Organization Pipelines API
   version: 1.0.0
 servers:
 - url: https://studio.edgeimpulse.com/v1
@@ -173,36 +173,227 @@ paths:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
 components:
-  parameters:
-    OrganizationPipelineIdParameter:
-      name: pipelineId
-      in: path
-      required: true
-      description: Pipeline ID
-      schema:
-        type: integer
-    ListPipelinesProjectIdParameter:
-      name: projectId
-      in: query
-      required: false
-      description: If set, filters on pipelines which are attached to this project.
-      schema:
-        type: integer
-    IgnoreLastSuccessfulRunQueryParameter:
-      name: ignoreLastSuccessfulRun
-      in: query
-      required: false
-      description: If set then `EI_LAST_SUCCESSFUL_RUN` is not set. You can use this to re-run a pipeline from scratch.
-      schema:
-        type: boolean
-    OrganizationIdParameter:
-      name: organizationId
-      in: path
-      required: true
-      description: Organization ID
-      schema:
-        type: integer
   schemas:
+    OrganizationPipelineStep:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+        filter:
+          type: string
+        pathFilters:
+          type: array
+          description: Set of paths to apply the transformation to, used for creating transformation jobs on default datasets. This option is experimental and may change in the future.
+          items:
+            $ref: '#/components/schemas/OrganizationCreateProjectPathFilter'
+        uploadType:
+          type: string
+          enum:
+          - project
+          - dataset
+        projectId:
+          type: integer
+        newProjectName:
+          type: string
+        projectApiKey:
+          type: string
+        projectHmacKey:
+          type: string
+        transformationBlockId:
+          type: integer
+        builtinTransformationBlock:
+          type: object
+        category:
+          type: string
+          enum:
+          - training
+          - testing
+          - split
+        outputDatasetName:
+          type: string
+        outputDatasetBucketId:
+          type: integer
+        outputDatasetBucketPath:
+          type: string
+        outputPathInDataset:
+          description: Path within the selected dataset to upload transformed files into. Used only when uploading into a default (non-clinical) dataset.
+          type: string
+        outputDatasetPathRule:
+          $ref: '#/components/schemas/OrganizationCreateProjectOutputDatasetPathRule'
+        label:
+          type: string
+        transformationParallel:
+          type: integer
+        extraCliArguments:
+          type: string
+        parameters:
+          type: object
+          additionalProperties:
+            type: string
+    OrganizationPipelineRunStep:
+      type: object
+      required:
+      - name
+      - status
+      properties:
+        name:
+          type: string
+        transformationJob:
+          $ref: '#/components/schemas/OrganizationCreateProject'
+        filter:
+          type: string
+        uploadType:
+          type: string
+          enum:
+          - project
+          - dataset
+        projectId:
+          type: integer
+        newProjectName:
+          type: string
+        projectApiKey:
+          type: string
+        projectHmacKey:
+          type: string
+        transformationBlockId:
+          type: integer
+        builtinTransformationBlock:
+          type: object
+        category:
+          type: string
+          enum:
+          - training
+          - testing
+          - split
+        outputDatasetName:
+          type: string
+        outputDatasetBucketId:
+          type: integer
+        outputDatasetBucketPath:
+          type: string
+        label:
+          type: string
+        extraCliArguments:
+          type: string
+        parameters:
+          type: object
+          additionalProperties:
+            type: string
+    OrganizationPipelineRun:
+      type: object
+      required:
+      - id
+      - steps
+      - created
+      properties:
+        id:
+          type: integer
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationPipelineRunStep'
+        created:
+          type: string
+          format: date-time
+        finished:
+          type: string
+          format: date-time
+        itemCountBefore:
+          description: Item count before the pipeline ran, only set when the pipeline has a dataset attached.
+          $ref: '#/components/schemas/OrganizationPipelineItemCount'
+        itemCountAfter:
+          description: Item count after the pipeline ran, only set when the pipeline has a dataset attached.
+          $ref: '#/components/schemas/OrganizationPipelineItemCount'
+        itemCountImportIntoProjectFailed:
+          description: Number of data items that failed to import into a project (through the s3-to-project, portal-to-project or dataset-to-project) transform blocks
+          type: integer
+    OrganizationPipeline:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - steps
+      - created
+      - emailRecipientUids
+      - whenToEmail
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        intervalStr:
+          type: string
+          description: 15m for every 15 minutes, 2h for every 2 hours, 1d for every 1 day
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationPipelineStep'
+        nextRun:
+          type: string
+          format: date-time
+        created:
+          type: string
+          format: date-time
+        currentRun:
+          $ref: '#/components/schemas/OrganizationPipelineRun'
+        lastRun:
+          $ref: '#/components/schemas/OrganizationPipelineRun'
+        feedingIntoDataset:
+          type: object
+          required:
+          - dataset
+          - datasetLink
+          - itemCount
+          - itemCountChecklistOK
+          - itemCountChecklistError
+          properties:
+            dataset:
+              type: string
+            datasetLink:
+              type: string
+            itemCount:
+              type: integer
+            itemCountChecklistOK:
+              type: integer
+            itemCountChecklistError:
+              type: integer
+            datasetType:
+              $ref: '#/components/schemas/OrganizationDatasetTypeEnum'
+        feedingIntoProject:
+          type: object
+          required:
+          - id
+          - name
+          - projectLink
+          - itemCount
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            projectLink:
+              type: string
+            itemCount:
+              type: integer
+        emailRecipientUids:
+          type: array
+          items:
+            type: integer
+        lastRunStartError:
+          type: string
+        notificationWebhook:
+          type: string
+        whenToEmail:
+          type: string
+          enum:
+          - always
+          - on_new_data
+          - never
     OrganizationCreateProject:
       type: object
       required:
@@ -333,58 +524,16 @@ components:
           description: Total amount of compute used (friendly string)
         createdByUser:
           $ref: '#/components/schemas/CreatedUpdatedByUser'
-    OrganizationCreateProjectOutputDatasetPathRule:
-      description: Defines the folder structure for writing to the output dataset. Used only when uploading into a default (non-clinical) dataset.
-      type: string
-      enum:
-      - no-subfolders
-      - subfolder-per-item
-      - use-full-path
-    TransformationJobOperatesOnEnum:
-      type: string
-      enum:
-      - file
-      - directory
-      - standalone
-    ListOrganizationPipelinesResponse:
+    EntityCreatedResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - pipelines
+        - id
         properties:
-          pipelines:
-            type: array
-            items:
-              $ref: '#/components/schemas/OrganizationPipeline'
-    OrganizationPipelineRun:
-      type: object
-      required:
-      - id
-      - steps
-      - created
-      properties:
-        id:
-          type: integer
-        steps:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationPipelineRunStep'
-        created:
-          type: string
-          format: date-time
-        finished:
-          type: string
-          format: date-time
-        itemCountBefore:
-          description: Item count before the pipeline ran, only set when the pipeline has a dataset attached.
-          $ref: '#/components/schemas/OrganizationPipelineItemCount'
-        itemCountAfter:
-          description: Item count after the pipeline ran, only set when the pipeline has a dataset attached.
-          $ref: '#/components/schemas/OrganizationPipelineItemCount'
-        itemCountImportIntoProjectFailed:
-          description: Number of data items that failed to import into a project (through the s3-to-project, portal-to-project or dataset-to-project) transform blocks
-          type: integer
+          id:
+            type: integer
+            description: Unique identifier of the created entity.
     GetOrganizationPipelinesResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -399,128 +548,6 @@ components:
       enum:
       - clinical
       - files
-    RunOrganizationPipelineResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - pipelineRun
-        properties:
-          pipelineRun:
-            $ref: '#/components/schemas/OrganizationPipelineRun'
-    OrganizationPipelineItemCount:
-      type: object
-      required:
-      - itemCount
-      - itemCountChecklistOK
-      - itemCountChecklistFailed
-      properties:
-        itemCount:
-          type: integer
-        itemCountChecklistOK:
-          type: integer
-        itemCountChecklistFailed:
-          type: integer
-    OrganizationPipeline:
-      type: object
-      required:
-      - id
-      - name
-      - description
-      - steps
-      - created
-      - emailRecipientUids
-      - whenToEmail
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        description:
-          type: string
-        intervalStr:
-          type: string
-          description: 15m for every 15 minutes, 2h for every 2 hours, 1d for every 1 day
-        steps:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationPipelineStep'
-        nextRun:
-          type: string
-          format: date-time
-        created:
-          type: string
-          format: date-time
-        currentRun:
-          $ref: '#/components/schemas/OrganizationPipelineRun'
-        lastRun:
-          $ref: '#/components/schemas/OrganizationPipelineRun'
-        feedingIntoDataset:
-          type: object
-          required:
-          - dataset
-          - datasetLink
-          - itemCount
-          - itemCountChecklistOK
-          - itemCountChecklistError
-          properties:
-            dataset:
-              type: string
-            datasetLink:
-              type: string
-            itemCount:
-              type: integer
-            itemCountChecklistOK:
-              type: integer
-            itemCountChecklistError:
-              type: integer
-            datasetType:
-              $ref: '#/components/schemas/OrganizationDatasetTypeEnum'
-        feedingIntoProject:
-          type: object
-          required:
-          - id
-          - name
-          - projectLink
-          - itemCount
-          properties:
-            id:
-              type: integer
-            name:
-              type: string
-            projectLink:
-              type: string
-            itemCount:
-              type: integer
-        emailRecipientUids:
-          type: array
-          items:
-            type: integer
-        lastRunStartError:
-          type: string
-        notificationWebhook:
-          type: string
-        whenToEmail:
-          type: string
-          enum:
-          - always
-          - on_new_data
-          - never
-    CreatedUpdatedByUser:
-      type: object
-      required:
-      - id
-      - name
-      - username
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        username:
-          type: string
-        photo:
-          type: string
     OrganizationUpdatePipelineBody:
       type: object
       required:
@@ -559,131 +586,6 @@ components:
           - never
         archived:
           type: boolean
-    OrganizationPipelineStep:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-        filter:
-          type: string
-        pathFilters:
-          type: array
-          description: Set of paths to apply the transformation to, used for creating transformation jobs on default datasets. This option is experimental and may change in the future.
-          items:
-            $ref: '#/components/schemas/OrganizationCreateProjectPathFilter'
-        uploadType:
-          type: string
-          enum:
-          - project
-          - dataset
-        projectId:
-          type: integer
-        newProjectName:
-          type: string
-        projectApiKey:
-          type: string
-        projectHmacKey:
-          type: string
-        transformationBlockId:
-          type: integer
-        builtinTransformationBlock:
-          type: object
-        category:
-          type: string
-          enum:
-          - training
-          - testing
-          - split
-        outputDatasetName:
-          type: string
-        outputDatasetBucketId:
-          type: integer
-        outputDatasetBucketPath:
-          type: string
-        outputPathInDataset:
-          description: Path within the selected dataset to upload transformed files into. Used only when uploading into a default (non-clinical) dataset.
-          type: string
-        outputDatasetPathRule:
-          $ref: '#/components/schemas/OrganizationCreateProjectOutputDatasetPathRule'
-        label:
-          type: string
-        transformationParallel:
-          type: integer
-        extraCliArguments:
-          type: string
-        parameters:
-          type: object
-          additionalProperties:
-            type: string
-    TransformationJobStatusEnum:
-      type: string
-      enum:
-      - waiting
-      - created
-      - started
-      - finished
-      - failed
-    EntityCreatedResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: integer
-            description: Unique identifier of the created entity.
-    OrganizationPipelineRunStep:
-      type: object
-      required:
-      - name
-      - status
-      properties:
-        name:
-          type: string
-        transformationJob:
-          $ref: '#/components/schemas/OrganizationCreateProject'
-        filter:
-          type: string
-        uploadType:
-          type: string
-          enum:
-          - project
-          - dataset
-        projectId:
-          type: integer
-        newProjectName:
-          type: string
-        projectApiKey:
-          type: string
-        projectHmacKey:
-          type: string
-        transformationBlockId:
-          type: integer
-        builtinTransformationBlock:
-          type: object
-        category:
-          type: string
-          enum:
-          - training
-          - testing
-          - split
-        outputDatasetName:
-          type: string
-        outputDatasetBucketId:
-          type: integer
-        outputDatasetBucketPath:
-          type: string
-        label:
-          type: string
-        extraCliArguments:
-          type: string
-        parameters:
-          type: object
-          additionalProperties:
-            type: string
     OrganizationCreateProjectPathFilter:
       type: object
       description: Filter, given as a dataset and path containing wildcards, used for creating transformation jobs
@@ -697,6 +599,43 @@ components:
         filter:
           type: string
           description: Path filter with wildcards, relative to the root of the dataset. For example, /folder/*.json will transform all JSON files in /folder (when operating on files)
+    OrganizationPipelineItemCount:
+      type: object
+      required:
+      - itemCount
+      - itemCountChecklistOK
+      - itemCountChecklistFailed
+      properties:
+        itemCount:
+          type: integer
+        itemCountChecklistOK:
+          type: integer
+        itemCountChecklistFailed:
+          type: integer
+    OrganizationCreateProjectOutputDatasetPathRule:
+      description: Defines the folder structure for writing to the output dataset. Used only when uploading into a default (non-clinical) dataset.
+      type: string
+      enum:
+      - no-subfolders
+      - subfolder-per-item
+      - use-full-path
+    TransformationJobOperatesOnEnum:
+      type: string
+      enum:
+      - file
+      - directory
+      - standalone
+    ListOrganizationPipelinesResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - pipelines
+        properties:
+          pipelines:
+            type: array
+            items:
+              $ref: '#/components/schemas/OrganizationPipeline'
     GenericApiResponse:
       type: object
       required:
@@ -708,6 +647,67 @@ components:
         error:
           type: string
           description: Optional error description (set if 'success' was false)
+    CreatedUpdatedByUser:
+      type: object
+      required:
+      - id
+      - name
+      - username
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        username:
+          type: string
+        photo:
+          type: string
+    TransformationJobStatusEnum:
+      type: string
+      enum:
+      - waiting
+      - created
+      - started
+      - finished
+      - failed
+    RunOrganizationPipelineResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - pipelineRun
+        properties:
+          pipelineRun:
+            $ref: '#/components/schemas/OrganizationPipelineRun'
+  parameters:
+    OrganizationPipelineIdParameter:
+      name: pipelineId
+      in: path
+      required: true
+      description: Pipeline ID
+      schema:
+        type: integer
+    ListPipelinesProjectIdParameter:
+      name: projectId
+      in: query
+      required: false
+      description: If set, filters on pipelines which are attached to this project.
+      schema:
+        type: integer
+    OrganizationIdParameter:
+      name: organizationId
+      in: path
+      required: true
+      description: Organization ID
+      schema:
+        type: integer
+    IgnoreLastSuccessfulRunQueryParameter:
+      name: ignoreLastSuccessfulRun
+      in: query
+      required: false
+      description: If set then `EI_LAST_SUCCESSFUL_RUN` is not set. You can use this to re-run a pipeline from scratch.
+      schema:
+        type: boolean
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey

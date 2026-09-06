@@ -1,0 +1,66 @@
+generated: '2026-09-06'
+method: searched
+source: https://docs.edgeimpulse.com/apis/studio#test-api-requests, https://www.edgeimpulse.com/pricing,
+  https://www.edgeimpulse.com/projects/all
+provider: Edge Impulse
+providerId: edge-impulse
+description: Edge Impulse publishes no sandbox in the payments sense — there is no test mode, no test/live
+  key prefix split, no fixtures and no time simulation. What it does publish is a free tier that IS the
+  real environment, an in-documentation request console bound to the live API, and a public project gallery
+  that can be cloned as ready-made test data.
+test_mode:
+  exists: false
+  note: There is one environment. API keys carry the ei_ prefix whether the project is a throwaway or
+    production; nothing in the credential or the base URL distinguishes test from live. The isolation
+    boundary is the PROJECT, not an environment flag — create a scratch project and point the key at that.
+key_prefixes:
+- prefix: ei_
+  mode: live
+  scope: project
+  note: The only prefix. No ei_test_ equivalent.
+consoles:
+- name: In-documentation API playground
+  url: https://docs.edgeimpulse.com/apis/studio#test-api-requests
+  type: request console
+  note: Every operation page in the API reference carries a test-request widget. You set your own x-api-key,
+    x-jwt-token or jwt cookie and it calls the LIVE API — requests made here are real. The @edgeimpulse/mcp-server
+    README points users at it to mint a JWT (https://docs.edgeimpulse.com/apis/studio/login/get-jwt-token?playground=open).
+- name: Edge Impulse Studio
+  url: https://studio.edgeimpulse.com
+  type: web console
+  note: Sign-up is self-serve and free; no sales call gates access.
+free_tier:
+  name: Developer
+  price: $0
+  note: 'The free plan is the sandbox: 3 private projects, unlimited public projects, up to 3 collaborators,
+    60 minutes of compute per job, 16 GB CPU memory, GPU training included. Licence terms restrict it
+    to internal R&D and pre-production use — development, testing, training, demoing and prototyping.
+    Production use requires Enterprise.'
+  source: https://www.edgeimpulse.com/pricing
+  detail: plans/edge-impulse-plans-pricing.yml
+test_data:
+  public_projects:
+    url: https://www.edgeimpulse.com/projects/all
+    note: Hundreds of public projects with real datasets and trained impulses can be cloned into your
+      own account, which is the closest thing to a published fixture set.
+  operations:
+  - listPublicProjects
+  - listPublicProjectTypes
+  - startRestoreJobFromPublic
+  synthetic_data:
+    note: GenAI synthetic data generation (images, voice, sound) is available on both plans and can manufacture
+      test datasets; performance calibration generates up to 30 minutes of synthetic testing data on the
+      free plan, 120 on Enterprise.
+simulation:
+  time_clocks: false
+  note: No test clocks. The rehearsal surfaces that do exist are previewAIActionsSamples (see what an
+    AI labelling action would change before committing, with clearAIActionsProposedChanges to discard)
+    and the profiling endpoints, which estimate on-device latency, RAM and flash without building a deployment.
+guidance_for_agents:
+- Assume every call is production. There is no safe mode.
+- Isolate with a dedicated scratch project and a project-scoped ei_ key, never a user JWT — a JWT reaches
+  every project and organization that user can see.
+- Create a project version (startVersionJob) before destructive experiments; it is the only restore point.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,220 @@
+generated: '2026-09-06'
+method: derived
+source: https://studio.edgeimpulse.com/openapi.yml (481 paths, 670 component schemas) + openapi/edge-impulse-*-openapi.yml
+provider: Edge Impulse
+providerId: edge-impulse
+description: 'Entity-relationship graph derived from the Edge Impulse Studio OpenAPI — path templates
+  and id-reference fields across the 670 component schemas. The model is a two-root hierarchy: an Organization
+  (Enterprise) owns Projects, and a Project owns everything else. 275 of 481 paths are scoped by {projectId}
+  and 148 by {organizationId}; almost nothing exists outside one of those two roots, which is why a project-scoped
+  API key is a genuine blast-radius boundary and a user JWT is not.'
+id_conventions:
+  style: integer surrogate keys
+  note: Ids are plain integers, not prefixed strings — projectId 12345, not proj_12345. There is no type
+    information in an id, so an agent cannot tell a projectId from an organizationId by looking at it.
+    The one exception is the job id, a string of the form job-1569583053767.
+entities:
+- name: Organization
+  key: organizationId
+  root: true
+  scope: Enterprise only
+  description: 'Enterprise tenancy root: members, buckets, datasets, pipelines, portals, custom blocks,
+    white labels.'
+  paths: 148
+- name: Project
+  key: projectId
+  root: true
+  description: The primary workspace. Owns data, impulses, models, deployments, devices, jobs and keys.
+  paths: 275
+- name: User
+  key: userId
+  description: An account. Belongs to organizations and collaborates on projects.
+- name: Sample
+  key: sampleId
+  description: One item of raw training, validation, testing or post-processing data, with labels and
+    metadata.
+  paths: 38
+- name: Impulse
+  key: impulseId
+  description: 'The ML pipeline: input block plus processing (DSP) blocks plus learning blocks.'
+- name: DSPBlock
+  key: dspId
+  description: A processing/feature-extraction block inside an impulse.
+  paths: 20
+- name: LearnBlock
+  key: learnId
+  description: A learning block (classification, regression, anomaly, object detection, transfer learning).
+  paths: 19
+- name: Job
+  key: jobId
+  id_format: job-<epoch-millis>
+  description: An asynchronous unit of work — feature generation, training, evaluation, deployment build,
+    export.
+  paths: 16
+- name: Device
+  key: deviceId
+  description: A connected edge device registered to a project.
+  paths: 9
+- name: Deployment
+  description: A built on-device artifact for a specific deployment target, now with a version history.
+- name: ProjectVersion
+  key: versionId
+  description: A snapshot of a project. The only restore point the platform offers.
+- name: ApiKey
+  key: apiKeyId
+  description: A project-scoped credential (ei_ prefix). Ingestion-only variants exist.
+- name: HmacKey
+  key: hmacId
+  description: A project-scoped signing key for ingestion payloads.
+- name: Bucket
+  key: bucketId
+  description: An organization storage bucket (S3/GCS) backing organization datasets.
+- name: OrganizationDataset
+  key: dataset
+  description: An organization-level dataset, distinct from project data.
+  paths: 11
+- name: DataItem
+  key: dataId
+  description: One item inside an organization dataset.
+  paths: 6
+- name: Pipeline
+  key: pipelineId
+  description: An organization data pipeline. Emits the completion webhook.
+- name: UploadPortal
+  key: portalId
+  description: A branded external upload surface for collecting data from third parties.
+  paths: 12
+- name: TransformationBlock
+  key: transformationBlockId
+  description: A custom organization block that transforms data.
+- name: AIAction
+  key: actionId
+  description: A GenAI labelling/transform action with a preview-then-apply lifecycle.
+  paths: 5
+- name: Whitelabel
+  key: whitelabelId
+  alt_key: whitelabelIdentifier
+  description: A white-label tenancy that rebrands Studio for an organization.
+- name: EonTunerTrial
+  key: trialId
+  description: One trial inside an EON Tuner AutoML run.
+- name: PostProcessing
+  key: postProcessingId
+  description: A post-processing block applied after inference.
+relationships:
+- from: Organization
+  to: Project
+  type: has_many
+  via: ownerOrganizationId
+- from: Organization
+  to: User
+  type: has_many
+  via: organizationId
+  note: members
+- from: Organization
+  to: Bucket
+  type: has_many
+  via: bucketId
+- from: Organization
+  to: OrganizationDataset
+  type: has_many
+  via: dataset
+- from: OrganizationDataset
+  to: DataItem
+  type: has_many
+  via: dataId
+- from: Organization
+  to: Pipeline
+  type: has_many
+  via: pipelineId
+- from: Organization
+  to: UploadPortal
+  type: has_many
+  via: portalId
+- from: Organization
+  to: TransformationBlock
+  type: has_many
+  via: transformationBlockId
+- from: Organization
+  to: Whitelabel
+  type: has_one
+  via: whitelabelId
+- from: Organization
+  to: Organization
+  type: has_many
+  via: innerOrganizationId
+  note: White-label parents nest child organizations.
+- from: Project
+  to: User
+  type: belongs_to
+  via: ownerUserId
+  note: A project is owned by a user or by an organization, not both.
+- from: Project
+  to: Sample
+  type: has_many
+  via: sampleId
+- from: Project
+  to: Impulse
+  type: has_many
+  via: impulseId
+- from: Impulse
+  to: DSPBlock
+  type: has_many
+  via: dspId
+- from: Impulse
+  to: LearnBlock
+  type: has_many
+  via: learnId
+- from: Impulse
+  to: PostProcessing
+  type: has_many
+  via: postProcessingId
+- from: Project
+  to: Job
+  type: has_many
+  via: jobId
+- from: Organization
+  to: Job
+  type: has_many
+  via: jobId
+  note: Organization jobs are a separate collection with their own status and cancel operations.
+- from: Project
+  to: Device
+  type: has_many
+  via: deviceId
+- from: Project
+  to: Deployment
+  type: has_many
+  via: deploymentVersion
+- from: Project
+  to: ProjectVersion
+  type: has_many
+  via: versionId
+- from: Project
+  to: ApiKey
+  type: has_many
+  via: apiKeyId
+- from: Project
+  to: HmacKey
+  type: has_many
+  via: hmacId
+- from: Project
+  to: AIAction
+  type: has_many
+  via: actionId
+- from: Project
+  to: EonTunerTrial
+  type: has_many
+  via: trialId
+- from: Sample
+  to: DataItem
+  type: derived_from
+  via: ingestion
+  note: Organization data items are imported into projects as samples through pipelines.
+notes:
+- The graph has no soft-delete or trash entity anywhere. ProjectVersion is the only rollback surface.
+- Ids are integers with no type prefix, so an agent must never infer entity type from an id value.
+- The Organization subtree is Enterprise-only; on the Developer plan it does not exist at all.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

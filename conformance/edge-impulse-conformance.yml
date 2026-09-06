@@ -1,0 +1,124 @@
+generated: '2026-09-06'
+method: searched
+source: https://www.edgeimpulse.com/security, https://app.vanta.com/edgeimpulse.com/trust/o9w8o0cckunmysbv6hv507,
+  https://edgeimpulse.com/llms.txt, https://studio.edgeimpulse.com/openapi.yml, https://docs.edgeimpulse.com/apis/studio
+provider: Edge Impulse
+providerId: edge-impulse
+description: 'Standards and compliance regimes Edge Impulse conforms to, each with the evidence that supports
+  it. Compliance is real and third-party audited (SOC 2 Type II, with a Vanta trust portal). Cross-cutting
+  API standards are thin: OpenAPI 3.0.0 yes, OAuth2/OIDC scopes declared, limit/offset pagination on some
+  collections — but no RFC 9457 problem details, no idempotency, no JSON:API, no OData, no SCIM. Edge
+  AI / TinyML has no ratified interchange standard for this kind of platform, so no domain-standard conformance
+  is asserted; that is a genuine absence in the market, not a gap in this provider.'
+conformance:
+- id: openapi
+  name: OpenAPI Specification
+  version: 3.0.0
+  conforms: true
+  evidence: 'https://studio.edgeimpulse.com/openapi.yml — openapi: 3.0.0, 481 paths, 559 operations, 670
+    component schemas, first-party and publicly served without auth.'
+- id: oauth2
+  name: OAuth 2.0
+  conforms: true
+  evidence: components.securitySchemes.OAuth2 in https://studio.edgeimpulse.com/openapi.yml declares authorizationCode,
+    implicit, password and clientCredentials flows against /v1/oauth/authorize and /v1/oauth/token.
+  note: 'Partial: implicit and password flows are still offered, and no RFC 8414 discovery document is
+    served.'
+- id: oidc
+  name: OpenID Connect
+  conforms: false
+  evidence: The OAuth2 scheme declares the openid, email and profile scopes, but /.well-known/openid-configuration
+    returns 404 on every Edge Impulse host (probed 2026-09-06). Without a discovery document this is OIDC-shaped
+    scoping, not OIDC conformance.
+- id: rfc9457
+  name: RFC 9457 Problem Details for HTTP APIs
+  conforms: false
+  evidence: No application/problem+json anywhere in the published spec. Errors use a custom GenericApiResponse
+    envelope returned with HTTP 200. See errors/edge-impulse-problem-types.yml.
+- id: idempotency
+  name: Idempotency keys (draft-ietf-httpapi-idempotency-key-header)
+  conforms: false
+  evidence: The string "idempoten" does not occur in the 1.03 MB published OpenAPI, and no idempotency
+    header is documented on any of the three APIs. 327 mutating operations have no replay protection.
+- id: pagination
+  name: Cursor/offset pagination
+  conforms: true
+  evidence: limit (28 operations) and offset (23 operations) query parameters are declared in components.parameters
+    of https://studio.edgeimpulse.com/openapi.yml.
+  note: 'Partial: most list operations return the whole collection with no paging.'
+- id: rfc8594
+  name: RFC 8594 Sunset / Deprecation headers
+  conforms: false
+  evidence: No Sunset or Deprecation response header appears in the spec, and no deprecation policy page
+    exists. Four operations carry the OpenAPI deprecated flag with no removal date. See lifecycle/edge-impulse-lifecycle.yml.
+- id: rfc9116
+  name: RFC 9116 security.txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on all seven Edge Impulse hosts probed 2026-09-06. See
+    well-known/edge-impulse-well-known.yml.
+- id: rfc8615
+  name: RFC 8615 well-known URIs (api-catalog, RFC 9727)
+  conforms: false
+  evidence: /.well-known/api-catalog returns 404 on all seven hosts probed 2026-09-06.
+- id: a2a
+  name: A2A Agent-to-Agent protocol
+  conforms: true
+  evidence: https://docs.edgeimpulse.com/.well-known/agent-card.json returns 200 with a valid AgentCard
+    (capabilities object, protocolVersion 0.3, skills array). Graded conformant in a2a/edge-impulse-a2a.yml.
+  note: Declares protocolVersion 0.3 rather than 1.0.0.
+- id: mcp
+  name: Model Context Protocol
+  conforms: true
+  evidence: POST tools/list to https://docs.edgeimpulse.com/mcp returned 200 with three tools on 2026-09-06,
+    and @edgeimpulse/mcp-server@0.1.3 on npm ships 218 Studio tools over stdio. See mcp/edge-impulse-mcp.yml.
+- id: llmstxt
+  name: llms.txt
+  conforms: true
+  evidence: https://docs.edgeimpulse.com/llms.txt and https://edgeimpulse.com/llms.txt both return 200
+    with real intent-bearing routers, plus per-section llms.txt files and an llms-full.txt.
+- id: asyncapi
+  name: AsyncAPI
+  conforms: false
+  evidence: Edge Impulse publishes a fully specified WebSocket protocol with per-message JSON Schemas
+    at https://docs.edgeimpulse.com/tools/protocols/remote-management/websocket, but ships no AsyncAPI
+    document. A derived one is in asyncapi/edge-impulse-remote-management-asyncapi.yml.
+- id: soc2
+  name: SOC 2 Type II
+  conforms: true
+  evidence: https://www.edgeimpulse.com/security — annual independent audit against the AICPA SOC 2 framework;
+    report available on request through the Vanta trust portal at https://app.vanta.com/edgeimpulse.com/trust/o9w8o0cckunmysbv6hv507.
+- id: gdpr
+  name: GDPR
+  conforms: true
+  evidence: https://edgeimpulse.com/llms.txt states the platform "adheres to GDPR and CCPA standards";
+    https://www.edgeimpulse.com/legal/privacy-policy is published.
+- id: ccpa
+  name: CCPA
+  conforms: true
+  evidence: https://edgeimpulse.com/llms.txt states CCPA adherence; the site footer carries a Do Not Sell
+    or Share My Personal Information control.
+- id: iso27001
+  name: ISO/IEC 27001
+  conforms: false
+  evidence: Not claimed on https://www.edgeimpulse.com/security or in the trust portal summary. SOC 2
+    Type II is the only certification named.
+- id: hipaa
+  name: HIPAA
+  conforms: false
+  evidence: Not claimed anywhere on the Edge Impulse security or legal pages, despite health-vertical
+    case studies.
+domain_standard:
+  asserted: false
+  market: Edge AI / TinyML MLOps
+  note: Reward-only check, deliberately left empty. Edge Impulse touches model-interchange formats (TensorFlow
+    Lite, ONNX, PyTorch, ExecuTorch) as deployment targets, but those are model file formats consumed
+    by the platform, not an API-contract standard the platform declares for its own interface. There is
+    no SCIM URN, OData $metadata, OpenRTB, Sparkplug, LTI, OAI-PMH, HL7 or ISO 20022 signature anywhere
+    in the contract, and no ratified API standard exists for this market to conform to. Asserting one
+    would be an invention.
+certifications:
+- SOC 2 Type II
+trust_center: https://app.vanta.com/edgeimpulse.com/trust/o9w8o0cckunmysbv6hv507
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

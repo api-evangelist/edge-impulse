@@ -1,0 +1,85 @@
+generated: '2026-09-06'
+method: searched
+source: https://docs.edgeimpulse.com/apis/ingestion, https://studio.edgeimpulse.com/openapi.yml, openapi/edge-impulse-*-openapi.yml
+provider: Edge Impulse
+providerId: edge-impulse
+format: custom-envelope
+rfc9457: false
+content_type: application/json (Studio) / text/plain (Ingestion)
+description: 'Edge Impulse does not publish an error-code registry, and its Studio API does not use HTTP
+  status codes to signal failure. Across all 559 published Studio operations the OpenAPI declares only
+  200 responses (plus four 302 redirects) — zero 4xx and zero 5xx. Failure arrives as a 200 whose body
+  is the GenericApiResponse envelope with success:false and a free-text error string. This is the single
+  most consequential fact about integrating with this API: a client that branches on response.ok will
+  treat every failure as a success.'
+envelope:
+  schema: GenericApiResponse
+  required:
+  - success
+  fields:
+  - name: success
+    type: boolean
+    description: Whether the operation succeeded.
+  - name: error
+    type: string
+    description: Free-text error description. Set only when success is false. Not a stable machine-readable
+      code.
+  example:
+    success: false
+    error: <free-text description>
+  stability: Prose only. There is no error code, type URI, or enumerated reason to switch on.
+studio_api:
+  declared_status_codes:
+    '200': 555
+    '302': 4
+  declared_4xx: 0
+  declared_5xx: 0
+  note: The 4xx/5xx behaviour that a real caller will meet — 401 on a bad key, 404 on an unknown projectId
+    — is undocumented. It cannot be derived from the contract because the contract does not describe it.
+    This artifact records that absence rather than inventing the codes.
+ingestion_api:
+  note: 'The Ingestion API is the exception: it documents real HTTP status codes and returns text/plain.'
+  docs: https://docs.edgeimpulse.com/apis/ingestion
+  problem_types:
+  - status: 200
+    title: Stored
+    detail: File stored; the stored file name is in the body.
+    remediation: None.
+  - status: 400
+    title: Invalid message
+    detail: Fields are missing or invalid. See the body for specifics.
+    remediation: Fix the payload shape or the acquisition format before retrying.
+  - status: 401
+    title: Unauthorized
+    detail: Missing x-api-key header, or an invalid API key.
+    remediation: Supply a valid project API key (prefix ei_) in the x-api-key header.
+  - status: 421
+    title: Misdirected Request — missing header
+    detail: A required header is missing; the body names it.
+    remediation: Add the named header (commonly x-file-name or Content-Type).
+  - status: 500
+    title: Internal server error
+    detail: Server-side failure; see the body.
+    remediation: Retry with backoff; the ingestion endpoints are not idempotent, so set x-disallow-duplicates
+      to avoid double-storing the same sample.
+  limits:
+  - Maximum 1000 files per request.
+  - Maximum 100 MB per file.
+remote_management_api:
+  note: 'The Remote Management WebSocket carries errors in-band: the Hello response and the Sample response
+    each have an err string alongside a boolean success flag. Same pattern as the Studio envelope, over
+    a socket.'
+  docs: https://docs.edgeimpulse.com/tools/protocols/remote-management/websocket
+  detail: asyncapi/edge-impulse-remote-management-asyncapi.yml
+job_failures:
+  note: Because everything expensive is a job, most real failures are not request failures at all. A job
+    that fails returns its reason through getJobStatus and getJobsLogs (GET /api/{projectId}/jobs/{jobId}/stdout),
+    not through the response to the call that started it.
+guidance_for_agents:
+- Check body.success on every Studio response. Never rely on the HTTP status code alone.
+- Treat body.error as human-readable prose; do not pattern-match it as a stable code.
+- For any job-starting call, follow up with getJobStatus and read getJobsLogs on failure.
+- On the Ingestion API the status codes ARE meaningful — 400/401/421/500 are documented.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

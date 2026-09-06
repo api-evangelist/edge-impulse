@@ -1,0 +1,2258 @@
+generated: '2026-09-06'
+method: derived
+source: mcp/edge-impulse-mcp.yml + openapi/edge-impulse-*-openapi.yml + https://studio.edgeimpulse.com/openapi.yml
+  + npm @edgeimpulse/mcp-server@0.1.3 (edge-impulse-api/src/gen/mcp.ts)
+provider: Edge Impulse
+providerId: edge-impulse
+description: 'Binding between the Edge Impulse MCP tool surface and the Studio OpenAPI. The @edgeimpulse/mcp-server
+  package is generated from the same OpenAPI with @kubb/plugin-mcp, so every tool name IS an operationId
+  and each binding is exact rather than inferred — confidence is high for all 218. The remote documentation
+  MCP endpoint is a separate, disjoint surface: its three tools have no REST backing at all. The large
+  rest_only[] set is the real finding: the Studio API exposes far more operations than the MCP server
+  currently registers.'
+surfaces:
+  openapi:
+    files: openapi/edge-impulse-*-openapi.yml
+    live: https://studio.edgeimpulse.com/openapi.yml
+    operations_repo: 631
+    operations_live: 559
+    gated: false
+  graphql:
+    present: false
+  mcp_remote:
+    url: https://docs.edgeimpulse.com/mcp
+    gated: false
+    tools: 3
+    scope: documentation only
+  mcp_local_stdio:
+    package: '@edgeimpulse/mcp-server'
+    version: 0.1.3
+    gated: true
+    gate: requires EI_API_KEY or EI_JWT_TOKEN
+    tools: 218
+    scope: Studio API
+coverage:
+  mcp_tools_total: 221
+  mcp_studio_tools: 218
+  mcp_docs_tools: 3
+  bound_to_rest: 218
+  bound_confidence_high: 218
+  mcp_only: 3
+  rest_only: 424
+  rest_operations_in_repo: 631
+  note: 11 of the 218 Studio tools bind only against the live published spec, not the openapi/ files in
+    this repo — evidence the harvested specs are behind the provider’s current one.
+category_counts:
+  Projects: 50
+  User: 42
+  Jobs: 40
+  Learn: 17
+  Optimization: 17
+  Impulse: 16
+  Devices: 12
+  Deployment: 11
+  Classify: 7
+  OrganizationJobs: 5
+  Export: 1
+crosswalk:
+- tool: getUserNeedToSetPassword
+  category: User
+  rest:
+  - getUserNeedToSetPassword
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: GET /api-user-need-to-set-password/{usernameOrEmail}
+- tool: getCurrentUser
+  category: User
+  rest:
+  - getCurrentUser
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: GET /api/user
+- tool: updateCurrentUser
+  category: User
+  rest:
+  - updateCurrentUser
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api/user
+- tool: deleteCurrentUser
+  category: User
+  rest:
+  - deleteCurrentUser
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: DELETE /api/user
+- tool: getCurrentUserProjects
+  category: User
+  rest:
+  - getCurrentUserProjects
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: GET /api/user/projects
+- tool: convertCurrentUser
+  category: User
+  rest:
+  - convertCurrentUser
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api/user/convert
+- tool: activateCurrentUser
+  category: User
+  rest:
+  - activateCurrentUser
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api/user/activate
+- tool: requestActivationCodeCurrentUser
+  category: User
+  rest:
+  - requestActivationCodeCurrentUser
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api/user/request-activation
+- tool: createDeveloperProfile
+  category: User
+  rest:
+  - createDeveloperProfile
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api/user/create-developer-profile
+- tool: listEmailsCurrentUser
+  category: User
+  rest:
+  - listEmailsCurrentUser
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: GET /api/user/emails
+- tool: deletePhotoCurrentUser
+  category: User
+  rest:
+  - deletePhotoCurrentUser
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: DELETE /api/user/photo
+- tool: changePasswordCurrentUser
+  category: User
+  rest:
+  - changePasswordCurrentUser
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api/user/change-password
+- tool: listOrganizationsCurrentUser
+  category: User
+  rest:
+  - listOrganizationsCurrentUser
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: GET /api/user/organizations
+- tool: listOrganizationBucketsCurrentUser
+  category: User
+  rest:
+  - listOrganizationBucketsCurrentUser
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: GET /api/users/buckets
+- tool: getUserByThirdPartyActivationCode
+  category: User
+  rest:
+  - getUserByThirdPartyActivationCode
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api/user/by-third-party-activation-code
+- tool: activateUserByThirdPartyActivationCode
+  category: User
+  rest:
+  - activateUserByThirdPartyActivationCode
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api/user/activate-by-third-party-activation-code
+- tool: acceptTermsOfService
+  category: User
+  rest:
+  - acceptTermsOfService
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api/user/accept-tos
+- tool: acceptEula
+  category: User
+  rest:
+  - acceptEula
+  binding: generated-from-openapi
+  confidence: high
+  spec: https://studio.edgeimpulse.com/openapi.yml
+  operation: POST /api/user/accept-eula
+  note: Operation exists in the live published spec but not in the openapi/ files harvested for this repo;
+    those predate it.
+- tool: userDismissNotification
+  category: User
+  rest:
+  - userDismissNotification
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api/user/dismiss-notification
+- tool: userGenerateNewTotpMfaKey
+  category: User
+  rest:
+  - userGenerateNewTotpMfaKey
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api/user/mfa/totp/create-key
+- tool: userSetTotpMfaKey
+  category: User
+  rest:
+  - userSetTotpMfaKey
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api/user/mfa/totp/set-key
+- tool: userDeleteTotpMfaKey
+  category: User
+  rest:
+  - userDeleteTotpMfaKey
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api/user/mfa/totp/clear
+- tool: userUpgradeSubscription
+  category: User
+  rest:
+  - userUpgradeSubscription
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api/user/subscription/upgrade
+- tool: userCancelSubscription
+  category: User
+  rest:
+  - userCancelSubscription
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api/user/subscription/cancel
+- tool: userUndoCancelSubscription
+  category: User
+  rest:
+  - userUndoCancelSubscription
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api/user/subscription/undo-cancel
+- tool: userGetSubscriptionMetrics
+  category: User
+  rest:
+  - userGetSubscriptionMetrics
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: GET /api/user/subscription/metrics
+- tool: getUser
+  category: User
+  rest:
+  - getUser
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: GET /api/users/{userId}
+- tool: updateUser
+  category: User
+  rest:
+  - updateUser
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api/users/{userId}
+- tool: deleteUser
+  category: User
+  rest:
+  - deleteUser
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: DELETE /api/users/{userId}
+- tool: activateUser
+  category: User
+  rest:
+  - activateUser
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api/users/{userId}/activate
+- tool: requestActivationCodeUser
+  category: User
+  rest:
+  - requestActivationCodeUser
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api/users/{userId}/request-activation
+- tool: listEmailsUser
+  category: User
+  rest:
+  - listEmailsUser
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: GET /api/users/{userId}/emails
+- tool: changePasswordUser
+  category: User
+  rest:
+  - changePasswordUser
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api/users/{userId}/change-password
+- tool: setUserPassword
+  category: User
+  rest:
+  - setUserPassword
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api/users/{userId}/set-password
+- tool: listOrganizationsUser
+  category: User
+  rest:
+  - listOrganizationsUser
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: GET /api/users/{userId}/organizations
+- tool: listOrganizationBucketsUser
+  category: User
+  rest:
+  - listOrganizationBucketsUser
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: GET /api/users/{userId}/buckets
+- tool: sendUserFeedback
+  category: User
+  rest:
+  - sendUserFeedback
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api/users/{userId}/feedback
+- tool: sendUserUpgradeRequest
+  category: User
+  rest:
+  - sendUserUpgradeRequest
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api/users/{userId}/upgrade
+- tool: listEnterpriseTrialsUser
+  category: User
+  rest:
+  - listEnterpriseTrialsUser
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: GET /api/users/{userId}/trials
+- tool: requestResetPassword
+  category: User
+  rest:
+  - requestResetPassword
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api-user-request-reset-password
+- tool: resetPassword
+  category: User
+  rest:
+  - resetPassword
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api-user-reset-password
+- tool: verifyResetPassword
+  category: User
+  rest:
+  - verifyResetPassword
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-user-api-openapi.yml
+  operation: POST /api-user-verify-reset-password-code
+- tool: listAllDeploymentTargets
+  category: Deployment
+  rest:
+  - listAllDeploymentTargets
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-deployment-api-openapi.yml
+  operation: GET /api/deployment/targets
+- tool: listProjects
+  category: Projects
+  rest:
+  - listProjects
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/projects
+- tool: createProject
+  category: Projects
+  rest:
+  - createProject
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: POST /api/projects/create
+- tool: listDevkeys
+  category: Projects
+  rest:
+  - listDevkeys
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/{projectId}/devkeys
+- tool: getCsvWizardUploadedFileInfo
+  category: Projects
+  rest:
+  - getCsvWizardUploadedFileInfo
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/{projectId}/csv-wizard/uploaded-file
+- tool: addCollaborator
+  category: Projects
+  rest:
+  - addCollaborator
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: POST /api/{projectId}/collaborators/add
+- tool: removeCollaborator
+  category: Projects
+  rest:
+  - removeCollaborator
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: POST /api/{projectId}/collaborators/remove
+- tool: transferOwnership
+  category: Projects
+  rest:
+  - transferOwnership
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: POST /api/{projectId}/collaborators/transfer-ownership
+- tool: transferOwnershipOrganization
+  category: Projects
+  rest:
+  - transferOwnershipOrganization
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: POST /api/{projectId}/collaborators/transfer-ownership-org
+- tool: listProjectHmacKeys
+  category: Projects
+  rest:
+  - listProjectHmacKeys
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/{projectId}/hmackeys
+- tool: addProjectHmacKey
+  category: Projects
+  rest:
+  - addProjectHmacKey
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: POST /api/{projectId}/hmackeys
+- tool: revokeProjectHmacKey
+  category: Projects
+  rest:
+  - revokeProjectHmacKey
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: DELETE /api/{projectId}/hmackeys/{hmacId}
+- tool: listProjectApiKeys
+  category: Projects
+  rest:
+  - listProjectApiKeys
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/{projectId}/apikeys
+- tool: addProjectApiKey
+  category: Projects
+  rest:
+  - addProjectApiKey
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: POST /api/{projectId}/apikeys
+- tool: revokeProjectApiKey
+  category: Projects
+  rest:
+  - revokeProjectApiKey
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: DELETE /api/{projectId}/apikeys/{apiKeyId}
+- tool: listEmails
+  category: Projects
+  rest:
+  - listEmails
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/{projectId}/emails
+- tool: getSocketToken
+  category: Projects
+  rest:
+  - getSocketToken
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/{projectId}/socket-token
+- tool: getProjectDataAxesSummary
+  category: Projects
+  rest:
+  - getProjectDataAxesSummary
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/{projectId}/data-axes
+- tool: getProjectTrainingDataSummary
+  category: Projects
+  rest:
+  - getProjectTrainingDataSummary
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/{projectId}/data-summary
+- tool: getProjectRecommendedDataInterval
+  category: Projects
+  rest:
+  - getProjectRecommendedDataInterval
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/{projectId}/data-interval
+- tool: setProjectComputeTimeLimit
+  category: Projects
+  rest:
+  - setProjectComputeTimeLimit
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: POST /api/{projectId}/compute-time-limit
+- tool: setProjectFileSizeLimit
+  category: Projects
+  rest:
+  - setProjectFileSizeLimit
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: POST /api/{projectId}/dsp-file-size-limit
+- tool: listVersions
+  category: Projects
+  rest:
+  - listVersions
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/{projectId}/versions
+- tool: listPublicVersions
+  category: Projects
+  rest:
+  - listPublicVersions
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/{projectId}/versions/public
+- tool: updateVersion
+  category: Projects
+  rest:
+  - updateVersion
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: POST /api/{projectId}/versions/{versionId}
+- tool: deleteVersion
+  category: Projects
+  rest:
+  - deleteVersion
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: DELETE /api/{projectId}/versions/{versionId}
+- tool: makeVersionPrivate
+  category: Projects
+  rest:
+  - makeVersionPrivate
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: POST /api/{projectId}/versions/{versionId}/make-private
+- tool: launchGettingStartedWizard
+  category: Projects
+  rest:
+  - launchGettingStartedWizard
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: POST /api/{projectId}/launch-getting-started
+- tool: getProjectLastModificationDate
+  category: Projects
+  rest:
+  - getProjectLastModificationDate
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/{projectId}/last-modification
+- tool: listDevelopmentBoards
+  category: Projects
+  rest:
+  - listDevelopmentBoards
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/{projectId}/development-boards
+- tool: getTargetConstraints
+  category: Projects
+  rest:
+  - getTargetConstraints
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/{projectId}/target-constraints
+- tool: setTargetConstraints
+  category: Projects
+  rest:
+  - setTargetConstraints
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: POST /api/{projectId}/target-constraints
+- tool: getModelVariants
+  category: Projects
+  rest:
+  - getModelVariants
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/{projectId}/model-variants
+- tool: projectDismissNotification
+  category: Projects
+  rest:
+  - projectDismissNotification
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: POST /api/{projectId}/dismiss-notification
+- tool: getSyntheticDataConfig
+  category: Projects
+  rest:
+  - getSyntheticDataConfig
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/{projectId}/synthetic-data
+- tool: listAIActions
+  category: Projects
+  rest:
+  - listAIActions
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/{projectId}/ai-actions
+- tool: setAIActionsOrder
+  category: Projects
+  rest:
+  - setAIActionsOrder
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: POST /api/{projectId}/ai-actions/order
+- tool: createAIAction
+  category: Projects
+  rest:
+  - createAIAction
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: POST /api/{projectId}/ai-actions/create
+- tool: getNewAIAction
+  category: Projects
+  rest:
+  - getNewAIAction
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/{projectId}/ai-actions/new
+- tool: getAIAction
+  category: Projects
+  rest:
+  - getAIAction
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/{projectId}/ai-actions/{actionId}
+- tool: updateAIAction
+  category: Projects
+  rest:
+  - updateAIAction
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: POST /api/{projectId}/ai-actions/{actionId}
+- tool: deleteAIAction
+  category: Projects
+  rest:
+  - deleteAIAction
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: DELETE /api/{projectId}/ai-actions/{actionId}
+- tool: previewAIActionsSamples
+  category: Projects
+  rest:
+  - previewAIActionsSamples
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: POST /api/{projectId}/ai-actions/{actionId}/preview-samples
+- tool: clearAIActionsProposedChanges
+  category: Projects
+  rest:
+  - clearAIActionsProposedChanges
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/{projectId}/ai-actions/{actionId}/clear-proposed-changes
+- tool: updateProjectTags
+  category: Projects
+  rest:
+  - updateProjectTags
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: POST /api/{projectId}/tags
+- tool: listPublicProjects
+  category: Projects
+  rest:
+  - listPublicProjects
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/projects/public
+- tool: listPublicProjectTypes
+  category: Projects
+  rest:
+  - listPublicProjectTypes
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/projects/types
+- tool: listDevices
+  category: Devices
+  rest:
+  - listDevices
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-devices-api-openapi.yml
+  operation: GET /api/{projectId}/devices
+- tool: getDevice
+  category: Devices
+  rest:
+  - getDevice
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-devices-api-openapi.yml
+  operation: GET /api/{projectId}/device/{deviceId}
+- tool: deleteDevice
+  category: Devices
+  rest:
+  - deleteDevice
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-devices-api-openapi.yml
+  operation: DELETE /api/{projectId}/device/{deviceId}
+- tool: startSampling
+  category: Devices
+  rest:
+  - startSampling
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-devices-api-openapi.yml
+  operation: POST /api/{projectId}/device/{deviceId}/start-sampling
+- tool: startDeviceInferenceDebugStream
+  category: Devices
+  rest:
+  - startDeviceInferenceDebugStream
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-devices-api-openapi.yml
+  operation: POST /api/{projectId}/device/{deviceId}/debug-stream/inference/start
+- tool: startDeviceSnapshotDebugStream
+  category: Devices
+  rest:
+  - startDeviceSnapshotDebugStream
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-devices-api-openapi.yml
+  operation: POST /api/{projectId}/device/{deviceId}/debug-stream/snapshot/start
+- tool: keepDeviceDebugStreamAlive
+  category: Devices
+  rest:
+  - keepDeviceDebugStreamAlive
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-devices-api-openapi.yml
+  operation: POST /api/{projectId}/device/{deviceId}/debug-stream/keep-alive
+- tool: stopDeviceDebugStream
+  category: Devices
+  rest:
+  - stopDeviceDebugStream
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-devices-api-openapi.yml
+  operation: POST /api/{projectId}/device/{deviceId}/debug-stream/stop
+- tool: getImpulseRecords
+  category: Devices
+  rest:
+  - getImpulseRecords
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-devices-api-openapi.yml
+  operation: POST /api/{projectId}/device/{deviceId}/get-impulse-records
+- tool: createDevice
+  category: Devices
+  rest:
+  - createDevice
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-devices-api-openapi.yml
+  operation: POST /api/{projectId}/devices/create
+- tool: renameDevice
+  category: Devices
+  rest:
+  - renameDevice
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-devices-api-openapi.yml
+  operation: POST /api/{projectId}/devices/{deviceId}/rename
+- tool: requestDeviceModelUpdate
+  category: Devices
+  rest:
+  - requestDeviceModelUpdate
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-devices-api-openapi.yml
+  operation: POST /api/{projectId}/devices/{deviceId}/request-model-update
+- tool: getImpulse
+  category: Impulse
+  rest:
+  - getImpulse
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-impulse-api-openapi.yml
+  operation: GET /api/{projectId}/impulse
+- tool: createImpulse
+  category: Impulse
+  rest:
+  - createImpulse
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-impulse-api-openapi.yml
+  operation: POST /api/{projectId}/impulse
+- tool: deleteImpulse
+  category: Impulse
+  rest:
+  - deleteImpulse
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-impulse-api-openapi.yml
+  operation: DELETE /api/{projectId}/impulse
+- tool: createNewEmptyImpulse
+  category: Impulse
+  rest:
+  - createNewEmptyImpulse
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-impulse-api-openapi.yml
+  operation: POST /api/{projectId}/impulse/new
+- tool: updateImpulse
+  category: Impulse
+  rest:
+  - updateImpulse
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-impulse-api-openapi.yml
+  operation: POST /api/{projectId}/impulse/update
+- tool: getImpulseAll
+  category: Impulse
+  rest:
+  - getImpulseAll
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-impulse-api-openapi.yml
+  operation: GET /api/{projectId}/impulse/all
+- tool: getNewBlockId
+  category: Impulse
+  rest:
+  - getNewBlockId
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-impulse-api-openapi.yml
+  operation: POST /api/{projectId}/impulse/get-new-block-id
+- tool: getImpulseBlocks
+  category: Impulse
+  rest:
+  - getImpulseBlocks
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-impulse-api-openapi.yml
+  operation: GET /api/{projectId}/impulse/blocks
+- tool: verifyDspBlockUrl
+  category: Impulse
+  rest:
+  - verifyDspBlockUrl
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-impulse-api-openapi.yml
+  operation: POST /api/{projectId}/verify-dsp-block/url
+- tool: getAllTransferLearningModels
+  category: Impulse
+  rest:
+  - getAllTransferLearningModels
+  binding: generated-from-openapi
+  confidence: high
+  spec: https://studio.edgeimpulse.com/openapi.yml
+  operation: GET /api/{projectId}/transfer-learning-models
+  note: Operation exists in the live published spec but not in the openapi/ files harvested for this repo;
+    those predate it.
+- tool: getAllImpulses
+  category: Impulse
+  rest:
+  - getAllImpulses
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-impulse-api-openapi.yml
+  operation: GET /api/{projectId}/impulses
+- tool: getAllDetailedImpulses
+  category: Impulse
+  rest:
+  - getAllDetailedImpulses
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-impulse-api-openapi.yml
+  operation: GET /api/{projectId}/impulses-detailed
+- tool: cloneImpulseStructure
+  category: Impulse
+  rest:
+  - cloneImpulseStructure
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-impulse-api-openapi.yml
+  operation: POST /api/{projectId}/impulse/{impulseId}/clone/structure
+- tool: cloneImpulseComplete
+  category: Impulse
+  rest:
+  - cloneImpulseComplete
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-impulse-api-openapi.yml
+  operation: POST /api/{projectId}/impulse/{impulseId}/clone/complete
+- tool: setImpulseThresholds
+  category: Impulse
+  rest:
+  - setImpulseThresholds
+  binding: generated-from-openapi
+  confidence: high
+  spec: https://studio.edgeimpulse.com/openapi.yml
+  operation: POST /api/{projectId}/impulse/{impulseId}/set-thresholds
+  note: Operation exists in the live published spec but not in the openapi/ files harvested for this repo;
+    those predate it.
+- tool: regenerateModelTestingSummary
+  category: Impulse
+  rest:
+  - regenerateModelTestingSummary
+  binding: generated-from-openapi
+  confidence: high
+  spec: https://studio.edgeimpulse.com/openapi.yml
+  operation: POST /api/{projectId}/impulse/{impulseId}/regenerate-model-testing-summary
+  note: Operation exists in the live published spec but not in the openapi/ files harvested for this repo;
+    those predate it.
+- tool: getAnomaly
+  category: Learn
+  rest:
+  - getAnomaly
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-learn-api-openapi.yml
+  operation: GET /api/{projectId}/training/anomaly/{learnId}
+- tool: setAnomaly
+  category: Learn
+  rest:
+  - setAnomaly
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-learn-api-openapi.yml
+  operation: POST /api/{projectId}/training/anomaly/{learnId}
+- tool: getAnomalyMetadata
+  category: Learn
+  rest:
+  - getAnomalyMetadata
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-learn-api-openapi.yml
+  operation: GET /api/{projectId}/training/anomaly/{learnId}/metadata
+- tool: getGmmMetadata
+  category: Learn
+  rest:
+  - getGmmMetadata
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-learn-api-openapi.yml
+  operation: GET /api/{projectId}/training/anomaly/{learnId}/gmm/metadata
+- tool: getKeras
+  category: Learn
+  rest:
+  - getKeras
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-learn-api-openapi.yml
+  operation: GET /api/{projectId}/training/keras/{learnId}
+- tool: setKeras
+  category: Learn
+  rest:
+  - setKeras
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-learn-api-openapi.yml
+  operation: POST /api/{projectId}/training/keras/{learnId}
+- tool: getKerasMetadata
+  category: Learn
+  rest:
+  - getKerasMetadata
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-learn-api-openapi.yml
+  operation: GET /api/{projectId}/training/keras/{learnId}/metadata
+- tool: getKerasDataExplorerFeatures
+  category: Learn
+  rest:
+  - getKerasDataExplorerFeatures
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-learn-api-openapi.yml
+  operation: GET /api/{projectId}/training/keras/{learnId}/data-explorer/features
+- tool: startKerasProfileJob
+  category: Learn
+  rest:
+  - startKerasProfileJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: https://studio.edgeimpulse.com/openapi.yml
+  operation: POST /api/{projectId}/training/keras/{learnId}/profile
+  note: Operation exists in the live published spec but not in the openapi/ files harvested for this repo;
+    those predate it.
+- tool: startAnomalyProfileJob
+  category: Learn
+  rest:
+  - startAnomalyProfileJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: https://studio.edgeimpulse.com/openapi.yml
+  operation: POST /api/{projectId}/training/anomaly/{learnId}/profile
+  note: Operation exists in the live published spec but not in the openapi/ files harvested for this repo;
+    those predate it.
+- tool: anomalyTrainedFeatures
+  category: Learn
+  rest:
+  - anomalyTrainedFeatures
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-learn-api-openapi.yml
+  operation: GET /api/{projectId}/training/anomaly/{learnId}/features/get-graph
+- tool: anomalyTrainedFeaturesPerSample
+  category: Learn
+  rest:
+  - anomalyTrainedFeaturesPerSample
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-learn-api-openapi.yml
+  operation: GET /api/{projectId}/training/anomaly/{learnId}/features/get-graph/classification/{sampleId}
+- tool: getPretrainedModelInfo
+  category: Learn
+  rest:
+  - getPretrainedModelInfo
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-learn-api-openapi.yml
+  operation: GET /api/{projectId}/pretrained-model
+- tool: savePretrainedModelParameters
+  category: Learn
+  rest:
+  - savePretrainedModelParameters
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-learn-api-openapi.yml
+  operation: POST /api/{projectId}/pretrained-model/save
+- tool: testPretrainedModel
+  category: Learn
+  rest:
+  - testPretrainedModel
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-learn-api-openapi.yml
+  operation: POST /api/{projectId}/pretrained-model/test
+- tool: testPretrainedModelImages
+  category: Learn
+  rest:
+  - testPretrainedModelImages
+  binding: generated-from-openapi
+  confidence: high
+  spec: https://studio.edgeimpulse.com/openapi.yml
+  operation: POST /api/{projectId}/pretrained-model/test-image
+  note: Operation exists in the live published spec but not in the openapi/ files harvested for this repo;
+    those predate it.
+- tool: profilePretrainedModel
+  category: Learn
+  rest:
+  - profilePretrainedModel
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-learn-api-openapi.yml
+  operation: POST /api/{projectId}/pretrained-model/profile
+- tool: classifySample
+  category: Classify
+  rest:
+  - classifySample
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-classify-api-openapi.yml
+  operation: GET /api/{projectId}/classify/{sampleId}
+- tool: classifySampleV2
+  category: Classify
+  rest:
+  - classifySampleV2
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-classify-api-openapi.yml
+  operation: POST /api/{projectId}/classify/v2/{sampleId}
+- tool: classifySampleForVariants
+  category: Classify
+  rest:
+  - classifySampleForVariants
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-classify-api-openapi.yml
+  operation: POST /api/{projectId}/classify/v2/{sampleId}/variants
+- tool: getSampleWindowFromCache
+  category: Classify
+  rest:
+  - getSampleWindowFromCache
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-classify-api-openapi.yml
+  operation: GET /api/{projectId}/classify/v2/{sampleId}/raw-data/{windowIndex}
+- tool: getClassifyJobResult
+  category: Classify
+  rest:
+  - getClassifyJobResult
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-classify-api-openapi.yml
+  operation: GET /api/{projectId}/classify/all/result
+- tool: classifySampleByLearnBlock
+  category: Classify
+  rest:
+  - classifySampleByLearnBlock
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-classify-api-openapi.yml
+  operation: GET /api/{projectId}/classify/anomaly-gmm/{blockId}/{sampleId}
+- tool: classifySampleByLearnBlockV2
+  category: Classify
+  rest:
+  - classifySampleByLearnBlockV2
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-classify-api-openapi.yml
+  operation: POST /api/{projectId}/classify/anomaly-gmm/v2/{blockId}/{sampleId}
+- tool: startPostProcessingJob
+  category: Jobs
+  rest:
+  - startPostProcessingJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/post-processing
+- tool: listDeploymentTargetsForProject
+  category: Deployment
+  rest:
+  - listDeploymentTargetsForProject
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-deployment-api-openapi.yml
+  operation: GET /api/{projectId}/deployment/targets
+- tool: listDeploymentTargetsForProjectDataSources
+  category: Deployment
+  rest:
+  - listDeploymentTargetsForProjectDataSources
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-deployment-api-openapi.yml
+  operation: GET /api/{projectId}/deployment/targets/data-sources
+- tool: getEvaluateJobResult
+  category: Deployment
+  rest:
+  - getEvaluateJobResult
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-deployment-api-openapi.yml
+  operation: GET /api/{projectId}/deployment/evaluate
+- tool: getEvaluateJobResultCache
+  category: Deployment
+  rest:
+  - getEvaluateJobResultCache
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-deployment-api-openapi.yml
+  operation: GET /api/{projectId}/deployment/evaluate/cache
+- tool: getDeployment
+  category: Deployment
+  rest:
+  - getDeployment
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-deployment-api-openapi.yml
+  operation: GET /api/{projectId}/deployment
+- tool: getLastDeploymentBuild
+  category: Deployment
+  rest:
+  - getLastDeploymentBuild
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-deployment-api-openapi.yml
+  operation: GET /api/{projectId}/deployment/last
+- tool: getSyntiantPosterior
+  category: Deployment
+  rest:
+  - getSyntiantPosterior
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-deployment-api-openapi.yml
+  operation: GET /api/{projectId}/deployment/syntiant/posterior
+- tool: setSyntiantPosterior
+  category: Deployment
+  rest:
+  - setSyntiantPosterior
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-deployment-api-openapi.yml
+  operation: POST /api/{projectId}/deployment/syntiant/posterior
+- tool: listDeploymentHistory
+  category: Deployment
+  rest:
+  - listDeploymentHistory
+  binding: generated-from-openapi
+  confidence: high
+  spec: https://studio.edgeimpulse.com/openapi.yml
+  operation: GET /api/{projectId}/deployment/history
+  note: Operation exists in the live published spec but not in the openapi/ files harvested for this repo;
+    those predate it.
+- tool: getHistoricDeployment
+  category: Deployment
+  rest:
+  - getHistoricDeployment
+  binding: generated-from-openapi
+  confidence: high
+  spec: https://studio.edgeimpulse.com/openapi.yml
+  operation: GET /api/{projectId}/deployment/history/{deploymentVersion}
+  note: Operation exists in the live published spec but not in the openapi/ files harvested for this repo;
+    those predate it.
+- tool: generateDataExplorerFeatures
+  category: Jobs
+  rest:
+  - generateDataExplorerFeatures
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/data-explorer-features
+- tool: calculateDataQualityMetrics
+  category: Jobs
+  rest:
+  - calculateDataQualityMetrics
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/data-quality-metrics
+- tool: retryImpulseMigration
+  category: Jobs
+  rest:
+  - retryImpulseMigration
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/retry-migrate-impulse
+- tool: createSyntheticDataJob
+  category: Jobs
+  rest:
+  - createSyntheticDataJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/synthetic-data
+- tool: createPreviewAIActionsJob
+  category: Jobs
+  rest:
+  - createPreviewAIActionsJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/ai-actions/{actionId}/preview
+- tool: createAIActionsJob
+  category: Jobs
+  rest:
+  - createAIActionsJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/ai-actions/{actionId}
+- tool: listTunerRuns
+  category: Optimization
+  rest:
+  - listTunerRuns
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-optimization-api-openapi.yml
+  operation: GET /api/{projectId}/optimize/runs
+- tool: getConfig
+  category: Optimization
+  rest:
+  - getConfig
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-optimization-api-openapi.yml
+  operation: GET /api/{projectId}/optimize/config
+- tool: updateConfig
+  category: Optimization
+  rest:
+  - updateConfig
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-optimization-api-openapi.yml
+  operation: POST /api/{projectId}/optimize/config
+- tool: getAllLearnBlocks
+  category: Optimization
+  rest:
+  - getAllLearnBlocks
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-optimization-api-openapi.yml
+  operation: GET /api/{projectId}/optimize/all-learn-blocks
+- tool: getWindowSettings
+  category: Optimization
+  rest:
+  - getWindowSettings
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-optimization-api-openapi.yml
+  operation: GET /api/{projectId}/optimize/window-settings
+- tool: createTrial
+  category: Optimization
+  rest:
+  - createTrial
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-optimization-api-openapi.yml
+  operation: POST /api/{projectId}/optimize/{jobId}/create-trial
+- tool: completeSearch
+  category: Optimization
+  rest:
+  - completeSearch
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-optimization-api-openapi.yml
+  operation: POST /api/{projectId}/optimize/{jobId}/complete-search
+- tool: getSpace
+  category: Optimization
+  rest:
+  - getSpace
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-optimization-api-openapi.yml
+  operation: GET /api/{projectId}/optimize/space
+- tool: getState
+  category: Optimization
+  rest:
+  - getState
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-optimization-api-openapi.yml
+  operation: GET /api/{projectId}/optimize/state
+- tool: deleteState
+  category: Optimization
+  rest:
+  - deleteState
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-optimization-api-openapi.yml
+  operation: DELETE /api/{projectId}/optimize/state
+- tool: getDspParameters
+  category: Optimization
+  rest:
+  - getDspParameters
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-optimization-api-openapi.yml
+  operation: GET /api/{projectId}/optimize/dsp-parameters
+- tool: getTransferLearningModels
+  category: Optimization
+  rest:
+  - getTransferLearningModels
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-optimization-api-openapi.yml
+  operation: GET /api/{projectId}/optimize/transfer-learning-models
+- tool: getAllBlocks
+  category: Optimization
+  rest:
+  - getAllBlocks
+  binding: generated-from-openapi
+  confidence: high
+  spec: https://studio.edgeimpulse.com/openapi.yml
+  operation: GET /api/{projectId}/optimize/all-blocks
+  note: Operation exists in the live published spec but not in the openapi/ files harvested for this repo;
+    those predate it.
+- tool: optimizeJob
+  category: Jobs
+  rest:
+  - optimizeJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/optimize
+- tool: setTunerPrimaryJob
+  category: Jobs
+  rest:
+  - setTunerPrimaryJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/set-tuner-primary-job
+- tool: getTrialLogs
+  category: Optimization
+  rest:
+  - getTrialLogs
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-optimization-api-openapi.yml
+  operation: GET /api/{projectId}/optimize/trial/{trialId}/stdout
+- tool: endTrial
+  category: Optimization
+  rest:
+  - endTrial
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-optimization-api-openapi.yml
+  operation: GET /api/{projectId}/optimize//{jobId}/trial/{trialId}/end-trial
+- tool: getTunerRunState
+  category: Optimization
+  rest:
+  - getTunerRunState
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-optimization-api-openapi.yml
+  operation: GET /api/{projectId}/optimize/{tunerCoordinatorJobId}/state
+- tool: updateTunerRun
+  category: Optimization
+  rest:
+  - updateTunerRun
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-optimization-api-openapi.yml
+  operation: POST /api/{projectId}/optimize/{tunerCoordinatorJobId}
+- tool: getExportUrl
+  category: Export
+  rest:
+  - getExportUrl
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-export-api-openapi.yml
+  operation: GET /api/{projectId}/export/get-url
+- tool: listActiveJobs
+  category: Jobs
+  rest:
+  - listActiveJobs
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: GET /api/{projectId}/jobs
+- tool: getImpulseMigrationJobStatus
+  category: Jobs
+  rest:
+  - getImpulseMigrationJobStatus
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: GET /api/{projectId}/jobs/impulse-migration/status
+- tool: getImpulseMigrationJobsLogs
+  category: Jobs
+  rest:
+  - getImpulseMigrationJobsLogs
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: GET /api/{projectId}/jobs/impulse-migration/stdout
+- tool: updateJob
+  category: Jobs
+  rest:
+  - updateJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/{jobId}/update
+- tool: getJobStatus
+  category: Jobs
+  rest:
+  - getJobStatus
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: GET /api/{projectId}/jobs/{jobId}/status
+- tool: getJobsLogs
+  category: Jobs
+  rest:
+  - getJobsLogs
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: GET /api/{projectId}/jobs/{jobId}/stdout
+- tool: cancelJob
+  category: Jobs
+  rest:
+  - cancelJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/{jobId}/cancel
+- tool: generateFeaturesJob
+  category: Jobs
+  rest:
+  - generateFeaturesJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/generate-features
+- tool: autotuneDspJob
+  category: Jobs
+  rest:
+  - autotuneDspJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/autotune-dsp
+- tool: trainKerasJob
+  category: Jobs
+  rest:
+  - trainKerasJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/train/keras/{learnId}
+- tool: trainAnomalyJob
+  category: Jobs
+  rest:
+  - trainAnomalyJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/train/anomaly/{learnId}
+- tool: exportKerasBlock
+  category: Jobs
+  rest:
+  - exportKerasBlock
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/train/keras/{learnId}/export
+- tool: exportKerasBlockData
+  category: Jobs
+  rest:
+  - exportKerasBlockData
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/train/keras/{learnId}/data
+- tool: buildOnDeviceModelJob
+  category: Jobs
+  rest:
+  - buildOnDeviceModelJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/build-ondevice-model
+- tool: buildOrganizationOnDeviceModelJob
+  category: Jobs
+  rest:
+  - buildOrganizationOnDeviceModelJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/build-ondevice-model/organization
+- tool: startOriginalExportJob
+  category: Jobs
+  rest:
+  - startOriginalExportJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/export/original
+- tool: startWavExportJob
+  category: Jobs
+  rest:
+  - startWavExportJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/export/wav
+- tool: startRetrainJob
+  category: Jobs
+  rest:
+  - startRetrainJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/retrain
+- tool: startClassifyJob
+  category: Jobs
+  rest:
+  - startClassifyJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/classify
+- tool: startPerformanceCalibrationJob
+  category: Jobs
+  rest:
+  - startPerformanceCalibrationJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/performance-calibration
+- tool: startEvaluateJob
+  category: Jobs
+  rest:
+  - startEvaluateJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/evaluate
+- tool: startVersionJob
+  category: Jobs
+  rest:
+  - startVersionJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/version
+- tool: startRestoreJob
+  category: Jobs
+  rest:
+  - startRestoreJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/restore
+- tool: startRestoreJobFromPublic
+  category: Jobs
+  rest:
+  - startRestoreJobFromPublic
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/restore/from-public
+- tool: startMakeVersionPublicJob
+  category: Jobs
+  rest:
+  - startMakeVersionPublicJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/versions/{versionId}/make-public
+- tool: startKeywordsNoiseJob
+  category: Jobs
+  rest:
+  - startKeywordsNoiseJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/keywords-noise
+- tool: startProfileTfliteJob
+  category: Jobs
+  rest:
+  - startProfileTfliteJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/profile-tflite
+- tool: startDeployPretrainedModelJob
+  category: Jobs
+  rest:
+  - startDeployPretrainedModelJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/deploy-pretrained-model
+- tool: getProfileTfliteJobResult
+  category: Jobs
+  rest:
+  - getProfileTfliteJobResult
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: GET /api/{projectId}/jobs/profile-tflite/{jobId}/result
+- tool: getProfileTfliteJobResultViaPostRequest
+  category: Jobs
+  rest:
+  - getProfileTfliteJobResultViaPostRequest
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-jobs-api-openapi.yml
+  operation: POST /api/{projectId}/jobs/profile-tflite/{jobId}/result
+- tool: startImportDataFromProjectJob
+  category: Jobs
+  rest:
+  - startImportDataFromProjectJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: https://studio.edgeimpulse.com/openapi.yml
+  operation: POST /api/{projectId}/jobs/import-data-from-project
+  note: Operation exists in the live published spec but not in the openapi/ files harvested for this repo;
+    those predate it.
+- tool: listActiveOrganizationJobs
+  category: OrganizationJobs
+  rest:
+  - listActiveOrganizationJobs
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-organizationjobs-api-openapi.yml
+  operation: GET /api/organizations/{organizationId}/jobs
+- tool: cancelOrganizationJob
+  category: OrganizationJobs
+  rest:
+  - cancelOrganizationJob
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-organizationjobs-api-openapi.yml
+  operation: POST /api/organizations/{organizationId}/jobs/{jobId}/cancel
+- tool: getOrganizationJobStatus
+  category: OrganizationJobs
+  rest:
+  - getOrganizationJobStatus
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-organizationjobs-api-openapi.yml
+  operation: GET /api/organizations/{organizationId}/jobs/{jobId}/status
+- tool: getOrganizationJobsLogs
+  category: OrganizationJobs
+  rest:
+  - getOrganizationJobsLogs
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-organizationjobs-api-openapi.yml
+  operation: GET /api/organizations/{organizationId}/jobs/{jobId}/stdout
+- tool: getOrganizationSocketToken
+  category: OrganizationJobs
+  rest:
+  - getOrganizationSocketToken
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-organizationjobs-api-openapi.yml
+  operation: GET /api/organizations/{organizationId}/socket-token
+- tool: getProjectInfo
+  category: Projects
+  rest:
+  - getProjectInfo
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/{projectId}
+- tool: updateProject
+  category: Projects
+  rest:
+  - updateProject
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: POST /api/{projectId}
+- tool: deleteProject
+  category: Projects
+  rest:
+  - deleteProject
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: DELETE /api/{projectId}
+- tool: getProjectInfoSummary
+  category: Projects
+  rest:
+  - getProjectInfoSummary
+  binding: generated-from-openapi
+  confidence: high
+  spec: openapi/edge-impulse-projects-api-openapi.yml
+  operation: GET /api/{projectId}/public-info
+mcp_only:
+- tool: search_edge_impulse_documentation
+  reason: Documentation retrieval on the remote docs MCP endpoint; no Studio REST operation backs it.
+- tool: query_docs_filesystem_edge_impulse_documentation
+  reason: Read-only virtual filesystem over documentation pages; no Studio REST operation backs it.
+- tool: submit_feedback
+  reason: Docs-platform feedback capture; no Studio REST operation backs it.
+rest_only:
+- addKerasFiles
+- addOrganizationApiKey
+- addOrganizationBucket
+- addOrganizationDataCampaign
+- addOrganizationDataCampaignDashboard
+- addOrganizationDataFile
+- addOrganizationDataFolder
+- addOrganizationDataItem
+- addOrganizationDataset
+- addOrganizationDeployBlock
+- addOrganizationDspBlock
+- addOrganizationMember
+- addOrganizationSecret
+- addOrganizationTransferLearningBlock
+- addOrganizationTransformationBlock
+- adminAddDisallowedEmailDomain
+- adminAddOrUpdateSSODomainIdPs
+- adminAddUserToOrganization
+- adminAddUserToProject
+- adminAddUserToProjectDeprecated
+- adminCreateMetricsReport
+- adminCreateOrganization
+- adminCreateOrganizationDataExport
+- adminCreateOrganizationProject
+- adminCreateOrganizationUsageReport
+- adminCreateProject
+- adminCreateTrial
+- adminDeleteDisallowedEmailDomain
+- adminDeleteMetricsReport
+- adminDeleteOrganization
+- adminDeleteOrganizationDataExport
+- adminDeleteOrganizationUsageReport
+- adminDeleteProject
+- adminDeleteSSODomainIdPs
+- adminDeleteStudioConfig
+- adminDeleteTrial
+- adminDeleteUser
+- adminDisableFeature
+- adminDownloadMetricsReport
+- adminDownloadOrganizationUsageReport
+- adminEnableFeature
+- adminFindUser
+- adminGetAllActiveUserIds
+- adminGetAllUserIds
+- adminGetDataMigration
+- adminGetDataMigrations
+- adminGetDisallowedEmailDomains
+- adminGetEmailVerificationCode
+- adminGetFeatureFlags
+- adminGetJobDetails
+- adminGetJobsLogs
+- adminGetJobsMetrics
+- adminGetMetrics
+- adminGetMetricsReport
+- adminGetMetricsReports
+- adminGetOrganizationComputeTimeUsage
+- adminGetOrganizationDataExport
+- adminGetOrganizationDataExports
+- adminGetOrganizationInfo
+- adminGetOrganizationJobs
+- adminGetOrganizationUsageReport
+- adminGetOrganizationUsageReports
+- adminGetOrganizations
+- adminGetProject
+- adminGetProjectJobs
+- adminGetProjects
+- adminGetSSODomainIdPs
+- adminGetSSOSettings
+- adminGetStudioConfig
+- adminGetTrial
+- adminGetUser
+- adminGetUserJobs
+- adminGetUserMetrics
+- adminGetUsers
+- adminRemoveUserFromOrganization
+- adminRemoveUserFromProject
+- adminRemoveUserFromProjectDeprecated
+- adminRestoreOrganization
+- adminSetStudioConfig
+- adminToggleDataMigration
+- adminUpdateOrganization
+- adminUpdateOrganizationDataExport
+- adminUpdateProject
+- adminUpdateTrial
+- adminUpdateUser
+- adminUpdateUserPermissions
+- adminUpgradeTrial
+- apiHealth
+- authorizeThirdParty
+- batchAddMetadata
+- batchClearMetadata
+- batchClearMetadataByKey
+- batchDelete
+- batchDisable
+- batchEditLabels
+- batchEnable
+- batchMove
+- changeDatasetOrganizationDataItems
+- classifyImage
+- classifyUsingAutolabel
+- clearAllObjectDetectionLabels
+- clearChecklistOrganizationDataItems
+- clearDataExplorer
+- clearDspBlock
+- clearOrganizationTransform
+- clearPerformanceCalibrationState
+- countSamples
+- createEnterpriseTrialUser
+- createEvaluationUser
+- createOrganization
+- createOrganizationPipeline
+- createOrganizationPortal
+- createProTierUser
+- createSignedUploadLink
+- createSignedUploadLinkDataset
+- createThirdPartyAuth
+- createUser
+- createUserThirdParty
+- createWhitelabel
+- cropSample
+- deleteAllSamples
+- deleteAllSamplesByCategory
+- deleteDatasetFile
+- deleteOrganization
+- deleteOrganizationCreateProject
+- deleteOrganizationCreateProjectFile
+- deleteOrganizationDataCampaign
+- deleteOrganizationDataCampaignDashboard
+- deleteOrganizationDataFile
+- deleteOrganizationDataItem
+- deleteOrganizationDataItems
+- deleteOrganizationDeployBlock
+- deleteOrganizationDspBlock
+- deleteOrganizationPipeline
+- deleteOrganizationPortal
+- deleteOrganizationSecret
+- deleteOrganizationTransferLearningBlock
+- deleteOrganizationTransformationBlock
+- deletePerformanceCalibrationSavedParameters
+- deletePortalFile
+- deleteSample
+- deleteTheme
+- deleteThirdPartyAuth
+- deleteWhitelabel
+- disableSample
+- discourse
+- downloadBuild
+- downloadCsvWizardConfig
+- downloadCsvWizardUploadedFile
+- downloadDatasetFile
+- downloadDatasetFolder
+- downloadDetailedImpulses
+- downloadDspArtifact
+- downloadDspData
+- downloadDspLabels
+- downloadJobsLogs
+- downloadKerasData
+- downloadKerasExport
+- downloadLearnModel
+- downloadOrganizationDataExport
+- downloadOrganizationDataFile
+- downloadOrganizationDataItem
+- downloadOrganizationJobsLogs
+- downloadOrganizationSingleDataItem
+- downloadPortalFile
+- downloadPretrainedModel
+- dspGetFeaturesForSample
+- dspSampleTrainedFeatures
+- editLabel
+- enableSample
+- exportOrganizationDeployBlock
+- exportOrganizationDspBlock
+- exportOrganizationTransferLearningBlock
+- exportOrganizationTransformationBlock
+- findSegmentsInSample
+- findSyntiantPosterior
+- getAIActionsProposedChanges
+- getAllImportedFrom
+- getAllImpulseBlocks
+- getAllThirdPartyAuth
+- getAllWhitelabels
+- getAutotunerResults
+- getClassifyJobResultPage
+- getClassifyMetricsAllVariants
+- getDataExplorerFeatures
+- getDataExplorerPredictions
+- getDataExplorerSettings
+- getDiversityData
+- getDspConfig
+- getDspFeatureImportance
+- getDspFeatureLabels
+- getDspMetadata
+- getDspRawSample
+- getDspSampleSlice
+- getEmailVerificationStatus
+- getFeatureFlags
+- getJobsSummary
+- getLabelNoiseData
+- getLearnXData
+- getLearnYData
+- getObjectDetectionLabelQueue
+- getObjectDetectionLabelQueueCount
+- getOrganizationBucket
+- getOrganizationCreateProjectStatus
+- getOrganizationCreateProjects
+- getOrganizationDataCampaign
+- getOrganizationDataCampaignDashboard
+- getOrganizationDataCampaignDashboards
+- getOrganizationDataCampaignDiff
+- getOrganizationDataCampaignsForDashboard
+- getOrganizationDataExport
+- getOrganizationDataExports
+- getOrganizationDataItem
+- getOrganizationDataItemTransformJobs
+- getOrganizationDataset
+- getOrganizationDeployBlock
+- getOrganizationDspBlock
+- getOrganizationInfo
+- getOrganizationMetrics
+- getOrganizationPipeline
+- getOrganizationPortal
+- getOrganizationTransferLearningBlock
+- getOrganizationTransformationBlock
+- getPerformanceAllVariants
+- getPerformanceCalibrationGroundTruth
+- getPerformanceCalibrationParameterSets
+- getPerformanceCalibrationRawResult
+- getPerformanceCalibrationSavedParameters
+- getPerformanceCalibrationStatus
+- getPortalInfo
+- getPostProcessingResults
+- getPublicMetrics
+- getPublicOrganizationTransformationBlock
+- getSample
+- getSampleAsAudio
+- getSampleAsImage
+- getSampleAsRaw
+- getSampleAsVideo
+- getSampleMetadata
+- getSampleSlice
+- getTheme
+- getThemes
+- getThirdPartyAuth
+- getUncroppedDownsampledSample
+- getUserCDNResource
+- getWavFile
+- getWhitelabel
+- getWhitelabelDomain
+- hasDataExplorerFeatures
+- hasDiversityData
+- hasLabelNoiseData
+- health
+- hideOrganizationDataset
+- inviteOrganizationMember
+- listAllJobs
+- listAllOrganizationJobs
+- listArchivedOrganizationPipelines
+- listDatasetFilesInFolder
+- listDownloads
+- listFinishedJobs
+- listFinishedOrganizationJobs
+- listOrganizationApiKeys
+- listOrganizationBuckets
+- listOrganizationData
+- listOrganizationDeployBlocks
+- listOrganizationDspBlocks
+- listOrganizationFiles
+- listOrganizationPipelines
+- listOrganizationPortals
+- listOrganizationProjects
+- listOrganizationSecrets
+- listOrganizationTransferLearningBlocks
+- listOrganizationTransformationBlocks
+- listOrganizations
+- listPortalFilesInFolder
+- listPublicOrganizationTransformationBlocks
+- listSamples
+- logAnalyticsEvent
+- logWebsitePageview
+- login
+- moveSample
+- moveToLabelingQueue
+- organizationAddCollaborator
+- organizationBulkUpdateMetadata
+- organizationCreateEmptyProject
+- organizationCreateProject
+- previewDefaultFilesInFolder
+- previewOrganizationDataFile
+- readme
+- rebalanceDataset
+- refreshOrganizationData
+- removeOrganizationBucket
+- removeOrganizationMember
+- renameDatasetFile
+- renamePortalFile
+- renameSample
+- requestEmailVerification
+- requestEnterpriseHrBlockLicense
+- requestEnterpriseLimitsIncrease
+- requestEnterpriseTrialExtension
+- resendOrganizationMemberInvite
+- retryOrganizationCreateProjectFile
+- retryOrganizationDspBlock
+- retryOrganizationTransform
+- retryOrganizationUpload
+- retryProcessing
+- revokeOrganizationApiKey
+- rotateOrganizationPortalToken
+- runDspOnFeaturesArray
+- runDspSampleSlice
+- runDspSampleSliceReadOnly
+- runOrganizationPipeline
+- scoreTrial
+- segmentSample
+- setDataExplorerSettings
+- setDspConfig
+- setLegacyImpulseStateInternal
+- setOrganizationMemberDatasets
+- setOrganizationMemberRole
+- setPerformanceCalibrationSavedParameters
+- setSampleBoundingBoxes
+- setSampleMetadata
+- setSampleProposedChanges
+- setSampleStructuredLabels
+- shouldGoOnCanary
+- splitSampleInFrames
+- startEnterpriseTrial
+- startProfileCustomDspBlock
+- stopOrganizationPipeline
+- storeSegmentLength
+- testOrganizationAdmin
+- trackObjects
+- updateDeploymentTargets
+- updateOrganization
+- updateOrganizationBucket
+- updateOrganizationCreateProject
+- updateOrganizationDataCampaign
+- updateOrganizationDataCampaignDashboard
+- updateOrganizationDataItem
+- updateOrganizationDataset
+- updateOrganizationDeployBlock
+- updateOrganizationDspBlock
+- updateOrganizationPipeline
+- updateOrganizationPortal
+- updateOrganizationTransferLearningBlock
+- updateOrganizationTransformationBlock
+- updateThemeColors
+- updateThemeFavicon
+- updateThemeLogos
+- updateThirdPartyAuth
+- updateWhitelabel
+- uploadCsvWizardUploadedFile
+- uploadCustomBlock
+- uploadDashboardScreenshot
+- uploadDataExplorerScreenshot
+- uploadKerasFiles
+- uploadLabeledAudio
+- uploadOrganizationHeader
+- uploadOrganizationLogo
+- uploadOrganizationReadmeImage
+- uploadPhotoCurrentUser
+- uploadPhotoUser
+- uploadPretrainedModel
+- uploadReadmeImage
+- validateEmail
+- verifyDataset
+- verifyEmail
+- verifyExistingOrganizationBucket
+- verifyOrganizationBucket
+- verifyOrganizationPortal
+- viewDatasetFile
+- viewPortalFile
+- whitelabelAdminAddDevelopmentBoard
+- whitelabelAdminAddOrganizationApiKey
+- whitelabelAdminAddProjectApiKey
+- whitelabelAdminAddUserToOrganization
+- whitelabelAdminAddUserToProject
+- whitelabelAdminCreateOrganization
+- whitelabelAdminCreateOrganizationExport
+- whitelabelAdminCreateOrganizationProject
+- whitelabelAdminCreateOrganizationUsageReport
+- whitelabelAdminCreateProject
+- whitelabelAdminDeleteOrganization
+- whitelabelAdminDeleteOrganizationExport
+- whitelabelAdminDeleteOrganizationUsageReport
+- whitelabelAdminDeleteProject
+- whitelabelAdminDeleteUser
+- whitelabelAdminDownloadOrganizationUsageReport
+- whitelabelAdminGetInfo
+- whitelabelAdminGetMetrics
+- whitelabelAdminGetOrganizationComputeTimeUsage
+- whitelabelAdminGetOrganizationExport
+- whitelabelAdminGetOrganizationExports
+- whitelabelAdminGetOrganizationInfo
+- whitelabelAdminGetOrganizationJobs
+- whitelabelAdminGetOrganizationUsageReport
+- whitelabelAdminGetOrganizationUsageReports
+- whitelabelAdminGetOrganizations
+- whitelabelAdminGetProject
+- whitelabelAdminGetProjectJobs
+- whitelabelAdminGetProjects
+- whitelabelAdminGetUser
+- whitelabelAdminGetUserJobs
+- whitelabelAdminGetUserMetrics
+- whitelabelAdminGetUsers
+- whitelabelAdminRemoveDevelopmentBoard
+- whitelabelAdminRemoveUserFromOrganization
+- whitelabelAdminRemoveUserFromProject
+- whitelabelAdminRestoreOrganization
+- whitelabelAdminUpdateDefaultDeploymentTarget
+- whitelabelAdminUpdateDeploymentOptionsOrder
+- whitelabelAdminUpdateDeploymentTargets
+- whitelabelAdminUpdateDevelopmentBoard
+- whitelabelAdminUpdateDevelopmentBoardImage
+- whitelabelAdminUpdateInfo
+- whitelabelAdminUpdateLearningBlocks
+- whitelabelAdminUpdateOrganization
+- whitelabelAdminUpdateOrganizationExport
+- whitelabelAdminUpdateProject
+- whitelabelAdminUpdateThemeColors
+- whitelabelAdminUpdateThemeDeviceLogo
+- whitelabelAdminUpdateThemeFavicon
+- whitelabelAdminUpdateThemeLogo
+- whitelabelAdminUpdateUser
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Edge Impulse Themes API
   version: 1.0.0
@@ -130,32 +130,6 @@ paths:
                 $ref: '#/components/schemas/GenericApiResponse'
 components:
   schemas:
-    GetThemesResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - themes
-        properties:
-          themes:
-            type: array
-            items:
-              $ref: '#/components/schemas/Theme'
-    GetThemeResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        properties:
-          theme:
-            $ref: '#/components/schemas/Theme'
-    UploadImageRequest:
-      type: object
-      required:
-      - image
-      properties:
-        image:
-          type: string
-          format: binary
     Theme:
       type: object
       required:
@@ -226,6 +200,36 @@ components:
                 type: number
             primaryColorGradientEnd:
               type: string
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    GetThemesResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - themes
+        properties:
+          themes:
+            type: array
+            items:
+              $ref: '#/components/schemas/Theme'
+    UploadImageRequest:
+      type: object
+      required:
+      - image
+      properties:
+        image:
+          type: string
+          format: binary
     UpdateThemeColorsRequest:
       type: object
       description: Only fields set in this object will be updated.
@@ -236,6 +240,13 @@ components:
         primaryColorGradientEnd:
           type: string
           description: Primary color gradient end in hex format
+    GetThemeResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          theme:
+            $ref: '#/components/schemas/Theme'
     UpdateThemeLogosRequest:
       type: object
       description: Only fields set in this object will be updated.
@@ -261,17 +272,6 @@ components:
         deviceLogo:
           type: string
           description: Device logo URL
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
   parameters:
     ThemeIdParameter:
       name: themeId

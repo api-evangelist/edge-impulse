@@ -1,0 +1,192 @@
+generated: '2026-09-06'
+method: searched
+source: https://docs.edgeimpulse.com/apis/studio, https://docs.edgeimpulse.com/apis/ingestion, https://studio.edgeimpulse.com/openapi.yml,
+  openapi/edge-impulse-*-openapi.yml
+provider: Edge Impulse
+providerId: edge-impulse
+description: 'Cross-cutting runtime semantics for the Edge Impulse Studio, Ingestion and Remote Management
+  APIs. The single most important fact for an agent: the Studio OpenAPI declares only 200 responses across
+  all 559 operations, and failure is carried inside a 200 body as {"success": false, "error": "..."}.
+  HTTP status alone tells a caller nothing.'
+authentication:
+  style: api-key header, JWT header, or JWT cookie
+  schemes:
+  - name: ApiKeyAuthentication
+    type: apiKey
+    in: header
+    parameter: x-api-key
+    note: Project-scoped key from Studio > project Dashboard > Keys. Key strings are prefixed ei_.
+  - name: JWTHttpHeaderAuthentication
+    type: apiKey
+    in: header
+    parameter: x-jwt-token
+    note: User JWT from POST /api-login. Required for user- and organization-scoped operations.
+  - name: JWTAuthentication
+    type: apiKey
+    in: cookie
+    parameter: jwt
+    note: Browser/Studio session cookie.
+  - name: OAuth2
+    type: oauth2
+    note: authorizationCode, implicit, password and clientCredentials flows against /v1/oauth/authorize
+      and /v1/oauth/token with openid, email and profile scopes. Present in the live published spec; see
+      scopes/edge-impulse-scopes.yml.
+  ingestion: The Ingestion API takes the same x-api-key header on ingestion.edgeimpulse.com.
+  remote_management: Devices authenticate to wss://remote-mgmt.edgeimpulse.com by sending their apiKey
+    inside the Hello message, not as an HTTP header.
+  docs: https://docs.edgeimpulse.com/apis/studio#api-authentication-types
+  detail: authentication/edge-impulse-authentication.yml
+idempotency:
+  coverage: none
+  mechanism: null
+  header: null
+  retention: null
+  evidence: The string "idempoten" does not appear anywhere in the 1.03 MB published OpenAPI, and no idempotency
+    key, replay window or de-duplication header is documented on any of the three APIs. 327 mutating operations
+    (284 POST, 39 DELETE, 4 PUT) have no replay protection.
+  consequence: A retried job-start POST starts a second job and consumes compute twice. Callers must record
+    the returned job id before retrying and reconcile against listActiveJobs.
+  closest_thing: The Ingestion API offers an x-disallow-duplicates header that hashes the payload against
+    the existing dataset. Edge Impulse recommends setting it but does not enable it by default. It is
+    content de-duplication for uploads, not request idempotency, and it covers only the five ingestion
+    file endpoints.
+pagination:
+  style: limit/offset
+  params:
+  - name: limit
+    in: query
+    operations: 28
+  - name: offset
+    in: query
+    operations: 23
+  response_fields: Collections return a totalCount alongside the item array on the endpoints that paginate.
+  default_page_size: Not published.
+  note: Only a minority of list operations paginate; the rest return the full collection.
+filtering:
+  note: Data-item listing endpoints carry a rich documented filter set — search, labels, category, dataType,
+    minLength/maxLength, minFrequency/maxFrequency, minDate/maxDate, minId/maxId, metadata, signatureValidity.
+field_expansion:
+  supported: false
+  note: No expand/fields/sparse-fieldset parameter is documented.
+metadata:
+  supported: true
+  note: Samples carry arbitrary key/value metadata. Set at ingestion with the x-metadata header (JSON-encoded
+    object) or afterwards through setSampleMetadata, batchAddMetadata or organizationBulkUpdateMetadata. Metadata drives train/validation
+    splits and performance slicing.
+  docs: https://docs.edgeimpulse.com/studio/projects/data-acquisition/dataset/metadata
+request_id_tracing:
+  supported: false
+  note: No request-id or correlation header is documented on any response. Long-running work is traced
+    by job id (job-1569583053767) instead, via getJobStatus and getJobsLogs.
+versioning:
+  style: single path version
+  current: v1
+  base_url: https://studio.edgeimpulse.com/v1
+  note: The Studio API has carried /v1 since launch; there is no published version-negotiation header
+    and no v2. Some operations are versioned individually in the operationId instead (classifySample vs
+    classifySampleV2). The Remote Management WebSocket protocol has its own numeric version, currently
+    3, negotiated in the Hello message.
+  detail: lifecycle/edge-impulse-lifecycle.yml
+error_envelope:
+  shape: GenericApiResponse
+  format: custom-envelope
+  rfc9457: false
+  schema:
+    success: boolean, required
+    error: string, optional — set when success is false
+  http_status_reliability: LOW on the Studio API. Every operation in the published spec declares only
+    200 (plus four 302 redirects). Callers MUST branch on the success field, not on the status code.
+  ingestion_exception: 'The Ingestion API does use real status codes and documents them: 200, 400, 401,
+    421, 500, with a text/plain body.'
+  detail: errors/edge-impulse-problem-types.yml
+rate_limit_signaling:
+  headers_documented: false
+  status_on_exhaustion: null
+  note: No X-RateLimit-*, RateLimit-* or Retry-After header is documented, and no 429 appears anywhere
+    in the published spec. Edge Impulse throttles by resource quota (compute minutes per job, CPU memory,
+    project and collaborator counts), not by request rate.
+  detail: rate-limits/edge-impulse-rate-limits.yml
+async_model:
+  note: 'Anything expensive is a job. The call returns a job id immediately and the work continues asynchronously.
+    Progress is delivered two ways: poll getJobStatus / getJobsLogs, or subscribe over the Studio WebSocket
+    to job-data-{jobId} and job-finished-{jobId}. A job is cancelled by sending job-cancel over the socket
+    or by calling cancelJob.'
+  docs: https://docs.edgeimpulse.com/apis/studio#jobs
+reversibility:
+  grade: documented
+  grade_reason: Reversal operations exist and are named in the contract, but Edge Impulse publishes no
+    window for any of them. Under the 0.12.0 rubric a reversal path without a stated window is documented
+    (0.4), not verified (1.0).
+  write_surface:
+    post: 284
+    delete: 39
+    put: 4
+    total: 327
+  reversals:
+  - action: Start any job
+    operationId: startClassifyJob / trainKerasJob / buildOnDeviceModelJob / generateFeaturesJob and peers
+    reversal: cancelJob
+    reversal_operationId: cancelJob
+    path: POST /api/{projectId}/jobs/{jobId}/cancel
+    window: null
+    window_source: null
+    note: Cancels a running job. Organization jobs have their own cancelOrganizationJob. No window is
+      published; a finished job cannot be cancelled and compute already spent is not returned.
+  - action: Cancel a subscription
+    operationId: userCancelSubscription
+    reversal: Undo subscription cancellation
+    reversal_operationId: userUndoCancelSubscription
+    path: POST /api/user/subscription/undo-cancel
+    window: null
+    docs: https://docs.edgeimpulse.com/apis/studio/user/undo-subscription-cancellation
+    note: An explicit undo exists. The period inside which it still works is not stated in the docs or
+      the spec.
+  - action: Change a project
+    operationId: many
+    reversal: Restore a saved project version
+    reversal_operationId: startRestoreJob
+    path: POST /api/{projectId}/jobs/restore
+    window: null
+    note: Project versioning is the general undo for project state, but only back to a version that was
+      explicitly created (startVersionJob). It is a snapshot mechanism, not a time window.
+  - action: Take a project public
+    operationId: startMakeVersionPublicJob
+    reversal: Make version private
+    reversal_operationId: makeVersionPrivate
+    path: POST /api/{projectId}/versions/{versionId}/make-private
+    window: null
+    note: Reversible in the product, but a public version may already have been cloned by others.
+  irreversible:
+  - operationId: deleteProject
+    path: DELETE /api/{projectId}
+    note: No documented undo and no retention window.
+  - operationId: deleteCurrentUser
+    path: DELETE /api/user
+    note: No documented undo.
+  - operationId: deleteImpulse
+    note: No documented undo.
+  - operationId: deleteVersion
+    note: Deletes the snapshot that would otherwise be the restore point.
+  - operationId: deleteSample / deleteAllSamples
+    note: No documented undo or trash state for dataset samples.
+  - operationId: revokeProjectApiKey / revokeProjectHmacKey
+    note: Irreversible; a new key must be issued.
+  guidance: An agent should treat every delete on this API as terminal and require explicit human approval,
+    and should create a project version (startVersionJob) before any bulk dataset or impulse mutation,
+    because that snapshot is the only restore point the platform offers.
+dry_run_mode:
+  supported: partial
+  note: 'There is no general dry-run flag. Two narrow rehearsal surfaces exist: previewAIActionsSamples
+    (preview what an AI labelling action would change, with clearAIActionsProposedChanges to discard)
+    and the profiling endpoints (profilePretrainedModel, startProfileTfliteJob) which estimate on-device
+    latency, RAM and flash without deploying anything.'
+cross_links:
+  errors: errors/edge-impulse-problem-types.yml
+  lifecycle: lifecycle/edge-impulse-lifecycle.yml
+  authentication: authentication/edge-impulse-authentication.yml
+  scopes: scopes/edge-impulse-scopes.yml
+  rate_limits: rate-limits/edge-impulse-rate-limits.yml
+  conformance: conformance/edge-impulse-conformance.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

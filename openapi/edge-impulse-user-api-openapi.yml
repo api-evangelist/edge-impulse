@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   title: Edge Impulse User API
   version: 1.0.0
@@ -898,6 +898,446 @@ paths:
                 $ref: '#/components/schemas/GenericApiResponse'
 components:
   schemas:
+    UserSubscriptionMetricsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          metrics:
+            type: object
+            required:
+            - computeMinutesCpu
+            - computeMinutesGpu
+            - computeMinutesTotal
+            - computeMinutesLimit
+            properties:
+              computeMinutesCpu:
+                type: number
+                description: Total compute of all user jobs, running on CPU, in the current billing period.
+              computeMinutesGpu:
+                type: number
+                description: Total compute of all user jobs, running on GPU, in the current billing period.
+              computeMinutesTotal:
+                type: number
+                description: Total compute of all user jobs in the current billing period, calculated as CPU + 3*GPU compute.
+              computeMinutesLimit:
+                type: number
+                description: Overall compute limit for the current billing period.
+              computeResetDate:
+                type: string
+                format: date-time
+                description: The date at which the current compute billing period will reset.
+    User:
+      type: object
+      required:
+      - id
+      - username
+      - name
+      - email
+      - created
+      - staffInfo
+      - pending
+      - activated
+      - mfaConfigured
+      properties:
+        id:
+          type: integer
+          example: 1
+        username:
+          type: string
+          example: janjongboom
+        name:
+          type: string
+          example: Jan Jongboom
+        email:
+          type: string
+          example: quijote@edgeimpulse.com
+        photo:
+          type: string
+          example: https://usercdn.edgeimpulse.com/photos/1.jpg
+        created:
+          type: string
+          format: date-time
+          example: '2019-08-31T17:32:28Z'
+        lastSeen:
+          type: string
+          format: date-time
+          example: '2019-08-31T17:32:28Z'
+        staffInfo:
+          $ref: '#/components/schemas/StaffInfo'
+        pending:
+          type: boolean
+        lastTosAcceptanceDate:
+          type: string
+          format: date-time
+          example: '2019-08-31T17:32:28Z'
+        jobTitle:
+          type: string
+          example: Software Engineer
+        permissions:
+          description: List of permissions the user has
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+        companyName:
+          type: string
+          example: Edge Impulse Inc.
+        activated:
+          type: boolean
+          description: Whether the user has activated their account or not.
+        mfaConfigured:
+          type: boolean
+          description: Whether the user has configured multi-factor authentication
+        stripeCustomerId:
+          type: string
+          description: Stripe customer ID, if any.
+        hasPendingPayments:
+          type: boolean
+          description: Whether the user has pending payments.
+        tier:
+          $ref: '#/components/schemas/UserTierEnum'
+    ActivateUserOrVerifyEmailRequest:
+      type: object
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          description: Activation or verification code (sent via email)
+    UserDeleteTotpMfaKeyRequest:
+      type: object
+      required:
+      - totpToken
+      properties:
+        totpToken:
+          type: string
+          description: Valid TOTP token
+    CreateUserResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          redirectUrl:
+            type: string
+            description: URL to redirect user to.
+          id:
+            type: integer
+            description: User unique identifier
+    ListOrganizationBucketsUserResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - buckets
+        properties:
+          buckets:
+            type: array
+            items:
+              type: object
+              required:
+              - id
+              - organizationId
+              - organizationName
+              - bucket
+              - region
+              - whitelabelId
+              properties:
+                id:
+                  type: integer
+                organizationId:
+                  type: integer
+                organizationName:
+                  type: string
+                bucket:
+                  type: string
+                  description: S3 bucket
+                region:
+                  type: string
+                  description: S3 region
+                whitelabelId:
+                  type: integer
+                  description: The unique identifier of the white label this bucket belongs to, if any
+    TrialExpirationDate:
+      type: string
+      format: date-time
+      description: Expiration date of the trial. The trial will be set as expired after this date. There will be a grace period of 30 days after a trial expires before fully deleting the trial organization. This field is ignored if the trial is requested by a non-admin user, defaulting to 14 days trial.
+      example: '2020-01-01T00:00:00Z'
+    UserTierEnum:
+      type: string
+      description: The user account tier.
+      enum:
+      - free
+      - community-plus
+      - professional
+      - enterprise
+    Permission:
+      type: string
+      enum:
+      - admin:infra:disallowedEmailDomains:write
+      - admin:infra:featureFlags:read
+      - admin:infra:featureFlags:write
+      - admin:infra:config:read
+      - admin:infra:config:write
+      - admin:infra:migrations:read
+      - admin:infra:migrations:write
+      - admin:metrics:read
+      - admin:metrics:write
+      - admin:organizations:read
+      - admin:organizations:write
+      - admin:organizations:members:write
+      - admin:projects:members:write
+      - admin:projects:read
+      - admin:projects:write
+      - admin:trials:read
+      - admin:trials:write
+      - admin:users:permissions:write
+      - admin:users:read
+      - admin:users:write
+      - admin:jobs:read
+      - admin:emails:verification:code:read
+      - projects:limits:write
+      - projects:training:keras:write
+      - thirdpartyauth:read
+      - thirdpartyauth:write
+      - users:emails:read
+      - whitelabels:read
+      - whitelabels:write
+    OrganizationMemberRole:
+      type: string
+      enum:
+      - admin
+      - member
+      - guest
+    UpgradeSubscriptionRequest:
+      type: object
+      required:
+      - billingCycle
+      - successUrl
+      - cancelUrl
+      properties:
+        billingCycle:
+          $ref: '#/components/schemas/BillingCycle'
+          description: 'Selects the billing frequency for the subscription.
+
+            Either ''monthly'' for regular monthly charges or ''yearly''
+
+            for annual billing with a potential discount.
+
+            '
+        successUrl:
+          type: string
+          description: URL to redirect the user to after a successful checkout process.
+        cancelUrl:
+          type: string
+          description: URL to redirect the user to after the checkout process is canceled.
+    ListEnterpriseTrialsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - trials
+        properties:
+          trials:
+            type: array
+            description: Current or past enterprise trials.
+            items:
+              $ref: '#/components/schemas/EnterpriseTrial'
+    VerifyResetPasswordRequest:
+      type: object
+      required:
+      - email
+      - code
+      properties:
+        email:
+          type: string
+        code:
+          type: string
+    UploadUserPhotoRequest:
+      type: object
+      required:
+      - photo
+      properties:
+        photo:
+          type: string
+          format: binary
+    CreateProTierUserRequest:
+      allOf:
+      - $ref: '#/components/schemas/CreateUserRequest'
+      - type: object
+        properties:
+          redirectUrlOrigin:
+            type: string
+            description: Origin of the redirect URL returned as result of creating the professional user.
+            example: https://studio.edgeimpulse.com
+          redirectUrlQueryParams:
+            type: string
+            description: Query parameters to be appended to the redirect URL returned as result of creating the professional user.
+            example: utm_source=google&utm_medium=cpc&utm_campaign=trial
+    EntityCreatedResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: Unique identifier of the created entity.
+    GetUserProjectsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - projects
+        properties:
+          projects:
+            type: array
+            items:
+              $ref: '#/components/schemas/Project'
+    ListEmailResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - emails
+        properties:
+          emails:
+            type: array
+            description: List of emails
+            items:
+              type: object
+              required:
+              - from
+              - to
+              - created
+              - subject
+              - bodyText
+              - bodyHTML
+              - sent
+              - providerResponse
+              properties:
+                userId:
+                  type: integer
+                projectId:
+                  type: integer
+                from:
+                  type: string
+                to:
+                  type: string
+                created:
+                  type: string
+                  format: date-time
+                subject:
+                  type: string
+                bodyText:
+                  type: string
+                bodyHTML:
+                  type: string
+                sent:
+                  type: boolean
+                providerResponse:
+                  type: string
+    UpdateUserRequest:
+      type: object
+      description: Only fields set in this object will be updated.
+      properties:
+        name:
+          type: string
+          description: New full name
+          example: Jan Jongboom
+        jobTitle:
+          type: string
+          description: New job title
+          example: Embedded Software Engineer
+        companyName:
+          type: string
+          description: New company name
+          example: Edge Impulse Inc.
+        experiments:
+          type: array
+          items:
+            type: string
+          description: List of user experiments
+        projectsSortOrder:
+          description: Default sort order on the projects list
+          $ref: '#/components/schemas/UserProjectsSortOrder'
+        timezone:
+          description: User timezone.
+          type: string
+    ProjectCollaborator:
+      allOf:
+      - $ref: '#/components/schemas/User'
+      - type: object
+        required:
+        - isOwner
+        properties:
+          isOwner:
+            type: boolean
+    DeleteUserRequest:
+      type: object
+      properties:
+        password:
+          type: string
+          description: User's current password. Required if the user has a password set.
+        totpToken:
+          type: string
+          description: TOTP Token. Required if a user has multi-factor authentication with a TOTP token enabled. If a user has MFA enabled, but no totpToken is submitted; then an error starting with "ERR_TOTP_TOKEN IS REQUIRED" is returned. Use this to then prompt for an MFA token and re-try this request.
+    RequestResetPasswordRequest:
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+    ChangePasswordRequest:
+      type: object
+      required:
+      - currentPassword
+      - newPassword
+      properties:
+        currentPassword:
+          type: string
+        newPassword:
+          type: string
+    ListOrganizationsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - organizations
+        properties:
+          organizations:
+            type: array
+            description: Array with organizations
+            items:
+              $ref: '#/components/schemas/Organization'
+    UploadUserPhotoResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - url
+        properties:
+          url:
+            type: string
+    UserExperiment:
+      type: object
+      required:
+      - type
+      - title
+      - enabled
+      - showToUser
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        help:
+          type: string
+        enabled:
+          type: boolean
+        showToUser:
+          type: boolean
     BillingCycle:
       type: string
       enum:
@@ -910,6 +1350,445 @@ components:
         - `yearly`: Billed once every year, often at a discounted rate compared to monthly billing.
 
         '
+    EnterpriseUpgradeOrTrialExtensionRequest:
+      type: object
+      properties:
+        reason:
+          type: string
+          description: 'Answer to the question: ''Why is this the right time for your team to invest in edge AI?''. This is optional.'
+        useCase:
+          type: string
+          description: 'Answer to the question: ''What best describes your use case?''. This is optional.'
+        timeline:
+          type: string
+          description: 'Answer to the question: ''What is your timeline for solving your problem?''. This is optional.'
+        objective:
+          type: string
+          description: 'Answer to the question: ''What are you hoping to achieve with an extension?''. This is optional.'
+        trialId:
+          type: number
+          description: The user's trial ID. This is optional.
+    CreateEvaluationUserResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - token
+        - redirectUrl
+        properties:
+          token:
+            type: string
+            description: JWT token, to be used to log in in the future through JWTAuthentication
+          redirectUrl:
+            type: string
+            description: URL to redirect user to.
+    CreateDeveloperProfileResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - organizationId
+        properties:
+          organizationId:
+            type: integer
+          link:
+            type: string
+    ActivateUserByThirdPartyActivationCodeRequest:
+      type: object
+      required:
+      - activationCode
+      - password
+      - username
+      properties:
+        activationCode:
+          type: string
+        password:
+          type: string
+          description: Password, minimum length 8 characters.
+        name:
+          type: string
+          description: Your name
+          example: Jan Jongboom
+        username:
+          type: string
+          description: Username, minimum 4 and maximum 30 characters. May contain alphanumeric characters, hyphens, underscores and dots. Validated according to `^(?=.{4,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._-]+(?<![_.])$`.
+          example: janjongboom
+        privacyPolicy:
+          type: boolean
+          description: Whether the user accepted the privacy policy
+    UserByThirdPartyActivationRequest:
+      type: object
+      required:
+      - activationCode
+      properties:
+        activationCode:
+          type: string
+    Organization:
+      type: object
+      required:
+      - id
+      - name
+      - users
+      - isDeveloperProfile
+      - whitelabelId
+      - trialId
+      - trialExpiredDate
+      - trialUpgradedDate
+      - created
+      - showHeaderImgMask
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          description: EdgeImpulse Inc.
+        logo:
+          type: string
+          example: https://usercdn.edgeimpulse.com/logos/1.jpg
+        headerImg:
+          type: string
+          example: https://usercdn.edgeimpulse.com/leaders/1.jpg
+        showHeaderImgMask:
+          type: boolean
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationUser'
+        isDeveloperProfile:
+          type: boolean
+        whitelabelId:
+          type:
+          - integer
+          - 'null'
+          description: Unique identifier of the white label this organization belongs to, if any.
+        projects:
+          type: array
+          items:
+            $ref: '#/components/schemas/Project'
+        trialId:
+          type:
+          - integer
+          - 'null'
+          description: Unique identifier of the trial this organization belongs to, if any.
+        trialExpiredDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date when the trial expired, if any. A expired trial has a grace period of 30 days before it's associated organization is deleted.
+        trialUpgradedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date when the trial was upgraded to a full enterprise account, if any.
+        created:
+          type: string
+          format: date-time
+          description: Date when the organization was created.
+        contractStartDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date when the current contract started, if any.
+        deletedDate:
+          type: string
+          format: date-time
+          description: The date in which the organization was deleted. If the organization is not deleted, this field is not set.
+    SendUserFeedbackRequest:
+      type: object
+      required:
+      - type
+      - subject
+      - body
+      properties:
+        type:
+          type: string
+          enum:
+          - feedback
+        subject:
+          type: string
+          description: The reason the user is contacting Edge Impulse Support.
+        body:
+          type: string
+          description: The body of the message.
+        workEmail:
+          type: string
+          description: The user's work email address. This is optional, if it's not provided, the registered email will be used.
+        company:
+          type: string
+          description: The user's company. This is optional.
+        jobTitle:
+          type: string
+          description: The user's job title. This is optional.
+        companySize:
+          type: string
+          description: The user's company size. This is optional.
+        organizationId:
+          type: number
+          description: The user's organization ID. This is optional.
+    GetJWTResponse:
+      example: '`{ "success": true, "token": "A372jdhe.ad3r4gfrg" }`'
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          token:
+            type: string
+            description: JWT token, to be used to log in in the future through JWTAuthentication
+          redirectUrl:
+            type: string
+            description: Redirect URL to follow to complete login
+    ConvertUserRequest:
+      type: object
+      required:
+      - name
+      - username
+      - email
+      - password
+      - privacyPolicy
+      properties:
+        name:
+          type: string
+          description: Your name
+          example: Jan Jongboom
+        username:
+          type: string
+          description: Username, minimum 4 and maximum 30 characters. May contain alphanumeric characters, hyphens, underscores and dots. Validated according to `^(?=.{4,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._-]+(?<![_.])$`.
+          example: janjongboom
+        email:
+          type: string
+          description: E-mail address. Will need to be validated before the account will become active.
+          example: jan@edgeimpulse.com
+        password:
+          type: string
+          description: Password, minimum length 8 characters.
+        projectName:
+          type: string
+          description: A project will automatically be created. Sets the name of the first project. If not set, this will be derived from the username.
+        privacyPolicy:
+          type: boolean
+          description: Whether the user accepted the privacy policy
+    StaffInfo:
+      type: object
+      required:
+      - isStaff
+      - hasSudoRights
+      properties:
+        isStaff:
+          type: boolean
+        hasSudoRights:
+          type: boolean
+        companyName:
+          type: string
+    DowngradeSubscriptionRequest:
+      type: object
+      properties:
+        downgradeReason:
+          type: string
+          description: Reason for downgrading the subscription.
+    Project:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - created
+      - owner
+      - collaborators
+      - labelingMethod
+      - metadata
+      - isEnterpriseProject
+      - whitelabelId
+      - tier
+      - hasPublicVersion
+      - isPublic
+      - allowsLivePublicAccess
+      - ownerIsDeveloperProfile
+      - indPauseProcessingSamples
+      - publicProjectListed
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Water hammer detection
+        description:
+          type: string
+        created:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        owner:
+          type: string
+          description: User or organization that owns the project
+        lastAccessed:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        lastModified:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        lastModificationDetails:
+          type: string
+          description: Details about the last modification
+          example: Data sample added
+        logo:
+          type: string
+          description: Custom logo for this project (not available for all projects)
+        ownerUserId:
+          type: integer
+        ownerOrganizationId:
+          type: integer
+        ownerAvatar:
+          type: string
+          description: URL of the project owner avatar, if any.
+        ownerIsDeveloperProfile:
+          type: boolean
+        developerProfileUserId:
+          type: integer
+          description: User ID of the developer profile, if any.
+        collaborators:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectCollaborator'
+        labelingMethod:
+          type: string
+          enum:
+          - single_label
+          - object_detection
+        metadata:
+          type: object
+          description: Metadata about the project
+        dataExplorerScreenshot:
+          type: string
+        isEnterpriseProject:
+          type: boolean
+          description: Whether this is an enterprise project
+        whitelabelId:
+          type:
+          - integer
+          - 'null'
+          description: Unique identifier of the white label this project belongs to, if any.
+        tags:
+          type: array
+          items:
+            type: string
+          description: List of project tags
+          example:
+          - FOMO
+          - beers
+        category:
+          type: string
+          description: Project category
+          example: Image classification
+        license:
+          type: string
+          description: Public project license, if any.
+        tier:
+          $ref: '#/components/schemas/ProjectTierEnum'
+        hasPublicVersion:
+          type: boolean
+          description: Whether this project has been published or not.
+        isPublic:
+          type: boolean
+          description: 'Whether this is a public version of a project. A version is a snapshot of a project at a certain point in time, which can be used to periodically save the state of a project. Versions can be private (just for internal use and reference) or public, available to everyone. A public version can be cloned by anyone, restoring the state of the project at the time into a new, separate project.
+
+            '
+        allowsLivePublicAccess:
+          type: boolean
+          description: 'Whether this project allows live, public access. Unlike a public version, a live public project is not fixed in time, and always includes the latest project changes. Similar to public versions, a live public project can be cloned by anyone, creating a new, separate project.
+
+            '
+        indPauseProcessingSamples:
+          type: boolean
+        publicProjectListed:
+          type: boolean
+          description: 'If the project allows public access, whether to list it the public projects overview response. If not listed, the project is still accessible via direct link. If the project does not allow public access, this field has no effect.
+
+            '
+    GetUserNeedToSetPasswordResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          email:
+            type: string
+            description: User email
+          needPassword:
+            type: boolean
+            description: Whether the user needs to set its password or not
+          whitelabels:
+            type: array
+            items:
+              type: string
+            description: White label domains the user belongs to, if any
+          trials:
+            type: array
+            description: Current or past enterprise trials.
+            items:
+              $ref: '#/components/schemas/EnterpriseTrial'
+          emailVerified:
+            type: boolean
+            description: Whether the user has verified its email address or not
+    ProjectTierEnum:
+      type: string
+      description: The project tier. This is "enterprise" for all organization projects, or the user tier for all user projects.
+      enum:
+      - free
+      - community-plus
+      - professional
+      - enterprise
+    EnterpriseTrial:
+      type: object
+      required:
+      - id
+      - userId
+      - created
+      - organizationId
+      - expirationDate
+      - expiredDate
+      - deletedDate
+      - upgradedDate
+      properties:
+        id:
+          type: integer
+          description: Unique identifier of the trial.
+        userId:
+          type: integer
+          description: ID of the user who created the trial.
+        organizationId:
+          type: integer
+          description: ID of the organization created for the trial.
+        created:
+          type: string
+          format: date-time
+          description: Date when the trial was created. Trials start immediately on creation.
+        expirationDate:
+          $ref: '#/components/schemas/TrialExpirationDate'
+        notes:
+          $ref: '#/components/schemas/TrialNotes'
+        expiredDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date when the trial actually expired. This is set when the trial is expired by the system.
+        deletedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date when the trial was deleted. This is set when the trial is fully  deleted by the system.
+        upgradedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date when the trial was upgraded to a full enterprise account.
     EntitlementLimits:
       type: object
       properties:
@@ -928,17 +1807,6 @@ components:
         numberOfUsers:
           type: integer
           description: Number of users allowed for this organization
-    CreateDeveloperProfileResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - organizationId
-        properties:
-          organizationId:
-            type: integer
-          link:
-            type: string
     GetUserResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -1069,846 +1937,6 @@ components:
           privatePersonalProjectsUsed:
             type: integer
             description: Number of private projects created by the current user.
-    ConvertUserRequest:
-      type: object
-      required:
-      - name
-      - username
-      - email
-      - password
-      - privacyPolicy
-      properties:
-        name:
-          type: string
-          description: Your name
-          example: Jan Jongboom
-        username:
-          type: string
-          description: Username, minimum 4 and maximum 30 characters. May contain alphanumeric characters, hyphens, underscores and dots. Validated according to `^(?=.{4,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._-]+(?<![_.])$`.
-          example: janjongboom
-        email:
-          type: string
-          description: E-mail address. Will need to be validated before the account will become active.
-          example: jan@edgeimpulse.com
-        password:
-          type: string
-          description: Password, minimum length 8 characters.
-        projectName:
-          type: string
-          description: A project will automatically be created. Sets the name of the first project. If not set, this will be derived from the username.
-        privacyPolicy:
-          type: boolean
-          description: Whether the user accepted the privacy policy
-    CreateEnterpriseTrialResponse:
-      allOf:
-      - $ref: '#/components/schemas/EntityCreatedResponse'
-      - type: object
-        properties:
-          userId:
-            type: integer
-            description: ID of the user created for the trial, if the user did not already exist.
-          redirectUrl:
-            type: string
-            description: URL to redirect the user to in order to access the enterprise trial.
-    CreateEvaluationUserResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - token
-        - redirectUrl
-        properties:
-          token:
-            type: string
-            description: JWT token, to be used to log in in the future through JWTAuthentication
-          redirectUrl:
-            type: string
-            description: URL to redirect user to.
-    UserProjectsSortOrder:
-      type: string
-      enum:
-      - created-asc
-      - created-desc
-      - added-asc
-      - added-desc
-      - name-asc
-      - name-desc
-      - last-accessed-desc
-    ChangePasswordRequest:
-      type: object
-      required:
-      - currentPassword
-      - newPassword
-      properties:
-        currentPassword:
-          type: string
-        newPassword:
-          type: string
-    ActivateUserByThirdPartyActivationCodeRequest:
-      type: object
-      required:
-      - activationCode
-      - password
-      - username
-      properties:
-        activationCode:
-          type: string
-        password:
-          type: string
-          description: Password, minimum length 8 characters.
-        name:
-          type: string
-          description: Your name
-          example: Jan Jongboom
-        username:
-          type: string
-          description: Username, minimum 4 and maximum 30 characters. May contain alphanumeric characters, hyphens, underscores and dots. Validated according to `^(?=.{4,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._-]+(?<![_.])$`.
-          example: janjongboom
-        privacyPolicy:
-          type: boolean
-          description: Whether the user accepted the privacy policy
-    UserDismissNotificationRequest:
-      type: object
-      required:
-      - notification
-      properties:
-        notification:
-          type: string
-    GetUserNeedToSetPasswordResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        properties:
-          email:
-            type: string
-            description: User email
-          needPassword:
-            type: boolean
-            description: Whether the user needs to set its password or not
-          whitelabels:
-            type: array
-            items:
-              type: string
-            description: White label domains the user belongs to, if any
-          trials:
-            type: array
-            description: Current or past enterprise trials.
-            items:
-              $ref: '#/components/schemas/EnterpriseTrial'
-          emailVerified:
-            type: boolean
-            description: Whether the user has verified its email address or not
-    EnterpriseTrial:
-      type: object
-      required:
-      - id
-      - userId
-      - created
-      - organizationId
-      - expirationDate
-      - expiredDate
-      - deletedDate
-      - upgradedDate
-      properties:
-        id:
-          type: integer
-          description: Unique identifier of the trial.
-        userId:
-          type: integer
-          description: ID of the user who created the trial.
-        organizationId:
-          type: integer
-          description: ID of the organization created for the trial.
-        created:
-          type: string
-          format: date-time
-          description: Date when the trial was created. Trials start immediately on creation.
-        expirationDate:
-          $ref: '#/components/schemas/TrialExpirationDate'
-        notes:
-          $ref: '#/components/schemas/TrialNotes'
-        expiredDate:
-          type: string
-          format: date-time
-          nullable: true
-          description: Date when the trial actually expired. This is set when the trial is expired by the system.
-        deletedDate:
-          type: string
-          format: date-time
-          nullable: true
-          description: Date when the trial was deleted. This is set when the trial is fully  deleted by the system.
-        upgradedDate:
-          type: string
-          format: date-time
-          nullable: true
-          description: Date when the trial was upgraded to a full enterprise account.
-    UserGenerateNewMfaKeyResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - key
-        - url
-        properties:
-          key:
-            type: string
-            description: Secret key (use SHA-1).
-          url:
-            type: string
-            description: URL that will be converted into a QR code that can be scanned.
-    ProjectCollaborator:
-      allOf:
-      - $ref: '#/components/schemas/User'
-      - type: object
-        required:
-        - isOwner
-        properties:
-          isOwner:
-            type: boolean
-    ActivateUserOrVerifyEmailRequest:
-      type: object
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          description: Activation or verification code (sent via email)
-    UploadUserPhotoResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - url
-        properties:
-          url:
-            type: string
-    DeleteUserRequest:
-      type: object
-      properties:
-        password:
-          type: string
-          description: User's current password. Required if the user has a password set.
-        totpToken:
-          type: string
-          description: TOTP Token. Required if a user has multi-factor authentication with a TOTP token enabled. If a user has MFA enabled, but no totpToken is submitted; then an error starting with "ERR_TOTP_TOKEN IS REQUIRED" is returned. Use this to then prompt for an MFA token and re-try this request.
-    Project:
-      type: object
-      required:
-      - id
-      - name
-      - description
-      - created
-      - owner
-      - collaborators
-      - labelingMethod
-      - metadata
-      - isEnterpriseProject
-      - whitelabelId
-      - tier
-      - hasPublicVersion
-      - isPublic
-      - allowsLivePublicAccess
-      - ownerIsDeveloperProfile
-      - indPauseProcessingSamples
-      - publicProjectListed
-      properties:
-        id:
-          type: integer
-          example: 1
-        name:
-          type: string
-          example: Water hammer detection
-        description:
-          type: string
-        created:
-          type: string
-          format: date-time
-          example: '2019-07-21T17:32:28Z'
-        owner:
-          type: string
-          description: User or organization that owns the project
-        lastAccessed:
-          type: string
-          format: date-time
-          example: '2019-07-21T17:32:28Z'
-        lastModified:
-          type: string
-          format: date-time
-          example: '2019-07-21T17:32:28Z'
-        lastModificationDetails:
-          type: string
-          description: Details about the last modification
-          example: Data sample added
-        logo:
-          type: string
-          description: Custom logo for this project (not available for all projects)
-        ownerUserId:
-          type: integer
-        ownerOrganizationId:
-          type: integer
-        ownerAvatar:
-          type: string
-          description: URL of the project owner avatar, if any.
-        ownerIsDeveloperProfile:
-          type: boolean
-        developerProfileUserId:
-          type: integer
-          description: User ID of the developer profile, if any.
-        collaborators:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProjectCollaborator'
-        labelingMethod:
-          type: string
-          enum:
-          - single_label
-          - object_detection
-        metadata:
-          type: object
-          description: Metadata about the project
-        dataExplorerScreenshot:
-          type: string
-        isEnterpriseProject:
-          type: boolean
-          description: Whether this is an enterprise project
-        whitelabelId:
-          type: integer
-          nullable: true
-          description: Unique identifier of the white label this project belongs to, if any.
-        tags:
-          type: array
-          items:
-            type: string
-          description: List of project tags
-          example:
-          - FOMO
-          - beers
-        category:
-          type: string
-          description: Project category
-          example: Image classification
-        license:
-          type: string
-          description: Public project license, if any.
-        tier:
-          $ref: '#/components/schemas/ProjectTierEnum'
-        hasPublicVersion:
-          type: boolean
-          description: Whether this project has been published or not.
-        isPublic:
-          type: boolean
-          description: 'Whether this is a public version of a project. A version is a snapshot of a project at a certain point in time, which can be used to periodically save the state of a project. Versions can be private (just for internal use and reference) or public, available to everyone. A public version can be cloned by anyone, restoring the state of the project at the time into a new, separate project.
-
-            '
-        allowsLivePublicAccess:
-          type: boolean
-          description: 'Whether this project allows live, public access. Unlike a public version, a live public project is not fixed in time, and always includes the latest project changes. Similar to public versions, a live public project can be cloned by anyone, creating a new, separate project.
-
-            '
-        indPauseProcessingSamples:
-          type: boolean
-        publicProjectListed:
-          type: boolean
-          description: 'If the project allows public access, whether to list it the public projects overview response. If not listed, the project is still accessible via direct link. If the project does not allow public access, this field has no effect.
-
-            '
-    UtmParameter:
-      type: object
-      additionalProperties: true
-    SendUserFeedbackRequest:
-      type: object
-      required:
-      - type
-      - subject
-      - body
-      properties:
-        type:
-          type: string
-          enum:
-          - feedback
-        subject:
-          type: string
-          description: The reason the user is contacting Edge Impulse Support.
-        body:
-          type: string
-          description: The body of the message.
-        workEmail:
-          type: string
-          description: The user's work email address. This is optional, if it's not provided, the registered email will be used.
-        company:
-          type: string
-          description: The user's company. This is optional.
-        jobTitle:
-          type: string
-          description: The user's job title. This is optional.
-        companySize:
-          type: string
-          description: The user's company size. This is optional.
-        organizationId:
-          type: number
-          description: The user's organization ID. This is optional.
-    ProjectTierEnum:
-      type: string
-      description: The project tier. This is "enterprise" for all organization projects, or the user tier for all user projects.
-      enum:
-      - free
-      - community-plus
-      - professional
-      - enterprise
-    UserTierEnum:
-      type: string
-      description: The user account tier.
-      enum:
-      - free
-      - community-plus
-      - professional
-      - enterprise
-    Permission:
-      type: string
-      enum:
-      - admin:infra:disallowedEmailDomains:write
-      - admin:infra:featureFlags:read
-      - admin:infra:featureFlags:write
-      - admin:infra:config:read
-      - admin:infra:config:write
-      - admin:infra:migrations:read
-      - admin:infra:migrations:write
-      - admin:metrics:read
-      - admin:metrics:write
-      - admin:organizations:read
-      - admin:organizations:write
-      - admin:organizations:members:write
-      - admin:projects:members:write
-      - admin:projects:read
-      - admin:projects:write
-      - admin:trials:read
-      - admin:trials:write
-      - admin:users:permissions:write
-      - admin:users:read
-      - admin:users:write
-      - admin:jobs:read
-      - admin:emails:verification:code:read
-      - projects:limits:write
-      - projects:training:keras:write
-      - thirdpartyauth:read
-      - thirdpartyauth:write
-      - users:emails:read
-      - whitelabels:read
-      - whitelabels:write
-    OrganizationMemberRole:
-      type: string
-      enum:
-      - admin
-      - member
-      - guest
-    EnterpriseUpgradeOrTrialExtensionRequest:
-      type: object
-      properties:
-        reason:
-          type: string
-          description: 'Answer to the question: ''Why is this the right time for your team to invest in edge AI?''. This is optional.'
-        useCase:
-          type: string
-          description: 'Answer to the question: ''What best describes your use case?''. This is optional.'
-        timeline:
-          type: string
-          description: 'Answer to the question: ''What is your timeline for solving your problem?''. This is optional.'
-        objective:
-          type: string
-          description: 'Answer to the question: ''What are you hoping to achieve with an extension?''. This is optional.'
-        trialId:
-          type: number
-          description: The user's trial ID. This is optional.
-    UserSubscriptionMetricsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        properties:
-          metrics:
-            type: object
-            required:
-            - computeMinutesCpu
-            - computeMinutesGpu
-            - computeMinutesTotal
-            - computeMinutesLimit
-            properties:
-              computeMinutesCpu:
-                type: number
-                description: Total compute of all user jobs, running on CPU, in the current billing period.
-              computeMinutesGpu:
-                type: number
-                description: Total compute of all user jobs, running on GPU, in the current billing period.
-              computeMinutesTotal:
-                type: number
-                description: Total compute of all user jobs in the current billing period, calculated as CPU + 3*GPU compute.
-              computeMinutesLimit:
-                type: number
-                description: Overall compute limit for the current billing period.
-              computeResetDate:
-                type: string
-                format: date-time
-                description: The date at which the current compute billing period will reset.
-    OrganizationUser:
-      allOf:
-      - $ref: '#/components/schemas/User'
-      - type: object
-        required:
-        - added
-        - role
-        - projectCount
-        - datasets
-        properties:
-          added:
-            type: string
-            format: date-time
-            example: '2019-08-31T17:32:28Z'
-          role:
-            $ref: '#/components/schemas/OrganizationMemberRole'
-          projectCount:
-            type: integer
-          datasets:
-            type: array
-            items:
-              type: string
-          lastAccessToOrganization:
-            type: string
-            format: date-time
-            description: Date when the user last accessed the organization data.
-          lastOrganizationProjectAccessed:
-            type: integer
-            description: ID of the last project accessed by the user in the organization.
-    StaffInfo:
-      type: object
-      required:
-      - isStaff
-      - hasSudoRights
-      properties:
-        isStaff:
-          type: boolean
-        hasSudoRights:
-          type: boolean
-        companyName:
-          type: string
-    UserSetTotpMfaKeyResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - recoveryCodes
-        properties:
-          recoveryCodes:
-            type: array
-            description: 10 recovery codes, which can be used in case you've lost access to your MFA TOTP app. Recovery codes are single use. Once you've used a recovery code once, it can not be used again.
-            items:
-              type: string
-    StartEnterpriseTrialRequest:
-      type: object
-      properties:
-        email:
-          type: string
-          description: Email of the user requesting the trial. If this email is different to the one stored for the user requesting the trial, it will be used to replace the existing one.
-          example: fred@flintstones.org
-        organizationName:
-          type: string
-          description: Name of the trial organization. All enterprise features are tied to an organization. This organization will be deleted after the trial ends. If no organization name is provided, the user's name will be used.
-          example: My Company
-        expirationDate:
-          $ref: '#/components/schemas/TrialExpirationDate'
-        notes:
-          $ref: '#/components/schemas/TrialNotes'
-        useCase:
-          type: string
-          description: Use case of the trial.
-          example: Industrial
-        userHasMLModelsInProduction:
-          type: string
-          enum:
-          - 'yes'
-          - 'no'
-          - no, but we will soon
-          description: Whether the user has ML models in production.
-          example: 'no'
-        companyName:
-          type: string
-          description: Name of the company requesting the trial.
-          example: ACME Inc.
-        companySize:
-          type: string
-          description: Size of the company requesting the trial. This is a range of number of employees.
-          example: 1-10
-        country:
-          type: string
-          description: Country of the company requesting the trial.
-          example: United States
-        stateOrProvince:
-          type: string
-          description: State or province of the company requesting the trial.
-          example: California
-        redirectUrlOrigin:
-          type: string
-          description: Origin of the redirect URL returned as result of creating the trial user.
-          example: https://studio.edgeimpulse.com
-        redirectUrlQueryParams:
-          type: string
-          description: Query parameters to be appended to the redirect URL returned as result of creating the trial user.
-          example: utm_source=google&utm_medium=cpc&utm_campaign=trial
-    TrialNotes:
-      type: string
-      description: Notes about the trial. Free form text. This field is ignored if the trial is requested by a non-admin user.
-      example: This is a trial for the company's new project.
-    UserDeleteTotpMfaKeyRequest:
-      type: object
-      required:
-      - totpToken
-      properties:
-        totpToken:
-          type: string
-          description: Valid TOTP token
-    ListOrganizationBucketsUserResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - buckets
-        properties:
-          buckets:
-            type: array
-            items:
-              type: object
-              required:
-              - id
-              - organizationId
-              - organizationName
-              - bucket
-              - region
-              - whitelabelId
-              properties:
-                id:
-                  type: integer
-                organizationId:
-                  type: integer
-                organizationName:
-                  type: string
-                bucket:
-                  type: string
-                  description: S3 bucket
-                region:
-                  type: string
-                  description: S3 region
-                whitelabelId:
-                  type: integer
-                  description: The unique identifier of the white label this bucket belongs to, if any
-    UserOrganization:
-      type: object
-      required:
-      - id
-      - name
-      - isDeveloperProfile
-      - whitelabelId
-      - isAdmin
-      - created
-      - trialId
-      - trialExpiredDate
-      - trialUpgradedDate
-      - entitlementLimits
-      - userCount
-      - adminCount
-      - privateProjectCount
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        logo:
-          type: string
-        isDeveloperProfile:
-          type: boolean
-        whitelabelId:
-          type: integer
-          nullable: true
-          description: Unique identifier of the white label this project belongs to, if any.
-        isAdmin:
-          type: boolean
-          description: Whether the user is admin of this organization or not.
-        created:
-          type: string
-          format: date-time
-          description: When the organization was created.
-          example: '2019-08-31T17:32:28Z'
-        trialId:
-          type: number
-          nullable: true
-          description: Unique identifier of the trial this organization belongs to, if any.
-          example: 1
-        trialExpiredDate:
-          type: string
-          format: date-time
-          nullable: true
-          description: Date when the trial expired, if any. A expired trial has a grace period of 30 days before it's associated organization is deleted.
-          example: '2019-08-31T17:32:28Z'
-        trialUpgradedDate:
-          type: string
-          format: date-time
-          nullable: true
-          description: Date when the trial was upgraded to a full enterprise account, if any.
-          example: '2019-08-31T17:32:28Z'
-        entitlementLimits:
-          $ref: '#/components/schemas/EntitlementLimits'
-        userCount:
-          type: integer
-          description: The total number of users that are a member of this organization.
-        adminCount:
-          type: integer
-          description: The number of admin users for this organization.
-        privateProjectCount:
-          type: integer
-          description: The number of private projects for this organization.
-        lastAccessed:
-          type: string
-          format: date-time
-          description: Last time this user accessed this organization.
-    User:
-      type: object
-      required:
-      - id
-      - username
-      - name
-      - email
-      - created
-      - staffInfo
-      - pending
-      - activated
-      - mfaConfigured
-      properties:
-        id:
-          type: integer
-          example: 1
-        username:
-          type: string
-          example: janjongboom
-        name:
-          type: string
-          example: Jan Jongboom
-        email:
-          type: string
-          example: quijote@edgeimpulse.com
-        photo:
-          type: string
-          example: https://usercdn.edgeimpulse.com/photos/1.jpg
-        created:
-          type: string
-          format: date-time
-          example: '2019-08-31T17:32:28Z'
-        lastSeen:
-          type: string
-          format: date-time
-          example: '2019-08-31T17:32:28Z'
-        staffInfo:
-          $ref: '#/components/schemas/StaffInfo'
-        pending:
-          type: boolean
-        lastTosAcceptanceDate:
-          type: string
-          format: date-time
-          example: '2019-08-31T17:32:28Z'
-        jobTitle:
-          type: string
-          example: Software Engineer
-        permissions:
-          description: List of permissions the user has
-          type: array
-          items:
-            $ref: '#/components/schemas/Permission'
-        companyName:
-          type: string
-          example: Edge Impulse Inc.
-        activated:
-          type: boolean
-          description: Whether the user has activated their account or not.
-        mfaConfigured:
-          type: boolean
-          description: Whether the user has configured multi-factor authentication
-        stripeCustomerId:
-          type: string
-          description: Stripe customer ID, if any.
-        hasPendingPayments:
-          type: boolean
-          description: Whether the user has pending payments.
-        tier:
-          $ref: '#/components/schemas/UserTierEnum'
-    CreateEnterpriseTrialUserRequest:
-      allOf:
-      - $ref: '#/components/schemas/StartEnterpriseTrialRequest'
-      - type: object
-        required:
-        - name
-        - username
-        - email
-        - privacyPolicy
-        properties:
-          name:
-            type: string
-            description: Name of the user.
-            example: John Doe
-          username:
-            type: string
-            description: Username, minimum 4 and maximum 30 characters. May contain alphanumeric characters, hyphens, underscores and dots. Validated according to `^(?=.{4,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._-]+(?<![_.])$`.
-            example: johndoe
-          email:
-            type: string
-            description: Email of the user. Only business email addresses are allowed. Emails with free domains like gmail.com or yahoo.com are not allowed.
-            example: jan@edgeimpulse.com
-          privacyPolicy:
-            type: boolean
-            description: Whether the user has accepted the terms of service and privacy policy.
-          password:
-            type: string
-            description: Password of the user. Minimum length 8 characters.
-          jobTitle:
-            type: string
-            description: Job title of the user.
-            example: TinyML engineer
-          companyName:
-            type: string
-            description: Name of the company requesting the trial.
-            example: ACME Inc.
-          redirectUrlOrigin:
-            type: string
-            description: Origin of the redirect URL returned as result of creating the trial user.
-            example: https://studio.edgeimpulse.com
-          redirectUrlQueryParams:
-            type: string
-            description: Query parameters to be appended to the redirect URL returned as result of creating the trial user.
-            example: utm_source=google&utm_medium=cpc&utm_campaign=trial
-          utmParams:
-            type: array
-            description: List of UTM parameters.
-            items:
-              $ref: '#/components/schemas/UtmParameter'
-    UserSetTotpMfaKeyRequest:
-      type: object
-      required:
-      - key
-      - totpToken
-      properties:
-        key:
-          type: string
-          description: Secret key obtained through `userGenerateNewMfaKey`.
-        totpToken:
-          type: string
-          description: TOTP token that is valid for the key (to ensure the device is configured correctly)
-    GetJWTResponse:
-      example: '`{ "success": true, "token": "A372jdhe.ad3r4gfrg" }`'
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        properties:
-          token:
-            type: string
-            description: JWT token, to be used to log in in the future through JWTAuthentication
-          redirectUrl:
-            type: string
-            description: Redirect URL to follow to complete login
     SetUserPasswordRequest:
       type: object
       required:
@@ -1921,259 +1949,6 @@ components:
         identityProvider:
           type: string
         password:
-          type: string
-    VerifyResetPasswordRequest:
-      type: object
-      required:
-      - email
-      - code
-      properties:
-        email:
-          type: string
-        code:
-          type: string
-    ListEmailResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - emails
-        properties:
-          emails:
-            type: array
-            description: List of emails
-            items:
-              type: object
-              required:
-              - from
-              - to
-              - created
-              - subject
-              - bodyText
-              - bodyHTML
-              - sent
-              - providerResponse
-              properties:
-                userId:
-                  type: integer
-                projectId:
-                  type: integer
-                from:
-                  type: string
-                to:
-                  type: string
-                created:
-                  type: string
-                  format: date-time
-                subject:
-                  type: string
-                bodyText:
-                  type: string
-                bodyHTML:
-                  type: string
-                sent:
-                  type: boolean
-                providerResponse:
-                  type: string
-    CreateProTierUserRequest:
-      allOf:
-      - $ref: '#/components/schemas/CreateUserRequest'
-      - type: object
-        properties:
-          redirectUrlOrigin:
-            type: string
-            description: Origin of the redirect URL returned as result of creating the professional user.
-            example: https://studio.edgeimpulse.com
-          redirectUrlQueryParams:
-            type: string
-            description: Query parameters to be appended to the redirect URL returned as result of creating the professional user.
-            example: utm_source=google&utm_medium=cpc&utm_campaign=trial
-    ListEnterpriseTrialsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - trials
-        properties:
-          trials:
-            type: array
-            description: Current or past enterprise trials.
-            items:
-              $ref: '#/components/schemas/EnterpriseTrial'
-    UpgradeSubscriptionRequest:
-      type: object
-      required:
-      - billingCycle
-      - successUrl
-      - cancelUrl
-      properties:
-        billingCycle:
-          $ref: '#/components/schemas/BillingCycle'
-          description: 'Selects the billing frequency for the subscription.
-
-            Either ''monthly'' for regular monthly charges or ''yearly''
-
-            for annual billing with a potential discount.
-
-            '
-        successUrl:
-          type: string
-          description: URL to redirect the user to after a successful checkout process.
-        cancelUrl:
-          type: string
-          description: URL to redirect the user to after the checkout process is canceled.
-    EntityCreatedResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: integer
-            description: Unique identifier of the created entity.
-    UpdateUserRequest:
-      type: object
-      description: Only fields set in this object will be updated.
-      properties:
-        name:
-          type: string
-          description: New full name
-          example: Jan Jongboom
-        jobTitle:
-          type: string
-          description: New job title
-          example: Embedded Software Engineer
-        companyName:
-          type: string
-          description: New company name
-          example: Edge Impulse Inc.
-        experiments:
-          type: array
-          items:
-            type: string
-          description: List of user experiments
-        projectsSortOrder:
-          description: Default sort order on the projects list
-          $ref: '#/components/schemas/UserProjectsSortOrder'
-        timezone:
-          description: User timezone.
-          type: string
-    ListOrganizationsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - organizations
-        properties:
-          organizations:
-            type: array
-            description: Array with organizations
-            items:
-              $ref: '#/components/schemas/Organization'
-    UserByThirdPartyActivationRequest:
-      type: object
-      required:
-      - activationCode
-      properties:
-        activationCode:
-          type: string
-    GetUserProjectsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - projects
-        properties:
-          projects:
-            type: array
-            items:
-              $ref: '#/components/schemas/Project'
-    Organization:
-      type: object
-      required:
-      - id
-      - name
-      - users
-      - isDeveloperProfile
-      - whitelabelId
-      - trialId
-      - trialExpiredDate
-      - trialUpgradedDate
-      - created
-      - showHeaderImgMask
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-          description: EdgeImpulse Inc.
-        logo:
-          type: string
-          example: https://usercdn.edgeimpulse.com/logos/1.jpg
-        headerImg:
-          type: string
-          example: https://usercdn.edgeimpulse.com/leaders/1.jpg
-        showHeaderImgMask:
-          type: boolean
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationUser'
-        isDeveloperProfile:
-          type: boolean
-        whitelabelId:
-          type: integer
-          nullable: true
-          description: Unique identifier of the white label this organization belongs to, if any.
-        projects:
-          type: array
-          items:
-            $ref: '#/components/schemas/Project'
-        trialId:
-          type: integer
-          nullable: true
-          description: Unique identifier of the trial this organization belongs to, if any.
-        trialExpiredDate:
-          type: string
-          format: date-time
-          nullable: true
-          description: Date when the trial expired, if any. A expired trial has a grace period of 30 days before it's associated organization is deleted.
-        trialUpgradedDate:
-          type: string
-          format: date-time
-          nullable: true
-          description: Date when the trial was upgraded to a full enterprise account, if any.
-        created:
-          type: string
-          format: date-time
-          description: Date when the organization was created.
-        contractStartDate:
-          type: string
-          format: date-time
-          nullable: true
-          description: Date when the current contract started, if any.
-        deletedDate:
-          type: string
-          format: date-time
-          description: The date in which the organization was deleted. If the organization is not deleted, this field is not set.
-    DowngradeSubscriptionRequest:
-      type: object
-      properties:
-        downgradeReason:
-          type: string
-          description: Reason for downgrading the subscription.
-    TrialExpirationDate:
-      type: string
-      format: date-time
-      description: Expiration date of the trial. The trial will be set as expired after this date. There will be a grace period of 30 days after a trial expires before fully deleting the trial organization. This field is ignored if the trial is requested by a non-admin user, defaulting to 14 days trial.
-      example: '2020-01-01T00:00:00Z'
-    RequestResetPasswordRequest:
-      type: object
-      required:
-      - email
-      properties:
-        email:
           type: string
     CreateUserRequest:
       type: object
@@ -2227,25 +2002,6 @@ components:
         ignoreEmailValidation:
           type: boolean
           description: If true, allows signup to proceed despite a potentially invalid email. Note that this will enforce email verification post-signup
-    CreateUserResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        properties:
-          redirectUrl:
-            type: string
-            description: URL to redirect user to.
-          id:
-            type: integer
-            description: User unique identifier
-    UploadUserPhotoRequest:
-      type: object
-      required:
-      - photo
-      properties:
-        photo:
-          type: string
-          format: binary
     GenericApiResponse:
       type: object
       required:
@@ -2257,24 +2013,18 @@ components:
         error:
           type: string
           description: Optional error description (set if 'success' was false)
-    UserExperiment:
+    UserSetTotpMfaKeyRequest:
       type: object
       required:
-      - type
-      - title
-      - enabled
-      - showToUser
+      - key
+      - totpToken
       properties:
-        type:
+        key:
           type: string
-        title:
+          description: Secret key obtained through `userGenerateNewMfaKey`.
+        totpToken:
           type: string
-        help:
-          type: string
-        enabled:
-          type: boolean
-        showToUser:
-          type: boolean
+          description: TOTP token that is valid for the key (to ensure the device is configured correctly)
     ResetPasswordRequest:
       type: object
       required:
@@ -2288,7 +2038,277 @@ components:
           type: string
         newPassword:
           type: string
+    CreateEnterpriseTrialResponse:
+      allOf:
+      - $ref: '#/components/schemas/EntityCreatedResponse'
+      - type: object
+        properties:
+          userId:
+            type: integer
+            description: ID of the user created for the trial, if the user did not already exist.
+          redirectUrl:
+            type: string
+            description: URL to redirect the user to in order to access the enterprise trial.
+    UserDismissNotificationRequest:
+      type: object
+      required:
+      - notification
+      properties:
+        notification:
+          type: string
+    UserOrganization:
+      type: object
+      required:
+      - id
+      - name
+      - isDeveloperProfile
+      - whitelabelId
+      - isAdmin
+      - created
+      - trialId
+      - trialExpiredDate
+      - trialUpgradedDate
+      - entitlementLimits
+      - userCount
+      - adminCount
+      - privateProjectCount
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        logo:
+          type: string
+        isDeveloperProfile:
+          type: boolean
+        whitelabelId:
+          type:
+          - integer
+          - 'null'
+          description: Unique identifier of the white label this project belongs to, if any.
+        isAdmin:
+          type: boolean
+          description: Whether the user is admin of this organization or not.
+        created:
+          type: string
+          format: date-time
+          description: When the organization was created.
+          example: '2019-08-31T17:32:28Z'
+        trialId:
+          type:
+          - number
+          - 'null'
+          description: Unique identifier of the trial this organization belongs to, if any.
+          example: 1
+        trialExpiredDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date when the trial expired, if any. A expired trial has a grace period of 30 days before it's associated organization is deleted.
+          example: '2019-08-31T17:32:28Z'
+        trialUpgradedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date when the trial was upgraded to a full enterprise account, if any.
+          example: '2019-08-31T17:32:28Z'
+        entitlementLimits:
+          $ref: '#/components/schemas/EntitlementLimits'
+        userCount:
+          type: integer
+          description: The total number of users that are a member of this organization.
+        adminCount:
+          type: integer
+          description: The number of admin users for this organization.
+        privateProjectCount:
+          type: integer
+          description: The number of private projects for this organization.
+        lastAccessed:
+          type: string
+          format: date-time
+          description: Last time this user accessed this organization.
+    UserProjectsSortOrder:
+      type: string
+      enum:
+      - created-asc
+      - created-desc
+      - added-asc
+      - added-desc
+      - name-asc
+      - name-desc
+      - last-accessed-desc
+    TrialNotes:
+      type: string
+      description: Notes about the trial. Free form text. This field is ignored if the trial is requested by a non-admin user.
+      example: This is a trial for the company's new project.
+    UtmParameter:
+      type: object
+      additionalProperties: true
+    CreateEnterpriseTrialUserRequest:
+      allOf:
+      - $ref: '#/components/schemas/StartEnterpriseTrialRequest'
+      - type: object
+        required:
+        - name
+        - username
+        - email
+        - privacyPolicy
+        properties:
+          name:
+            type: string
+            description: Name of the user.
+            example: John Doe
+          username:
+            type: string
+            description: Username, minimum 4 and maximum 30 characters. May contain alphanumeric characters, hyphens, underscores and dots. Validated according to `^(?=.{4,30}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._-]+(?<![_.])$`.
+            example: johndoe
+          email:
+            type: string
+            description: Email of the user. Only business email addresses are allowed. Emails with free domains like gmail.com or yahoo.com are not allowed.
+            example: jan@edgeimpulse.com
+          privacyPolicy:
+            type: boolean
+            description: Whether the user has accepted the terms of service and privacy policy.
+          password:
+            type: string
+            description: Password of the user. Minimum length 8 characters.
+          jobTitle:
+            type: string
+            description: Job title of the user.
+            example: TinyML engineer
+          companyName:
+            type: string
+            description: Name of the company requesting the trial.
+            example: ACME Inc.
+          redirectUrlOrigin:
+            type: string
+            description: Origin of the redirect URL returned as result of creating the trial user.
+            example: https://studio.edgeimpulse.com
+          redirectUrlQueryParams:
+            type: string
+            description: Query parameters to be appended to the redirect URL returned as result of creating the trial user.
+            example: utm_source=google&utm_medium=cpc&utm_campaign=trial
+          utmParams:
+            type: array
+            description: List of UTM parameters.
+            items:
+              $ref: '#/components/schemas/UtmParameter'
+    UserGenerateNewMfaKeyResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - key
+        - url
+        properties:
+          key:
+            type: string
+            description: Secret key (use SHA-1).
+          url:
+            type: string
+            description: URL that will be converted into a QR code that can be scanned.
+    OrganizationUser:
+      allOf:
+      - $ref: '#/components/schemas/User'
+      - type: object
+        required:
+        - added
+        - role
+        - projectCount
+        - datasets
+        properties:
+          added:
+            type: string
+            format: date-time
+            example: '2019-08-31T17:32:28Z'
+          role:
+            $ref: '#/components/schemas/OrganizationMemberRole'
+          projectCount:
+            type: integer
+          datasets:
+            type: array
+            items:
+              type: string
+          lastAccessToOrganization:
+            type: string
+            format: date-time
+            description: Date when the user last accessed the organization data.
+          lastOrganizationProjectAccessed:
+            type: integer
+            description: ID of the last project accessed by the user in the organization.
+    StartEnterpriseTrialRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          description: Email of the user requesting the trial. If this email is different to the one stored for the user requesting the trial, it will be used to replace the existing one.
+          example: fred@flintstones.org
+        organizationName:
+          type: string
+          description: Name of the trial organization. All enterprise features are tied to an organization. This organization will be deleted after the trial ends. If no organization name is provided, the user's name will be used.
+          example: My Company
+        expirationDate:
+          $ref: '#/components/schemas/TrialExpirationDate'
+        notes:
+          $ref: '#/components/schemas/TrialNotes'
+        useCase:
+          type: string
+          description: Use case of the trial.
+          example: Industrial
+        userHasMLModelsInProduction:
+          type: string
+          enum:
+          - 'yes'
+          - 'no'
+          - no, but we will soon
+          description: Whether the user has ML models in production.
+          example: 'no'
+        companyName:
+          type: string
+          description: Name of the company requesting the trial.
+          example: ACME Inc.
+        companySize:
+          type: string
+          description: Size of the company requesting the trial. This is a range of number of employees.
+          example: 1-10
+        country:
+          type: string
+          description: Country of the company requesting the trial.
+          example: United States
+        stateOrProvince:
+          type: string
+          description: State or province of the company requesting the trial.
+          example: California
+        redirectUrlOrigin:
+          type: string
+          description: Origin of the redirect URL returned as result of creating the trial user.
+          example: https://studio.edgeimpulse.com
+        redirectUrlQueryParams:
+          type: string
+          description: Query parameters to be appended to the redirect URL returned as result of creating the trial user.
+          example: utm_source=google&utm_medium=cpc&utm_campaign=trial
+    UserSetTotpMfaKeyResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - recoveryCodes
+        properties:
+          recoveryCodes:
+            type: array
+            description: 10 recovery codes, which can be used in case you've lost access to your MFA TOTP app. Recovery codes are single use. Once you've used a recovery code once, it can not be used again.
+            items:
+              type: string
   parameters:
+    UserIdParameter:
+      name: userId
+      in: path
+      required: true
+      description: User ID
+      schema:
+        type: integer
     UsernameOrEmailParameter:
       name: usernameOrEmail
       in: path
@@ -2303,13 +2323,6 @@ components:
       description: If set to "true", the "projects" field is left empty (will be faster if you call this function a lot). Use `getCurrentUserProjects` to get the project list in a separate call.
       schema:
         type: boolean
-    UserIdParameter:
-      name: userId
-      in: path
-      required: true
-      description: User ID
-      schema:
-        type: integer
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey

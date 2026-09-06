@@ -1,0 +1,85 @@
+generated: '2026-09-06'
+method: searched
+source: https://docs.edgeimpulse.com/studio/organizations/data-pipelines#webhooks, https://docs.edgeimpulse.com/studio/projects/data-acquisition/data-sources#webhooks,
+  https://docs.edgeimpulse.com/apis/studio#jobs, https://docs.edgeimpulse.com/tools/protocols/remote-management/websocket
+provider: Edge Impulse
+providerId: edge-impulse
+description: 'Edge Impulse has three event surfaces and publishes a machine-readable contract for none
+  of them. One outbound webhook exists — a data-pipeline completion callback with a documented JSON body.
+  Two socket surfaces carry the rest: job progress events on the Studio WebSocket, and the fully specified
+  device Remote Management protocol (derived into an AsyncAPI document in this repo). There is no event
+  catalogue, no subscription API, no signing scheme and no retry policy.'
+asyncapi_published: false
+derived_asyncapi: asyncapi/edge-impulse-remote-management-asyncapi.yml
+webhooks:
+- id: pipeline-run-complete
+  name: Data pipeline run complete
+  direction: outbound
+  transport: HTTP POST
+  configured_in: Studio — organization data pipelines, and project data sources
+  docs: https://docs.edgeimpulse.com/studio/organizations/data-pipelines#webhooks
+  trigger: Fires when a data pipeline finishes a run.
+  payload_fields:
+  - name: organizationId
+    type: integer
+  - name: pipelineId
+    type: integer
+  - name: pipelineName
+    type: string
+  - name: projectId
+    type: integer
+  - name: success
+    type: boolean
+  - name: newItems
+    type: integer
+  - name: newChecklistOK
+    type: integer
+  - name: newChecklistFail
+    type: integer
+  signing: null
+  retries: null
+  note: 'Availability follows the feature: organization data pipelines are an Enterprise capability.'
+socket_events:
+- id: job-data
+  surface: Studio WebSocket
+  pattern: job-data-{jobId}
+  payload: '{ data: ''string with status'' }'
+  description: Status update on a running job, e.g. training progress.
+  docs: https://docs.edgeimpulse.com/apis/studio#updates
+- id: job-finished
+  surface: Studio WebSocket
+  pattern: job-finished-{jobId}
+  payload: '{ success: true }'
+  description: The job has finished; success indicates whether it completed cleanly.
+  docs: https://docs.edgeimpulse.com/apis/studio#updates
+- id: job-cancel
+  surface: Studio WebSocket
+  pattern: job-cancel
+  direction: inbound
+  payload: jobId
+  description: Client-sent event that cancels a running job over the socket.
+  docs: https://docs.edgeimpulse.com/apis/studio#canceling-a-job
+socket_token:
+  note: A socket token is obtained through getSocketToken (project) or getOrganizationSocketToken (organization)
+    before connecting to the Studio WebSocket.
+device_protocol:
+  surface: Remote Management WebSocket
+  endpoint: wss://remote-mgmt.edgeimpulse.com
+  protocol_version: 3
+  messages: 12
+  encodings:
+  - JSON
+  - CBOR
+  docs: https://docs.edgeimpulse.com/tools/protocols/remote-management/websocket
+  note: Fully specified in prose with a JSON Schema per message, and covered by a published device conformance
+    suite at https://github.com/edgeimpulse/integration-tests-firmware. Derived into AsyncAPI 3.0.0 in
+    this repo.
+gaps:
+- No webhook subscription/management API — the pipeline webhook URL is set in the Studio UI only.
+- No signature header or shared secret is documented for the outbound webhook, so a receiver cannot verify
+  origin.
+- No delivery guarantee, retry schedule or replay endpoint is documented.
+- 'No event catalogue: job events are described in two sentences of prose, not enumerated.'
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

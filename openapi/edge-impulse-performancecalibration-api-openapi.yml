@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Edge Impulse PerformanceCalibration API
+  title: Edge Impulse Performance Calibration API
   version: 1.0.0
 servers:
 - url: https://studio.edgeimpulse.com/v1
@@ -226,80 +226,82 @@ paths:
                 $ref: '#/components/schemas/GetPostProcessingResultsResponse'
 components:
   schemas:
-    GetPerformanceCalibrationRawResultResponse:
+    PerformanceCalibrationUploadLabeledAudioResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - detections
+        - uploadKey
         properties:
-          detections:
+          uploadKey:
+            type: string
+    GetPostProcessingResultsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - variableNames
+        - objectiveNames
+        - variables
+        - objectives
+        properties:
+          variableNames:
             type: array
+            description: The names of the variables being tuned, in column order.
             items:
-              $ref: '#/components/schemas/PerformanceCalibrationRawDetection'
-    PerformanceCalibrationGroundTruth:
+              type: string
+          objectiveNames:
+            type: array
+            description: The names of the objectives being minimized, in column order.
+            items:
+              type: string
+          variables:
+            type: array
+            description: The variable values representing the pareto front of optimal solutions.
+            items:
+              type: array
+              items:
+                type: number
+          objectives:
+            type: array
+            description: The objective values that correspond with the variables.
+            items:
+              type: array
+              items:
+                type: number
+    GetPerformanceCalibrationParametersResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          params:
+            $ref: '#/components/schemas/PerformanceCalibrationParameters'
+    StartPerformanceCalibrationRequest:
       type: object
       required:
-      - type
-      - labelIdx
-      - labelString
-      - start
-      - length
+      - backgroundNoiseLabel
       properties:
-        type:
+        backgroundNoiseLabel:
           type: string
-          description: Whether this region is a single sample, a region of background noise, or a region of background noise that contains samples.
-          enum:
-          - sample
-          - noise
-          - combined_noise
-        labelIdx:
-          type: integer
-          description: Index of the label in the array of all labels
-        labelString:
-          type: string
-          description: String label of the sample
-        start:
-          type: integer
-          description: The start time of the region in milliseconds
-        length:
-          type: integer
-          description: The length of the region in milliseconds
-        samples:
+          description: The label used to signify background noise in the impulse
+        otherNoiseLabels:
           type: array
-          description: If the region contains samples, all the samples within this region
           items:
-            type: object
-            required:
-            - id
-            - start
-            - length
-            - idx
-            properties:
-              id:
-                type: integer
-                description: The ID of the samples in Studio
-              start:
-                type: number
-                description: The start time of the sample in milliseconds
-              length:
-                type: number
-                description: The length of the sample in milliseconds
-              idx:
-                type: integer
-                description: For debugging. The index of the sample in the original Y array.
-    PerformanceCalibrationDetection:
+            type: string
+          description: Any other labels that should be considered equivalent to background noise
+        uploadKey:
+          type: string
+          description: The key of an uploaded sample. If not present, a synthetic sample will be created.
+        sampleLengthMinutes:
+          type: number
+          description: The length of sample to create (required for synthetic samples)
+    PerformanceCalibrationSaveParameterSetRequest:
       type: object
       required:
-      - time
-      - label
+      - params
       properties:
-        time:
-          type: integer
-          description: The time of the detection in milliseconds
-        label:
-          type: string
-          description: The label that was detected
+        params:
+          $ref: '#/components/schemas/PerformanceCalibrationParameters'
     PerformanceCalibrationRawDetection:
       type: object
       required:
@@ -396,6 +398,121 @@ components:
         windowSizeMs:
           type: number
           description: The size of the input block window in milliseconds.
+    PerformanceCalibrationUploadLabeledAudioRequest:
+      type: object
+      required:
+      - zip
+      properties:
+        zip:
+          type: string
+          format: binary
+    GetPerformanceCalibrationParameterSetsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - parameterSets
+        properties:
+          parameterSets:
+            type: array
+            items:
+              $ref: '#/components/schemas/PerformanceCalibrationParameterSet'
+    GetPerformanceCalibrationRawResultResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - detections
+        properties:
+          detections:
+            type: array
+            items:
+              $ref: '#/components/schemas/PerformanceCalibrationRawDetection'
+    PerformanceCalibrationGroundTruth:
+      type: object
+      required:
+      - type
+      - labelIdx
+      - labelString
+      - start
+      - length
+      properties:
+        type:
+          type: string
+          description: Whether this region is a single sample, a region of background noise, or a region of background noise that contains samples.
+          enum:
+          - sample
+          - noise
+          - combined_noise
+        labelIdx:
+          type: integer
+          description: Index of the label in the array of all labels
+        labelString:
+          type: string
+          description: String label of the sample
+        start:
+          type: integer
+          description: The start time of the region in milliseconds
+        length:
+          type: integer
+          description: The length of the region in milliseconds
+        samples:
+          type: array
+          description: If the region contains samples, all the samples within this region
+          items:
+            type: object
+            required:
+            - id
+            - start
+            - length
+            - idx
+            properties:
+              id:
+                type: integer
+                description: The ID of the samples in Studio
+              start:
+                type: number
+                description: The start time of the sample in milliseconds
+              length:
+                type: number
+                description: The length of the sample in milliseconds
+              idx:
+                type: integer
+                description: For debugging. The index of the sample in the original Y array.
+    PerformanceCalibrationDetection:
+      type: object
+      required:
+      - time
+      - label
+      properties:
+        time:
+          type: integer
+          description: The time of the detection in milliseconds
+        label:
+          type: string
+          description: The label that was detected
+    GetPerformanceCalibrationGroundTruthResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - samples
+        properties:
+          samples:
+            type: array
+            items:
+              $ref: '#/components/schemas/PerformanceCalibrationGroundTruth'
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
     PerformanceCalibrationParameters:
       type: object
       required:
@@ -413,33 +530,6 @@ components:
           example: 1
         parametersStandard:
           $ref: '#/components/schemas/PerformanceCalibrationParametersStandard'
-    PerformanceCalibrationUploadLabeledAudioRequest:
-      type: object
-      required:
-      - zip
-      properties:
-        zip:
-          type: string
-          format: binary
-    StartPerformanceCalibrationRequest:
-      type: object
-      required:
-      - backgroundNoiseLabel
-      properties:
-        backgroundNoiseLabel:
-          type: string
-          description: The label used to signify background noise in the impulse
-        otherNoiseLabels:
-          type: array
-          items:
-            type: string
-          description: Any other labels that should be considered equivalent to background noise
-        uploadKey:
-          type: string
-          description: The key of an uploaded sample. If not present, a synthetic sample will be created.
-        sampleLengthMinutes:
-          type: number
-          description: The length of sample to create (required for synthetic samples)
     PerformanceCalibrationParametersStandard:
       type: object
       required:
@@ -459,51 +549,20 @@ components:
           type: number
           description: The amount of time new matches will be ignored after a positive result.
           example: 500
-    GetPerformanceCalibrationParameterSetsResponse:
+    GetPerformanceCalibrationStatusResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - parameterSets
+        - available
         properties:
-          parameterSets:
-            type: array
-            items:
-              $ref: '#/components/schemas/PerformanceCalibrationParameterSet'
-    GetPostProcessingResultsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - variableNames
-        - objectiveNames
-        - variables
-        - objectives
-        properties:
-          variableNames:
-            type: array
-            description: The names of the variables being tuned, in column order.
-            items:
-              type: string
-          objectiveNames:
-            type: array
-            description: The names of the objectives being minimized, in column order.
-            items:
-              type: string
-          variables:
-            type: array
-            description: The variable values representing the pareto front of optimal solutions.
-            items:
-              type: array
-              items:
-                type: number
-          objectives:
-            type: array
-            description: The objective values that correspond with the variables.
-            items:
-              type: array
-              items:
-                type: number
+          available:
+            type: boolean
+          unsupportedProjectError:
+            type: string
+            description: If the current project is unsupported by performance calibration, this field explains the reason why. Otherwise, it is undefined.
+          options:
+            $ref: '#/components/schemas/StartPerformanceCalibrationRequest'
     PerformanceCalibrationFalsePositive:
       type: object
       required:
@@ -531,65 +590,6 @@ components:
           description: All of the sample IDs in the affected region
           items:
             type: integer
-    PerformanceCalibrationSaveParameterSetRequest:
-      type: object
-      required:
-      - params
-      properties:
-        params:
-          $ref: '#/components/schemas/PerformanceCalibrationParameters'
-    GetPerformanceCalibrationGroundTruthResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - samples
-        properties:
-          samples:
-            type: array
-            items:
-              $ref: '#/components/schemas/PerformanceCalibrationGroundTruth'
-    PerformanceCalibrationUploadLabeledAudioResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - uploadKey
-        properties:
-          uploadKey:
-            type: string
-    GetPerformanceCalibrationStatusResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - available
-        properties:
-          available:
-            type: boolean
-          unsupportedProjectError:
-            type: string
-            description: If the current project is unsupported by performance calibration, this field explains the reason why. Otherwise, it is undefined.
-          options:
-            $ref: '#/components/schemas/StartPerformanceCalibrationRequest'
-    GetPerformanceCalibrationParametersResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        properties:
-          params:
-            $ref: '#/components/schemas/PerformanceCalibrationParameters'
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
   parameters:
     ProjectIdParameter:
       name: projectId

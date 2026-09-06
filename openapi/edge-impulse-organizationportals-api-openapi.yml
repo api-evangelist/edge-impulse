@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Edge Impulse OrganizationPortals API
+  title: Edge Impulse Organization Portals API
   version: 1.0.0
 servers:
 - url: https://studio.edgeimpulse.com/v1
@@ -142,6 +142,37 @@ paths:
                 $ref: '#/components/schemas/GenericApiResponse'
 components:
   schemas:
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    CreateOrganizationPortalResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        - url
+        properties:
+          id:
+            type: integer
+            description: Portal ID for the new upload portal
+          url:
+            type: string
+            description: URL to the portal
+          signedUrl:
+            type: string
+            description: pre-signed upload URL. Only set if using a non-built-in bucket.
+          bucketBucket:
+            type: string
+            description: Only set if using a non-built-in bucket.
     UpdateOrganizationPortalResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -158,6 +189,70 @@ components:
           bucketBucket:
             type: string
             description: Only set if not using the Edge Impulse hosted bucket.
+    CreateOrganizationPortalRequest:
+      type: object
+      required:
+      - name
+      - bucketId
+      - bucketPath
+      properties:
+        name:
+          type: string
+          example: EdgeImpulse Inc.
+          description: The name of the upload portal.
+        description:
+          type: string
+          example: EdgeImpulse Inc. Portal description
+          description: The purpose and description of the upload portal.
+        bucketId:
+          type: integer
+          example: 1
+          description: The S3 bucket id to store the uploaded data. Set to '0' to select a bucket hosted by Edge Impulse.
+        bucketPath:
+          type: string
+          example: /path/in/bucket
+          description: The path in the bucket the upload portal will write to.
+    ListOrganizationPortalsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - portals
+        properties:
+          portals:
+            type: array
+            items:
+              type: object
+              required:
+              - id
+              - name
+              - url
+              - token
+              - bucketId
+              - bucketName
+              - bucketPath
+              - bucketUrl
+              - created
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                description:
+                  type: string
+                url:
+                  type: string
+                bucketId:
+                  type: integer
+                bucketName:
+                  type: string
+                bucketPath:
+                  type: string
+                bucketUrl:
+                  type: string
+                created:
+                  type: string
+                  format: date-time
     GetOrganizationPortalResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -205,49 +300,6 @@ components:
             type: string
             example: s3://bucketname/path/to/bucket
             description: The full S3 bucket path where uploaded data is stored.
-    CreateOrganizationPortalRequest:
-      type: object
-      required:
-      - name
-      - bucketId
-      - bucketPath
-      properties:
-        name:
-          type: string
-          example: EdgeImpulse Inc.
-          description: The name of the upload portal.
-        description:
-          type: string
-          example: EdgeImpulse Inc. Portal description
-          description: The purpose and description of the upload portal.
-        bucketId:
-          type: integer
-          example: 1
-          description: The S3 bucket id to store the uploaded data. Set to '0' to select a bucket hosted by Edge Impulse.
-        bucketPath:
-          type: string
-          example: /path/in/bucket
-          description: The path in the bucket the upload portal will write to.
-    CreateOrganizationPortalResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        - url
-        properties:
-          id:
-            type: integer
-            description: Portal ID for the new upload portal
-          url:
-            type: string
-            description: URL to the portal
-          signedUrl:
-            type: string
-            description: pre-signed upload URL. Only set if using a non-built-in bucket.
-          bucketBucket:
-            type: string
-            description: Only set if using a non-built-in bucket.
     VerifyOrganizationBucketResponse:
       description: "Response object for verifying an organization's bucket connectivity.\n\nWorkflow:\n1. The client initiates verification by sending a GET request to /api/organizations/{organizationId}/buckets/verify with bucket and credential details.\n2. The server responds with this VerifyOrganizationBucketResponse object.\n3. The client checks the connectionStatus:\n   - If \"connected\": Verification is complete. Other properties (files, hasInfoLabelsFile, signedUrl) are available.\n   - If \"connecting\": Verification is in progress. The client should continue polling. Other properties are not yet available.\n   - If \"error\": Verification failed. Check connectionError for details. Other properties are not available.\n4. If connectionStatus is \"connecting\", the client should periodically poll the endpoint until the status changes to \"connected\" or \"error\".\n"
       allOf:
@@ -272,15 +324,17 @@ components:
             - connecting
             - error
           connectionError:
-            type: string
-            nullable: true
+            type:
+            - string
+            - 'null'
             description: 'Provides additional details if connectionStatus is "error". Helps diagnose verification failures.
 
               '
           connectionStatusSince:
-            type: string
+            type:
+            - string
+            - 'null'
             format: date-time
-            nullable: true
             description: 'Timestamp of when the connectionStatus last changed.
 
               '
@@ -326,71 +380,19 @@ components:
               where the endpoint must be reformatted. This field will be undefined for other storage providers.
 
               '
-    ListOrganizationPortalsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - portals
-        properties:
-          portals:
-            type: array
-            items:
-              type: object
-              required:
-              - id
-              - name
-              - url
-              - token
-              - bucketId
-              - bucketName
-              - bucketPath
-              - bucketUrl
-              - created
-              properties:
-                id:
-                  type: integer
-                name:
-                  type: string
-                description:
-                  type: string
-                url:
-                  type: string
-                bucketId:
-                  type: integer
-                bucketName:
-                  type: string
-                bucketPath:
-                  type: string
-                bucketUrl:
-                  type: string
-                created:
-                  type: string
-                  format: date-time
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
   parameters:
-    PortalIdParameter:
-      name: portalId
-      in: path
-      required: true
-      description: Portal ID
-      schema:
-        type: integer
     OrganizationIdParameter:
       name: organizationId
       in: path
       required: true
       description: Organization ID
+      schema:
+        type: integer
+    PortalIdParameter:
+      name: portalId
+      in: path
+      required: true
+      description: Portal ID
       schema:
         type: integer
   securitySchemes:

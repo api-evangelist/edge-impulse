@@ -3,88 +3,120 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: Edge Impulse
 providerId: edge-impulse
+generated: '2026-09-06'
+method: searched
+source: https://www.edgeimpulse.com/pricing, https://docs.edgeimpulse.com/apis/studio, https://docs.edgeimpulse.com/apis/ingestion,
+  https://studio.edgeimpulse.com/openapi.yml
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+modified: '2026-09-06'
 tags:
-  - Artificial Intelligence
-  - Embedded Machine Learning
-  - Edge AI
-  - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the Edge Impulse API surface. Captures per-tier
-  quotas, burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to
-  be replaced with published provider limits.
+- Artificial Intelligence
+- Embedded Machine Learning
+- Edge AI
+- Quotas
+description: 'Edge Impulse publishes NO request-rate limits and NO rate-limit response headers. No 429
+  appears anywhere in the 559-operation published OpenAPI, and no X-RateLimit-*, RateLimit-* or Retry-After
+  header is documented on any of the three APIs. This is an honest zero, and it is a real gap for an agent:
+  there is no runtime signal telling a caller how close it is to a wall. What Edge Impulse does meter
+  is RESOURCE consumption — compute minutes per job, memory, project and collaborator counts, and upload
+  size — plus hard payload caps on the Ingestion API. Those are recorded below. This REPLACES a 2026-05-04
+  bulk-sweep scaffold that invented per-minute and per-month request quotas across three tiers that Edge
+  Impulse does not sell.'
+limit_count: 0
+quota_count: 8
 headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  limit: null
+  remaining: null
+  reset: null
+  retryAfter: null
+  policy: null
+  note: None documented. Verified against the full published OpenAPI and the Studio and Ingestion API
+    reference pages on 2026-09-06.
 responseCodes:
-  throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
-limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Edge Impulse API
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Edge Impulse API
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Edge Impulse API
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Edge Impulse API
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Edge Impulse API
+  throttled: null
+  note: No 429 is declared in the published spec. The Studio API declares only 200 (555 operations) and
+    302 (4). The Ingestion API documents 200, 400, 401, 421 and 500 — no throttling code among them.
+limits: []
+quotas:
+- tier: developer
+  name: Compute time per job
+  scope: per-job
+  metric: minutes
+  limit: 60
+  source: https://www.edgeimpulse.com/pricing
+  note: Jobs started through the API count against the same budget as jobs started in Studio.
+- tier: enterprise
+  name: Compute time per job
+  scope: per-job
+  metric: minutes
+  limit: -1
+  source: https://www.edgeimpulse.com/pricing
+  note: Unlimited.
+- tier: developer
+  name: CPU compute memory
+  scope: per-job
+  metric: gigabytes
+  limit: 16
+  source: https://www.edgeimpulse.com/pricing
+- tier: enterprise
+  name: CPU compute memory
+  scope: per-job
+  metric: gigabytes
+  limit: null
+  source: https://www.edgeimpulse.com/pricing
+  note: Configurable.
+- tier: developer
+  name: Private projects
+  scope: per-account
+  metric: projects
+  limit: 3
+  source: https://www.edgeimpulse.com/pricing
+- tier: developer
+  name: Collaborators per project
+  scope: per-project
+  metric: users
+  limit: 3
+  source: https://www.edgeimpulse.com/pricing
+- tier: all
+  name: Files per ingestion request
+  scope: per-request
+  metric: files
+  limit: 1000
+  source: https://docs.edgeimpulse.com/apis/ingestion
+- tier: all
+  name: Single file size on ingestion
+  scope: per-file
+  metric: megabytes
+  limit: 100
+  source: https://docs.edgeimpulse.com/apis/ingestion
+limit_increase:
+  operationId: requestEnterpriseLimitsIncrease
+  path: POST /api/organizations/{organizationId}/limits-request
+  increasable:
+  - users
+  - projects
+  - compute
+  - storage
+  docs: https://docs.edgeimpulse.com/apis/studio/organizations/request-organization-limits-increase
+  note: Organization limits are raised by filing a request through the API; there is no self-serve upgrade
+    and no published turnaround.
+project_overrides:
+- operationId: setProjectComputeTimeLimit
+  path: POST /api/{projectId}/compute-time-limit
+  note: JWT-only and not available to all users.
+- operationId: setProjectFileSizeLimit
+  note: JWT-only.
+  path: POST /api/{projectId}/dsp-file-size-limit
 policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+- name: No published backoff guidance
+  description: Edge Impulse does not document a retry or backoff policy. Because the API is not idempotent,
+    a naive retry of a job-start POST starts a second job and consumes compute twice.
+- name: Quota exhaustion is not signalled at the HTTP layer
+  description: Exceeding a compute or project quota surfaces as a failed job or a success:false envelope,
+    not as a distinct status code an agent can branch on.
+related:
+  plans: plans/edge-impulse-plans-pricing.yml
+  conventions: conventions/edge-impulse-conventions.yml
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com

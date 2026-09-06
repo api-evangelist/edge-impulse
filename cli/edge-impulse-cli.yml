@@ -1,0 +1,62 @@
+generated: '2026-09-06'
+method: searched
+source: https://docs.edgeimpulse.com/tools/clis/edge-impulse-cli, https://docs.edgeimpulse.com/tools/clis/edge-impulse-linux-cli,
+  https://www.npmjs.com/package/edge-impulse-cli
+provider: Edge Impulse
+providerId: edge-impulse
+description: 'Edge Impulse ships a first-party CLI as an npm bundle of six separate binaries rather than
+  one command with subcommands. It is device-facing: it configures boards over serial, proxies devices
+  that have no IP connection, forwards sensor data, runs a deployed impulse, and packages custom blocks.
+  A second bundle, edge-impulse-linux, covers Linux-class devices.'
+packages:
+- name: edge-impulse-cli
+  registry: npm
+  version: 1.39.3
+  published: '2026-08-27'
+  install: npm install -g edge-impulse-cli
+  requires: Node.js; Python 3 and a build toolchain for some serial dependencies
+  docs: https://docs.edgeimpulse.com/tools/clis/edge-impulse-cli/installation
+- name: edge-impulse-linux
+  registry: npm
+  version: 1.25.2
+  published: '2026-08-04'
+  install: npm install -g edge-impulse-linux
+  docs: https://docs.edgeimpulse.com/tools/clis/edge-impulse-linux-cli
+binaries:
+- command: edge-impulse-daemon
+  purpose: Configure a device over serial and act as a proxy for devices with no IP connection. Speaks
+    the Remote Management WebSocket protocol on the device's behalf.
+  docs: https://docs.edgeimpulse.com/tools/clis/edge-impulse-cli/serial-daemon
+- command: edge-impulse-uploader
+  purpose: Upload and sign local files into a project dataset.
+  docs: https://docs.edgeimpulse.com/tools/clis/edge-impulse-cli/uploader
+- command: edge-impulse-data-forwarder
+  purpose: Collect data from any supported device over a serial connection and forward it to Edge Impulse.
+  docs: https://docs.edgeimpulse.com/tools/clis/edge-impulse-cli/data-forwarder
+- command: edge-impulse-run-impulse
+  purpose: Run and inspect the impulse currently deployed on a device.
+  docs: https://docs.edgeimpulse.com/tools/clis/edge-impulse-cli/impulse-runner
+- command: edge-impulse-blocks
+  purpose: Create and push organizational transformation, custom DSP, custom deployment and custom transfer-learning
+    blocks.
+  docs: https://docs.edgeimpulse.com/tools/clis/edge-impulse-cli/blocks
+- command: himax-flash-tool
+  purpose: Flash Himax boards and microcontrollers.
+  docs: https://docs.edgeimpulse.com/tools/clis/edge-impulse-cli/himax-flash-tool
+- command: edge-impulse-linux
+  purpose: Connect a Linux device (Raspberry Pi, Jetson, Dragonwing) to a project for data collection.
+  docs: https://docs.edgeimpulse.com/tools/clis/edge-impulse-linux-cli
+- command: edge-impulse-linux-runner
+  purpose: Download and run a built .eim model on a Linux device, with a local inference web view.
+  docs: https://docs.edgeimpulse.com/tools/clis/edge-impulse-linux-cli
+authentication: Interactive login prompts for Edge Impulse credentials, or --api-key with a project ei_
+  key. The daemon writes device config back to the board.
+agent_cli:
+  note: 'Separately from the device CLI, the MCP packages install an agent-facing CLI: ei-agentic-claude
+    installs an edge-impulse-cli binary of its own that shadows the device CLI name. They are different
+    programs — see mcp/edge-impulse-mcp.yml.'
+browser_alternative: Chrome and Edge can connect to fully-supported development boards directly over WebSerial,
+  with no CLI installed.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

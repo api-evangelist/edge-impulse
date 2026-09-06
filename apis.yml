@@ -1,10 +1,15 @@
 aid: edge-impulse
 url: https://raw.githubusercontent.com/api-evangelist/edge-impulse/refs/heads/main/apis.yml
 name: Edge Impulse
-description: >-
-  Build datasets, train models, and optimize libraries to run directly on
-  device; from the smallest microcontrollers to gateways with the latest
-  neural accelerators (and anything in between).
+description: 'Edge Impulse is the end-to-end edge AI MLOps platform for building datasets, training and
+  optimizing machine learning models, and deploying them directly on device — from the smallest microcontrollers
+  to gateways with the latest neural accelerators. The platform covers the whole workflow: sensor data
+  collection and labeling, DSP feature engineering, model training with the EON Tuner and EON Compiler,
+  hardware-aware profiling for latency, RAM and flash, and deployment as a C++ library, Arduino library,
+  WebAssembly package, Docker container or prebuilt firmware. It is driven programmatically through three
+  APIs — a 559-operation Studio API, an Ingestion API and a device Remote Management WebSocket — plus
+  CLIs, Python/Node/Rust/Go SDKs and a first-party MCP server. Founded in 2019 by Zach Shelby and Jan
+  Jongboom; acquired by Qualcomm Technologies in March 2025 and still operating under its own brand.'
 kind: contract
 deliveryModel:
   model: saas
@@ -20,24 +25,37 @@ deliveryModel:
   method: derived
 accessModel:
   pricing: freemium
-  onboarding: unknown
-  trial: false
-  try_now: false
-  public: false
-  label: Freemium
-  confidence: medium
+  onboarding: self-service
+  trial: true
+  try_now: true
+  public: true
+  label: Freemium · self-service sign-up
+  confidence: high
   source:
   - plans
-  generated: '2026-07-22'
+  - https://studio.edgeimpulse.com/signup
+  - https://www.edgeimpulse.com/pricing
+  - https://docs.edgeimpulse.com/apis/studio#test-api-requests
+  - https://studio.edgeimpulse.com/openapi.yml
+  note: Developer plan is $0 with self-serve sign-up and no sales gate; the API reference carries a live
+    request console; the OpenAPI is served publicly without authentication at https://studio.edgeimpulse.com/openapi.yml.
+    Production use requires an Enterprise licence.
+  generated: '2026-09-06'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/edge-impulse.png
 tags:
-  - Artificial Intelligence
-  - Embedded Machine Learning
-  - Edge AI
+- Artificial Intelligence
+- Machine Learning
+- Embedded Machine Learning
+- Edge AI
+- MLOps
+- Computer Vision
+- Internet of Things
+- Model Deployment
+- Developer Tools
 access: 3rd-Party
 created: '2024-11-07'
-modified: '2026-04-28'
+modified: '2026-09-06'
 position: Consuming
 specificationVersion: '0.23'
 apis:
@@ -53,6 +71,8 @@ apis:
     url: openapi/edge-impulse-admin-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-admin-overlay.yaml
 - aid: edge-impulse:edge-impulse-auth-api
   name: Edge Impulse Auth API
   description: The Auth API from Edge Impulse — 2 operation(s) for auth.
@@ -67,6 +87,8 @@ apis:
     url: openapi/edge-impulse-auth-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-auth-overlay.yaml
 - aid: edge-impulse:edge-impulse-canary-api
   name: Edge Impulse Canary API
   description: The Canary API from Edge Impulse — 1 operation(s) for canary.
@@ -79,6 +101,8 @@ apis:
     url: openapi/edge-impulse-canary-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-canary-overlay.yaml
 - aid: edge-impulse:edge-impulse-cdn-api
   name: Edge Impulse CDN API
   description: The CDN API from Edge Impulse — 1 operation(s) for cdn.
@@ -91,6 +115,8 @@ apis:
     url: openapi/edge-impulse-cdn-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-cdn-overlay.yaml
 - aid: edge-impulse:edge-impulse-classify-api
   name: Edge Impulse Classify API
   description: The Classify API from Edge Impulse — 10 operation(s) for classify.
@@ -103,6 +129,8 @@ apis:
     url: openapi/edge-impulse-classify-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-classify-overlay.yaml
 - aid: edge-impulse:edge-impulse-deployment-api
   name: Edge Impulse Deployment API
   description: The Deployment API from Edge Impulse — 10 operation(s) for deployment.
@@ -115,6 +143,8 @@ apis:
     url: openapi/edge-impulse-deployment-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-deployment-overlay.yaml
 - aid: edge-impulse:edge-impulse-devices-api
   name: Edge Impulse Devices API
   description: The Devices API from Edge Impulse — 11 operation(s) for devices.
@@ -127,6 +157,8 @@ apis:
     url: openapi/edge-impulse-devices-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-devices-overlay.yaml
 - aid: edge-impulse:edge-impulse-dsp-api
   name: Edge Impulse DSP API
   description: The DSP API from Edge Impulse — 18 operation(s) for dsp.
@@ -139,6 +171,8 @@ apis:
     url: openapi/edge-impulse-dsp-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-dsp-overlay.yaml
 - aid: edge-impulse:edge-impulse-emailverification-api
   name: Edge Impulse EmailVerification API
   description: The EmailVerification API from Edge Impulse — 4 operation(s) for emailverification.
@@ -153,6 +187,8 @@ apis:
     url: openapi/edge-impulse-emailverification-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-emailverification-overlay.yaml
 - aid: edge-impulse:edge-impulse-export-api
   name: Edge Impulse Export API
   description: The Export API from Edge Impulse — 1 operation(s) for export.
@@ -165,6 +201,8 @@ apis:
     url: openapi/edge-impulse-export-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-export-overlay.yaml
 - aid: edge-impulse:edge-impulse-featureflags-api
   name: Edge Impulse FeatureFlags API
   description: The FeatureFlags API from Edge Impulse — 1 operation(s) for featureflags.
@@ -179,6 +217,8 @@ apis:
     url: openapi/edge-impulse-featureflags-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-featureflags-overlay.yaml
 - aid: edge-impulse:edge-impulse-health-api
   name: Edge Impulse Health API
   description: The Health API from Edge Impulse — 2 operation(s) for health.
@@ -191,6 +231,8 @@ apis:
     url: openapi/edge-impulse-health-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-health-overlay.yaml
 - aid: edge-impulse:edge-impulse-impulse-api
   name: Edge Impulse Impulse API
   description: The Impulse API from Edge Impulse — 13 operation(s) for impulse.
@@ -203,6 +245,8 @@ apis:
     url: openapi/edge-impulse-impulse-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-impulse-overlay.yaml
 - aid: edge-impulse:edge-impulse-jobs-api
   name: Edge Impulse Jobs API
   description: The Jobs API from Edge Impulse — 42 operation(s) for jobs.
@@ -217,6 +261,8 @@ apis:
     url: openapi/edge-impulse-jobs-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-jobs-overlay.yaml
 - aid: edge-impulse:edge-impulse-learn-api
   name: Edge Impulse Learn API
   description: The Learn API from Edge Impulse — 21 operation(s) for learn.
@@ -229,6 +275,8 @@ apis:
     url: openapi/edge-impulse-learn-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-learn-overlay.yaml
 - aid: edge-impulse:edge-impulse-login-api
   name: Edge Impulse Login API
   description: The Login API from Edge Impulse — 1 operation(s) for login.
@@ -241,6 +289,8 @@ apis:
     url: openapi/edge-impulse-login-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-login-overlay.yaml
 - aid: edge-impulse:edge-impulse-metrics-api
   name: Edge Impulse Metrics API
   description: The Metrics API from Edge Impulse — 3 operation(s) for metrics.
@@ -253,6 +303,8 @@ apis:
     url: openapi/edge-impulse-metrics-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-metrics-overlay.yaml
 - aid: edge-impulse:edge-impulse-optimization-api
   name: Edge Impulse Optimization API
   description: The Optimization API from Edge Impulse — 15 operation(s) for optimization.
@@ -265,6 +317,8 @@ apis:
     url: openapi/edge-impulse-optimization-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-optimization-overlay.yaml
 - aid: edge-impulse:edge-impulse-organizationblocks-api
   name: Edge Impulse OrganizationBlocks API
   description: The OrganizationBlocks API from Edge Impulse — 17 operation(s) for organizationblocks.
@@ -277,10 +331,11 @@ apis:
     url: openapi/edge-impulse-organizationblocks-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-organizationblocks-overlay.yaml
 - aid: edge-impulse:edge-impulse-organizationcreateproject-api
   name: Edge Impulse OrganizationCreateProject API
-  description: >-
-    The OrganizationCreateProject API from Edge Impulse — 10 operation(s) for organizationcreateproject.
+  description: The OrganizationCreateProject API from Edge Impulse — 10 operation(s) for organizationcreateproject.
   humanURL: https://docs.edgeimpulse.com/reference/edge-impulse-api
   baseURL: https://studio.edgeimpulse.com/v1
   tags:
@@ -290,6 +345,8 @@ apis:
     url: openapi/edge-impulse-organizationcreateproject-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-organizationcreateproject-overlay.yaml
 - aid: edge-impulse:edge-impulse-organizationdata-api
   name: Edge Impulse OrganizationData API
   description: The OrganizationData API from Edge Impulse — 32 operation(s) for organizationdata.
@@ -302,10 +359,11 @@ apis:
     url: openapi/edge-impulse-organizationdata-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-organizationdata-overlay.yaml
 - aid: edge-impulse:edge-impulse-organizationdatacampaigns-api
   name: Edge Impulse OrganizationDataCampaigns API
-  description: >-
-    The OrganizationDataCampaigns API from Edge Impulse — 7 operation(s) for organizationdatacampaigns.
+  description: The OrganizationDataCampaigns API from Edge Impulse — 7 operation(s) for organizationdatacampaigns.
   humanURL: https://docs.edgeimpulse.com/reference/edge-impulse-api
   baseURL: https://studio.edgeimpulse.com/v1
   tags:
@@ -315,6 +373,8 @@ apis:
     url: openapi/edge-impulse-organizationdatacampaigns-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-organizationdatacampaigns-overlay.yaml
 - aid: edge-impulse:edge-impulse-organizationjobs-api
   name: Edge Impulse OrganizationJobs API
   description: The OrganizationJobs API from Edge Impulse — 8 operation(s) for organizationjobs.
@@ -329,10 +389,11 @@ apis:
     url: openapi/edge-impulse-organizationjobs-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-organizationjobs-overlay.yaml
 - aid: edge-impulse:edge-impulse-organizationpipelines-api
   name: Edge Impulse OrganizationPipelines API
-  description: >-
-    The OrganizationPipelines API from Edge Impulse — 5 operation(s) for organizationpipelines.
+  description: The OrganizationPipelines API from Edge Impulse — 5 operation(s) for organizationpipelines.
   humanURL: https://docs.edgeimpulse.com/reference/edge-impulse-api
   baseURL: https://studio.edgeimpulse.com/v1
   tags:
@@ -342,6 +403,8 @@ apis:
     url: openapi/edge-impulse-organizationpipelines-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-organizationpipelines-overlay.yaml
 - aid: edge-impulse:edge-impulse-organizationportals-api
   name: Edge Impulse OrganizationPortals API
   description: The OrganizationPortals API from Edge Impulse — 7 operation(s) for organizationportals.
@@ -354,6 +417,8 @@ apis:
     url: openapi/edge-impulse-organizationportals-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-organizationportals-overlay.yaml
 - aid: edge-impulse:edge-impulse-organizations-api
   name: Edge Impulse Organizations API
   description: The Organizations API from Edge Impulse — 60 operation(s) for organizations.
@@ -368,10 +433,11 @@ apis:
     url: openapi/edge-impulse-organizations-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-organizations-overlay.yaml
 - aid: edge-impulse:edge-impulse-performancecalibration-api
   name: Edge Impulse PerformanceCalibration API
-  description: >-
-    The PerformanceCalibration API from Edge Impulse — 9 operation(s) for performancecalibration.
+  description: The PerformanceCalibration API from Edge Impulse — 9 operation(s) for performancecalibration.
   humanURL: https://docs.edgeimpulse.com/reference/edge-impulse-api
   baseURL: https://studio.edgeimpulse.com/v1
   tags:
@@ -381,6 +447,8 @@ apis:
     url: openapi/edge-impulse-performancecalibration-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-performancecalibration-overlay.yaml
 - aid: edge-impulse:edge-impulse-projects-api
   name: Edge Impulse Projects API
   description: The Projects API from Edge Impulse — 46 operation(s) for projects.
@@ -395,6 +463,8 @@ apis:
     url: openapi/edge-impulse-projects-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-projects-overlay.yaml
 - aid: edge-impulse:edge-impulse-raw-data-api
   name: Edge Impulse Raw data API
   description: The Raw data API from Edge Impulse — 54 operation(s) for raw data.
@@ -409,6 +479,8 @@ apis:
     url: openapi/edge-impulse-raw-data-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-raw-data-overlay.yaml
 - aid: edge-impulse:edge-impulse-themes-api
   name: Edge Impulse Themes API
   description: The Themes API from Edge Impulse — 5 operation(s) for themes.
@@ -421,6 +493,8 @@ apis:
     url: openapi/edge-impulse-themes-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-themes-overlay.yaml
 - aid: edge-impulse:edge-impulse-thirdpartyauth-api
   name: Edge Impulse ThirdPartyAuth API
   description: The ThirdPartyAuth API from Edge Impulse — 4 operation(s) for thirdpartyauth.
@@ -433,6 +507,8 @@ apis:
     url: openapi/edge-impulse-thirdpartyauth-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-thirdpartyauth-overlay.yaml
 - aid: edge-impulse:edge-impulse-uploadportal-api
   name: Edge Impulse UploadPortal API
   description: The UploadPortal API from Edge Impulse — 7 operation(s) for uploadportal.
@@ -445,6 +521,8 @@ apis:
     url: openapi/edge-impulse-uploadportal-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-uploadportal-overlay.yaml
 - aid: edge-impulse:edge-impulse-user-api
   name: Edge Impulse User API
   description: The User API from Edge Impulse — 43 operation(s) for user.
@@ -457,6 +535,8 @@ apis:
     url: openapi/edge-impulse-user-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-user-overlay.yaml
 - aid: edge-impulse:edge-impulse-whitelabels-api
   name: Edge Impulse Whitelabels API
   description: The Whitelabels API from Edge Impulse — 5 operation(s) for whitelabels.
@@ -471,60 +551,193 @@ apis:
     url: openapi/edge-impulse-whitelabels-api-openapi.yml
   - type: Documentation
     url: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  - type: Overlay
+    url: overlays/edge-impulse-whitelabels-overlay.yaml
+- aid: edge-impulse:edge-impulse-ingestion-api
+  name: Edge Impulse Ingestion API
+  description: The Ingestion API sends new device data into an Edge Impulse project. It accepts sensor
+    (JSON/CBOR/CSV/Parquet), audio (WAV), image (JPG/PNG) and video (MP4/AVI) samples on the training,
+    validation, testing, post-processing and split endpoints, authenticated with a project x-api-key.
+    Maximum 1000 files per request and 100 MB per file. It documents real HTTP status codes (200, 400,
+    401, 421, 500), unlike the Studio API.
+  humanURL: https://docs.edgeimpulse.com/apis/ingestion
+  baseURL: https://ingestion.edgeimpulse.com
+  tags:
+  - Data Ingestion
+  - Machine Learning
+  properties:
+  - type: Documentation
+    url: https://docs.edgeimpulse.com/apis/ingestion
+  - type: ErrorCatalog
+    url: errors/edge-impulse-problem-types.yml
+  - type: Authentication
+    url: authentication/edge-impulse-authentication.yml
+- aid: edge-impulse:edge-impulse-remote-management-api
+  name: Edge Impulse Remote Management API
+  description: A two-way WebSocket protocol between edge devices and Edge Impulse Studio, used to drive
+    a connected device — request a sample, follow acquisition progress and stream snapshot frames. Devices
+    connect to wss://remote-mgmt.edgeimpulse.com and authenticate by sending their project API key in
+    the Hello message; payloads may be JSON or CBOR. Protocol version 3, fully specified with a JSON Schema
+    per message and covered by a public device conformance suite.
+  humanURL: https://docs.edgeimpulse.com/apis/remote-management
+  baseURL: https://remote-mgmt.edgeimpulse.com
+  tags:
+  - Devices
+  - Streaming
+  - Internet of Things
+  properties:
+  - type: Documentation
+    url: https://docs.edgeimpulse.com/tools/protocols/remote-management/websocket
+  - type: AsyncAPI
+    url: asyncapi/edge-impulse-remote-management-asyncapi.yml
+  - type: Authentication
+    url: authentication/edge-impulse-authentication.yml
 common:
-  - type: CapabilityMap
-    url: capabilities/edge-impulse-capability-edges.yml
-    name: Edge Impulse Business Capability Map
-  - type: TrustCenter
-    url: security/edge-impulse-trust-center.yml
-  - type: DomainSecurity
-    url: security/edge-impulse-domain-security.yml
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/edgeimpulse
-  - url: https://edgeimpulse.com/
-    name: Edge Impulse - The Leading Edge AI Platform
-    type: Website
-  - url: https://docs.edgeimpulse.com/docs
-    name: Edge Impulse Documentation
-    type: Documentation
-  - url: https://www.edgeimpulse.com/blog/
-    name: Edge Impulse Blog
-    type: Blog
-  - url: https://edgeimpulse.com/faqs
-    name: Edge Impulse FAQ
-    type: FAQ
-  - url: https://edgeimpulse.com/about
-    name: About Edge Impulse
-    type: About
-  - url: https://edgeimpulse.com/events
-    name: Events
-    type: Events
-  - url: https://forum.edgeimpulse.com/
-    name: Edge Impulse Developer Community
-    type: Forums
-  - url: https://edgeimpulse.com/case-studies
-    name: Case Studies
-    type: CaseStudies
-  - url: https://edgeimpulse.com/pricing
-    name: Pricing
-    type: Plans
-  - url: https://studio.edgeimpulse.com/login
-    name: Login
-    type: Login
-  - url: https://studio.edgeimpulse.com/signup
-    name: Sign Up
-    type: Signup
-  - url: https://edgeimpulse.com/security
-    name: SOC2 Security
-    type: Security
-  - url: https://edgeimpulse.com/branding
-    name: Branding
-    type: Branding
-  - url: https://github.com/edgeimpulse
-    name: GitHub Organization
-    type: GitHubOrganization
-  - type: LlmsText
-    url: https://docs.edgeimpulse.com/llms.txt
+- type: Authentication
+  url: authentication/edge-impulse-authentication.yml
+- type: CapabilityMap
+  url: capabilities/edge-impulse-capability-edges.yml
+  name: Edge Impulse Business Capability Map
+- type: TrustCenter
+  url: security/edge-impulse-trust-center.yml
+- type: DomainSecurity
+  url: security/edge-impulse-domain-security.yml
+- type: LinkedIn
+  url: https://www.linkedin.com/company/edgeimpulse
+- url: https://edgeimpulse.com/
+  name: Edge Impulse - The Leading Edge AI Platform
+  type: Website
+- url: https://docs.edgeimpulse.com/docs
+  name: Edge Impulse Documentation
+  type: Documentation
+- url: https://www.edgeimpulse.com/blog/
+  name: Edge Impulse Blog
+  type: Blog
+- url: https://edgeimpulse.com/faqs
+  name: Edge Impulse FAQ
+  type: FAQ
+- url: https://edgeimpulse.com/about
+  name: About Edge Impulse
+  type: About
+- url: https://edgeimpulse.com/events
+  name: Events
+  type: Events
+- url: https://forum.edgeimpulse.com/
+  name: Edge Impulse Developer Community
+  type: Forums
+- url: https://edgeimpulse.com/case-studies
+  name: Case Studies
+  type: CaseStudies
+- url: https://edgeimpulse.com/pricing
+  name: Pricing
+  type: Plans
+- url: https://studio.edgeimpulse.com/login
+  name: Login
+  type: Login
+- url: https://studio.edgeimpulse.com/signup
+  name: Sign Up
+  type: Signup
+- url: https://edgeimpulse.com/security
+  name: SOC2 Security
+  type: Security
+- url: https://edgeimpulse.com/branding
+  name: Branding
+  type: Branding
+- url: https://github.com/edgeimpulse
+  name: GitHub Organization
+  type: GitHubOrganization
+- type: LlmsText
+  url: https://docs.edgeimpulse.com/llms.txt
+- type: Packages
+  url: packages/edge-impulse-packages.yml
+  name: Edge Impulse Client Libraries and CLIs
+- type: SDKs
+  url: packages/edge-impulse-packages.yml
+  name: Edge Impulse SDKs
+- type: CLI
+  url: cli/edge-impulse-cli.yml
+  name: Edge Impulse CLI
+- type: MCPServer
+  url: mcp/edge-impulse-mcp.yml
+  name: Edge Impulse MCP Servers
+- type: ToolCrosswalk
+  url: mcp/edge-impulse-tool-crosswalk.yml
+  name: MCP Tool to OpenAPI Crosswalk
+- type: AgentCard
+  url: a2a/edge-impulse-a2a.yml
+  name: Edge Impulse A2A Agent Card
+- type: AgentSkill
+  url: skills/_index.yml
+  name: Edge Impulse Agent Skills
+- type: WellKnown
+  url: well-known/edge-impulse-well-known.yml
+  name: Well-Known Document Probe
+- type: Conformance
+  url: conformance/edge-impulse-conformance.yml
+  name: Standards Conformance
+- type: Compliance
+  url: conformance/edge-impulse-conformance.yml
+  name: Compliance and Certifications
+- type: ErrorCatalog
+  url: errors/edge-impulse-problem-types.yml
+  name: Error Model
+- type: Lifecycle
+  url: lifecycle/edge-impulse-lifecycle.yml
+  name: API Lifecycle, Versioning and Deprecation
+- type: StatusPage
+  url: https://edgeimpulse.statuspage.io
+  name: Edge Impulse Status
+- type: OAuthScopes
+  url: scopes/edge-impulse-scopes.yml
+  name: OAuth Scopes
+- type: Conventions
+  url: conventions/edge-impulse-conventions.yml
+  name: API Conventions and Runtime Semantics
+- type: DataModel
+  url: data-model/edge-impulse-data-model.yml
+  name: Entity Relationship Model
+- type: AsyncAPI
+  url: asyncapi/edge-impulse-remote-management-asyncapi.yml
+  name: Remote Management AsyncAPI (derived)
+- type: Webhooks
+  url: asyncapi/edge-impulse-webhooks.yml
+  name: Webhooks and Event Surfaces
+- type: Postman
+  url: https://raw.githubusercontent.com/edgeimpulse/ei-agentic-claude/main/Edge%20Impulse%20API.postman_collection.json
+  name: Edge Impulse API Postman Collection
+- type: DeveloperPortal
+  url: https://docs.edgeimpulse.com/
+  name: Edge Impulse Developer Documentation
+- type: APIReference
+  url: https://docs.edgeimpulse.com/apis/studio
+  name: Edge Impulse Studio API Reference
+- type: GettingStarted
+  url: https://docs.edgeimpulse.com/knowledge/guides/getting-started-for-beginners
+  name: Getting Started
+- type: Support
+  url: https://forum.edgeimpulse.com/
+  name: Edge Impulse Developer Forum
+- type: Console
+  url: https://docs.edgeimpulse.com/apis/studio#test-api-requests
+  name: In-Documentation API Request Console
+- type: Pricing
+  url: https://www.edgeimpulse.com/pricing
+  name: Edge Impulse Pricing
+- type: SignUp
+  url: https://studio.edgeimpulse.com/signup
+  name: Sign Up for Edge Impulse
+- type: TermsOfService
+  url: https://www.edgeimpulse.com/legal/terms-of-service
+  name: Terms of Service
+- type: PrivacyPolicy
+  url: https://www.edgeimpulse.com/legal/privacy-policy
+  name: Privacy Policy
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-09-06'
+  status: enriched
+  artifacts_added: 63
+  artifacts_updated: 5
+  pass: local-v3

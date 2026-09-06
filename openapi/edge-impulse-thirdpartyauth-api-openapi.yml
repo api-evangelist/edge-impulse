@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Edge Impulse ThirdPartyAuth API
+  title: Edge Impulse Third Party Auth API
   version: 1.0.0
 servers:
 - url: https://studio.edgeimpulse.com/v1
@@ -163,6 +163,79 @@ paths:
                 $ref: '#/components/schemas/CreateUserThirdPartyResponse'
 components:
   schemas:
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    CreateThirdPartyAuthResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        - secretKey
+        - apiKey
+        properties:
+          id:
+            type: integer
+          secretKey:
+            type: string
+          apiKey:
+            type: string
+    UpdateThirdPartyAuthRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        domains:
+          type: array
+          items:
+            type: string
+    ThirdPartyAuth:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - logo
+      - domains
+      - created
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        domains:
+          type: array
+          items:
+            type: string
+        created:
+          type: string
+          format: date-time
+    GetThirdPartyAuthResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - auth
+        properties:
+          auth:
+            $ref: '#/components/schemas/ThirdPartyAuth'
     CreateThirdPartyAuthRequest:
       type: object
       required:
@@ -184,6 +257,29 @@ components:
         secretKey:
           type: string
         apiKey:
+          type: string
+    CreateUserThirdPartyResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - status
+        properties:
+          status:
+            type: string
+            enum:
+            - userWasCreated
+            - userNotManagedByThirdParty
+            - userAlreadyExists
+          jwtToken:
+            type: string
+    AuthorizeThirdPartyRequest:
+      type: object
+      required:
+      - nextUrl
+      properties:
+        nextUrl:
+          description: The URL to redirect to after authorization is completed.
           type: string
     CreateUserThirdPartyRequest:
       type: object
@@ -211,42 +307,6 @@ components:
         privacyPolicy:
           type: boolean
           description: Whether the user accepted the privacy policy
-    AuthorizeThirdPartyRequest:
-      type: object
-      required:
-      - nextUrl
-      properties:
-        nextUrl:
-          description: The URL to redirect to after authorization is completed.
-          type: string
-    UpdateThirdPartyAuthRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        logo:
-          type: string
-        domains:
-          type: array
-          items:
-            type: string
-    CreateThirdPartyAuthResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        - secretKey
-        - apiKey
-        properties:
-          id:
-            type: integer
-          secretKey:
-            type: string
-          apiKey:
-            type: string
     GetAllThirdPartyAuthResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -258,66 +318,6 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/ThirdPartyAuth'
-    GetThirdPartyAuthResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - auth
-        properties:
-          auth:
-            $ref: '#/components/schemas/ThirdPartyAuth'
-    CreateUserThirdPartyResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - status
-        properties:
-          status:
-            type: string
-            enum:
-            - userWasCreated
-            - userNotManagedByThirdParty
-            - userAlreadyExists
-          jwtToken:
-            type: string
-    ThirdPartyAuth:
-      type: object
-      required:
-      - id
-      - name
-      - description
-      - logo
-      - domains
-      - created
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        description:
-          type: string
-        logo:
-          type: string
-        domains:
-          type: array
-          items:
-            type: string
-        created:
-          type: string
-          format: date-time
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
   parameters:
     AuthIdParameter:
       name: authId

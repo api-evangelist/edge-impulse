@@ -1,0 +1,377 @@
+asyncapi: 3.0.0
+info:
+  title: Edge Impulse Remote Management API
+  version: '3'
+  description: 'DERIVED, NOT PUBLISHED. Edge Impulse does not ship an AsyncAPI document. This one is derived by
+    API Evangelist from the provider''s own written WebSocket protocol reference at https://docs.edgeimpulse.com/tools/protocols/remote-management/websocket,
+    which specifies each message and includes a JSON Schema for it. Every payload schema below is copied verbatim
+    from that page (trailing commas in the published JSON were removed so the schemas parse); nothing was invented.
+    The remote management service lets Studio drive a connected device — request a sample, follow its progress,
+    and stream snapshot frames. It is NOT used for data ingestion: the sample itself goes to the Ingestion API.'
+  contact:
+    name: Edge Impulse
+    url: https://docs.edgeimpulse.com/apis/remote-management
+  x-generated: '2026-09-06'
+  x-method: derived
+  x-source: https://docs.edgeimpulse.com/tools/protocols/remote-management/websocket
+  x-protocol-version: 3
+servers:
+  production:
+    host: remote-mgmt.edgeimpulse.com
+    protocol: wss
+    description: Remote management WebSocket. Standard ports 80/443. Payloads may be JSON or CBOR; the device chooses
+      with its Hello message.
+  production_insecure:
+    host: remote-mgmt.edgeimpulse.com
+    protocol: ws
+    description: Plaintext WebSocket, documented for constrained devices that cannot do TLS.
+channels:
+  session:
+    address: /
+    title: Remote management session
+    description: A single duplex WebSocket session between one device (or the serial daemon acting as its proxy)
+      and the Edge Impulse remote management service. Devices authenticate by sending their project apiKey inside
+      the Hello message.
+    messages:
+      Hello:
+        $ref: '#/components/messages/Hello'
+      HelloResponse:
+        $ref: '#/components/messages/HelloResponse'
+      Sample:
+        $ref: '#/components/messages/Sample'
+      SampleResponse:
+        $ref: '#/components/messages/SampleResponse'
+      SampleStarted:
+        $ref: '#/components/messages/SampleStarted'
+      SampleProcessing:
+        $ref: '#/components/messages/SampleProcessing'
+      SampleReading:
+        $ref: '#/components/messages/SampleReading'
+      SampleUploading:
+        $ref: '#/components/messages/SampleUploading'
+      SampleFinished:
+        $ref: '#/components/messages/SampleFinished'
+      StartSnapshot:
+        $ref: '#/components/messages/StartSnapshot'
+      StopSnapshot:
+        $ref: '#/components/messages/StopSnapshot'
+      SnapshotFrame:
+        $ref: '#/components/messages/SnapshotFrame'
+operations:
+  sendHello:
+    action: send
+    channel:
+      $ref: '#/channels/session'
+    summary: Device announces itself and authenticates.
+    messages:
+    - $ref: '#/channels/session/messages/Hello'
+  receiveHelloResponse:
+    action: receive
+    channel:
+      $ref: '#/channels/session'
+    summary: Server acknowledges the handshake.
+    messages:
+    - $ref: '#/channels/session/messages/HelloResponse'
+  receiveSampleRequest:
+    action: receive
+    channel:
+      $ref: '#/channels/session'
+    summary: Server requests a new sample.
+    messages:
+    - $ref: '#/channels/session/messages/Sample'
+  sendSampleResponse:
+    action: send
+    channel:
+      $ref: '#/channels/session'
+    summary: Device accepts or rejects the sampling request.
+    messages:
+    - $ref: '#/channels/session/messages/SampleResponse'
+  sendSampleProgress:
+    action: send
+    channel:
+      $ref: '#/channels/session'
+    summary: Device reports sampling progress.
+    messages:
+    - $ref: '#/channels/session/messages/SampleStarted'
+    - $ref: '#/channels/session/messages/SampleProcessing'
+    - $ref: '#/channels/session/messages/SampleReading'
+    - $ref: '#/channels/session/messages/SampleUploading'
+    - $ref: '#/channels/session/messages/SampleFinished'
+  receiveSnapshotControl:
+    action: receive
+    channel:
+      $ref: '#/channels/session'
+    summary: Server starts or stops snapshot streaming (protocol v3+).
+    messages:
+    - $ref: '#/channels/session/messages/StartSnapshot'
+    - $ref: '#/channels/session/messages/StopSnapshot'
+  sendSnapshotFrame:
+    action: send
+    channel:
+      $ref: '#/channels/session'
+    summary: Device streams a snapshot frame.
+    messages:
+    - $ref: '#/channels/session/messages/SnapshotFrame'
+components:
+  messages:
+    Hello:
+      name: Hello
+      title: Hello (request)
+      summary: First message of the session. Only a device sends it; the encoding of this message (JSON or CBOR)
+        fixes the encoding for the rest of the session.
+      contentType: application/json
+      payload:
+        $schema: http://json-schema.org/draft-07/schema#
+        type: object
+        properties:
+          hello:
+            type: object
+            properties:
+              version:
+                type: integer
+                decription: API version, currently 3
+              apiKey:
+                type: string
+                description: API key of the Studio project
+              deviceId:
+                type: string
+                description: Unique identifier for this device, usually MAC address. Should be unique across your
+                  project in the Studio
+              deviceType:
+                type: string
+                description: Device type, for example the exact model of the device. Should be the same for all
+                  similar devices
+              connection:
+                type: string
+                description: How the device is connected, either `ip` (direct connection) or `daemon` (via the serial
+                  daemon)
+              sensors:
+                type: array
+                description: List of sensors that the device supports
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      description: Human readable name like Accelerometer or Microphone. For cameras, set the name
+                        to `Camera (WIDTHxHEIGHT)`
+                    frequencies:
+                      type: array
+                      items:
+                        type: number
+                        description: List of supported frequencies by the sensor, in Hz. List can be empty for cameras.
+                    maxSampleLengthS:
+                      type: integer
+                      description: Maximum sample length in seconds. For cameras, this value is ignored but must
+                        be a valid number (eg. 60)
+                  required:
+                  - name
+                  - frequencies
+                  - maxSampleLengthS
+              supportsSnapshotStreaming:
+                type: boolean
+                description: Set to `true` if the device supports snapshot streaming
+            required:
+            - version
+            - apiKey
+            - deviceId
+            - deviceType
+            - connection
+            - sensors
+            - supportsSnapshotStreaming
+    HelloResponse:
+      name: HelloResponse
+      title: Hello (response)
+      summary: Server acknowledgement of the device handshake.
+      contentType: application/json
+      payload:
+        $schema: http://json-schema.org/draft-07/schema#
+        type: object
+        properties:
+          hello:
+            type: boolean
+            description: Set to `true` if the device is accepted. `false` otherwise, and the `err` field is set
+              to a string with error description
+          err:
+            type: string
+            description: Error message if `hello` is `false`. If `hello` is `true`, this field is `undefined` or
+              may be empty
+        required:
+        - hello
+    Sample:
+      name: Sample
+      title: Sample (request)
+      summary: Server instructs the device to acquire a new sample.
+      contentType: application/json
+      payload:
+        $schema: http://json-schema.org/draft-07/schema#
+        type: object
+        properties:
+          sample:
+            type: object
+            properties:
+              label:
+                type: string
+                description: Label for this data. Use this to populate the `x-file-name` header when posting data
+                  to the ingestion service
+              length:
+                type: integer
+                description: Sampling length in milliseconds
+              path:
+                type: string
+                description: Path of the URL where to post the data
+              hmacKey:
+                type: string
+                description: Key to sign the data with, the device does not have to adhere to this request
+              interval:
+                type: integer
+                description: Interval between samples. This can also be a float. Devices do not have to adhere to
+                  this field, e.g. if the sensor does not support this frequency, or if the value is non-sensical
+              sensor:
+                type: string
+                description: Name of the sensor to sample from. This field is only populated if the `sensors` field
+                  in the hello request was populated
+            required:
+            - label
+            - length
+            - path
+            - hmacKey
+            - interval
+        required:
+        - sample
+    SampleResponse:
+      name: SampleResponse
+      title: Sample (response)
+      summary: Device acknowledges (or rejects) the sampling request.
+      contentType: application/json
+      payload:
+        $schema: http://json-schema.org/draft-07/schema#
+        type: object
+        properties:
+          sample:
+            type: boolean
+            description: Set to `true` if the `sample` request is correct, sensor can be configured to the desired
+              parameters etc. Set to `false` otherwise, and provide the `err` field with a string with error description
+          err:
+            type: string
+            description: Error message if `sample` is `false`. If `sample` is `true`, this field is `undefined`
+              or may be empty
+        required:
+        - sample
+    SampleStarted:
+      name: SampleStarted
+      title: Sample started (notification)
+      summary: Sampling has begun on the device.
+      contentType: application/json
+      payload:
+        $schema: http://json-schema.org/draft-07/schema#
+        type: object
+        properties:
+          sampleStarted:
+            type: boolean
+            description: Set to `true` if the sampling started. Set to `false` otherwise
+        required:
+        - sampleStarted
+    SampleProcessing:
+      name: SampleProcessing
+      title: Sample processing (notification)
+      summary: The device is processing the acquired sample.
+      contentType: application/json
+      payload:
+        $schema: http://json-schema.org/draft-07/schema#
+        type: object
+        properties:
+          sampleProcessing:
+            type: boolean
+            description: This field should always be `true`
+        required:
+        - sampleStarted
+    SampleReading:
+      name: SampleReading
+      title: Sample reading (notification)
+      summary: The daemon is pulling data off the device over serial; carries a progress percentage. May be sent
+        repeatedly.
+      contentType: application/json
+      payload:
+        $schema: http://json-schema.org/draft-07/schema#
+        type: object
+        properties:
+          sampleReading:
+            type: boolean
+            description: This field should always be `true`
+          progressPercentage:
+            type: integer
+            description: Progress percentage of the reading process.
+        required:
+        - sampleReading
+        - progressPercentage
+    SampleUploading:
+      name: SampleUploading
+      title: Sample uploading (notification)
+      summary: The device is uploading the sample to the Ingestion API.
+      contentType: application/json
+      payload:
+        $schema: http://json-schema.org/draft-07/schema#
+        type: object
+        properties:
+          sampleUploading:
+            type: boolean
+            description: This field should always be `true`
+        required:
+        - sampleUploading
+    SampleFinished:
+      name: SampleFinished
+      title: Sample finished (notification)
+      summary: The sampling cycle is complete.
+      contentType: application/json
+      payload:
+        $schema: http://json-schema.org/draft-07/schema#
+        type: object
+        properties:
+          sampleFinished:
+            type: boolean
+            description: This field should always be `true`
+        required:
+        - sampleFinished
+    StartSnapshot:
+      name: StartSnapshot
+      title: Start snapshot (request)
+      summary: Server asks the device to begin streaming snapshot frames. Protocol v3 and above.
+      contentType: application/json
+      payload:
+        $schema: http://json-schema.org/draft-07/schema#
+        type: object
+        properties:
+          startSnapshot:
+            type: boolean
+            description: Set to `true` if the device should start streaming snapshots.
+        required:
+        - startSnapshot
+    StopSnapshot:
+      name: StopSnapshot
+      title: Stop snapshot (request)
+      summary: Server asks the device to stop streaming snapshot frames. Protocol v3 and above.
+      contentType: application/json
+      payload:
+        $schema: http://json-schema.org/draft-07/schema#
+        type: object
+        properties:
+          stopSnapshot:
+            type: boolean
+            description: Set to `true` if the device should stop streaming snapshots.
+        required:
+        - stopSnapshot
+    SnapshotFrame:
+      name: SnapshotFrame
+      title: Snapshot frame (notification)
+      summary: A single snapshot frame from the device.
+      contentType: application/json
+      payload:
+        $schema: http://json-schema.org/draft-07/schema#
+        type: object
+        properties:
+          snapshotFrame:
+            type: string
+            description: Base64 encoded JPG file
+        required:
+        - snapshotFrame

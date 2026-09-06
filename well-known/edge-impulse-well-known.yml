@@ -1,0 +1,144 @@
+generated: '2026-09-06'
+method: probed
+source: Live GET probes of the named /.well-known/ paths on every host in this record
+provider: Edge Impulse
+providerId: edge-impulse
+description: 'Named-path /.well-known probe across every host this record knows: the registrable domain
+  and www, the docs host, the Studio API host, the community forum, and both secondary API hosts (ingestion,
+  remote-mgmt). Edge Impulse serves NO security.txt, NO OpenID/OAuth discovery document, NO api-catalog
+  and NO ai-plugin.json anywhere. It does serve two real documents from the documentation host: an A2A
+  agent card and the Agent Skill that card advertises.'
+summary:
+  hosts_probed: 7
+  paths_probed_per_host: 7
+  documents_served: 2
+  security_txt: false
+  api_catalog: false
+  openid_configuration: false
+  oauth_authorization_server: false
+  ai_plugin: false
+  agent_card: true
+hosts:
+- host: edgeimpulse.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: www.edgeimpulse.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: docs.edgeimpulse.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: well-known/edge-impulse-docs-agent-card.json
+    content_type: application/json
+    note: Real A2A Agent Card. Also saved verbatim to a2a/edge-impulse-agent-card.json.
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/agent-skills/edgeimpulse/skill.md
+    status: 200
+    file: skills/edge-impulse-edgeimpulse.md
+    content_type: text/markdown
+    note: Provider-published Agent Skill, referenced from the agent card skills[].url.
+- host: studio.edgeimpulse.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: forum.edgeimpulse.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: ingestion.edgeimpulse.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: remote-mgmt.edgeimpulse.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Edge Impulse OrganizationCreateProject API
+  title: Edge Impulse Organization Create Project API
   version: 1.0.0
 servers:
 - url: https://studio.edgeimpulse.com/v1
@@ -267,26 +267,83 @@ paths:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
 components:
+  parameters:
+    TransformOffsetResultsParameter:
+      name: transformOffset
+      in: query
+      required: true
+      description: Offset in results of transformation jobs, can be used in conjunction with TransformLimitResultsParameter to implement paging.
+      schema:
+        type: integer
+    IncludePipelineJobsParameter:
+      name: includePipelineJobs
+      in: query
+      required: false
+      description: If enabled, also includes jobs that are part of a pipeline
+      schema:
+        type: boolean
+    OrganizationCreateProjectIdParameter:
+      name: createProjectId
+      in: path
+      required: true
+      description: Create project job ID.
+      schema:
+        type: integer
+    TransformLimitResultsParameter:
+      name: transformLimit
+      in: query
+      required: true
+      description: Maximum number of results of transformation jobs
+      schema:
+        type: integer
+    TransformSelectionParameter:
+      name: selection
+      in: query
+      required: false
+      description: Type of selected rows, either 'all', 'created', 'in-progress' or 'failed' (defaults to 'all')
+      schema:
+        type: string
+    OffsetResultsParameter:
+      name: offset
+      in: query
+      required: false
+      description: Offset in results, can be used in conjunction with LimitResultsParameter to implement paging.
+      schema:
+        type: integer
+    OrganizationCreateProjectFileIdParameter:
+      name: createProjectFileId
+      in: path
+      required: true
+      description: Create project job file ID.
+      schema:
+        type: integer
+    LimitResultsParameter:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of results
+      schema:
+        type: integer
+    OrganizationIdParameter:
+      name: organizationId
+      in: path
+      required: true
+      description: Organization ID
+      schema:
+        type: integer
   schemas:
-    UploadCustomBlockRequest:
+    UpdateOrganizationAddCollaboratorRequest:
       type: object
       required:
-      - tar
-      - type
-      - blockId
+      - projectId
+      - userId
       properties:
-        tar:
-          type: string
-          format: binary
-        type:
-          type: string
-          enum:
-          - transform
-          - deploy
-          - dsp
-          - transferLearning
-        blockId:
+        projectId:
           type: integer
+          description: The ID of the project to add the collaborator to.
+        userId:
+          type: integer
+          description: The user ID to add to the project. The user must be an admin of the organization.
     OrganizationCreateProject:
       type: object
       required:
@@ -417,62 +474,6 @@ components:
           description: Total amount of compute used (friendly string)
         createdByUser:
           $ref: '#/components/schemas/CreatedUpdatedByUser'
-    OrganizationCreateProjectOutputDatasetPathRule:
-      description: Defines the folder structure for writing to the output dataset. Used only when uploading into a default (non-clinical) dataset.
-      type: string
-      enum:
-      - no-subfolders
-      - subfolder-per-item
-      - use-full-path
-    TransformationJobOperatesOnEnum:
-      type: string
-      enum:
-      - file
-      - directory
-      - standalone
-    StartJobResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: integer
-            description: Job identifier. Status updates will include this identifier.
-            example: 12873488112
-    UpdateOrganizationAddCollaboratorRequest:
-      type: object
-      required:
-      - projectId
-      - userId
-      properties:
-        projectId:
-          type: integer
-          description: The ID of the project to add the collaborator to.
-        userId:
-          type: integer
-          description: The user ID to add to the project. The user must be an admin of the organization.
-    CreateProjectResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        - apiKey
-        properties:
-          id:
-            type: integer
-            description: Project ID for the new project
-          apiKey:
-            type: string
-            description: API key for the new project
-    ProjectVisibility:
-      type: string
-      enum:
-      - public
-      - private
-      description: The visibility of the project, either public or private. Public projects can be viewed by anyone on the internet and edited by collaborators. Private projects can only be viewed and edited by collaborators.
     UpdateOrganizationCreateEmptyProjectRequest:
       type: object
       required:
@@ -488,76 +489,18 @@ components:
           type: string
           example: jan@edgeimpulse.com
           description: The username or email of the owner of the project. This field is mandatory when authenticating via API key. If no email is provided when authenticating via JWT, the user ID attached to the JWT will be user as project owner.
-    OrganizationCreateProjectRequest:
-      type: object
-      description: If uploadType is set to 'project', either projectId, newProjectName or both projectApiKey and projectHmacKey are required. projectId and newProjectName are only available through JWT tokens. If uploadType is set to 'dataset' then outputDatasetName can be set to '' to output in the same dataset, or set to a string to create (or append to) a new dataset.
-      required:
-      - name
-      properties:
-        name:
-          type: string
-        filter:
-          type: string
-          description: Filter in SQL format, used for creating transformation jobs on clinical datasets
-        pathFilters:
-          type: array
-          description: Set of paths to apply the transformation to, used for creating transformation jobs on default datasets. This option is experimental and may change in the future.
-          items:
-            $ref: '#/components/schemas/OrganizationCreateProjectPathFilter'
-        uploadType:
-          type: string
-          enum:
-          - project
-          - dataset
-        projectId:
-          type: integer
-        projectVisibility:
-          $ref: '#/components/schemas/ProjectVisibility'
-        newProjectName:
-          type: string
-        projectApiKey:
-          type: string
-        projectHmacKey:
-          type: string
-        transformationBlockId:
-          type: integer
-        builtinTransformationBlock:
-          type: object
-        category:
-          type: string
-          enum:
-          - training
-          - testing
-          - split
-        outputDatasetName:
-          type: string
-        outputDatasetBucketId:
-          type: integer
-        outputDatasetBucketPath:
-          description: Path of new dataset within the bucket; used only when creating a new dataset.
-          type: string
-        outputPathInDataset:
-          description: Path within the selected dataset to upload transformed files into. Used only when uploading into a default (non-clinical) dataset.
-          type: string
-        outputDatasetPathRule:
-          $ref: '#/components/schemas/OrganizationCreateProjectOutputDatasetPathRule'
-        label:
-          type: string
-        emailRecipientUids:
-          type: array
-          items:
-            type: integer
-        transformationParallel:
-          description: Number of parallel jobs to start
-          type: integer
-        extraCliArguments:
-          description: Optional extra arguments for this transformation block
-          type: string
-        parameters:
-          type: object
-          description: List of custom parameters for this transformation job (see the list of parameters that the block exposes).
-          additionalProperties:
-            type: string
+    OrganizationCreateProjectStatusResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          status:
+            $ref: '#/components/schemas/OrganizationCreateProjectWithFiles'
+    OrganizationDatasetTypeEnum:
+      type: string
+      enum:
+      - clinical
+      - files
     OrganizationGetCreateProjectsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -641,56 +584,6 @@ components:
                   description: Total amount of compute used (friendly string)
                 createdByUser:
                   $ref: '#/components/schemas/CreatedUpdatedByUser'
-    OrganizationDatasetTypeEnum:
-      type: string
-      enum:
-      - clinical
-      - files
-    UpdateOrganizationCreateProjectRequest:
-      type: object
-      properties:
-        transformationParallel:
-          type: integer
-          description: Number of transformation jobs that can be ran in parallel
-        emailRecipientUids:
-          description: List of user IDs to notify when a Job succeeds
-          type: array
-          items:
-            type: integer
-    CreatedUpdatedByUser:
-      type: object
-      required:
-      - id
-      - name
-      - username
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        username:
-          type: string
-        photo:
-          type: string
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
-    TransformationJobStatusEnum:
-      type: string
-      enum:
-      - waiting
-      - created
-      - started
-      - finished
-      - failed
     OrganizationCreateProjectResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -745,13 +638,106 @@ components:
                   $ref: '#/components/schemas/OrganizationDatasetTypeEnum'
           fileCountForFilter:
             type: integer
-    OrganizationCreateProjectStatusResponse:
+    UploadCustomBlockRequest:
+      type: object
+      required:
+      - tar
+      - type
+      - blockId
+      properties:
+        tar:
+          type: string
+          format: binary
+        type:
+          type: string
+          enum:
+          - transform
+          - deploy
+          - dsp
+          - transferLearning
+        blockId:
+          type: integer
+    OrganizationCreateProjectRequest:
+      type: object
+      description: If uploadType is set to 'project', either projectId, newProjectName or both projectApiKey and projectHmacKey are required. projectId and newProjectName are only available through JWT tokens. If uploadType is set to 'dataset' then outputDatasetName can be set to '' to output in the same dataset, or set to a string to create (or append to) a new dataset.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+        filter:
+          type: string
+          description: Filter in SQL format, used for creating transformation jobs on clinical datasets
+        pathFilters:
+          type: array
+          description: Set of paths to apply the transformation to, used for creating transformation jobs on default datasets. This option is experimental and may change in the future.
+          items:
+            $ref: '#/components/schemas/OrganizationCreateProjectPathFilter'
+        uploadType:
+          type: string
+          enum:
+          - project
+          - dataset
+        projectId:
+          type: integer
+        projectVisibility:
+          $ref: '#/components/schemas/ProjectVisibility'
+        newProjectName:
+          type: string
+        projectApiKey:
+          type: string
+        projectHmacKey:
+          type: string
+        transformationBlockId:
+          type: integer
+        builtinTransformationBlock:
+          type: object
+        category:
+          type: string
+          enum:
+          - training
+          - testing
+          - split
+        outputDatasetName:
+          type: string
+        outputDatasetBucketId:
+          type: integer
+        outputDatasetBucketPath:
+          description: Path of new dataset within the bucket; used only when creating a new dataset.
+          type: string
+        outputPathInDataset:
+          description: Path within the selected dataset to upload transformed files into. Used only when uploading into a default (non-clinical) dataset.
+          type: string
+        outputDatasetPathRule:
+          $ref: '#/components/schemas/OrganizationCreateProjectOutputDatasetPathRule'
+        label:
+          type: string
+        emailRecipientUids:
+          type: array
+          items:
+            type: integer
+        transformationParallel:
+          description: Number of parallel jobs to start
+          type: integer
+        extraCliArguments:
+          description: Optional extra arguments for this transformation block
+          type: string
+        parameters:
+          type: object
+          description: List of custom parameters for this transformation job (see the list of parameters that the block exposes).
+          additionalProperties:
+            type: string
+    StartJobResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
+        required:
+        - id
         properties:
-          status:
-            $ref: '#/components/schemas/OrganizationCreateProjectWithFiles'
+          id:
+            type: integer
+            description: Job identifier. Status updates will include this identifier.
+            example: 12873488112
     OrganizationCreateProjectPathFilter:
       type: object
       description: Filter, given as a dataset and path containing wildcards, used for creating transformation jobs
@@ -765,70 +751,84 @@ components:
         filter:
           type: string
           description: Path filter with wildcards, relative to the root of the dataset. For example, /folder/*.json will transform all JSON files in /folder (when operating on files)
-  parameters:
-    TransformSelectionParameter:
-      name: selection
-      in: query
-      required: false
-      description: Type of selected rows, either 'all', 'created', 'in-progress' or 'failed' (defaults to 'all')
-      schema:
-        type: string
-    OrganizationCreateProjectFileIdParameter:
-      name: createProjectFileId
-      in: path
-      required: true
-      description: Create project job file ID.
-      schema:
-        type: integer
-    LimitResultsParameter:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of results
-      schema:
-        type: integer
-    OrganizationCreateProjectIdParameter:
-      name: createProjectId
-      in: path
-      required: true
-      description: Create project job ID.
-      schema:
-        type: integer
-    TransformOffsetResultsParameter:
-      name: transformOffset
-      in: query
-      required: true
-      description: Offset in results of transformation jobs, can be used in conjunction with TransformLimitResultsParameter to implement paging.
-      schema:
-        type: integer
-    OrganizationIdParameter:
-      name: organizationId
-      in: path
-      required: true
-      description: Organization ID
-      schema:
-        type: integer
-    OffsetResultsParameter:
-      name: offset
-      in: query
-      required: false
-      description: Offset in results, can be used in conjunction with LimitResultsParameter to implement paging.
-      schema:
-        type: integer
-    TransformLimitResultsParameter:
-      name: transformLimit
-      in: query
-      required: true
-      description: Maximum number of results of transformation jobs
-      schema:
-        type: integer
-    IncludePipelineJobsParameter:
-      name: includePipelineJobs
-      in: query
-      required: false
-      description: If enabled, also includes jobs that are part of a pipeline
-      schema:
-        type: boolean
+    UpdateOrganizationCreateProjectRequest:
+      type: object
+      properties:
+        transformationParallel:
+          type: integer
+          description: Number of transformation jobs that can be ran in parallel
+        emailRecipientUids:
+          description: List of user IDs to notify when a Job succeeds
+          type: array
+          items:
+            type: integer
+    OrganizationCreateProjectOutputDatasetPathRule:
+      description: Defines the folder structure for writing to the output dataset. Used only when uploading into a default (non-clinical) dataset.
+      type: string
+      enum:
+      - no-subfolders
+      - subfolder-per-item
+      - use-full-path
+    ProjectVisibility:
+      type: string
+      enum:
+      - public
+      - private
+      description: The visibility of the project, either public or private. Public projects can be viewed by anyone on the internet and edited by collaborators. Private projects can only be viewed and edited by collaborators.
+    CreateProjectResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        - apiKey
+        properties:
+          id:
+            type: integer
+            description: Project ID for the new project
+          apiKey:
+            type: string
+            description: API key for the new project
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    CreatedUpdatedByUser:
+      type: object
+      required:
+      - id
+      - name
+      - username
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        username:
+          type: string
+        photo:
+          type: string
+    TransformationJobOperatesOnEnum:
+      type: string
+      enum:
+      - file
+      - directory
+      - standalone
+    TransformationJobStatusEnum:
+      type: string
+      enum:
+      - waiting
+      - created
+      - started
+      - finished
+      - failed
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey

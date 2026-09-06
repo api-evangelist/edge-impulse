@@ -1,0 +1,56 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Edge Impulse Third Party Auth API
+  version: 1.0.0
+  x-generated: '2026-09-06'
+  x-method: generated
+  x-source: apis.yml + conventions/edge-impulse-conventions.yml + errors/edge-impulse-problem-types.yml
+    + https://docs.edgeimpulse.com/apis/studio
+  x-description: 'Non-destructive overlay over openapi/edge-impulse-thirdpartyauth-api-openapi.yml. It
+    adds the provider-published contact, licence and documentation links Edge Impulse omits from its OpenAPI,
+    and it records the two runtime facts an agent cannot learn from the contract itself: failure is signalled
+    inside a 200 body, and no idempotency mechanism exists. It changes no path, operation or schema.'
+extends: openapi/edge-impulse-thirdpartyauth-api-openapi.yml
+actions:
+- target: $.info
+  description: Add the provider contact, terms of service and external documentation links published on
+    the Edge Impulse site but absent from the contract.
+  update:
+    contact:
+      name: Edge Impulse
+      url: https://www.edgeimpulse.com/contact
+    termsOfService: https://www.edgeimpulse.com/legal/terms-of-service
+    x-privacy-policy: https://www.edgeimpulse.com/legal/privacy-policy
+    x-status-page: https://edgeimpulse.statuspage.io
+    x-provider: Edge Impulse
+    x-provider-id: edge-impulse
+    x-parent-company: Qualcomm Technologies, Inc.
+- target: $
+  description: Attach the external documentation link for this API surface.
+  update:
+    externalDocs:
+      description: Edge Impulse Studio API reference
+      url: https://docs.edgeimpulse.com/apis/studio
+- target: $.info
+  description: 'Record the runtime semantics an agent cannot derive from this contract: HTTP 200 does
+    not mean success, and there is no idempotency key.'
+  update:
+    x-error-semantics:
+      style: envelope-in-200
+      schema: GenericApiResponse
+      rule: Branch on body.success, never on the HTTP status code. This contract declares only 200 responses.
+      artifact: errors/edge-impulse-problem-types.yml
+    x-idempotency:
+      coverage: none
+      header: null
+      rule: No idempotency key exists. A retried POST starts a second job. Record the returned job id
+        before retrying.
+      artifact: conventions/edge-impulse-conventions.yml
+    x-reversibility:
+      grade: documented
+      rule: cancelJob reverses a running job; deletes have no documented undo and no retention window.
+        Create a project version (startVersionJob) before destructive work.
+      artifact: conventions/edge-impulse-conventions.yml
+    x-pagination:
+      style: limit/offset
+      artifact: conventions/edge-impulse-conventions.yml

@@ -1,0 +1,108 @@
+generated: '2026-09-06'
+method: searched
+source: https://docs.edgeimpulse.com/mcp (probed), https://www.npmjs.com/package/@edgeimpulse/mcp-server, https://github.com/edgeimpulse/ei-agentic-claude
+provider: Edge Impulse
+providerId: edge-impulse
+status: published
+description: >-
+  Edge Impulse ships MCP two ways, and they are different products. A REMOTE, anonymous
+  documentation MCP endpoint answers tools/list today at https://docs.edgeimpulse.com/mcp
+  (3 read-only docs tools). A first-party LOCAL stdio server, @edgeimpulse/mcp-server, wraps
+  the Studio API itself and exposes 218 tools whose names are the OpenAPI operationIds
+  one-for-one — it is generated from the same OpenAPI with kubb's MCP plugin, and it requires
+  an EI_API_KEY or EI_JWT_TOKEN and a human to install it first.
+deployment:
+  mode: both
+  endpoint: https://docs.edgeimpulse.com/mcp
+  install: npx -y @edgeimpulse/mcp-server
+  package: https://www.npmjs.com/package/@edgeimpulse/mcp-server
+  auth: api-key
+  verified: probed
+servers:
+  - id: docs-mcp
+    name: Edge Impulse Documentation MCP
+    kind: remote
+    transport: streamable-http
+    endpoint: https://docs.edgeimpulse.com/mcp
+    auth: none
+    verified: probed
+    probe:
+      method: POST tools/list
+      http_status: 200
+      fetched: '2026-09-06'
+    host_note: >-
+      Served on Edge Impulse's own documentation host (Mintlify-hosted docs platform). The
+      tool set is documentation retrieval, not Studio operations.
+    tools_file: mcp/edge-impulse-docs-mcp-tools.json
+    tool_count: 3
+    tools:
+      - name: search_edge_impulse_documentation
+        description: Search the Edge Impulse documentation knowledge base.
+        read_only: true
+      - name: query_docs_filesystem_edge_impulse_documentation
+        description: >-
+          Read-only shell-like query over a virtualized in-memory filesystem containing only
+          the documentation pages and OpenAPI specs.
+        read_only: true
+      - name: submit_feedback
+        description: Submit feedback on a documentation page.
+        read_only: false
+  - id: studio-mcp
+    name: Edge Impulse MCP Server (@edgeimpulse/mcp-server)
+    kind: local-stdio
+    transport: stdio
+    install: npx -y @edgeimpulse/mcp-server
+    binary: edge-impulse-mcp
+    package: '@edgeimpulse/mcp-server'
+    registry: npm
+    version: 0.1.3
+    published: '2026-06-19'
+    auth: api-key
+    auth_detail: >-
+      EI_API_KEY (a project-scoped Edge Impulse API key) or EI_JWT_TOKEN (a user JWT, which
+      reaches every project and organization that user can see). EI_HOST defaults to
+      https://studio.edgeimpulse.com/v1.
+    verified: searched
+    tool_count: 218
+    tool_generation: >-
+      Generated from the Edge Impulse Studio OpenAPI with @kubb/plugin-mcp; each server.tool()
+      name is the OpenAPI operationId verbatim, so every tool inherits its operation's real
+      parameters and request body.
+    http_mode_note: >-
+      The package also ships an HTTP MCP server (npm run start:http) for a self-hosted remote
+      deployment. Edge Impulse does not operate a public hosted instance of it; the README
+      tells the operator to put it behind HTTPS and an auth layer themselves.
+  - id: ei-agentic-claude
+    name: ei-agentic-claude (proof of concept)
+    kind: local-stdio
+    transport: stdio
+    install: npm install -g ei-agentic-claude
+    binary: edge-impulse-mcp
+    package: ei-agentic-claude
+    registry: npm
+    version: 1.0.6
+    published: '2026-02-13'
+    auth: api-key
+    verified: searched
+    repository: https://github.com/edgeimpulse/ei-agentic-claude
+    status: experimental
+    note: >-
+      The repository README labels this a proof of concept, not production-ready. It predates
+      @edgeimpulse/mcp-server and ships the first-party Postman collection plus five
+      published Agent Skills. Recorded for completeness; @edgeimpulse/mcp-server is the
+      current package.
+crosswalk: mcp/edge-impulse-tool-crosswalk.yml
+oauth_discovery:
+  probes:
+    - url: https://docs.edgeimpulse.com/.well-known/oauth-authorization-server
+      status: 404
+    - url: https://docs.edgeimpulse.com/.well-known/oauth-protected-resource
+      status: 404
+    - url: https://studio.edgeimpulse.com/.well-known/oauth-authorization-server
+      status: 404
+  note: >-
+    No RFC 9728 / RFC 8414 discovery documents are served. The remote docs endpoint is
+    anonymous and the Studio server is key-based, so neither needs one.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

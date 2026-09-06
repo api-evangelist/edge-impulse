@@ -1,0 +1,121 @@
+generated: '2026-09-06'
+method: searched
+source: https://edgeimpulse.statuspage.io, https://docs.edgeimpulse.com/studio/projects/versioning, https://docs.edgeimpulse.com/tools/protocols/remote-management/websocket,
+  https://www.edgeimpulse.com/pricing, https://studio.edgeimpulse.com/openapi.yml
+provider: Edge Impulse
+providerId: edge-impulse
+description: Versioning, deprecation and operational-transparency posture. Edge Impulse runs a real Atlassian
+  Statuspage covering the Studio API and Ingestion, and publishes an SLA figure on the Enterprise plan.
+  It does NOT publish an API deprecation policy, sunset dates, RFC 8594 Deprecation/Sunset headers, or
+  a dated API changelog — four operations are flagged deprecated in the contract with no removal date
+  attached to any of them.
+api_versioning:
+  scheme: single path segment
+  current: v1
+  base_url: https://studio.edgeimpulse.com/v1
+  spec_version: 1.0.0 (info.version in the published OpenAPI)
+  note: No version header, no media-type versioning, no dated versions. Individual operations are versioned
+    in the operationId instead (classifySample / classifySampleV2, classifySampleByLearnBlock / classifySampleByLearnBlockV2)
+    — the old and new operations coexist on the same /v1 base.
+protocol_versioning:
+  surface: Remote Management WebSocket
+  current: 3
+  negotiated_in: the Hello message
+  history:
+  - version: 1
+    note: Original protocol.
+  - version: 2
+    note: Sensor type changed from a string to a complex type describing frequencies and maximum sample
+      length; documented defaults are applied for v1 devices.
+  - version: 3
+    note: Added progress percentages for sampleReading and commands for snapshot streaming; v2 devices
+      get supportsSnapshotStreaming = false.
+  source: https://docs.edgeimpulse.com/tools/protocols/remote-management/websocket#version-history
+  note: This is the only versioned surface Edge Impulse publishes a written history for, and it is backward
+    compatible by design — old device versions keep working with documented defaults.
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  note: No deprecation policy page, no notice period, no sunset dates. The only deprecation signal is
+    the OpenAPI deprecated flag on four white-label admin operations, whose descriptions begin "DEPRECATED."
+    with no replacement named and no removal date.
+  deprecated_operations:
+  - operationId: whitelabelAdminAddUserToProject
+    method: POST
+    path: /api/organizations/{organizationId}/whitelabel/projects/{projectId}/members
+    replacement: null
+    sunset: null
+  - operationId: whitelabelAdminRemoveUserFromProject
+    method: DELETE
+    path: /api/organizations/{organizationId}/whitelabel/projects/{projectId}/members/{userId}
+    replacement: null
+    sunset: null
+  - operationId: whitelabelAdminAddUserToOrganization
+    method: POST
+    path: /api/organizations/{organizationId}/whitelabel/organizations/{innerOrganizationId}/members
+    replacement: null
+    sunset: null
+  - operationId: whitelabelAdminRemoveUserFromOrganization
+    method: DELETE
+    path: /api/organizations/{organizationId}/whitelabel/organizations/{innerOrganizationId}/members/{userId}
+    replacement: null
+    sunset: null
+  observed_drift: Beyond the four flagged operations, the contract moves without announcement. The spec
+    harvested into this repo carries 84 paths the current published spec no longer has (the whole /api/admin/*
+    internal surface, /api-health, /api-metrics, /api-feature-flags), and the current spec adds 41 paths
+    the harvest did not have (deployment history, ingestion-only API keys, multi-project deployment, SSO
+    lookup). None of that appears in any changelog.
+change_log:
+  published: false
+  note: No /changelog, /whats-new or release-notes page exists on docs.edgeimpulse.com or edgeimpulse.com
+    (both probed, 404). Product announcements are prose blog posts at https://www.edgeimpulse.com/blog.
+    The nearest dated, machine-readable change record is the npm and PyPI release history of the client
+    libraries — see packages/edge-impulse-packages.yml.
+  probes:
+  - url: https://docs.edgeimpulse.com/changelog
+    status: 404
+  - url: https://docs.edgeimpulse.com/whats-new
+    status: 404
+  - url: https://edgeimpulse.com/changelog
+    status: 404
+status_page:
+  published: true
+  url: https://edgeimpulse.statuspage.io
+  platform: Atlassian Statuspage
+  api: https://edgeimpulse.statuspage.io/api/v2/summary.json
+  feeds:
+  - https://edgeimpulse.statuspage.io/history.atom
+  - https://edgeimpulse.statuspage.io/history.rss
+  components:
+  - Core Services
+  - Studio
+  - Studio API
+  - Ingestion
+  - Forum
+  - User Forum
+  - Keycloak
+  - Internal User SSO
+  observed:
+    fetched: '2026-09-06'
+    http_status: 200
+    indicator: none
+    description: All Systems Operational
+    page_updated_at: '2026-08-27'
+  note: The status page is not linked from the main site navigation or the docs; it was found by probing
+    the vendor subdomain. It is real and machine-readable, with both a JSON API and Atom/RSS incident
+    feeds.
+sla:
+  published: true
+  uptime: 99.5% monthly uptime percentage
+  applies_to: Enterprise plan only
+  source: https://www.edgeimpulse.com/pricing
+  note: The Developer (free) plan carries no uptime guarantee. Terms are in the Enterprise Terms of Service.
+support:
+  developer: Community forum and documentation only.
+  enterprise: Email plus a dedicated Slack or Microsoft Teams channel; premium support packages available.
+  source: https://www.edgeimpulse.com/pricing
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
