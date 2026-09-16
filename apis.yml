@@ -345,7 +345,8 @@ apis:
     url: overlays/edge-impulse-organizationblocks-overlay.yaml
 - aid: edge-impulse:edge-impulse-organizationcreateproject-api
   name: Edge Impulse OrganizationCreateProject API
-  description: The OrganizationCreateProject API from Edge Impulse — 10 operation(s) for organizationcreateproject.
+  description: >-
+    The OrganizationCreateProject API from Edge Impulse — 10 operation(s) for organizationcreateproject.
   humanURL: https://docs.edgeimpulse.com/reference/edge-impulse-api
   baseURL: https://studio.edgeimpulse.com/v1
   tags:
@@ -373,7 +374,8 @@ apis:
     url: overlays/edge-impulse-organizationdata-overlay.yaml
 - aid: edge-impulse:edge-impulse-organizationdatacampaigns-api
   name: Edge Impulse OrganizationDataCampaigns API
-  description: The OrganizationDataCampaigns API from Edge Impulse — 7 operation(s) for organizationdatacampaigns.
+  description: >-
+    The OrganizationDataCampaigns API from Edge Impulse — 7 operation(s) for organizationdatacampaigns.
   humanURL: https://docs.edgeimpulse.com/reference/edge-impulse-api
   baseURL: https://studio.edgeimpulse.com/v1
   tags:
@@ -403,7 +405,8 @@ apis:
     url: overlays/edge-impulse-organizationjobs-overlay.yaml
 - aid: edge-impulse:edge-impulse-organizationpipelines-api
   name: Edge Impulse OrganizationPipelines API
-  description: The OrganizationPipelines API from Edge Impulse — 5 operation(s) for organizationpipelines.
+  description: >-
+    The OrganizationPipelines API from Edge Impulse — 5 operation(s) for organizationpipelines.
   humanURL: https://docs.edgeimpulse.com/reference/edge-impulse-api
   baseURL: https://studio.edgeimpulse.com/v1
   tags:
@@ -447,7 +450,8 @@ apis:
     url: overlays/edge-impulse-organizations-overlay.yaml
 - aid: edge-impulse:edge-impulse-performancecalibration-api
   name: Edge Impulse PerformanceCalibration API
-  description: The PerformanceCalibration API from Edge Impulse — 9 operation(s) for performancecalibration.
+  description: >-
+    The PerformanceCalibration API from Edge Impulse — 9 operation(s) for performancecalibration.
   humanURL: https://docs.edgeimpulse.com/reference/edge-impulse-api
   baseURL: https://studio.edgeimpulse.com/v1
   tags:
@@ -565,11 +569,11 @@ apis:
     url: overlays/edge-impulse-whitelabels-overlay.yaml
 - aid: edge-impulse:edge-impulse-ingestion-api
   name: Edge Impulse Ingestion API
-  description: The Ingestion API sends new device data into an Edge Impulse project. It accepts sensor
-    (JSON/CBOR/CSV/Parquet), audio (WAV), image (JPG/PNG) and video (MP4/AVI) samples on the training,
-    validation, testing, post-processing and split endpoints, authenticated with a project x-api-key.
-    Maximum 1000 files per request and 100 MB per file. It documents real HTTP status codes (200, 400,
-    401, 421, 500), unlike the Studio API.
+  description: >-
+    The Ingestion API sends new device data into an Edge Impulse project. It accepts sensor (JSON/CBOR/CSV/Parquet),
+    audio (WAV), image (JPG/PNG) and video (MP4/AVI) samples on the training, validation, testing, post-processing
+    and split endpoints, authenticated with a project x-api-key. Maximum 1000 files per request and 100
+    MB per file. It documents real HTTP status codes (200, 400, 401, 421, 500), unlike the Studio API.
   humanURL: https://docs.edgeimpulse.com/apis/ingestion
   baseURL: https://ingestion.edgeimpulse.com
   tags:
@@ -587,11 +591,12 @@ apis:
     url: authentication/edge-impulse-authentication.yml
 - aid: edge-impulse:edge-impulse-remote-management-api
   name: Edge Impulse Remote Management API
-  description: A two-way WebSocket protocol between edge devices and Edge Impulse Studio, used to drive
-    a connected device — request a sample, follow acquisition progress and stream snapshot frames. Devices
-    connect to wss://remote-mgmt.edgeimpulse.com and authenticate by sending their project API key in
-    the Hello message; payloads may be JSON or CBOR. Protocol version 3, fully specified with a JSON Schema
-    per message and covered by a public device conformance suite.
+  description: >-
+    A two-way WebSocket protocol between edge devices and Edge Impulse Studio, used to drive a connected
+    device — request a sample, follow acquisition progress and stream snapshot frames. Devices connect
+    to wss://remote-mgmt.edgeimpulse.com and authenticate by sending their project API key in the Hello
+    message; payloads may be JSON or CBOR. Protocol version 3, fully specified with a JSON Schema per
+    message and covered by a public device conformance suite.
   humanURL: https://docs.edgeimpulse.com/apis/remote-management
   baseURL: https://remote-mgmt.edgeimpulse.com
   tags:
@@ -605,6 +610,26 @@ apis:
     url: asyncapi/edge-impulse-remote-management-asyncapi.yml
   - type: Authentication
     url: authentication/edge-impulse-authentication.yml
+- aid: edge-impulse:edge-impulse-integrations-api
+  name: Edge Impulse Integrations API
+  description: The Integrations API from Edge Impulse — 2 operation(s) for integrations.
+  humanURL: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  baseURL: https://studio.edgeimpulse.com/v1
+  tags:
+  - Integrations
+  properties:
+  - type: OpenAPI
+    url: openapi/edge-impulse-integrations-api-openapi.yml
+- aid: edge-impulse:edge-impulse-postprocessing-api
+  name: Edge Impulse Post Processing API
+  description: The PostProcessing API from Edge Impulse — 3 operation(s) for postprocessing.
+  humanURL: https://docs.edgeimpulse.com/reference/edge-impulse-api
+  baseURL: https://studio.edgeimpulse.com/v1
+  tags:
+  - PostProcessing
+  properties:
+  - type: OpenAPI
+    url: openapi/edge-impulse-postprocessing-api-openapi.yml
 common:
 - type: Authentication
   url: authentication/edge-impulse-authentication.yml
