@@ -2,14 +2,11 @@ openapi: 3.2.0
 info:
   title: Edge Impulse Raw data API
   version: 1.0.0
+  description: 'Operations tagged Raw data across 2 of this provider''s published API definitions: edge-impulse-openapi.yml, edge-impulse-studio-openapi-2026-09-06.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://studio.edgeimpulse.com/v1
-security:
-- ApiKeyAuthentication: []
-- JWTAuthentication: []
-- JWTHttpHeaderAuthentication: []
 tags:
-- name: Raw data
+- name: Raw Data
 paths:
   /api/{projectId}/raw-data:
     get:
@@ -17,7 +14,7 @@ paths:
       description: Retrieve all raw data by category.
       operationId: listSamples
       tags:
-      - Raw data
+      - Raw Data
       x-middleware:
       - AllowsReadOnly
       parameters:
@@ -45,13 +42,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListSamplesResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/count:
     get:
       summary: Count samples
       description: Count all raw data by category.
       operationId: countSamples
       tags:
-      - Raw data
+      - Raw Data
       x-middleware:
       - AllowsReadOnly
       parameters:
@@ -75,13 +78,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CountSamplesResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/label-object-detection-queue:
     get:
       summary: Object detection label queue
       description: Get all unlabeled items from the object detection queue.
       operationId: getObjectDetectionLabelQueue
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       responses:
@@ -91,13 +100,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ObjectDetectionLabelQueueResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/label-object-detection-queue/count:
     get:
       summary: Object detection label queue count
       description: Get count for unlabeled items from the object detection queue.
       operationId: getObjectDetectionLabelQueueCount
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       responses:
@@ -107,13 +122,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ObjectDetectionLabelQueueCountResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/rebalance:
     post:
       summary: Rebalance dataset
       description: Rebalances the dataset over training / testing categories. This resets the category for all data and splits it 80%/20% between training and testing. This is a deterministic process based on the hash of the name of the data.
       operationId: rebalanceDataset
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       responses:
@@ -123,13 +144,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RebalanceDatasetResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/clear-all-object-detection-labels:
     post:
       summary: Clear all object detection labels
       description: Clears all object detection labels for this dataset, and places all images back in the labeling queue.
       operationId: clearAllObjectDetectionLabels
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       responses:
@@ -139,13 +166,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/delete-all:
     post:
       summary: Remove all samples
       description: Deletes all samples for this project over all categories. This also invalidates all DSP and learn blocks. Note that this does not delete the data from cold storage.
       operationId: deleteAllSamples
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       responses:
@@ -155,13 +188,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/delete-all/{category}:
     post:
       summary: Remove all samples by category
       description: Deletes all samples for this project over a single category. Note that this does not delete the data from cold storage.
       operationId: deleteAllSamplesByCategory
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/RawDataCategoryParameter'
@@ -172,13 +211,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/metadata:
     get:
       summary: Get project sample metadata
       description: Get metadata for all samples in a project.
       operationId: getSampleMetadata
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/RawDataCategoryQueryParameter'
@@ -189,13 +234,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetSampleMetadataResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/imported-from:
     get:
       summary: List data with "imported from" metadata key
       description: Lists all data with an 'imported from' metadata key. Used to check in a data source which items are already in a project.
       operationId: getAllImportedFrom
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/LimitResultsParameter'
@@ -207,13 +258,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetAllImportedFromResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/{sampleId}:
     get:
       summary: Get sample
       description: Get a sample.
       operationId: getSample
       tags:
-      - Raw data
+      - Raw Data
       x-middleware:
       - AllowsReadOnly
       parameters:
@@ -230,12 +287,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetSampleResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
     delete:
       summary: Remove sample
       description: Deletes the sample. Note that this does not delete the data from cold storage.
       operationId: deleteSample
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/SampleIdParameter'
@@ -246,13 +307,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/{sampleId}/raw:
     get:
       summary: Download file
       description: Download a sample in it's original format as uploaded to the ingestion service.
       operationId: getSampleAsRaw
       tags:
-      - Raw data
+      - Raw Data
       x-middleware:
       - AllowsReadOnly
       parameters:
@@ -266,13 +333,19 @@ paths:
               schema:
                 type: string
                 format: binary
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/{sampleId}/wav:
     get:
       summary: Get WAV file
       description: Get a sample as a WAV file. This only applies to samples with an audio axis.
       operationId: getSampleAsAudio
       tags:
-      - Raw data
+      - Raw Data
       x-middleware:
       - SupportsRange
       - AllowsReadOnly
@@ -291,13 +364,19 @@ paths:
               schema:
                 type: string
                 format: binary
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/{sampleId}/image:
     get:
       summary: Get image file
       description: Get a sample as an image file. This only applies to samples with RGBA data.
       operationId: getSampleAsImage
       tags:
-      - Raw data
+      - Raw Data
       x-middleware:
       - AllowsReadOnly
       parameters:
@@ -314,13 +393,19 @@ paths:
               schema:
                 type: string
                 format: binary
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/{sampleId}/video:
     get:
       summary: Get video file
       description: Get a sample as an video file. This only applies to samples with video data.
       operationId: getSampleAsVideo
       tags:
-      - Raw data
+      - Raw Data
       x-middleware:
       - AllowsReadOnly
       parameters:
@@ -337,13 +422,19 @@ paths:
               schema:
                 type: string
                 format: binary
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/{sampleId}/slice:
     get:
       summary: Get sample slice
       description: Get a slice of a sample.
       operationId: getSampleSlice
       tags:
-      - Raw data
+      - Raw Data
       x-middleware:
       - AllowsReadOnly
       parameters:
@@ -359,13 +450,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetSampleResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/{sampleId}/rename:
     post:
       summary: Rename sample
       description: Sets the file name of the sample. This name does not need to be unique, but it's highly recommended to do so.
       operationId: renameSample
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/SampleIdParameter'
@@ -382,13 +479,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/{sampleId}/edit-label:
     post:
       summary: Edit label
       description: Sets the label (also known as class) of the sample. Use the same label for similar types of data, as they are used during training.
       operationId: editLabel
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/SampleIdParameter'
@@ -405,13 +508,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/{sampleId}/move:
     post:
       summary: Move sample
       description: Move a sample to another category (e.g. from test to training).
       operationId: moveSample
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/SampleIdParameter'
@@ -428,13 +537,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/{sampleId}/crop:
     post:
       summary: Crop sample
       description: Crop a sample to within a new range.
       operationId: cropSample
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/SampleIdParameter'
@@ -451,17 +566,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CropSampleResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/{sampleId}/split:
     post:
       summary: Split sample into frames
       description: 'Split a video sample into individual frames.
 
-        Depending on the length of the video sample this will either execute immediately or return the ID of a job that will perform this action.
-
-        '
+        Depending on the length of the video sample this will either execute immediately or return the ID of a job that will perform this action.'
       operationId: splitSampleInFrames
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/SampleIdParameter'
@@ -480,13 +599,19 @@ paths:
                 anyOf:
                 - $ref: '#/components/schemas/GenericApiResponse'
                 - $ref: '#/components/schemas/StartJobResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/{sampleId}/find-segments:
     post:
       summary: Find segments
       description: Find start and end times for all non-noise events in a sample
       operationId: findSegmentsInSample
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/SampleIdParameter'
@@ -503,13 +628,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FindSegmentSampleResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/{sampleId}/segment:
     post:
       summary: Segment sample
       description: Slice a sample into multiple segments. The original file will be marked as deleted, but you can crop any created segment to retrieve the original file.
       operationId: segmentSample
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/SampleIdParameter'
@@ -526,13 +657,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/{sampleId}/bounding-boxes:
     post:
       summary: Set bounding boxes
       description: Set the bounding boxes for a sample
       operationId: setSampleBoundingBoxes
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/SampleIdParameter'
@@ -549,13 +686,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/{sampleId}/structured-labels:
     post:
       summary: Update structured labels
       description: Set structured labels for a sample. If a sample has structured labels the `label` column is ignored, and the sample is allowed to have multiple labels. An array of { startIndex, endIndex, label } needs to be passed in with labels for the complete sample (see `valuesCount` to get the upper bound). endIndex is _inclusive_. If you pass in an incorrect array (e.g. missing values) you'll get an error back.
       operationId: setSampleStructuredLabels
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/SampleIdParameter'
@@ -572,13 +715,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/store-segment-length:
     post:
       summary: Store the last segment length
       description: When segmenting a sample into smaller segments, store the segment length to ensure uniform segment lengths.
       operationId: storeSegmentLength
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       requestBody:
@@ -594,13 +743,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/{sampleId}/original:
     get:
       summary: Get the original downsampled data
       description: Get the original, uncropped, downsampled data.
       operationId: getUncroppedDownsampledSample
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/SampleIdParameter'
@@ -615,13 +770,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetSampleResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/{sampleId}/retry-processing:
     post:
       summary: Retry processing
       description: If a sample failed processing, retry the processing operation.
       operationId: retryProcessing
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/SampleIdParameter'
@@ -632,13 +793,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/{sampleId}/enable:
     post:
       summary: Enable sample
       description: Enable a sample, ensuring that it is not excluded from the dataset.
       operationId: enableSample
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/SampleIdParameter'
@@ -649,13 +816,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/{sampleId}/disable:
     post:
       summary: Disable sample
       description: Disable a sample, ensuring that it is excluded from the dataset.
       operationId: disableSample
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/SampleIdParameter'
@@ -666,13 +839,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/{sampleId}/autolabel:
     post:
       summary: Auto-label an image
       description: Classify an image using another neural network.
       operationId: classifyUsingAutolabel
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/SampleIdParameter'
@@ -689,13 +868,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ObjectDetectionAutoLabelResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/{sampleId}/metadata:
     post:
       summary: Set sample metadata
       description: Adds or updates the metadata associated to a sample.
       operationId: setSampleMetadata
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/SampleIdParameter'
@@ -712,13 +897,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/{sampleId}/to-labeling-queue:
     post:
       summary: Move sample to labeling queue
       description: Clears the bounding box labels and moves item back to labeling queue
       operationId: moveToLabelingQueue
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/SampleIdParameter'
@@ -729,13 +920,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/{sampleId}/propose-changes:
     post:
       summary: Propose changes
       description: Queue up changes to an object as part of the AI Actions flow. This overwrites any previous proposed changes.
       operationId: setSampleProposedChanges
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/SampleIdParameter'
@@ -752,17 +949,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/batch/edit-labels:
     post:
       summary: Edit labels for multiple samples
       description: 'Sets the label (also known as class) of multiple samples.
 
-        Depending on the number of affected samples this will either execute immediately or return the ID of a job that will perform this action in batches.
-
-        '
+        Depending on the number of affected samples this will either execute immediately or return the ID of a job that will perform this action in batches.'
       operationId: batchEditLabels
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/RawDataCategoryQueryParameter'
@@ -794,17 +995,21 @@ paths:
                 anyOf:
                 - $ref: '#/components/schemas/GenericApiResponse'
                 - $ref: '#/components/schemas/StartJobResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/batch/delete:
     post:
       summary: Remove multiple samples
       description: 'Deletes samples. Note that this does not delete the data from cold storage.
 
-        Depending on the number of affected samples this will either execute immediately or return the ID of a job that will perform this action in batches.
-
-        '
+        Depending on the number of affected samples this will either execute immediately or return the ID of a job that will perform this action in batches.'
       operationId: batchDelete
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/RawDataCategoryQueryParameter'
@@ -830,17 +1035,21 @@ paths:
                 anyOf:
                 - $ref: '#/components/schemas/GenericApiResponse'
                 - $ref: '#/components/schemas/StartJobResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/batch/moveSamples:
     post:
       summary: Move multiple samples
       description: 'Move multiple samples to another category (e.g. from test to training).
 
-        Depending on the number of affected samples this will either execute immediately or return the ID of a job that will perform this action in batches.
-
-        '
+        Depending on the number of affected samples this will either execute immediately or return the ID of a job that will perform this action in batches.'
       operationId: batchMove
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/RawDataCategoryQueryParameter'
@@ -872,17 +1081,21 @@ paths:
                 anyOf:
                 - $ref: '#/components/schemas/GenericApiResponse'
                 - $ref: '#/components/schemas/StartJobResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/batch/enable-samples:
     post:
       summary: Enable multiple samples
       description: 'Enables samples, ensuring that they are not excluded from the dataset.
 
-        Depending on the number of affected samples this will either execute immediately or return the ID of a job that will perform this action in batches.
-
-        '
+        Depending on the number of affected samples this will either execute immediately or return the ID of a job that will perform this action in batches.'
       operationId: batchEnable
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/RawDataCategoryQueryParameter'
@@ -908,17 +1121,21 @@ paths:
                 anyOf:
                 - $ref: '#/components/schemas/GenericApiResponse'
                 - $ref: '#/components/schemas/StartJobResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/batch/disable-samples:
     post:
       summary: Disable multiple samples
       description: 'Disables samples, ensuring that they are excluded from the dataset.
 
-        Depending on the number of affected samples this will either execute immediately or return the ID of a job that will perform this action in batches.
-
-        '
+        Depending on the number of affected samples this will either execute immediately or return the ID of a job that will perform this action in batches.'
       operationId: batchDisable
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/RawDataCategoryQueryParameter'
@@ -944,13 +1161,19 @@ paths:
                 anyOf:
                 - $ref: '#/components/schemas/GenericApiResponse'
                 - $ref: '#/components/schemas/StartJobResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/batch/add-metadata:
     post:
       summary: Add metadata (multiple samples)
       description: Add specific metadata for multiple samples.
       operationId: batchAddMetadata
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/RawDataCategoryQueryParameter'
@@ -982,13 +1205,19 @@ paths:
                 anyOf:
                 - $ref: '#/components/schemas/GenericApiResponse'
                 - $ref: '#/components/schemas/StartJobResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/batch/clear-metadata-by-key:
     post:
       summary: Clear metadata by key (multiple samples)
       description: Clears a specific metadata field (by key) for multiple samples.
       operationId: batchClearMetadataByKey
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/RawDataCategoryQueryParameter'
@@ -1020,13 +1249,19 @@ paths:
                 anyOf:
                 - $ref: '#/components/schemas/GenericApiResponse'
                 - $ref: '#/components/schemas/StartJobResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/batch/clear-metadata:
     post:
       summary: Clear all metadata (multiple samples)
       description: Clears all metadata for multiple samples.
       operationId: batchClearMetadata
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/RawDataCategoryQueryParameter'
@@ -1050,13 +1285,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/track-objects:
     post:
       summary: Track objects
       description: Track objects between two samples. Source sample should have bounding boxes set.
       operationId: trackObjects
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       requestBody:
@@ -1072,13 +1313,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TrackObjectsResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/data-explorer/features:
     get:
       summary: Get data explorer features
       description: t-SNE2 output of the raw dataset
       operationId: getDataExplorerFeatures
       tags:
-      - Raw data
+      - Raw Data
       x-middleware:
       - AllowsReadOnly
       - CustomResponse
@@ -1091,13 +1338,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetDataExplorerFeaturesResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/data-explorer/has-features:
     get:
       summary: Check data explorer features
       description: t-SNE2 output of the raw dataset
       operationId: hasDataExplorerFeatures
       tags:
-      - Raw data
+      - Raw Data
       x-middleware:
       - AllowsReadOnly
       parameters:
@@ -1109,13 +1362,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HasDataExplorerFeaturesResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/data-explorer/predictions:
     get:
       summary: Get data explorer predictions
       description: Predictions for every data explorer point (only available when using current impulse to populate data explorer)
       operationId: getDataExplorerPredictions
       tags:
-      - Raw data
+      - Raw Data
       x-middleware:
       - AllowsReadOnly
       - CustomResponse
@@ -1128,13 +1387,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DataExplorerPredictionsResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/data-explorer/clear:
     post:
       summary: Clear data explorer
       description: Remove the current data explorer state
       operationId: clearDataExplorer
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       responses:
@@ -1144,13 +1409,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/data-explorer/settings:
     get:
       summary: Get data explorer settings
       description: Get data explorer configuration, like the type of data, and the input / dsp block to use.
       operationId: getDataExplorerSettings
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       responses:
@@ -1160,12 +1431,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetDataExplorerSettingsResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
     post:
       summary: Set data explorer settings
       description: Set data explorer configuration, like the type of data, and the input / dsp block to use.
       operationId: setDataExplorerSettings
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       requestBody:
@@ -1181,6 +1456,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/data-explorer/screenshot:
     post:
       summary: Upload a data explorer screenshot
@@ -1188,7 +1469,7 @@ paths:
       x-internal-api: true
       operationId: uploadDataExplorerScreenshot
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       requestBody:
@@ -1204,13 +1485,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/data-quality/diversity/exists:
     get:
       summary: Check if data diversity metrics exist
       description: Determine if data diversity metrics have been calculated. To calculate these metrics, use the `calculateDataQualityMetrics` endpoint.
       operationId: hasDiversityData
       tags:
-      - Raw data
+      - Raw Data
       x-middleware:
       - AllowsReadOnly
       parameters:
@@ -1222,13 +1509,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HasDataExplorerFeaturesResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/data-quality/diversity:
     get:
       summary: Get diversity metrics data
       description: Obtain metrics that describe the similarity and diversity of a dataset. To calculate these metrics, use the `calculateDataQualityMetrics` endpoint.
       operationId: getDiversityData
       tags:
-      - Raw data
+      - Raw Data
       x-middleware:
       - AllowsReadOnly
       parameters:
@@ -1240,13 +1533,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetDiversityDataResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/data-quality/label-noise/exists:
     get:
       summary: Check if label noise metrics exist
       description: Determine if label noise metrics have been calculated. To calculate these metrics, use the `calculateDataQualityMetrics` endpoint.
       operationId: hasLabelNoiseData
       tags:
-      - Raw data
+      - Raw Data
       x-middleware:
       - AllowsReadOnly
       parameters:
@@ -1258,13 +1557,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HasDataExplorerFeaturesResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/data-quality/label-noise:
     get:
       summary: Get label noise data
       description: Obtain metrics that describe potential label noise issues in the dataset. To calculate these metrics, use the `calculateDataQualityMetrics` endpoint.
       operationId: getLabelNoiseData
       tags:
-      - Raw data
+      - Raw Data
       x-middleware:
       - AllowsReadOnly
       parameters:
@@ -1276,13 +1581,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetLabelNoiseDataResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/raw-data/ai-actions-preview/{jobId}/proposed-changes:
     get:
       summary: Get AI Actions proposed changes
       description: Get proposed changes from an AI Actions job.
       operationId: getAIActionsProposedChanges
       tags:
-      - Raw data
+      - Raw Data
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/JobIdParameter'
@@ -1293,8 +1604,397 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetAIActionsProposedChangesResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
+  /api/{projectId}/v2/rebalance:
+    post:
+      summary: Rebalance dataset
+      description: Rebalances the dataset over training / testing categories. This resets the category for all data and splits it 80%/20% between training and testing. This is a deterministic process based on the hash of the name of the data. Returns immediately on small datasets, or starts a job on larger datasets. To get the dataset ratio (as returned by the v1 endpoint), use getDatasetRatio. For richer, more powerful dataset splitting with configurable ratios, stratification, and grouping, use splitDataset (`/v1/api/{projectId}/split`).
+      operationId: rebalanceDatasetV2
+      x-oauth-scopes:
+      - projects:data:update
+      - jobs:run
+      tags:
+      - Raw Data
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/GenericApiResponse'
+                - $ref: '#/components/schemas/StartJobResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+      - OAuth2: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
+  /api/{projectId}/split:
+    post:
+      summary: Split dataset
+      description: 'Performs a deterministic, in-place split of the project''s dataset into "training", "testing", and optional "validation" sets. Split balancing can use the label, one or more metadata keys, or both as a composite grouping signal. Related samples can also be kept together across splits by metadata key. This is a deterministic process based on the hash of the name of the data. Returns immediately on small datasets, or starts a job on larger datasets.
+
+        For example:
+
+        { "trainingSplitRatio": 0.8, "testingSplitRatio": 0.1, "validationSplitRatio": 0.1, "excludeDisabledSamples": false, "stratifyBy": { "label": true, "metadataKeys": ["site", "scanner"] }, "keepTogetherMetadataKeys": ["capture_group"] }
+
+        With these options, label/site/scanner are used to balance the split, while samples sharing the same capture_group value stay in the same split bucket.'
+      operationId: splitDataset
+      tags:
+      - Raw Data
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DatasetSplitOptions'
+      x-oauth-scopes:
+      - projects:data:update
+      - jobs:run
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/GenericApiResponse'
+                - $ref: '#/components/schemas/StartJobResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+      - OAuth2: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
+  /api/{projectId}/split-preview:
+    post:
+      summary: Split dataset preview
+      description: Returns a preview of how the project's dataset would be split if the current split options were applied. For each group (composite of label and/or metadata keys, or keep-together group), shows the number and percentage of samples that would be assigned to each split. This does not update the dataset, only provides a summary. Returns immediately on small datasets, or starts a job on larger datasets.
+      operationId: splitDatasetPreview
+      tags:
+      - Raw Data
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DatasetSplitOptions'
+      x-oauth-scopes:
+      - projects:data:read
+      - jobs:run
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/DatasetSplitPreviewResponse'
+                - $ref: '#/components/schemas/StartJobResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+      - OAuth2: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
+  /api/{projectId}/get-split-preview-results:
+    get:
+      summary: Get split preview results
+      description: Returns the results of a previously requested split preview job. This endpoint is used to retrieve the results after a split preview job has been started.
+      operationId: getSplitPreviewResults
+      tags:
+      - Raw Data
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      x-oauth-scopes:
+      - projects:data:read
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DatasetSplitPreviewResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+      - OAuth2: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
+  /api/{projectId}/raw-data/ratio:
+    get:
+      summary: Get dataset ratio
+      description: Retrieve number of samples in train and test set.
+      operationId: getDatasetRatio
+      x-oauth-scopes:
+      - projects:data:read
+      tags:
+      - Raw Data
+      x-middleware:
+      - AllowsReadOnly
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDatasetRatioResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+      - OAuth2: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
+  /api/{projectId}/raw-data/metadata-filter-options:
+    get:
+      summary: Get project sample metadata filter options
+      description: Get a list of unique key value pairs across all samples in a project that can be applied as filters to the /api/{projectId}/raw-data endpoint
+      operationId: getSampleMetadataFilterOptions
+      x-oauth-scopes:
+      - projects:data:read
+      tags:
+      - Raw Data
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/RawDataCategoryQueryParameter_2'
+      - $ref: '#/components/parameters/LimitResultsParameter'
+      - $ref: '#/components/parameters/OffsetResultsParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSampleMetadataFilterOptionsResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+      - OAuth2: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
+  /api/{projectId}/raw-data/project-metadata:
+    get:
+      summary: Get project dataset metadata
+      description: Get the raw data metadata for this project
+      operationId: getRawDataProjectMetadata
+      tags:
+      - Raw Data
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalDatasetVersionIdParameter'
+      - $ref: '#/components/parameters/TruncateLabelsParameter'
+      - name: includeDisabled
+        in: query
+        required: false
+        description: Whether to include enabled-only samples, or both enabled and disabled samples (defaults to both).
+        schema:
+          type: string
+          enum:
+          - both
+          - enabled
+      x-oauth-scopes:
+      - projects:data:read
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRawDataProjectMetadataResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+      - OAuth2: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
+  /api/{projectId}/raw-data/{sampleId}/video-dimensions:
+    post:
+      summary: Set sample video dimensions
+      description: Update the video dimensions for a sample. This is only available for video files that do not have dimensions set yet.
+      operationId: setSampleVideoDimensions
+      x-oauth-scopes:
+      - projects:data:update
+      tags:
+      - Raw Data
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/SampleIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetSampleVideoDimensionsRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+      - OAuth2: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
+  /api/{projectId}/raw-data/batch/edit-bounding-boxes:
+    post:
+      summary: Edit bounding boxes for multiple samples
+      description: 'Relabels (or removes) bounding boxes for multiple samples.
+
+        Depending on the number of affected samples this will either execute immediately or return the ID of a job that will perform this action in batches.'
+      operationId: batchEditBoundingBoxes
+      x-oauth-scopes:
+      - projects:data:update
+      - jobs:run
+      tags:
+      - Raw Data
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/RawDataCategoryQueryParameter_2'
+      - $ref: '#/components/parameters/FiltersLabelsParameter'
+      - $ref: '#/components/parameters/FiltersFilenameParameter'
+      - $ref: '#/components/parameters/FiltersMaxLengthParameter'
+      - $ref: '#/components/parameters/FiltersMinLengthParameter'
+      - $ref: '#/components/parameters/FiltersMinFrequencyParameter'
+      - $ref: '#/components/parameters/FiltersMaxFrequencyParameter'
+      - $ref: '#/components/parameters/FiltersSignatureParameter'
+      - $ref: '#/components/parameters/FiltersDisabledParameter'
+      - $ref: '#/components/parameters/FiltersIdsParameter'
+      - $ref: '#/components/parameters/FiltersExcludeIdsParameter'
+      - $ref: '#/components/parameters/FiltersMinLabelParameter'
+      - $ref: '#/components/parameters/FiltersMaxLabelParameter'
+      - $ref: '#/components/parameters/SearchQueryParameter'
+      - $ref: '#/components/parameters/FiltersDataTypeParameter'
+      - $ref: '#/components/parameters/FiltersMinIdParameter'
+      - $ref: '#/components/parameters/FiltersMaxIdParameter'
+      - $ref: '#/components/parameters/FiltersMetadataParameter'
+      - $ref: '#/components/parameters/FiltersMinDateParameter'
+      - $ref: '#/components/parameters/FiltersMaxDateParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BatchEditBoundingBoxesRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/GenericApiResponse'
+                - $ref: '#/components/schemas/StartJobResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+      - OAuth2: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
+  /api/{projectId}/raw-data/batch/back-to-labeling:
+    post:
+      summary: Put samples back into the object detection labeling queue
+      description: 'Batch operation to put multiple samples back into the object detection labeling queue.
+
+        Depending on the number of affected samples this will either execute immediately or return the ID of a job that will perform this action in batches.'
+      operationId: batchBackToLabeling
+      x-oauth-scopes:
+      - projects:data:update
+      - jobs:run
+      tags:
+      - Raw Data
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/RawDataCategoryQueryParameter_2'
+      - $ref: '#/components/parameters/FiltersLabelsParameter'
+      - $ref: '#/components/parameters/FiltersFilenameParameter'
+      - $ref: '#/components/parameters/FiltersMaxLengthParameter'
+      - $ref: '#/components/parameters/FiltersMinLengthParameter'
+      - $ref: '#/components/parameters/FiltersMinFrequencyParameter'
+      - $ref: '#/components/parameters/FiltersMaxFrequencyParameter'
+      - $ref: '#/components/parameters/FiltersSignatureParameter'
+      - $ref: '#/components/parameters/FiltersDisabledParameter'
+      - $ref: '#/components/parameters/FiltersIdsParameter'
+      - $ref: '#/components/parameters/FiltersExcludeIdsParameter'
+      - $ref: '#/components/parameters/FiltersMinLabelParameter'
+      - $ref: '#/components/parameters/FiltersMaxLabelParameter'
+      - $ref: '#/components/parameters/SearchQueryParameter'
+      - $ref: '#/components/parameters/FiltersDataTypeParameter'
+      - $ref: '#/components/parameters/FiltersMinIdParameter'
+      - $ref: '#/components/parameters/FiltersMaxIdParameter'
+      - $ref: '#/components/parameters/FiltersMetadataParameter'
+      - $ref: '#/components/parameters/FiltersMinDateParameter'
+      - $ref: '#/components/parameters/FiltersMaxDateParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BackToLabelingRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/GenericApiResponse'
+                - $ref: '#/components/schemas/StartJobResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+      - OAuth2: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
 components:
   parameters:
+    AxisIndexParameter:
+      name: axisIx
+      in: query
+      required: true
+      description: Axis index
+      schema:
+        type: integer
+    SliceStartParameter:
+      name: sliceStart
+      in: query
+      required: true
+      description: Begin index of the slice
+      schema:
+        type: integer
+    FiltersMinLabelParameter:
+      name: minLabel
+      in: query
+      required: false
+      description: Only include samples with a label >= this value
+      schema:
+        type: number
     FiltersDisabledParameter:
       name: includeDisabled
       in: query
@@ -1306,21 +2006,13 @@ components:
         - both
         - enabled
         - disabled
-    OptionalSliceEndDefaultToWindowLengthParameter:
-      name: sliceEnd
+    ZoomStart:
+      name: zoomStart
       in: query
       required: false
-      description: End index of the slice. If not given, the sample will be sliced to the same length as the impulse input block window length.
+      description: Zoom into the sample, with the focus starting at this index
       schema:
         type: integer
-    FiltersExcludeIdsParameter:
-      name: excludeIds
-      in: query
-      required: false
-      description: Exclude samples with an ID within the given list of IDs, given as a JSON string
-      schema:
-        example: '[4, 5, 6]'
-        type: string
     OptionalSliceEndParameter:
       name: sliceEnd
       in: query
@@ -1328,66 +2020,6 @@ components:
       description: End index of the slice. If not given, the whole sample is used.
       schema:
         type: integer
-    RawDataCategoryQueryParameter:
-      name: category
-      in: query
-      required: true
-      description: Which of the three acquisition categories to retrieve data from
-      schema:
-        type: string
-        enum:
-        - training
-        - testing
-        - anomaly
-    OptionalSliceStartParameter:
-      name: sliceStart
-      in: query
-      required: false
-      description: Begin index of the slice. If not given, the whole sample is used.
-      schema:
-        type: integer
-    FiltersMaxFrequencyParameter:
-      name: maxFrequency
-      in: query
-      required: false
-      description: Only include samples with lower frequency than given frequency, in hertz
-      schema:
-        type: number
-    AfterInputBlockParameter:
-      name: afterInputBlock
-      in: query
-      required: false
-      description: Whether to process the image through the input block first
-      schema:
-        type: boolean
-    FiltersMinLabelParameter:
-      name: minLabel
-      in: query
-      required: false
-      description: Only include samples with a label >= this value
-      schema:
-        type: number
-    OffsetResultsParameter:
-      name: offset
-      in: query
-      required: false
-      description: Offset in results, can be used in conjunction with LimitResultsParameter to implement paging.
-      schema:
-        type: integer
-    OptionalImpulseIdParameter:
-      name: impulseId
-      in: query
-      required: false
-      description: Impulse ID. If this is unset then the default impulse is used.
-      schema:
-        type: integer
-    FiltersFilenameParameter:
-      name: filename
-      in: query
-      required: false
-      description: Only include samples whose filename includes the given filename
-      schema:
-        type: string
     FiltersSignatureParameter:
       name: signatureValidity
       in: query
@@ -1399,56 +2031,6 @@ components:
         - both
         - valid
         - invalid
-    FiltersMinFrequencyParameter:
-      name: minFrequency
-      in: query
-      required: false
-      description: Only include samples with higher frequency than given frequency, in hertz
-      schema:
-        type: number
-    SampleIdParameter:
-      name: sampleId
-      in: path
-      required: true
-      description: Sample ID
-      schema:
-        type: integer
-    FiltersMaxLabelParameter:
-      name: maxLabel
-      in: query
-      required: false
-      description: Only include samples with a label < this value
-      schema:
-        type: number
-    JobIdParameter:
-      name: jobId
-      in: path
-      required: true
-      description: Job ID
-      schema:
-        type: integer
-    SearchQueryParameter:
-      name: search
-      in: query
-      required: false
-      description: Search query
-      schema:
-        example: <id> <name>
-        type: string
-    ZoomStart:
-      name: zoomStart
-      in: query
-      required: false
-      description: Zoom into the sample, with the focus starting at this index
-      schema:
-        type: integer
-    ExcludeSensorsParameter:
-      name: excludeSensors
-      in: query
-      required: false
-      description: Whether to exclude sensors in the response (as these can slow down requests when you have large pages).
-      schema:
-        type: boolean
     ProposedActionsJobIdParameter:
       name: proposedActionsJobId
       in: query
@@ -1456,39 +2038,11 @@ components:
       description: Pass this parameter when querying samples from inside an AI Action job. If you pass this parameter in a multi-stage AI Action, previous proposed changes (from an earlier step) will be applied to the returned dataset.
       schema:
         type: integer
-    LimitPayloadValues:
-      name: limitPayloadValues
-      in: query
-      required: false
-      description: Limit the number of payload values in the response
-      schema:
-        type: integer
-    ProjectIdParameter:
-      name: projectId
+    JobIdParameter:
+      name: jobId
       in: path
       required: true
-      description: Project ID
-      schema:
-        type: integer
-    CacheKeyParameter:
-      name: cacheKey
-      in: query
-      required: false
-      description: If set, then a long cache header is sent. If this is omitted then a no-cache header is sent. You can use this if you f.e. know the last modified date of a sample. Stick the last modified date in the cache key, so the sample can be stored in browser cache (and will automatically be invalidated if the modified date changes).
-      schema:
-        type: string
-    FiltersMinLengthParameter:
-      name: minLength
-      in: query
-      required: false
-      description: Only include samples longer than the given length, in milliseconds
-      schema:
-        type: integer
-    LimitResultsParameter:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of results
+      description: Job ID
       schema:
         type: integer
     ZoomEnd:
@@ -1496,35 +2050,6 @@ components:
       in: query
       required: false
       description: Zoom into the sample, with the focus ending at this index
-      schema:
-        type: integer
-    FiltersMaxLengthParameter:
-      name: maxLength
-      in: query
-      required: false
-      description: Only include samples shorter than the given length, in milliseconds
-      schema:
-        type: integer
-    SliceStartParameter:
-      name: sliceStart
-      in: query
-      required: true
-      description: Begin index of the slice
-      schema:
-        type: integer
-    FiltersIdsParameter:
-      name: ids
-      in: query
-      required: false
-      description: Only include samples with an ID within the given list of IDs, given as a JSON string
-      schema:
-        example: '[1, 2, 3]'
-        type: string
-    AxisIndexParameter:
-      name: axisIx
-      in: query
-      required: true
-      description: Axis index
       schema:
         type: integer
     RawDataCategoryParameter:
@@ -1538,6 +2063,31 @@ components:
         - training
         - testing
         - anomaly
+    RawDataCategoryQueryParameter:
+      name: category
+      in: query
+      required: true
+      description: Which of the three acquisition categories to retrieve data from
+      schema:
+        type: string
+        enum:
+        - training
+        - testing
+        - anomaly
+    FiltersMinLengthParameter:
+      name: minLength
+      in: query
+      required: false
+      description: Only include samples longer than the given length, in milliseconds
+      schema:
+        type: integer
+    FiltersMaxFrequencyParameter:
+      name: maxFrequency
+      in: query
+      required: false
+      description: Only include samples with lower frequency than given frequency, in hertz
+      schema:
+        type: number
     FiltersLabelsParameter:
       name: labels
       in: query
@@ -1546,32 +2096,377 @@ components:
       schema:
         example: '["idle", "snake"]'
         type: string
+    ProjectIdParameter:
+      name: projectId
+      in: path
+      required: true
+      description: Project ID
+      schema:
+        type: integer
+    OptionalImpulseIdParameter:
+      name: impulseId
+      in: query
+      required: false
+      description: Impulse ID. If this is unset then the default impulse is used.
+      schema:
+        type: integer
+    FiltersIdsParameter:
+      name: ids
+      in: query
+      required: false
+      description: Only include samples with an ID within the given list of IDs, given as a JSON string
+      schema:
+        example: '[1, 2, 3]'
+        type: string
+    FiltersMinFrequencyParameter:
+      name: minFrequency
+      in: query
+      required: false
+      description: Only include samples with higher frequency than given frequency, in hertz
+      schema:
+        type: number
+    LimitResultsParameter:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of results
+      schema:
+        type: integer
+    OffsetResultsParameter:
+      name: offset
+      in: query
+      required: false
+      description: Offset in results, can be used in conjunction with LimitResultsParameter to implement paging.
+      schema:
+        type: integer
+    FiltersMaxLengthParameter:
+      name: maxLength
+      in: query
+      required: false
+      description: Only include samples shorter than the given length, in milliseconds
+      schema:
+        type: integer
+    SearchQueryParameter:
+      name: search
+      in: query
+      required: false
+      description: Search query
+      schema:
+        example: <id> <name>
+        type: string
+    FiltersMaxLabelParameter:
+      name: maxLabel
+      in: query
+      required: false
+      description: Only include samples with a label < this value
+      schema:
+        type: number
+    OptionalSliceEndDefaultToWindowLengthParameter:
+      name: sliceEnd
+      in: query
+      required: false
+      description: End index of the slice. If not given, the sample will be sliced to the same length as the impulse input block window length.
+      schema:
+        type: integer
+    ExcludeSensorsParameter:
+      name: excludeSensors
+      in: query
+      required: false
+      description: Whether to exclude sensors in the response (as these can slow down requests when you have large pages).
+      schema:
+        type: boolean
+    OptionalSliceStartParameter:
+      name: sliceStart
+      in: query
+      required: false
+      description: Begin index of the slice. If not given, the whole sample is used.
+      schema:
+        type: integer
+    CacheKeyParameter:
+      name: cacheKey
+      in: query
+      required: false
+      description: If set, then a long cache header is sent. If this is omitted then a no-cache header is sent. You can use this if you f.e. know the last modified date of a sample. Stick the last modified date in the cache key, so the sample can be stored in browser cache (and will automatically be invalidated if the modified date changes).
+      schema:
+        type: string
+    FiltersFilenameParameter:
+      name: filename
+      in: query
+      required: false
+      description: Only include samples whose filename includes the given filename
+      schema:
+        type: string
+    LimitPayloadValues:
+      name: limitPayloadValues
+      in: query
+      required: false
+      description: Limit the number of payload values in the response
+      schema:
+        type: integer
+    SampleIdParameter:
+      name: sampleId
+      in: path
+      required: true
+      description: Sample ID
+      schema:
+        type: integer
+    AfterInputBlockParameter:
+      name: afterInputBlock
+      in: query
+      required: false
+      description: Whether to process the image through the input block first
+      schema:
+        type: boolean
+    FiltersExcludeIdsParameter:
+      name: excludeIds
+      in: query
+      required: false
+      description: Exclude samples with an ID within the given list of IDs, given as a JSON string
+      schema:
+        example: '[4, 5, 6]'
+        type: string
+    TruncateStructuredLabelsParameter:
+      name: truncateStructuredLabels
+      in: query
+      required: false
+      description: If true, only a slice of labels will be returned for samples with multiple labels.
+      schema:
+        type: boolean
+    FiltersMetadataParameter:
+      name: metadata
+      in: query
+      required: false
+      description: "Filter samples by metadata key-value pairs, provided as a JSON string.\nEach item in the filter list is an object with the following properties:\n    - \"key\": Metadata key to filter on.\n    - \"op\": Operator (\"eq\" for positive match, \"neq\" for negative match).\n    - \"values\": (optional) Array of values to match/exclude. If omitted or empty, matches/excludes all values for the key.\nIn addition to filter objects, the following option objects can be specified:\n    - { \"no_metadata\": boolean } - If true, include samples without any metadata\n    - { \"filters_combinator\": (\"and\" | \"or\") } - Specifies the combinator and matching mode:\n        - \"and\": All filter items must match (logical AND).\n        - \"or\": Any filter item may match (logical OR); samples with metadata keys not present in the filters are included.\n"
+      schema:
+        example: "Example 1: returns samples where metadata key \"foo\" is 'bar' or 'baz' AND\nmetadata key \"k\" is \"v\".\n[\n    { \"no_metadata\": true },\n    { \"filters_combinator\": \"and\" },\n    { \"key\": \"foo\", \"op\": \"eq\", \"values\": [\"bar\", \"baz\"] },\n    { \"key\": \"k\", \"op\": \"eq\", \"values\": [\"v\"] }\n]\n\nExample 2: returns samples where metadata key \"foo\" is not 'bar'. Samples\nwithout any metadata are filtered out.\n[\n    { \"no_metadata\": false },\n    { \"filters_combinator\": \"or\" },\n    { \"key\": \"foo\", \"op\": \"neq\", \"values\": [\"bar\"] }\n]\n"
+        type: string
+    FiltersMinDateParameter:
+      name: minDate
+      in: query
+      required: false
+      description: Only include samples that where added after the date given
+      schema:
+        type: string
+        format: date-time
+        example: '2023-01-01T00:00:00.000Z'
+    RawDataCategoryParameter_2:
+      name: category
+      in: path
+      required: true
+      description: Which of the three acquisition categories to download data from
+      schema:
+        $ref: '#/components/schemas/RawDataCategory'
+    RawDataCategoryQueryParameter_2:
+      name: category
+      in: query
+      required: true
+      description: Which of the three acquisition categories to retrieve data from
+      schema:
+        $ref: '#/components/schemas/RawDataFilterCategory'
+    OptionalDatasetVersionIdParameter:
+      name: datasetVersionId
+      in: query
+      required: false
+      description: Dataset version ID. If not set, the current dataset version is used
+      schema:
+        type: integer
+    TruncateLabelsParameter:
+      name: truncateLabels
+      in: query
+      required: false
+      description: If true, only a slice of labels will be returned.
+      schema:
+        type: boolean
+    FiltersMaxDateParameter:
+      name: maxDate
+      in: query
+      required: false
+      description: Only include samples that were added before the date given
+      schema:
+        type: string
+        format: date-time
+        example: '2024-12-31T00:00:00.000Z'
+    FiltersMaxIdParameter:
+      name: maxId
+      in: query
+      required: false
+      description: Include only samples with an ID < this value
+      schema:
+        type: integer
+    FiltersDataTypeParameter:
+      name: dataType
+      in: query
+      required: false
+      description: Include only samples with a particular data type
+      schema:
+        type: string
+        enum:
+        - audio
+        - image
+    OptionalDatastreamIndexParameter:
+      name: datastreamIndex
+      in: query
+      required: false
+      description: Datastream index (defaults to 0)
+      schema:
+        type: integer
+    SamplesSortByParameter:
+      name: sortBy
+      in: query
+      required: false
+      description: If not specified, "id-desc" is used.
+      schema:
+        type: string
+        enum:
+        - id-desc
+        - random
+    FiltersMinIdParameter:
+      name: minId
+      in: query
+      required: false
+      description: Include only samples with an ID >= this value
+      schema:
+        type: integer
   schemas:
-    SetSampleProposedChangesRequest:
+    CosineSimilarityIssue:
       type: object
+      description: Describes a sample that has potential issues as identified by the cosine similarity label noise detection method.
       required:
-      - jobId
-      - proposedChanges
+      - id
+      - label
+      - issues
       properties:
-        jobId:
+        id:
           type: integer
-          description: Job ID of an AI Actions job. This is passed into your job via the --propose-actions argument.
-        proposedChanges:
-          $ref: '#/components/schemas/SampleProposedChanges'
-    CropSampleRequest:
+          description: The ID of this sample
+        sample:
+          $ref: '#/components/schemas/Sample'
+          description: Detailed information about the sample
+        label:
+          type: integer
+          description: The label of this sample, in index form
+        issues:
+          type: array
+          description: A list of samples that have windows that are symptomatic of this issue.
+          items:
+            type: object
+            required:
+            - id
+            - label
+            - windows
+            properties:
+              id:
+                type: integer
+                description: The ID of this sample
+              sample:
+                $ref: '#/components/schemas/Sample'
+                description: Detailed information about the sample
+              label:
+                type: integer
+                description: The label of this sample, in index form
+              windows:
+                type: array
+                description: The windows in this sample that are symptomatic of this issue.
+                items:
+                  type: object
+                  required:
+                  - windowStart
+                  - windowEnd
+                  - score
+                  properties:
+                    windowStart:
+                      type: integer
+                      description: The start time of this window in milliseconds
+                    windowEnd:
+                      type: integer
+                      description: The end time of this window in milliseconds
+                    score:
+                      type: number
+                      description: The cosine similarity score between this window and a window from the sample in the parent object.
+    RawSamplePayload:
       type: object
+      description: Sensor readings and metadata
       required:
-      - cropStart
-      - cropEnd
+      - device_type
+      - sensors
+      - values
       properties:
+        device_name:
+          type: string
+          description: Unique identifier for this device. **Only** set this when the device has a globally unique identifier (e.g. MAC address).
+          example: ac:87:a3:0a:2d:1b
+        device_type:
+          type: string
+          description: Device type, for example the exact model of the device. Should be the same for all similar devices.
+          example: DISCO-L475VG-IOT01A
+        sensors:
+          type: array
+          description: Array with sensor axes
+          items:
+            $ref: '#/components/schemas/Sensor'
+        values:
+          type: array
+          description: 'Array of sensor values. One array item per interval, and as many items in this array as there are sensor axes. This type is returned if there are multiple axes.
+
+            '
+          items:
+            type: array
+            items:
+              type: number
         cropStart:
           type: integer
-          description: New start index of the sample
+          description: New start index of the cropped sample
           example: 0
         cropEnd:
           type: integer
-          description: New end index of the sample
+          description: New end index of the cropped sample
           example: 128
+    DatasetRatioData:
+      type: object
+      properties:
+        ratio:
+          type: object
+          properties:
+            training:
+              type: integer
+              description: number of training samples after rebalance
+            testing:
+              type: integer
+              description: number of testing samples after rebalance
+    SampleMetadata:
+      type: object
+      required:
+      - id
+      - metadata
+      properties:
+        id:
+          type: integer
+          description: Sample ID
+        metadata:
+          type: object
+          description: Sample free form associated metadata
+          additionalProperties:
+            type: string
+    ObjectDetectionLabelQueueCountResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - samplesCount
+        properties:
+          samplesCount:
+            type: integer
+    MoveRawDataRequest:
+      type: object
+      required:
+      - newCategory
+      properties:
+        newCategory:
+          type: string
+          enum:
+          - training
+          - testing
+          - anomaly
     HasDataExplorerFeaturesResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -1583,213 +2478,12 @@ components:
             type: boolean
           inputBlock:
             $ref: '#/components/schemas/ImpulseInputBlock'
-    SampleProposedChanges:
+    SplitSampleInFramesRequest:
       type: object
       properties:
-        label:
-          type: string
-          description: New label (single-label)
-        isDisabled:
-          type: boolean
-          description: True if the current sample should be disabled; or false if it should not be disabled.
-        boundingBoxes:
-          type: array
-          description: List of bounding boxes. The existing bounding boxes on the sample will be replaced (so if you want to add new bounding boxes, use the existing list as a basis).
-          items:
-            $ref: '#/components/schemas/BoundingBox'
-        metadata:
-          type: object
-          description: Free form associated metadata. The existing metadata on the sample will be replaced (so if you want to add new metadata, use the existing list as a basis).
-          additionalProperties:
-            type: string
-        structuredLabels:
-          type: array
-          description: New label (multi-label)
-          items:
-            $ref: '#/components/schemas/StructuredLabel'
-    GetDiversityDataResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        properties:
-          data:
-            type: array
-            items:
-              type: object
-              required:
-              - clusterInfos
-              - maxDistance
-              properties:
-                labelId:
-                  type: number
-                maxDistance:
-                  type: number
-                clusterInfos:
-                  type: array
-                  items:
-                    type: object
-                    description: Information about a cluster of samples
-                    required:
-                    - idx
-                    - indexes
-                    - windows
-                    - vendiScore
-                    - vendiRatio
-                    - count
-                    - distance
-                    - leftIdx
-                    - rightIdx
-                    properties:
-                      idx:
-                        type: integer
-                        description: Unique index of the cluster
-                      indexes:
-                        type: array
-                        items:
-                          type: integer
-                        description: Indexes of all windows contained in the cluster (for debugging)
-                      windows:
-                        type: array
-                        items:
-                          type: array
-                          items:
-                            type: integer
-                        description: The sample ID and window start and end of every window in the cluster
-                      samples:
-                        type: array
-                        items:
-                          $ref: '#/components/schemas/Sample'
-                        description: Details of every sample in the cluster
-                      vendiScore:
-                        type: number
-                        description: Raw vendi score
-                      vendiRatio:
-                        type: number
-                        description: Vendi score expressed as ratio from 0 to 1
-                      count:
-                        type: integer
-                        description: The number if windows in the cluster
-                      distance:
-                        type: number
-                        description: The distance of the cluster from the origin
-                      leftIdx:
-                        type:
-                        - integer
-                        - 'null'
-                        description: The cluster id on the left branch of the dendrogram
-                      rightIdx:
-                        type:
-                        - integer
-                        - 'null'
-                        description: The cluster id on the right branch of the dendrogram
-    TrackObjectsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - boundingBoxes
-        properties:
-          boundingBoxes:
-            type: array
-            items:
-              $ref: '#/components/schemas/BoundingBox'
-    ObjectDetectionLabelQueueResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - samples
-        properties:
-          samples:
-            type: array
-            items:
-              type: object
-              required:
-              - id
-              properties:
-                id:
-                  type: integer
-    SegmentSampleRequest:
-      type: object
-      required:
-      - segments
-      properties:
-        segments:
-          type: array
-          items:
-            type: object
-            required:
-            - startMs
-            - endMs
-            properties:
-              startMs:
-                type: integer
-              endMs:
-                type: integer
-    DataExplorerPredictionsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - predictions
-        - labels
-        - classificationType
-        properties:
-          predictions:
-            type: array
-            items:
-              $ref: '#/components/schemas/ModelPrediction'
-          labels:
-            type: array
-            items:
-              type: string
-          classificationType:
-            type: string
-            enum:
-            - classification
-            - regression
-    BoundingBox:
-      type: object
-      description: This has the _absolute values_ for x/y/w/h (so 0..x (where x is the w/h of the image))
-      required:
-      - label
-      - x
-      - y
-      - width
-      - height
-      properties:
-        label:
-          type: string
-        x:
+        fps:
           type: integer
-        y:
-          type: integer
-        width:
-          type: integer
-        height:
-          type: integer
-    GetAllImportedFromResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - data
-        properties:
-          data:
-            type: array
-            items:
-              type: object
-              required:
-              - id
-              - category
-              - importedFrom
-              properties:
-                id:
-                  type: integer
-                category:
-                  type: string
-                importedFrom:
-                  type: string
+          description: Frames per second to extract from this video.
     Sensor:
       type: object
       required:
@@ -1803,45 +2497,73 @@ components:
         units:
           type: string
           description: Type of data on this axis. Needs to comply to SenML units (see https://www.iana.org/assignments/senml/senml.xhtml).
-    BatchAddMetadataRequest:
+    ProjectSampleMetadata:
+      type: object
+      description: Project sample metadata
+      required:
+      - metadata
+      properties:
+        metadata:
+          type: array
+          description: Array with all available sample metadata.
+          items:
+            $ref: '#/components/schemas/SampleMetadata'
+    UploadImageRequest:
       type: object
       required:
-      - metadataKey
-      - metadataValue
+      - image
       properties:
-        metadataKey:
+        image:
           type: string
-        metadataValue:
-          type: string
-    GetAIActionsProposedChangesResponse:
+          format: binary
+    StoreSegmentLengthRequest:
+      type: object
+      required:
+      - segmentLength
+      properties:
+        segmentLength:
+          type: number
+          description: Last segment length in milliseconds.
+          example: 1000
+    GetSampleMetadataResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - $ref: '#/components/schemas/ProjectSampleMetadata'
+    ListSamplesResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - proposedChanges
+        - samples
+        - totalCount
         properties:
-          proposedChanges:
+          samples:
             type: array
             items:
-              type: object
-              required:
-              - sampleId
-              - step
-              - proposedChanges
-              properties:
-                sampleId:
-                  type: integer
-                step:
-                  type: integer
-                proposedChanges:
-                  $ref: '#/components/schemas/SampleProposedChanges'
-    BatchClearMetadataByKeyRequest:
+              $ref: '#/components/schemas/Sample'
+          totalCount:
+            type: integer
+    ObjectDetectionAutoLabelRequest:
       type: object
       required:
-      - metadataKey
+      - neuralNetwork
       properties:
-        metadataKey:
+        neuralNetwork:
           type: string
+          enum:
+          - yolov5
+          - currentProject
+    FindSegmentSampleRequest:
+      type: object
+      required:
+      - shiftSegments
+      - segmentLengthMs
+      properties:
+        shiftSegments:
+          type: boolean
+          description: If set, the segments are automatically shifted randomly, to make the dataset distribution more uniform.
+        segmentLengthMs:
+          type: integer
     ImpulseInputBlock:
       type: object
       required:
@@ -1949,70 +2671,6 @@ components:
               type: number
             subsetSeed:
               type: number
-    GetSampleMetadataResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - $ref: '#/components/schemas/ProjectSampleMetadata'
-    RebalanceDatasetResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - $ref: '#/components/schemas/DatasetRatioData'
-    CropSampleResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - requiresProcessing
-        properties:
-          requiresProcessing:
-            type: boolean
-    FindSegmentSampleRequest:
-      type: object
-      required:
-      - shiftSegments
-      - segmentLengthMs
-      properties:
-        shiftSegments:
-          type: boolean
-          description: If set, the segments are automatically shifted randomly, to make the dataset distribution more uniform.
-        segmentLengthMs:
-          type: integer
-    ProjectSampleMetadata:
-      type: object
-      description: Project sample metadata
-      required:
-      - metadata
-      properties:
-        metadata:
-          type: array
-          description: Array with all available sample metadata.
-          items:
-            $ref: '#/components/schemas/SampleMetadata'
-    DatasetRatioData:
-      type: object
-      properties:
-        ratio:
-          type: object
-          properties:
-            training:
-              type: integer
-              description: number of training samples after rebalance
-            testing:
-              type: integer
-              description: number of testing samples after rebalance
-    GetDataExplorerSettingsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - $ref: '#/components/schemas/DataExplorerSettings'
-      - type: object
-        required:
-        - dimensionalityReductionRecommendation
-        properties:
-          dimensionalityReductionRecommendation:
-            type: string
-            enum:
-            - tsne
-            - pca
     CosineSimilarityData:
       type: object
       description: Describes the results of running the cosine similarity label noise detection method.
@@ -2030,173 +2688,56 @@ components:
           description: A list of samples that have windows that are dissimilar to windows of other samples that have the same label.
           items:
             $ref: '#/components/schemas/CosineSimilarityIssue'
-    CrossValidationData:
+    BoundingBox:
       type: object
-      description: Describes the results of running the cross validation label noise detection method.
+      description: This has the _absolute values_ for x/y/w/h (so 0..x (where x is the w/h of the image))
       required:
-      - scores
-      properties:
-        scores:
-          type: array
-          items:
-            type: object
-            required:
-            - id
-            - windowStart
-            - windowEnd
-            - label
-            - probability
-            - score
-            properties:
-              id:
-                type: integer
-                description: The ID of the sample this window belongs to
-              sample:
-                $ref: '#/components/schemas/Sample'
-                description: Detailed information about the sample this window belongs to
-              windowStart:
-                type: integer
-                description: The start time of this window in milliseconds
-              windowEnd:
-                type: integer
-                description: The end time of this window in milliseconds
-              label:
-                type: integer
-                description: The label of this window, in index form
-              probability:
-                type: number
-                description: The probability of this window being the label it was assigned, as estimated by a classifier trained on the whole dataset.
-              score:
-                type: number
-                description: The z-score of the probability with respect to other class members, so that outliers (i.e. windows whose probability is low) can be easily spotted. This assumes that most correctly labelled class members will have a high probability.
-    GetLabelNoiseDataResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - data
-        properties:
-          data:
-            type: object
-            properties:
-              cosineSimilarity:
-                $ref: '#/components/schemas/CosineSimilarityData'
-              neighbors:
-                $ref: '#/components/schemas/NeighborsData'
-              crossValidation:
-                $ref: '#/components/schemas/CrossValidationData'
-    StructuredLabel:
-      type: object
-      description: 'A structured label contains a label, and the range for which this label is valid. `endIndex` is inclusive. E.g. `{ startIndex: 10, endIndex: 13, label: ''running'' }` means that the values at index 10, 11, 12, 13 are labeled ''running''. To get time codes you can multiple by the sample''s `intervalMs` property.'
-      required:
-      - startIndex
-      - endIndex
       - label
+      - x
+      - y
+      - width
+      - height
       properties:
-        startIndex:
-          type: integer
-          description: Start index of the label (e.g. 0)
-        endIndex:
-          type: integer
-          description: 'End index of the label (e.g. 3). This value is inclusive, so { startIndex: 0, endIndex: 3 } covers 0, 1, 2, 3.'
         label:
           type: string
-          description: The label for this section.
-    SampleBoundingBoxesRequest:
+        x:
+          type: integer
+        y:
+          type: integer
+        width:
+          type: integer
+        height:
+          type: integer
+    ModelPrediction:
       type: object
       required:
-      - boundingBoxes
+      - sampleId
+      - startMs
+      - endMs
+      - prediction
       properties:
-        boundingBoxes:
-          type: array
-          items:
-            $ref: '#/components/schemas/BoundingBox'
-    UploadImageRequest:
-      type: object
-      required:
-      - image
-      properties:
-        image:
-          type: string
-          format: binary
-    StoreSegmentLengthRequest:
-      type: object
-      required:
-      - segmentLength
-      properties:
-        segmentLength:
+        sampleId:
+          type: integer
+        startMs:
           type: number
-          description: Last segment length in milliseconds.
-          example: 1000
-    NeighborsData:
-      type: object
-      description: Describes the results of running the nearest neighbors label noise detection method.
-      required:
-      - scoresAndNeighbors
-      - numNeighbors
-      properties:
-        scoresAndNeighbors:
-          type: array
-          items:
-            $ref: '#/components/schemas/NeighborsScore'
-          description: The label noise score and nearest neighbors for each window of data in the project that shows a potential label noise issue.
-        numNeighbors:
-          type: integer
-          description: The number of neighbors used in the nearest neighbors algorithm.
-    SplitSampleInFramesRequest:
-      type: object
-      properties:
-        fps:
-          type: integer
-          description: Frames per second to extract from this video.
-    ObjectDetectionAutoLabelRequest:
-      type: object
-      required:
-      - neuralNetwork
-      properties:
-        neuralNetwork:
+        endMs:
+          type: number
+        label:
           type: string
-          enum:
-          - yolov5
-          - currentProject
-    RawSamplePayload:
-      type: object
-      description: Sensor readings and metadata
-      required:
-      - device_type
-      - sensors
-      - values
-      properties:
-        device_name:
+        prediction:
           type: string
-          description: Unique identifier for this device. **Only** set this when the device has a globally unique identifier (e.g. MAC address).
-          example: ac:87:a3:0a:2d:1b
-        device_type:
-          type: string
-          description: Device type, for example the exact model of the device. Should be the same for all similar devices.
-          example: DISCO-L475VG-IOT01A
-        sensors:
+        predictionCorrect:
+          type: boolean
+        f1Score:
+          type: number
+          description: Only set for object detection projects
+        anomalyScores:
           type: array
-          description: Array with sensor axes
-          items:
-            $ref: '#/components/schemas/Sensor'
-        values:
-          type: array
-          description: 'Array of sensor values. One array item per interval, and as many items in this array as there are sensor axes. This type is returned if there are multiple axes.
-
-            '
+          description: Only set for visual anomaly projects. 2D array of shape (n, n) with raw anomaly scores, where n varies based on the image input size and the specific visual anomaly algorithm used. The scores corresponds to each grid cell in the image's spatial matrix.
           items:
             type: array
             items:
               type: number
-        cropStart:
-          type: integer
-          description: New start index of the cropped sample
-          example: 0
-        cropEnd:
-          type: integer
-          description: New end index of the cropped sample
-          example: 128
     ObjectDetectionAutoLabelResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -2230,13 +2771,15 @@ components:
             type: array
             items:
               type: string
-    EditSampleLabelRequest:
+    RenameSampleRequest:
       type: object
+      required:
+      - name
       properties:
-        label:
+        name:
           type: string
-          description: New label for this sample
-          example: water-hammer
+          description: New name for this sample
+          example: faulty-machine2.A3de
     GetDataExplorerFeaturesResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -2292,40 +2835,35 @@ components:
                       - testing
           inputBlock:
             $ref: '#/components/schemas/ImpulseInputBlock'
-    ModelPrediction:
+    BatchClearMetadataByKeyRequest:
       type: object
       required:
-      - sampleId
-      - startMs
-      - endMs
-      - prediction
+      - metadataKey
       properties:
-        sampleId:
-          type: integer
-        startMs:
-          type: number
-        endMs:
-          type: number
-        label:
+        metadataKey:
           type: string
-        prediction:
-          type: string
-        predictionCorrect:
-          type: boolean
-        f1Score:
-          type: number
-          description: Only set for object detection projects
-        anomalyScores:
-          type: array
-          description: Only set for visual anomaly projects. 2D array of shape (n, n) with raw anomaly scores, where n varies based on the image input size and the specific visual anomaly algorithm used. The scores corresponds to each grid cell in the image's spatial matrix.
-          items:
-            type: array
-            items:
-              type: number
-    GetSampleResponse:
+    GetAllImportedFromResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
-      - $ref: '#/components/schemas/RawSampleData'
+      - type: object
+        required:
+        - data
+        properties:
+          data:
+            type: array
+            items:
+              type: object
+              required:
+              - id
+              - category
+              - importedFrom
+              properties:
+                id:
+                  type: integer
+                category:
+                  type: string
+                importedFrom:
+                  type: string
     SetSampleMetadataRequest:
       type: object
       properties:
@@ -2333,20 +2871,114 @@ components:
           type: object
           additionalProperties:
             type: string
-    ListSamplesResponse:
+    CrossValidationData:
+      type: object
+      description: Describes the results of running the cross validation label noise detection method.
+      required:
+      - scores
+      properties:
+        scores:
+          type: array
+          items:
+            type: object
+            required:
+            - id
+            - windowStart
+            - windowEnd
+            - label
+            - probability
+            - score
+            properties:
+              id:
+                type: integer
+                description: The ID of the sample this window belongs to
+              sample:
+                $ref: '#/components/schemas/Sample'
+                description: Detailed information about the sample this window belongs to
+              windowStart:
+                type: integer
+                description: The start time of this window in milliseconds
+              windowEnd:
+                type: integer
+                description: The end time of this window in milliseconds
+              label:
+                type: integer
+                description: The label of this window, in index form
+              probability:
+                type: number
+                description: The probability of this window being the label it was assigned, as estimated by a classifier trained on the whole dataset.
+              score:
+                type: number
+                description: The z-score of the probability with respect to other class members, so that outliers (i.e. windows whose probability is low) can be easily spotted. This assumes that most correctly labelled class members will have a high probability.
+    SampleBoundingBoxesRequest:
+      type: object
+      required:
+      - boundingBoxes
+      properties:
+        boundingBoxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/BoundingBox'
+    SampleProposedChanges:
+      type: object
+      properties:
+        label:
+          type: string
+          description: New label (single-label)
+        isDisabled:
+          type: boolean
+          description: True if the current sample should be disabled; or false if it should not be disabled.
+        boundingBoxes:
+          type: array
+          description: List of bounding boxes. The existing bounding boxes on the sample will be replaced (so if you want to add new bounding boxes, use the existing list as a basis).
+          items:
+            $ref: '#/components/schemas/BoundingBox'
+        metadata:
+          type: object
+          description: Free form associated metadata. The existing metadata on the sample will be replaced (so if you want to add new metadata, use the existing list as a basis).
+          additionalProperties:
+            type: string
+        structuredLabels:
+          type: array
+          description: New label (multi-label)
+          items:
+            $ref: '#/components/schemas/StructuredLabel'
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    StartJobResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - samples
-        - totalCount
+        - id
         properties:
-          samples:
-            type: array
-            items:
-              $ref: '#/components/schemas/Sample'
-          totalCount:
+          id:
             type: integer
+            description: Job identifier. Status updates will include this identifier.
+            example: 12873488112
+    RawSampleData:
+      type: object
+      required:
+      - sample
+      - payload
+      - totalPayloadLength
+      properties:
+        sample:
+          $ref: '#/components/schemas/Sample'
+        payload:
+          $ref: '#/components/schemas/RawSamplePayload'
+        totalPayloadLength:
+          type: integer
+          description: Total number of payload values
     NeighborsScore:
       type: object
       description: Describes the label noise score and nearest neighbors for a single window of data in the project that shows a potential label noise issue.
@@ -2394,15 +3026,58 @@ components:
               windowEnd:
                 type: integer
                 description: The end time of this window in milliseconds
-    ObjectDetectionLabelQueueCountResponse:
+    GetAIActionsProposedChangesResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - samplesCount
+        - proposedChanges
         properties:
-          samplesCount:
-            type: integer
+          proposedChanges:
+            type: array
+            items:
+              type: object
+              required:
+              - sampleId
+              - step
+              - proposedChanges
+              properties:
+                sampleId:
+                  type: integer
+                step:
+                  type: integer
+                proposedChanges:
+                  $ref: '#/components/schemas/SampleProposedChanges'
+    GetSampleResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - $ref: '#/components/schemas/RawSampleData'
+    TrackObjectsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - boundingBoxes
+        properties:
+          boundingBoxes:
+            type: array
+            items:
+              $ref: '#/components/schemas/BoundingBox'
+    NeighborsData:
+      type: object
+      description: Describes the results of running the nearest neighbors label noise detection method.
+      required:
+      - scoresAndNeighbors
+      - numNeighbors
+      properties:
+        scoresAndNeighbors:
+          type: array
+          items:
+            $ref: '#/components/schemas/NeighborsScore'
+          description: The label noise score and nearest neighbors for each window of data in the project that shows a potential label noise issue.
+        numNeighbors:
+          type: integer
+          description: The number of neighbors used in the nearest neighbors algorithm.
     CountSamplesResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -2412,6 +3087,284 @@ components:
         properties:
           count:
             type: integer
+    ObjectDetectionLabelQueueResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - samples
+        properties:
+          samples:
+            type: array
+            items:
+              type: object
+              required:
+              - id
+              properties:
+                id:
+                  type: integer
+    StructuredLabel:
+      type: object
+      description: 'A structured label contains a label, and the range for which this label is valid. `endIndex` is inclusive. E.g. `{ startIndex: 10, endIndex: 13, label: ''running'' }` means that the values at index 10, 11, 12, 13 are labeled ''running''. To get time codes you can multiple by the sample''s `intervalMs` property.'
+      required:
+      - startIndex
+      - endIndex
+      - label
+      properties:
+        startIndex:
+          type: integer
+          description: Start index of the label (e.g. 0)
+        endIndex:
+          type: integer
+          description: 'End index of the label (e.g. 3). This value is inclusive, so { startIndex: 0, endIndex: 3 } covers 0, 1, 2, 3.'
+        label:
+          type: string
+          description: The label for this section.
+    SetSampleProposedChangesRequest:
+      type: object
+      required:
+      - jobId
+      - proposedChanges
+      properties:
+        jobId:
+          type: integer
+          description: Job ID of an AI Actions job. This is passed into your job via the --propose-actions argument.
+        proposedChanges:
+          $ref: '#/components/schemas/SampleProposedChanges'
+    FindSegmentSampleResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - segments
+        properties:
+          segments:
+            type: array
+            items:
+              type: object
+              required:
+              - startMs
+              - endMs
+              properties:
+                startMs:
+                  type: integer
+                endMs:
+                  type: integer
+    GetDiversityDataResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              type: object
+              required:
+              - clusterInfos
+              - maxDistance
+              properties:
+                labelId:
+                  type: number
+                maxDistance:
+                  type: number
+                clusterInfos:
+                  type: array
+                  items:
+                    type: object
+                    description: Information about a cluster of samples
+                    required:
+                    - idx
+                    - indexes
+                    - windows
+                    - vendiScore
+                    - vendiRatio
+                    - count
+                    - distance
+                    - leftIdx
+                    - rightIdx
+                    properties:
+                      idx:
+                        type: integer
+                        description: Unique index of the cluster
+                      indexes:
+                        type: array
+                        items:
+                          type: integer
+                        description: Indexes of all windows contained in the cluster (for debugging)
+                      windows:
+                        type: array
+                        items:
+                          type: array
+                          items:
+                            type: integer
+                        description: The sample ID and window start and end of every window in the cluster
+                      samples:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Sample'
+                        description: Details of every sample in the cluster
+                      vendiScore:
+                        type: number
+                        description: Raw vendi score
+                      vendiRatio:
+                        type: number
+                        description: Vendi score expressed as ratio from 0 to 1
+                      count:
+                        type: integer
+                        description: The number if windows in the cluster
+                      distance:
+                        type: number
+                        description: The distance of the cluster from the origin
+                      leftIdx:
+                        type:
+                        - integer
+                        - 'null'
+                        description: The cluster id on the left branch of the dendrogram
+                      rightIdx:
+                        type:
+                        - integer
+                        - 'null'
+                        description: The cluster id on the right branch of the dendrogram
+    CropSampleResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - requiresProcessing
+        properties:
+          requiresProcessing:
+            type: boolean
+    DataExplorerPredictionsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - predictions
+        - labels
+        - classificationType
+        properties:
+          predictions:
+            type: array
+            items:
+              $ref: '#/components/schemas/ModelPrediction'
+          labels:
+            type: array
+            items:
+              type: string
+          classificationType:
+            type: string
+            enum:
+            - classification
+            - regression
+    GetDataExplorerSettingsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - $ref: '#/components/schemas/DataExplorerSettings'
+      - type: object
+        required:
+        - dimensionalityReductionRecommendation
+        properties:
+          dimensionalityReductionRecommendation:
+            type: string
+            enum:
+            - tsne
+            - pca
+    BatchAddMetadataRequest:
+      type: object
+      required:
+      - metadataKey
+      - metadataValue
+      properties:
+        metadataKey:
+          type: string
+        metadataValue:
+          type: string
+    DataExplorerSettings:
+      type: object
+      properties:
+        preset:
+          description: Preset to use for the data explorer.
+          type: string
+          enum:
+          - keywords
+          - images
+          - current-impulse
+          - current-impulse-embeddings
+        dimensionalityReductionTechnique:
+          type: string
+          enum:
+          - tsne
+          - pca
+        impulseId:
+          type: integer
+          description: Which impulse to use (if preset is either 'current-impulse' or 'current-impulse-embeddings'). If this is undefined then 'defaultImpulseId' is used.
+    EditSampleLabelRequest:
+      type: object
+      properties:
+        label:
+          type: string
+          description: New label for this sample
+          example: water-hammer
+    SegmentSampleRequest:
+      type: object
+      required:
+      - segments
+      properties:
+        segments:
+          type: array
+          items:
+            type: object
+            required:
+            - startMs
+            - endMs
+            properties:
+              startMs:
+                type: integer
+              endMs:
+                type: integer
+    RebalanceDatasetResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - $ref: '#/components/schemas/DatasetRatioData'
+    SetSampleStructuredLabelsRequest:
+      type: object
+      required:
+      - structuredLabels
+      properties:
+        structuredLabels:
+          type: array
+          items:
+            $ref: '#/components/schemas/StructuredLabel'
+    CropSampleRequest:
+      type: object
+      required:
+      - cropStart
+      - cropEnd
+      properties:
+        cropStart:
+          type: integer
+          description: New start index of the sample
+          example: 0
+        cropEnd:
+          type: integer
+          description: New end index of the sample
+          example: 128
+    GetLabelNoiseDataResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - data
+        properties:
+          data:
+            type: object
+            properties:
+              cosineSimilarity:
+                $ref: '#/components/schemas/CosineSimilarityData'
+              neighbors:
+                $ref: '#/components/schemas/NeighborsData'
+              crossValidation:
+                $ref: '#/components/schemas/CrossValidationData'
     Sample:
       type: object
       required:
@@ -2589,178 +3542,6 @@ components:
               type: integer
             height:
               type: integer
-    MoveRawDataRequest:
-      type: object
-      required:
-      - newCategory
-      properties:
-        newCategory:
-          type: string
-          enum:
-          - training
-          - testing
-          - anomaly
-    RawSampleData:
-      type: object
-      required:
-      - sample
-      - payload
-      - totalPayloadLength
-      properties:
-        sample:
-          $ref: '#/components/schemas/Sample'
-        payload:
-          $ref: '#/components/schemas/RawSamplePayload'
-        totalPayloadLength:
-          type: integer
-          description: Total number of payload values
-    SampleMetadata:
-      type: object
-      required:
-      - id
-      - metadata
-      properties:
-        id:
-          type: integer
-          description: Sample ID
-        metadata:
-          type: object
-          description: Sample free form associated metadata
-          additionalProperties:
-            type: string
-    FindSegmentSampleResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - segments
-        properties:
-          segments:
-            type: array
-            items:
-              type: object
-              required:
-              - startMs
-              - endMs
-              properties:
-                startMs:
-                  type: integer
-                endMs:
-                  type: integer
-    CosineSimilarityIssue:
-      type: object
-      description: Describes a sample that has potential issues as identified by the cosine similarity label noise detection method.
-      required:
-      - id
-      - label
-      - issues
-      properties:
-        id:
-          type: integer
-          description: The ID of this sample
-        sample:
-          $ref: '#/components/schemas/Sample'
-          description: Detailed information about the sample
-        label:
-          type: integer
-          description: The label of this sample, in index form
-        issues:
-          type: array
-          description: A list of samples that have windows that are symptomatic of this issue.
-          items:
-            type: object
-            required:
-            - id
-            - label
-            - windows
-            properties:
-              id:
-                type: integer
-                description: The ID of this sample
-              sample:
-                $ref: '#/components/schemas/Sample'
-                description: Detailed information about the sample
-              label:
-                type: integer
-                description: The label of this sample, in index form
-              windows:
-                type: array
-                description: The windows in this sample that are symptomatic of this issue.
-                items:
-                  type: object
-                  required:
-                  - windowStart
-                  - windowEnd
-                  - score
-                  properties:
-                    windowStart:
-                      type: integer
-                      description: The start time of this window in milliseconds
-                    windowEnd:
-                      type: integer
-                      description: The end time of this window in milliseconds
-                    score:
-                      type: number
-                      description: The cosine similarity score between this window and a window from the sample in the parent object.
-    RenameSampleRequest:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: New name for this sample
-          example: faulty-machine2.A3de
-    StartJobResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: integer
-            description: Job identifier. Status updates will include this identifier.
-            example: 12873488112
-    DataExplorerSettings:
-      type: object
-      properties:
-        preset:
-          description: Preset to use for the data explorer.
-          type: string
-          enum:
-          - keywords
-          - images
-          - current-impulse
-          - current-impulse-embeddings
-        dimensionalityReductionTechnique:
-          type: string
-          enum:
-          - tsne
-          - pca
-        impulseId:
-          type: integer
-          description: Which impulse to use (if preset is either 'current-impulse' or 'current-impulse-embeddings'). If this is undefined then 'defaultImpulseId' is used.
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
-    SetSampleStructuredLabelsRequest:
-      type: object
-      required:
-      - structuredLabels
-      properties:
-        structuredLabels:
-          type: array
-          items:
-            $ref: '#/components/schemas/StructuredLabel'
     TrackObjectsRequest:
       type: object
       required:
@@ -2771,6 +3552,1434 @@ components:
           type: integer
         nextSampleId:
           type: integer
+    LastUpdatedByProjectApiKey:
+      type: object
+      description: The project API key that last updated a sample.
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+          enum:
+          - projectApiKey
+        id:
+          type: integer
+          description: The ID of the project API key that last updated the sample.
+    ProjectDatasetMetadataRatioNoRatio:
+      type: object
+      description: Placeholder dataset ratio info when no ratio is available
+      required:
+      - type
+      - hasValidationCategory
+      - count
+      properties:
+        type:
+          type: string
+          enum:
+          - no-ratio
+        hasValidationCategory:
+          type: boolean
+        count:
+          $ref: '#/components/schemas/ProjectDatasetMetadataRatioCount'
+    RawSamplePayload_2:
+      type: object
+      description: Sensor readings and metadata
+      required:
+      - device_type
+      - sensors
+      - values
+      - intervalMs
+      - frequencyHz
+      properties:
+        device_name:
+          type: string
+          description: Unique identifier for this device. **Only** set this when the device has a globally unique identifier (e.g. MAC address).
+          example: ac:87:a3:0a:2d:1b
+        device_type:
+          type: string
+          description: Device type, for example the exact model of the device. Should be the same for all similar devices.
+          example: DISCO-L475VG-IOT01A
+        sensors:
+          type: array
+          description: Array with sensor axes
+          items:
+            $ref: '#/components/schemas/Sensor_2'
+        values:
+          type: array
+          description: 'Array of sensor values. One array item per interval, and as many items in this array as there are sensor axes. This type is returned if there are multiple axes.
+
+            '
+          items:
+            type: array
+            items:
+              type: number
+        cropStart:
+          type: integer
+          description: New start index of the cropped sample
+          example: 0
+        cropEnd:
+          type: integer
+          description: New end index of the cropped sample
+          example: 128
+        intervalMs:
+          type: number
+          description: Interval between two windows (1000 / frequency). If the data was resampled, then this lists the resampled interval for this payload.
+          example: 16
+        frequencyHz:
+          type: number
+          description: Frequency of the sample. If the data was resampled, then this lists the resampled frequency for this payload.
+          example: 62.5
+    DatasetRatioData_2:
+      type: object
+      required:
+      - ratio
+      properties:
+        ratio:
+          type: object
+          properties:
+            training:
+              type: integer
+              description: Number of training samples after rebalance
+            validation:
+              type: integer
+              description: Number of validation samples after rebalance. This is experimental and may change in the future.
+            testing:
+              type: integer
+              description: Number of testing samples after rebalance. This ignores test data with a label that's not in the training dataset.
+    MoveRawDataRequest_2:
+      type: object
+      required:
+      - newCategory
+      properties:
+        newCategory:
+          $ref: '#/components/schemas/RawDataCategory'
+    Sensor_2:
+      type: object
+      required:
+      - index
+      - name
+      - units
+      properties:
+        index:
+          type: integer
+          description: Index of the sensor (globally, so you can refer back to it in e.g. getSampleAsAudio)
+        name:
+          type: string
+          description: Name of the axis
+          example: accX
+        units:
+          type: string
+          description: Type of data on this axis. Needs to comply to SenML units (see https://www.iana.org/assignments/senml/senml.xhtml).
+    RawDataLabelDistributionRegressionValueGroup:
+      type: object
+      description: Shows a single "bucket" of the data distribution for a regression dataset.
+      required:
+      - groupMin
+      - groupMax
+      - totalLength
+      - totalLengthStr
+      - dataCount
+      properties:
+        groupMin:
+          type: number
+          description: Group minimum value
+        groupMax:
+          type: number
+          description: Group maximum value
+        totalLength:
+          type: integer
+          description: Total sample length within this group in milliseconds. For data types without a duration-based total this may be 0.
+        totalLengthStr:
+          type: string
+          description: Total sample length within this group given as a UI-friendly formatted string.
+        dataCount:
+          type: integer
+          description: Total sample data count within this group.
+    RawDataLabelDistributionRegressionValueGroupsPerKey:
+      type: object
+      description: Shows the data distribution for a regression dataset, for a particular label key.
+      required:
+      - minLabel
+      - maxLabel
+      - valueGroupsGlobalScale
+      - valueGroupsLocalScale
+      properties:
+        minLabel:
+          type: number
+          description: Minimum overall label for this label key.
+        maxLabel:
+          type: number
+          description: Maximum overall label for this label key.
+        valueGroupsGlobalScale:
+          type: array
+          description: Data distribution for this label key, given on a "global" scale (scaled relative to all label keys).
+          items:
+            $ref: '#/components/schemas/RawDataLabelDistributionRegressionValueGroup'
+        valueGroupsLocalScale:
+          type: array
+          description: Data distribution for this label key, given on a "local" scale (scaled only based on values for this label key).
+          items:
+            $ref: '#/components/schemas/RawDataLabelDistributionRegressionValueGroup'
+    ObjectDetectionAutoLabelRequest_2:
+      type: object
+      required:
+      - neuralNetwork
+      properties:
+        neuralNetwork:
+          type: string
+          enum:
+          - yolov5
+          - yolo-pro
+          - currentProject
+    BoundingBoxWithScore:
+      type: object
+      description: This has the _ratio_ for x/y/w/h (so 0..1)
+      required:
+      - label
+      - x
+      - y
+      - width
+      - height
+      - score
+      properties:
+        label:
+          type: string
+        x:
+          type: number
+        y:
+          type: number
+        width:
+          type: number
+        height:
+          type: number
+        score:
+          type: number
+    ImpulseInputBlock_2:
+      type: object
+      required:
+      - id
+      - type
+      - name
+      - title
+      properties:
+        id:
+          type: integer
+          minimum: 1
+          description: Identifier for this block. Make sure to up this number when creating a new block via `getNewBlockId`, and don't re-use identifiers. If the block hasn't changed, keep the ID as-is. ID must be unique across the project and greather than zero (>0).
+        type:
+          description: Block type (either time-series, image or features)
+          example: time-series
+          $ref: '#/components/schemas/InputBlockType'
+        name:
+          type: string
+          description: Block name, will be used in menus
+          example: Time series
+        title:
+          type: string
+          description: Block title, used in the impulse UI
+          example: Time series
+        axes:
+          type: array
+          description: Input axes, identified by the name in the name of the axis. If not set, then all axes are selected.
+          items:
+            type: string
+            example: accX
+        windowSizeMs:
+          type: integer
+          description: Size of the sliding window in milliseconds
+          example: 2004
+        windowIncreaseMs:
+          type: integer
+          description: We use a sliding window to go over the raw data. How many milliseconds to increase the sliding window with for each step.
+        frequencyHz:
+          type: number
+          description: (Input only) Frequency of the input data in Hz
+          example: 60
+        classificationWindowIncreaseMs:
+          type: integer
+          description: We use a sliding window to go over the raw data. How many milliseconds to increase the sliding window with for each step in classification mode.
+        padZeros:
+          type: boolean
+          description: Whether to zero pad data when a data item is too short
+        labelingMethodMultiLabel:
+          type: object
+          description: 'Determines how a single label is assigned to each generated window when source samples contain multiple labels.
+
+            Available options - end-of-window: use the label active at the end timestamp of the window. - anywhere-in-window: assign one of the configured `labels` when it appears anywhere in the window. - anywhere-in-window-min-percentage: assign one of the configured `labels` only when it covers at least `minPercentage` of the full window. - majority-in-window: assign the label with the highest prevalence across the full window.
+
+            Tie-breaking: - For count-based modes (anywhere-in-window, anywhere-in-window-min-percentage, and majority-in-window), if two or more candidate labels have equal prevalence, the first encountered label in the window is used.'
+          required:
+          - type
+          properties:
+            type:
+              type: string
+              enum:
+              - end-of-window
+              - anywhere-in-window
+              - anywhere-in-window-min-percentage
+              - majority-in-window
+            labels:
+              description: Required when choosing "anywhere-in-window" or "anywhere-in-window-min-percentage". The list of classes that should trigger detection (e.g. "interference").
+              type: array
+              items:
+                type: string
+            minPercentage:
+              description: Required when choosing "anywhere-in-window-min-percentage". A label is assigned only if it is present in at least this percentage of the full window.
+              type: number
+        imageWidth:
+          type: integer
+          description: Width all images are resized to before training
+          example: 28
+        imageHeight:
+          type: integer
+          description: Width all images are resized to before training
+          example: 28
+        resizeMode:
+          $ref: '#/components/schemas/ImageInputResizeMode'
+        resizeMethod:
+          type: string
+          description: Resize method to use when resizing images
+          example: squash
+          enum:
+          - lanczos3
+          - nearest
+        cropAnchor:
+          type: string
+          description: If images are resized using a crop, choose where to anchor the crop
+          example: middle-center
+          enum:
+          - top-left
+          - top-center
+          - top-right
+          - middle-left
+          - middle-center
+          - middle-right
+          - bottom-left
+          - bottom-center
+          - bottom-right
+        createdBy:
+          type: string
+          description: The system component that created the block version (createImpulse | clone | tuner). Cannot be set via API.
+          example: createImpulse
+        createdAt:
+          type: string
+          format: date-time
+          description: The datetime that the block version was created. Cannot be set via API.
+        datasetSubset:
+          $ref: '#/components/schemas/ImpulseInputBlockDatasetSubset'
+    ProjectDatasetMetadataClassesCategory:
+      allOf:
+      - $ref: '#/components/schemas/ProjectDatasetMetadataBase'
+      - type: object
+        required:
+        - type
+        - fullLabelCount
+        - labels
+        properties:
+          type:
+            type: string
+            enum:
+            - classes
+          fullLabelCount:
+            type: integer
+          labels:
+            type: array
+            items:
+              $ref: '#/components/schemas/RawDataLabelDistributionLabel'
+    ModelPrediction_2:
+      type: object
+      required:
+      - sampleId
+      - startMs
+      - endMs
+      - prediction
+      properties:
+        sampleId:
+          type: integer
+        startMs:
+          type: number
+        endMs:
+          type: number
+        label:
+          type: string
+        prediction:
+          type: string
+        predictionCorrect:
+          type: boolean
+        f1Score:
+          type: number
+          description: Only set for object detection projects
+        anomalyScores:
+          type: array
+          description: Only set for visual anomaly projects. 2D array of shape (n, n) with raw anomaly scores, where n varies based on the image input size and the specific visual anomaly algorithm used. The scores corresponds to each grid cell in the image's spatial matrix.
+          items:
+            type: array
+            items:
+              type: number
+        boundingBoxes:
+          type: array
+          description: Only set for object detection projects. Coordinates are scaled 0..1, not absolute values.
+          items:
+            $ref: '#/components/schemas/BoundingBoxWithScore'
+        labelMapPredictions:
+          type: object
+          description: For samples with structured labels (in the form of a key/value label map), this object will contain per-key prediction info for the sample.
+          additionalProperties:
+            type: string
+    DatasetSplitOptions:
+      type: object
+      required:
+      - trainingSplitRatio
+      - testingSplitRatio
+      properties:
+        trainingSplitRatio:
+          type: number
+          description: Proportion of the dataset to use for training.
+        testingSplitRatio:
+          type: number
+          description: Proportion of the dataset to use for testing.
+        validationSplitRatio:
+          type: number
+          description: Proportion of the dataset to use for validation. This is experimental and may change in the future.
+        excludeDisabledSamples:
+          type: boolean
+          description: Whether to exclude samples that are marked as disabled.
+          default: false
+        stratifyBy:
+          type: object
+          description: Optional balancing targets for the split.
+          properties:
+            label:
+              type: boolean
+              description: Whether to stratify by label.
+            metadataKeys:
+              type: array
+              items:
+                type: string
+              description: Metadata keys to use as balancing targets. If more than one is selected, they are combined into composite assignment buckets.
+        keepTogetherMetadataKeys:
+          type: array
+          items:
+            type: string
+          description: 'List of metadata keys whose matching values must stay together in a single split. This is useful for leakage prevention across train, validation, and test.
+
+            '
+    BatchEditBoundingBoxesRequest:
+      type: object
+      required:
+      - oldLabels
+      - newLabel
+      properties:
+        oldLabels:
+          description: List of labels to edit. All bounding boxes with this label will be edited.
+          type: array
+          items:
+            type: string
+        newLabel:
+          description: New label. Set to an empty string to remove the bounding boxes.
+          type: string
+    LastUpdatedByDatasetVersionRestore:
+      type: object
+      description: The dataset restore  that last updated a sample.
+      required:
+      - type
+      - datasetVersionId
+      - groupKey
+      properties:
+        type:
+          type: string
+          enum:
+          - datasetVersionRestore
+        datasetVersionId:
+          type: integer
+          description: The ID of the dataset version that last updated the sample.
+        groupKey:
+          type: string
+          description: A random grouping ID to keep restore snapshots isolated.
+        actor:
+          description: The actor that started the dataset restore operation.
+          type: object
+          oneOf:
+          - $ref: '#/components/schemas/LastUpdatedByUser'
+          - $ref: '#/components/schemas/LastUpdatedByProjectApiKey'
+          - $ref: '#/components/schemas/LastUpdatedByOAuthClient'
+    GetDataExplorerFeaturesResponse_2:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - hasFeatures
+        - data
+        properties:
+          hasFeatures:
+            type: boolean
+          data:
+            type: array
+            items:
+              type: object
+              required:
+              - X
+              - y
+              - yLabel
+              properties:
+                X:
+                  type: object
+                  description: Data by feature index for this window
+                  example: '`{ 0: 9.81, 11: 0.32, 22: 0.79 }`'
+                  additionalProperties:
+                    type: number
+                y:
+                  type: integer
+                  description: Training label index
+                yLabel:
+                  type: string
+                  description: Training label string
+                sample:
+                  type: object
+                  required:
+                  - id
+                  - name
+                  - startMs
+                  - endMs
+                  - category
+                  properties:
+                    id:
+                      type: number
+                    name:
+                      type: string
+                    startMs:
+                      type: number
+                    endMs:
+                      type: number
+                    category:
+                      type: string
+                      enum:
+                      - training
+                      - testing
+                      - validation
+          inputBlock:
+            $ref: '#/components/schemas/ImpulseInputBlock_2'
+    ProjectDatasetMetadataRatioCount:
+      type: object
+      description: Per-dataset data count
+      required:
+      - training
+      - testing
+      - validation
+      properties:
+        training:
+          type: integer
+        testing:
+          type: integer
+        validation:
+          type: integer
+    RawSampleData_2:
+      type: object
+      required:
+      - sample
+      - payload
+      - totalPayloadLength
+      properties:
+        sample:
+          $ref: '#/components/schemas/Sample_2'
+        payload:
+          description: If multiple payloads are present (one per datastream) this returns the first datastream.
+          $ref: '#/components/schemas/RawSamplePayload_2'
+        totalPayloadLength:
+          type: integer
+          description: Total number of payload values
+    DatasetSplitPreviewRow:
+      type: object
+      required:
+      - stratValue
+      - splitCategory
+      - sampleCount
+      - percentWithinGroup
+      properties:
+        stratValue:
+          type: string
+        splitCategory:
+          type: string
+          enum:
+          - training
+          - testing
+          - validation
+        sampleCount:
+          type: number
+        percentWithinGroup:
+          type: number
+        totalLengthMs:
+          type: number
+        percentWithinGroupDuration:
+          type: number
+    RawDataFilterCategory:
+      type: string
+      enum:
+      - training
+      - testing
+      - validation
+      - post-processing
+      - all
+    ImageInputResizeMode:
+      type: string
+      description: 'Input images are resized automatically before training and testing, to match the impulse input shape.
+
+        This determines the resize mode used when the aspect ratio of the input data is different to the aspect ratio of the impulse.
+
+        '
+      example: squash
+      enum:
+      - squash
+      - fit-short
+      - fit-long
+      - crop
+    ProjectDatasetMetadataBase:
+      type: object
+      description: Dataset metadata info, for a particular data category, shared between classification and regression data types.
+      required:
+      - type
+      - totalLength
+      - totalLengthNumber
+      - maxLengthMs
+      - minLengthMs
+      - minFrequency
+      - maxFrequency
+      - itemCount
+      - isTimeseries
+      - isFeatures
+      - metadataFilterOptions
+      - metadataKeys
+      properties:
+        type:
+          type: string
+          enum:
+          - classes
+          - regression
+        totalLength:
+          type: string
+        totalLengthNumber:
+          type: integer
+        maxLengthMs:
+          type: integer
+        minLengthMs:
+          type: integer
+        minFrequency:
+          type: integer
+        maxFrequency:
+          type: integer
+        itemCount:
+          type: integer
+        isTimeseries:
+          type: boolean
+        isFeatures:
+          type: boolean
+        metadataFilterOptions:
+          $ref: '#/components/schemas/MetadataFilterOptions'
+        metadataKeys:
+          type: array
+          items:
+            type: string
+          description: Full list of metadata keys in the project.
+        changeActionCounts:
+          type: object
+          description: Breakdown of the number of samples with mutation events in the dataset version.
+          properties:
+            insert:
+              type: number
+              description: Number of samples in this window with at least one insert mutation.
+            update:
+              type: number
+              description: Number of samples in this window with at least one update mutation.
+            delete:
+              type: number
+              description: Number of samples in this window with at least one delete mutation.
+    LastUpdatedByUser:
+      type: object
+      description: The user who last updated a sample.
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+          enum:
+          - user
+        id:
+          type: integer
+          description: The ID of the user that last updated the sample.
+    InputBlockType:
+      type: string
+      enum:
+      - time-series
+      - image
+      - features
+    SampleDatastream:
+      type: object
+      required:
+      - index
+      - chartType
+      - intervalMs
+      - frequencyHz
+      - sensors
+      - valuesCount
+      - totalLengthMs
+      properties:
+        index:
+          type: integer
+        chartType:
+          type: string
+          enum:
+          - chart
+          - image
+          - video
+          - table
+        intervalMs:
+          description: Interval between two windows (1000 / frequency).
+          type: number
+        frequencyHz:
+          description: Frequency of the datastream
+          type: number
+        sensors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sensor_2'
+        valuesCount:
+          type: integer
+          description: Number of readings in this datastream.
+        imageDimensions:
+          type: object
+          required:
+          - width
+          - height
+          properties:
+            width:
+              type: integer
+            height:
+              type: integer
+        totalLengthMs:
+          type: number
+          description: Total length (in ms.) of the datastream
+    ProjectDatasetMetadataClasses:
+      allOf:
+      - $ref: '#/components/schemas/ProjectDatasetMetadataCommon'
+      - type: object
+        required:
+        - type
+        - training
+        - testing
+        - validation
+        - postProcessing
+        - all
+        properties:
+          type:
+            type: string
+            enum:
+            - classes
+          training:
+            description: Training dataset metadata
+            $ref: '#/components/schemas/ProjectDatasetMetadataClassesCategory'
+          testing:
+            description: Testing dataset metadata
+            $ref: '#/components/schemas/ProjectDatasetMetadataClassesCategory'
+          validation:
+            description: Validation dataset metadata
+            $ref: '#/components/schemas/ProjectDatasetMetadataClassesCategory'
+          postProcessing:
+            description: Post-processing dataset metadata
+            $ref: '#/components/schemas/ProjectDatasetMetadataClassesCategory'
+          all:
+            description: Overall dataset metadata
+            $ref: '#/components/schemas/ProjectDatasetMetadataClassesCategory'
+    ProjectDatasetMetadataCommon:
+      type: object
+      description: Overall dataset metadata info
+      required:
+      - ratio
+      - labelQueueCount
+      - totalItemCount
+      properties:
+        ratio:
+          discriminator:
+            propertyName: type
+            mapping:
+              no-ratio: '#/components/schemas/ProjectDatasetMetadataRatioNoRatio'
+              classes: '#/components/schemas/ProjectDatasetMetadataRatioClasses'
+              regression: '#/components/schemas/ProjectDatasetMetadataRatioRegression'
+          oneOf:
+          - $ref: '#/components/schemas/ProjectDatasetMetadataRatioNoRatio'
+          - $ref: '#/components/schemas/ProjectDatasetMetadataRatioClasses'
+          - $ref: '#/components/schemas/ProjectDatasetMetadataRatioRegression'
+        labelQueueCount:
+          type: integer
+        totalItemCount:
+          type: integer
+    GetSampleResponse_2:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - $ref: '#/components/schemas/RawSampleData_2'
+      - $ref: '#/components/schemas/RawSampleDataStreamPayloads'
+    BackToLabelingRequest:
+      type: object
+      required:
+      - labelAction
+      properties:
+        labelAction:
+          type: string
+          description: Defines what should happen to labels during the action. Use "clear-labels" to remove all existing labels.
+          enum:
+          - clear-labels
+    DatasetSplitPreview:
+      type: object
+      required:
+      - assignmentPreview
+      - balancePreviews
+      properties:
+        assignmentPreview:
+          $ref: '#/components/schemas/DatasetSplitPreviewSection'
+        balancePreviews:
+          type: array
+          items:
+            $ref: '#/components/schemas/DatasetSplitPreviewSection'
+    SampleKeyValueLabels:
+      type: object
+      required:
+      - type
+      - labels
+      properties:
+        type:
+          type: string
+          enum:
+          - key-values
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+    GetDatasetRatioResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - $ref: '#/components/schemas/DatasetRatioData_2'
+    SetSampleVideoDimensionsRequest:
+      type: object
+      required:
+      - width
+      - height
+      properties:
+        width:
+          type: integer
+        height:
+          type: integer
+    ImpulseInputBlockDatasetSubset:
+      type: object
+      description: Only generate features for samples where (sample_id + datasetSubsetSeed) % datasetSubset) == 0
+      required:
+      - includePercentage
+      properties:
+        includePercentage:
+          description: Number between 0 and 100, with the % of data that should be _included_
+          type: number
+        seed:
+          description: Seed number (optional). If not specified, the seed is set to 0.
+          type: integer
+    StructuredLabel_2:
+      type: object
+      description: 'A structured label contains a label, and the range for which this label is valid. `endIndex` is inclusive. E.g. `{ startIndex: 10, endIndex: 13, label: ''running'' }` means that the values at index 10, 11, 12, 13 are labeled ''running''. To get time codes you can multiple by the sample''s `intervalMs` property.'
+      required:
+      - startIndex
+      - endIndex
+      - label
+      properties:
+        startIndex:
+          type: integer
+          description: Start index of the label (e.g. 0)
+        endIndex:
+          type: integer
+          description: 'End index of the label (e.g. 3). This value is inclusive, so { startIndex: 0, endIndex: 3 } covers 0, 1, 2, 3.'
+        label:
+          type: string
+          description: The label for this section.
+        labelMap:
+          $ref: '#/components/schemas/SampleLabelMapLabels'
+    ProjectDatasetMetadataRatioClasses:
+      type: object
+      description: Dataset ratio info for classification datasets
+      required:
+      - type
+      - hasValidationCategory
+      - trainingRatio
+      - testingRatio
+      - validationRatio
+      - showImbalanceTooltip
+      - showRebalanceDataset
+      - showTrainTestSplit
+      - categoryData
+      - count
+      properties:
+        type:
+          type: string
+          enum:
+          - classes
+        hasValidationCategory:
+          type: boolean
+        trainingRatio:
+          type: number
+        testingRatio:
+          type: number
+        validationRatio:
+          type: number
+        showImbalanceTooltip:
+          type: boolean
+        showRebalanceDataset:
+          type: boolean
+        showTrainTestSplit:
+          type: boolean
+        invalidRatioClasses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectDatasetMetadataRatioClass'
+        allRatioClasses:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectDatasetMetadataRatioClass'
+        categoryData:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectDatasetMetadataCategoryData'
+        count:
+          $ref: '#/components/schemas/ProjectDatasetMetadataRatioCount'
+    GetRawDataProjectMetadataResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - metadata
+        properties:
+          metadata:
+            discriminator:
+              propertyName: type
+              mapping:
+                classes: '#/components/schemas/ProjectDatasetMetadataClasses'
+                regression: '#/components/schemas/ProjectDatasetMetadataRegression'
+            oneOf:
+            - $ref: '#/components/schemas/ProjectDatasetMetadataClasses'
+            - $ref: '#/components/schemas/ProjectDatasetMetadataRegression'
+    RawSampleDataStreamPayloads:
+      type: object
+      required:
+      - datastreamPayloads
+      properties:
+        datastreamPayloads:
+          type: array
+          items:
+            type: object
+            required:
+            - index
+            - payload
+            - totalPayloadLength
+            properties:
+              index:
+                type: integer
+                description: Index of the datastream in the sample (datastreams that are not in the impulse are filtered out here, so you can still find them back).
+              payload:
+                description: Payload for the current datastream.
+                $ref: '#/components/schemas/RawSamplePayload_2'
+              totalPayloadLength:
+                type: integer
+                description: Total number of payload values
+    RawDataCategory:
+      type: string
+      enum:
+      - training
+      - testing
+      - validation
+      - post-processing
+    DatasetSplitPreviewResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - data
+        properties:
+          data:
+            $ref: '#/components/schemas/DatasetSplitPreview'
+    GetSampleDspResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - $ref: '#/components/schemas/RawSampleData_2'
+    ProjectDatasetMetadataRatioRegression:
+      type: object
+      description: Dataset ratio info for regression datasets
+      required:
+      - type
+      - hasValidationCategory
+      - trainingRatio
+      - testingRatio
+      - validationRatio
+      - categoryData
+      - count
+      properties:
+        type:
+          type: string
+          enum:
+          - regression
+        hasValidationCategory:
+          type: boolean
+        trainingRatio:
+          type: number
+        testingRatio:
+          type: number
+        validationRatio:
+          type: number
+        categoryData:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectDatasetMetadataCategoryData'
+        count:
+          $ref: '#/components/schemas/ProjectDatasetMetadataRatioCount'
+    SampleLabelMapLabels:
+      description: 'Structured sample labels in the form of a key-value map.
+
+        This property is optional and only defined for samples with key-value labels.
+
+        '
+      discriminator:
+        propertyName: type
+        mapping:
+          key-values: '#/components/schemas/SampleKeyValueLabels'
+      oneOf:
+      - $ref: '#/components/schemas/SampleKeyValueLabels'
+    MetadataFilterOptions:
+      type: object
+      required:
+      - totalCount
+      - count
+      - optionsList
+      properties:
+        totalCount:
+          type: integer
+        count:
+          type: integer
+        optionsList:
+          type: array
+          description: Available metadata filter options that can be supplied to the /raw-data/ endpoint to filter samples
+          items:
+            type: object
+            required:
+            - key
+            - options
+            properties:
+              key:
+                example: locationId
+                type: string
+              options:
+                type: array
+                example:
+                - buildingA
+                - buildingB
+                items:
+                  type: string
+    GetSampleMetadataFilterOptionsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - $ref: '#/components/schemas/MetadataFilterOptions'
+    LastUpdatedByOAuthClient:
+      type: object
+      description: The OAuth client that last updated a sample, and the user it is acting on behalf of.
+      required:
+      - type
+      - oauthClientId
+      properties:
+        type:
+          type: string
+          enum:
+          - oauthClient
+        oauthClientId:
+          type: string
+          description: The ID of the OAuth client that last updated the sample.
+        userId:
+          type: integer
+          description: The user ID the OAuth client is acting on behalf of.
+    ProjectLabelingMethod:
+      type: string
+      enum:
+      - single_label
+      - object_detection
+      - label_map
+    DatasetSplitPreviewSection:
+      type: object
+      required:
+      - title
+      - keyLabel
+      - rows
+      properties:
+        title:
+          type: string
+        summary:
+          type: string
+        keyLabel:
+          type: string
+        rows:
+          type: array
+          items:
+            $ref: '#/components/schemas/DatasetSplitPreviewRow'
+    RawDataLabelDistributionLabel:
+      type: object
+      required:
+      - label
+      - totalLength
+      - totalLengthStr
+      - dataCount
+      properties:
+        label:
+          type: string
+        totalLength:
+          type: integer
+          description: Total sample length for the label in milliseconds. For data types without a duration-based total this may be 0.
+          example: 189152
+        totalLengthStr:
+          type: string
+          description: Total sample length for the label given as a UI-friendly formatted string.
+          example: 3m 9s
+        dataCount:
+          type: integer
+          description: Total sample data count for the label.
+          example: 19
+    ProjectDatasetMetadataRegression:
+      allOf:
+      - $ref: '#/components/schemas/ProjectDatasetMetadataCommon'
+      - type: object
+        required:
+        - type
+        - training
+        - testing
+        - validation
+        - postProcessing
+        - all
+        properties:
+          type:
+            type: string
+            enum:
+            - regression
+          training:
+            description: Training dataset metadata
+            $ref: '#/components/schemas/ProjectDatasetMetadataRegressionCategory'
+          testing:
+            description: Testing dataset metadata
+            $ref: '#/components/schemas/ProjectDatasetMetadataRegressionCategory'
+          validation:
+            description: Validation dataset metadata
+            $ref: '#/components/schemas/ProjectDatasetMetadataRegressionCategory'
+          postProcessing:
+            description: Post-processing dataset metadata
+            $ref: '#/components/schemas/ProjectDatasetMetadataRegressionCategory'
+          all:
+            description: Overall dataset metadata
+            $ref: '#/components/schemas/ProjectDatasetMetadataRegressionCategory'
+    ProjectDatasetMetadataRatioClass:
+      type: object
+      description: Dataset ratio info for a single class
+      required:
+      - trainingRatio
+      - testingRatio
+      - validationRatio
+      - label
+      - total
+      - totalTraining
+      - totalTesting
+      - totalValidation
+      - totalTrainingStr
+      - totalTestingStr
+      - totalValidationStr
+      properties:
+        trainingRatio:
+          description: Training dataset ratio
+          type: number
+        testingRatio:
+          description: Testing dataset ratio
+          type: number
+        validationRatio:
+          description: Validation dataset ratio
+          type: number
+        label:
+          description: Class name or label
+          type: string
+        total:
+          description: Total item count
+          type: number
+        totalTraining:
+          description: Total training dataset item count
+          type: number
+        totalTesting:
+          description: Total testing dataset item count
+          type: number
+        totalValidation:
+          description: Total validation dataset item count
+          type: number
+        totalTrainingStr:
+          description: Total training dataset item count, given as a UI-friendly string
+          type: string
+        totalTestingStr:
+          description: Total testing dataset item count, given as a UI-friendly string
+          type: string
+        totalValidationStr:
+          description: Total validation dataset item count, given as a UI-friendly string
+          type: string
+    Sample_2:
+      type: object
+      required:
+      - id
+      - filename
+      - signatureValidate
+      - created
+      - lastModified
+      - category
+      - coldstorageFilename
+      - label
+      - intervalMs
+      - frequency
+      - originalIntervalMs
+      - originalFrequency
+      - deviceType
+      - sensors
+      - valuesCount
+      - added
+      - boundingBoxes
+      - boundingBoxesType
+      - chartType
+      - isDisabled
+      - isProcessing
+      - processingError
+      - isCropped
+      - projectId
+      - sha256Hash
+      - datastreams
+      properties:
+        id:
+          type: integer
+          example: 2
+        filename:
+          type: string
+          example: idle01.d8Ae
+        signatureValidate:
+          type: boolean
+          description: Whether signature validation passed
+          example: true
+        signatureMethod:
+          type: string
+          example: HS256
+        signatureKey:
+          type: string
+          description: Either the shared key or the public key that was used to validate the sample
+        created:
+          type: string
+          format: date-time
+          description: Timestamp when the sample was created on device, or if no accurate time was known on device, the time that the file was processed by the ingestion service.
+        lastModified:
+          type: string
+          format: date-time
+          description: Timestamp when the sample was last modified.
+        category:
+          example: training
+          $ref: '#/components/schemas/RawDataCategory'
+        coldstorageFilename:
+          type: string
+        label:
+          type: string
+          example: healthy-machine
+        intervalMs:
+          type: number
+          description: 'Interval between two windows (1000 / frequency). NOTE: Previously this value could change depending on whether the sample was resampled. This behavior has been removed.'
+          example: 16
+        frequency:
+          type: number
+          description: 'Frequency of the sample. NOTE: Previously this value could change depending on whether the sample was resampled. This behavior has been removed.'
+          example: 62.5
+        originalIntervalMs:
+          type: number
+          description: DEPRECATED. See "intervalMs".
+          example: 16
+        originalFrequency:
+          type: number
+          description: DEPRECATED. See "frequency".
+          example: 62.5
+        deviceName:
+          type: string
+        deviceType:
+          type: string
+        sensors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sensor_2'
+        valuesCount:
+          type: integer
+          description: Number of readings in this file. If you have multiple datastreams, this is the value count from the datastream with the highest frequency.
+        totalLengthMs:
+          type: number
+          description: Total length (in ms.) of this file
+        added:
+          type: string
+          format: date-time
+          description: Timestamp when the sample was added to the current acquisition bucket.
+        boundingBoxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/BoundingBox'
+        boundingBoxesType:
+          type: string
+          enum:
+          - object_detection
+          - constrained_object_detection
+        chartType:
+          type: string
+          enum:
+          - chart
+          - image
+          - video
+          - table
+        thumbnailVideo:
+          type: string
+        thumbnailVideoFull:
+          type: string
+        isDisabled:
+          type: boolean
+          description: True if the current sample is excluded from use
+        isProcessing:
+          type: boolean
+          description: True if the current sample is still processing (e.g. for video)
+        processingJobId:
+          type: integer
+          description: Set when sample is processing and a job has picked up the request
+        processingError:
+          type: boolean
+          description: Set when processing this sample failed
+        processingErrorString:
+          type: string
+          description: Error (only set when processing this sample failed)
+        isCropped:
+          type: boolean
+          description: Whether the sample is cropped from another sample (and has crop start / end info)
+        metadata:
+          type: object
+          description: Sample free form associated metadata
+          additionalProperties:
+            type: string
+        projectId:
+          type: integer
+          description: Unique identifier of the project this sample belongs to
+        projectOwnerName:
+          type: string
+          description: Name of the owner of the project this sample belongs to
+        projectName:
+          type: string
+          description: Name of the project this sample belongs to
+        projectLabelingMethod:
+          description: What labeling flow the project this sample belongs to uses
+          $ref: '#/components/schemas/ProjectLabelingMethod'
+        sha256Hash:
+          type: string
+          description: Data sample SHA 256 hash (including CBOR envelope if applicable)
+        structuredLabels:
+          type: array
+          items:
+            $ref: '#/components/schemas/StructuredLabel_2'
+        structuredLabelsList:
+          type: array
+          items:
+            type: string
+        createdBySyntheticDataJobId:
+          type: integer
+          description: If this sample was created by a synthetic data job, it's referenced here.
+        imageDimensions:
+          type: object
+          required:
+          - width
+          - height
+          properties:
+            width:
+              type: integer
+            height:
+              type: integer
+        videoUrl:
+          type: string
+          description: Video link, cropped and in original resolution.
+        videoUrlFull:
+          type: string
+          description: Video link in original resolution.
+        labelMap:
+          $ref: '#/components/schemas/SampleLabelMapLabels'
+        lastUpdatedBy:
+          description: Information about the entity that last updated a sample. This can be a user, a project API key, an OAuth client, or a dataset version restore operation.
+          discriminator:
+            propertyName: type
+            mapping:
+              user: '#/components/schemas/LastUpdatedByUser'
+              projectApiKey: '#/components/schemas/LastUpdatedByProjectApiKey'
+              oauthClient: '#/components/schemas/LastUpdatedByOAuthClient'
+              datasetVersionRestore: '#/components/schemas/LastUpdatedByDatasetVersionRestore'
+          oneOf:
+          - $ref: '#/components/schemas/LastUpdatedByUser'
+          - $ref: '#/components/schemas/LastUpdatedByProjectApiKey'
+          - $ref: '#/components/schemas/LastUpdatedByOAuthClient'
+          - $ref: '#/components/schemas/LastUpdatedByDatasetVersionRestore'
+        datastreams:
+          type: array
+          items:
+            $ref: '#/components/schemas/SampleDatastream'
+    ProjectDatasetMetadataRegressionCategory:
+      allOf:
+      - $ref: '#/components/schemas/ProjectDatasetMetadataBase'
+      - type: object
+        required:
+        - type
+        - labelsCount
+        - minLabel
+        - maxLabel
+        - valueGroups
+        - fullLabelCount
+        properties:
+          type:
+            type: string
+            enum:
+            - regression
+          labelsCount:
+            type: integer
+          minLabel:
+            type: number
+          maxLabel:
+            type: number
+          valueGroups:
+            type: array
+            items:
+              $ref: '#/components/schemas/RawDataLabelDistributionRegressionValueGroup'
+          groupsPerLabelMapKey:
+            type: object
+            additionalProperties:
+              $ref: '#/components/schemas/RawDataLabelDistributionRegressionValueGroupsPerKey'
+          fullLabelCount:
+            type: integer
+          fullLabelMax:
+            type: number
+          fullLabelMin:
+            type: number
+          fullLabelMean:
+            type: number
+    ProjectDatasetMetadataCategoryData:
+      type: object
+      description: Dataset ratio info for a single category and label
+      required:
+      - length
+      - category
+      - label
+      properties:
+        length:
+          description: Total length
+          type: number
+        category:
+          description: Data category
+          $ref: '#/components/schemas/RawDataCategory'
+        label:
+          description: Data class name or label
+          type: string
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey
@@ -2784,3 +4993,34 @@ components:
       type: apiKey
       in: header
       name: x-jwt-token
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: /v1/oauth/authorize
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        implicit:
+          authorizationUrl: /v1/oauth/authorize
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        password:
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        clientCredentials:
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+x-refined-from:
+- edge-impulse-openapi.yml
+- edge-impulse-studio-openapi-2026-09-06.yml

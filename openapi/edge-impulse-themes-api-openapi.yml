@@ -130,6 +130,28 @@ paths:
                 $ref: '#/components/schemas/GenericApiResponse'
 components:
   schemas:
+    GetThemesResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - themes
+        properties:
+          themes:
+            type: array
+            items:
+              $ref: '#/components/schemas/Theme'
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
     Theme:
       type: object
       required:
@@ -200,46 +222,6 @@ components:
                 type: number
             primaryColorGradientEnd:
               type: string
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
-    GetThemesResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - themes
-        properties:
-          themes:
-            type: array
-            items:
-              $ref: '#/components/schemas/Theme'
-    UploadImageRequest:
-      type: object
-      required:
-      - image
-      properties:
-        image:
-          type: string
-          format: binary
-    UpdateThemeColorsRequest:
-      type: object
-      description: Only fields set in this object will be updated.
-      properties:
-        primaryColor:
-          type: string
-          description: Primary color in hex format
-        primaryColorGradientEnd:
-          type: string
-          description: Primary color gradient end in hex format
     GetThemeResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -272,6 +254,24 @@ components:
         deviceLogo:
           type: string
           description: Device logo URL
+    UploadImageRequest:
+      type: object
+      required:
+      - image
+      properties:
+        image:
+          type: string
+          format: binary
+    UpdateThemeColorsRequest:
+      type: object
+      description: Only fields set in this object will be updated.
+      properties:
+        primaryColor:
+          type: string
+          description: Primary color in hex format
+        primaryColorGradientEnd:
+          type: string
+          description: Primary color gradient end in hex format
   parameters:
     ThemeIdParameter:
       name: themeId

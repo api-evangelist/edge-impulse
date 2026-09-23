@@ -2,12 +2,9 @@ openapi: 3.2.0
 info:
   title: Edge Impulse Login API
   version: 1.0.0
+  description: 'Operations tagged Login across 2 of this provider''s published API definitions: edge-impulse-openapi.yml, edge-impulse-studio-openapi-2026-09-06.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://studio.edgeimpulse.com/v1
-security:
-- ApiKeyAuthentication: []
-- JWTAuthentication: []
-- JWTHttpHeaderAuthentication: []
 tags:
 - name: Login
 paths:
@@ -32,8 +29,53 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetJWTResponse'
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
+  /api-sso/{usernameOrEmail}:
+    get:
+      summary: Get SSO settings for a user or email domain
+      description: Get the list of identity providers enabled for a user or a given email domain.
+      tags:
+      - Login
+      operationId: getSSODomainIdPs
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/UsernameOrEmailParameter'
+      x-oauth-scopes: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSSODomainIdPsResponse'
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
 components:
   schemas:
+    GetJWTResponse:
+      example: '`{ "success": true, "token": "A372jdhe.ad3r4gfrg" }`'
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          token:
+            type: string
+            description: JWT token, to be used to log in in the future through JWTAuthentication
+          redirectUrl:
+            type: string
+            description: Redirect URL to follow to complete login
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
     GetJWTRequest:
       type: object
       required:
@@ -61,29 +103,33 @@ components:
         totpToken:
           type: string
           description: TOTP Token. Required if a user has multi-factor authentication with a TOTP token enabled. If a user has MFA enabled, but no totpToken is submitted; then an error starting with "ERR_TOTP_TOKEN IS REQUIRED" is returned. Use this to then prompt for an MFA token and re-login.
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
-    GetJWTResponse:
-      example: '`{ "success": true, "token": "A372jdhe.ad3r4gfrg" }`'
+    GetSSODomainIdPsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
+        required:
+        - idps
         properties:
-          token:
-            type: string
-            description: JWT token, to be used to log in in the future through JWTAuthentication
-          redirectUrl:
-            type: string
-            description: Redirect URL to follow to complete login
+          idps:
+            type: array
+            items:
+              type: string
+              example:
+              - google
+              - okta
+          needsPasswordSetup:
+            type: boolean
+            description: 'True when the user has no password set and none of their linked IDPs are currently valid. The client should display the password-setup flow instead of the password input.
+
+              '
+  parameters:
+    UsernameOrEmailParameter:
+      name: usernameOrEmail
+      in: path
+      required: true
+      description: Username or email
+      schema:
+        type: string
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey
@@ -97,3 +143,34 @@ components:
       type: apiKey
       in: header
       name: x-jwt-token
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: /v1/oauth/authorize
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        implicit:
+          authorizationUrl: /v1/oauth/authorize
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        password:
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        clientCredentials:
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+x-refined-from:
+- edge-impulse-openapi.yml
+- edge-impulse-studio-openapi-2026-09-06.yml

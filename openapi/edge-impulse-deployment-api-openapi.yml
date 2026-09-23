@@ -2,12 +2,9 @@ openapi: 3.2.0
 info:
   title: Edge Impulse Deployment API
   version: 1.0.0
+  description: 'Operations tagged Deployment across 2 of this provider''s published API definitions: edge-impulse-openapi.yml, edge-impulse-studio-openapi-2026-09-06.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://studio.edgeimpulse.com/v1
-security:
-- ApiKeyAuthentication: []
-- JWTAuthentication: []
-- JWTHttpHeaderAuthentication: []
 tags:
 - name: Deployment
 paths:
@@ -27,6 +24,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeploymentTargetsResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/deployment/targets:
     get:
       summary: Deployment targets
@@ -46,10 +49,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProjectDeploymentTargetsResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/deployment/targets/data-sources:
     get:
       summary: Deployment targets (data sources)
-      description: List deployment targets for a project from data sources page  (it shows some things like all Linux deploys, and hides 'fake' deploy targets like mobile phone / computer)
+      description: List deployment targets for a project from data sources page (it shows some things like all Linux deploys, and hides 'fake' deploy targets like mobile phone / computer)
       operationId: listDeploymentTargetsForProjectDataSources
       tags:
       - Deployment
@@ -65,6 +74,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeploymentTargetsResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/deployment/evaluate:
     get:
       summary: Evaluate job result
@@ -82,6 +97,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EvaluateJobResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/deployment/evaluate/cache:
     get:
       summary: Check evaluate job result (cache)
@@ -99,6 +120,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EvaluateJobResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/deployment:
     get:
       summary: Get deployment info
@@ -119,6 +146,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetDeploymentResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/deployment/download:
     get:
       summary: Download
@@ -142,6 +175,12 @@ paths:
               schema:
                 type: string
                 format: binary
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/deployment/last:
     get:
       summary: Get information on the last deployment build
@@ -159,6 +198,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetLastDeploymentBuildResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/deployment/syntiant/posterior:
     get:
       summary: Get Syntiant posterior parameters
@@ -176,6 +221,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetSyntiantPosteriorResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
     post:
       summary: Set Syntiant posterior parameters
       description: Set the current posterior parameters for the Syntiant deployment target
@@ -198,6 +247,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/jobs/find-syntiant-posterior:
     post:
       summary: Find Syntiant posterior parameters
@@ -221,8 +276,262 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StartJobResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
+  /api/{projectId}/deployment/history:
+    get:
+      summary: List deployment history
+      description: Lists all successfully built deployments.
+      operationId: listDeploymentHistory
+      x-oauth-scopes:
+      - deployments:read
+      tags:
+      - Deployment
+      x-middleware:
+      - AllowsDeploymentApiKey
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/FilterByImpulseIdParameter'
+      - $ref: '#/components/parameters/FilterByDeploymentFormatParameter'
+      - $ref: '#/components/parameters/LimitResultsParameter'
+      - $ref: '#/components/parameters/OffsetResultsParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDeploymentHistoryResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+      - OAuth2: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
+  /api/{projectId}/deployment/history/{deploymentVersion}:
+    get:
+      summary: Get historic deployment
+      description: Get info about a previously built deployment.
+      operationId: getHistoricDeployment
+      x-oauth-scopes:
+      - deployments:read
+      tags:
+      - Deployment
+      x-middleware:
+      - AllowsDeploymentApiKey
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/DeploymentVersionParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDeploymentHistoryResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+      - OAuth2: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
+  /api/{projectId}/deployment/history/{deploymentVersion}/download:
+    get:
+      summary: Download historic deployment
+      description: Download a previously built deployment (use listDeploymentHistory to see all deployments).
+      operationId: downloadHistoricDeployment
+      x-oauth-scopes:
+      - deployments:read
+      tags:
+      - Deployment
+      x-middleware:
+      - AllowsReadOnly
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/DeploymentVersionParameter'
+      responses:
+        '200':
+          description: ZIP or BIN file
+          headers:
+            Content-Length:
+              description: Size of the deployment artifact in bytes.
+              schema:
+                type: integer
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+      - OAuth2: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
+  /api/{projectId}/deployment/public/build:
+    post:
+      summary: Build deployment (public)
+      description: Create a deployment job for a _public_ project. You can only create deployments for "wasm" and "wasm-browser-simd" deployment types. If a deployment already exists, jobId is null. If a deployment did not exist, or a job is created, jobId is set to an integer, and you can get updates via `getPublicDeploymentStatus`. When this step is complete use `downloadHistoricDeployment` to download the artefacts using deploymentVersion. Updates are _NOT_ streamed over the websocket API (for security reasons); but can be obtained via `getPublicDeploymentStatus`.
+      operationId: buildPublicDeploymentJob
+      tags:
+      - Deployment
+      x-oauth-scopes:
+      - deployments:create
+      x-middleware:
+      - AllowsReadOnly
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/OptionalImpulseIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BuildPublicDeploymentJobRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BuildPublicDeploymentJobResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+      - OAuth2: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
+  /api/{projectId}/deployment/public/jobs/{jobId}/status:
+    get:
+      summary: Get status of build job (public)
+      description: Get the status of a deployment job created through buildPublicDeploymentJob.
+      operationId: getPublicDeploymentStatus
+      tags:
+      - Deployment
+      x-oauth-scopes:
+      - deployments:read
+      x-middleware:
+      - AllowsReadOnly
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/JobIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPublicDeploymentStatusResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+      - OAuth2: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
 components:
+  parameters:
+    ModelEngineParameter:
+      name: engine
+      in: query
+      required: false
+      description: Optional engine for the build (if not, it uses the default engine for the deployment target)
+      schema:
+        $ref: '#/components/schemas/DeploymentTargetEngine'
+    ModelTypeParameter:
+      name: modelType
+      in: query
+      required: false
+      description: Optional model type of the build (if not, it uses the settings in the Keras block)
+      schema:
+        $ref: '#/components/schemas/KerasModelTypeEnum'
+    ProjectIdParameter:
+      name: projectId
+      in: path
+      required: true
+      description: Project ID
+      schema:
+        type: integer
+    OptionalImpulseIdParameter:
+      name: impulseId
+      in: query
+      required: false
+      description: Impulse ID. If this is unset then the default impulse is used.
+      schema:
+        type: integer
+    DeploymentTypeParameter:
+      name: type
+      in: query
+      required: true
+      description: The name of the built target. You can find this by listing all deployment targets through `listDeploymentTargetsForProject` (via `GET /v1/api/{projectId}/deployment/targets`) and see the `format` type.
+      schema:
+        type: string
+    LimitResultsParameter:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of results
+      schema:
+        type: integer
+    DeploymentVersionParameter:
+      name: deploymentVersion
+      in: path
+      required: true
+      description: Deployment version ID
+      schema:
+        type: integer
+    FilterByImpulseIdParameter:
+      name: impulseId
+      in: query
+      required: false
+      description: Impulse ID. If this is unset, data for all impulses is returned.
+      schema:
+        type: integer
+    OffsetResultsParameter:
+      name: offset
+      in: query
+      required: false
+      description: Offset in results, can be used in conjunction with LimitResultsParameter to implement paging.
+      schema:
+        type: integer
+    JobIdParameter:
+      name: jobId
+      in: path
+      required: true
+      description: Job ID
+      schema:
+        type: integer
+    FilterByDeploymentFormatParameter:
+      name: deploymentFormat
+      in: query
+      required: false
+      schema:
+        type: string
   schemas:
+    DeploymentTargetEngine:
+      type: string
+      enum:
+      - tflite
+      - tflite-eon
+      - tflite-eon-ram-optimized
+      - tensorrt
+      - tensaiflow
+      - drp-ai
+      - tidl
+      - akida
+      - syntiant
+      - memryx
+      - neox
+      - ethos-linux
+      - st-aton
     SetSyntiantPosteriorRequest:
       type: object
       required:
@@ -230,58 +539,17 @@ components:
       properties:
         parameters:
           type: object
-    ProjectDeploymentTargetsResponse:
+    GetDeploymentResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - targets
+        - hasDeployment
         properties:
-          targets:
-            type: array
-            items:
-              $ref: '#/components/schemas/ProjectDeploymentTarget'
-    LearnBlockType:
-      type: string
-      description: The type of learning block (anomaly, keras, keras-transfer-image, keras-transfer-kws, keras-object-detection, keras-regression). Each behaves differently.
-      enum:
-      - anomaly
-      - anomaly-gmm
-      - keras
-      - keras-transfer-image
-      - keras-transfer-kws
-      - keras-object-detection
-      - keras-regression
-      - keras-akida
-      - keras-akida-transfer-image
-      - keras-akida-object-detection
-      - keras-visual-anomaly
-    EvaluateResultValue:
-      type: object
-      properties:
-        raw:
-          description: The value based on the model alone
-          type: number
-        withAnomaly:
-          description: The value including the result of anomaly detection
-          type: number
-    ProjectDeploymentTarget:
-      allOf:
-      - $ref: '#/components/schemas/DeploymentTarget'
-      - type: object
-        required:
-        - recommendedForProject
-        - disabledForProject
-        properties:
-          recommendedForProject:
+          hasDeployment:
             type: boolean
-            description: Whether this deployment target is recommended for the project based on connected devices.
-          disabledForProject:
-            type: boolean
-            description: Whether this deployment target is disabled for the project based on various attributes of the project.
-          reasonTargetDisabled:
-            type: string
-            description: If the deployment target is disabled for the project, this gives the reason why.
+          version:
+            type: integer
     EvaluateJobResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -293,6 +561,141 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/ModelVariantStats'
+    DeploymentTargetsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - targets
+        properties:
+          targets:
+            type: array
+            items:
+              $ref: '#/components/schemas/DeploymentTarget'
+    GetLastDeploymentBuildResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - hasBuild
+        properties:
+          hasBuild:
+            type: boolean
+            description: Does the deployment build still exist? (Builds are deleted if they are no longer valid for the project)
+          lastBuild:
+            type: object
+            required:
+            - version
+            - deploymentType
+            - engine
+            - created
+            properties:
+              version:
+                type: integer
+                description: The build version, incremented after each deployment build
+              deploymentType:
+                type: string
+                description: Deployment type of the build
+              engine:
+                $ref: '#/components/schemas/DeploymentTargetEngine'
+              modelType:
+                $ref: '#/components/schemas/KerasModelTypeEnum'
+              created:
+                type: string
+                format: date-time
+                description: The time this build was created
+          lastDeploymentTarget:
+            $ref: '#/components/schemas/ProjectDeploymentTarget'
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    EvaluateResultValue:
+      type: object
+      properties:
+        raw:
+          description: The value based on the model alone
+          type: number
+        withAnomaly:
+          description: The value including the result of anomaly detection
+          type: number
+    StartJobResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: Job identifier. Status updates will include this identifier.
+            example: 12873488112
+    ModelVariantStats:
+      type: object
+      required:
+      - modelType
+      - learnBlockType
+      - learnBlockId
+      - confusionMatrix
+      - confusionMatrixRowHeaders
+      - confusionMatrixColumnHeaders
+      - accuracy
+      - trainingLabels
+      - classificationLabels
+      properties:
+        modelType:
+          description: The type of model
+          $ref: '#/components/schemas/KerasModelTypeEnum'
+        learnBlockId:
+          description: The learning block this model variant is from
+          type: integer
+        learnBlockType:
+          $ref: '#/components/schemas/LearnBlockType'
+        confusionMatrix:
+          description: A map from actual labels to predicted labels, where actual labels are listed in `trainingLabels` and possible predicted labels are listed in `classificationLabels`.
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: object
+              $ref: '#/components/schemas/EvaluateResultValue'
+        trainingLabels:
+          description: The labels present in the model's training data. These are all present in the first dimension of the confusion matrix.
+          type: array
+          items:
+            type: string
+        classificationLabels:
+          description: The possible labels resulting from classification. These may be present in the second dimension of the confusion matrix.
+          type: array
+          items:
+            type: string
+        totalWindowCount:
+          description: The total number of windows that were evaluated
+          type: integer
+        totalCorrectWindowCount:
+          description: The total number of windows that the model classified correctly
+          $ref: '#/components/schemas/EvaluateResultValue'
+        accuracy:
+          description: The model's accuracy as a percentage
+          $ref: '#/components/schemas/EvaluateResultValue'
+    ProjectDeploymentTargetsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - targets
+        properties:
+          targets:
+            type: array
+            items:
+              $ref: '#/components/schemas/ProjectDeploymentTarget'
     DeploymentTarget:
       type: object
       required:
@@ -421,117 +824,38 @@ components:
           - syntiant-nicla-ndp120
           - syntiant-avnet-rasyn
           - syntiant-ndp120-lib-ndp-v1-15-0
-    GetLastDeploymentBuildResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - hasBuild
-        properties:
-          hasBuild:
-            type: boolean
-            description: Does the deployment build still exist? (Builds are deleted if they are no longer valid for the project)
-          lastBuild:
-            type: object
-            required:
-            - version
-            - deploymentType
-            - engine
-            - created
-            properties:
-              version:
-                type: integer
-                description: The build version, incremented after each deployment build
-              deploymentType:
-                type: string
-                description: Deployment type of the build
-              engine:
-                $ref: '#/components/schemas/DeploymentTargetEngine'
-              modelType:
-                $ref: '#/components/schemas/KerasModelTypeEnum'
-              created:
-                type: string
-                format: date-time
-                description: The time this build was created
-          lastDeploymentTarget:
-            $ref: '#/components/schemas/ProjectDeploymentTarget'
-    ModelVariantStats:
-      type: object
-      required:
-      - modelType
-      - learnBlockType
-      - learnBlockId
-      - confusionMatrix
-      - confusionMatrixRowHeaders
-      - confusionMatrixColumnHeaders
-      - accuracy
-      - trainingLabels
-      - classificationLabels
-      properties:
-        modelType:
-          description: The type of model
-          $ref: '#/components/schemas/KerasModelTypeEnum'
-        learnBlockId:
-          description: The learning block this model variant is from
-          type: integer
-        learnBlockType:
-          $ref: '#/components/schemas/LearnBlockType'
-        confusionMatrix:
-          description: A map from actual labels to predicted labels, where actual labels are listed in `trainingLabels` and possible predicted labels are listed in `classificationLabels`.
-          type: object
-          additionalProperties:
-            type: object
-            additionalProperties:
-              type: object
-              $ref: '#/components/schemas/EvaluateResultValue'
-        trainingLabels:
-          description: The labels present in the model's training data. These are all present in the first dimension of the confusion matrix.
-          type: array
-          items:
-            type: string
-        classificationLabels:
-          description: The possible labels resulting from classification. These may be present in the second dimension of the confusion matrix.
-          type: array
-          items:
-            type: string
-        totalWindowCount:
-          description: The total number of windows that were evaluated
-          type: integer
-        totalCorrectWindowCount:
-          description: The total number of windows that the model classified correctly
-          $ref: '#/components/schemas/EvaluateResultValue'
-        accuracy:
-          description: The model's accuracy as a percentage
-          $ref: '#/components/schemas/EvaluateResultValue'
-    StartJobResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: integer
-            description: Job identifier. Status updates will include this identifier.
-            example: 12873488112
-    KerasModelTypeEnum:
+    LearnBlockType:
       type: string
+      description: The type of learning block (anomaly, keras, keras-transfer-image, keras-transfer-kws, keras-object-detection, keras-regression). Each behaves differently.
       enum:
-      - int8
-      - float32
-      - akida
-      - requiresRetrain
-    DeploymentTargetsResponse:
+      - anomaly
+      - anomaly-gmm
+      - keras
+      - keras-transfer-image
+      - keras-transfer-kws
+      - keras-object-detection
+      - keras-regression
+      - keras-akida
+      - keras-akida-transfer-image
+      - keras-akida-object-detection
+      - keras-visual-anomaly
+    ProjectDeploymentTarget:
       allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
+      - $ref: '#/components/schemas/DeploymentTarget'
       - type: object
         required:
-        - targets
+        - recommendedForProject
+        - disabledForProject
         properties:
-          targets:
-            type: array
-            items:
-              $ref: '#/components/schemas/DeploymentTarget'
+          recommendedForProject:
+            type: boolean
+            description: Whether this deployment target is recommended for the project based on connected devices.
+          disabledForProject:
+            type: boolean
+            description: Whether this deployment target is disabled for the project based on various attributes of the project.
+          reasonTargetDisabled:
+            type: string
+            description: If the deployment target is disabled for the project, this gives the reason why.
     GetSyntiantPosteriorResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -543,7 +867,47 @@ components:
             type: boolean
           parameters:
             type: object
-    DeploymentTargetEngine:
+    KerasModelTypeEnum:
+      type: string
+      enum:
+      - int8
+      - float32
+      - akida
+      - requiresRetrain
+    GetPublicDeploymentStatusResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - job
+        - logs
+        properties:
+          job:
+            type: object
+            required:
+            - created
+            properties:
+              created:
+                type: string
+                format: date-time
+                description: When the job was created.
+              started:
+                type: string
+                format: date-time
+                description: When the job was started.
+              finished:
+                type: string
+                format: date-time
+                description: When the job was finished.
+              finishedSuccessful:
+                type: boolean
+                description: Whether the job finished successfully. (Set to null if job is not finished)
+          logs:
+            type: array
+            description: Last 1000 log lines for this job.
+            items:
+              $ref: '#/components/schemas/JobLogItem'
+    DeploymentTargetEngine_2:
       type: string
       enum:
       - tflite
@@ -559,64 +923,414 @@ components:
       - neox
       - ethos-linux
       - st-aton
-    GenericApiResponse:
+      - ceva-npn
+      - nordic-axon
+      - vlm-connector
+      - qaic
+    BuildPublicDeploymentJobRequest:
       type: object
       required:
-      - success
+      - deploymentType
+      - modelType
       properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
+        deploymentType:
           type: string
-          description: Optional error description (set if 'success' was false)
-    GetDeploymentResponse:
+        modelType:
+          $ref: '#/components/schemas/KerasModelVariantEnum'
+    JobLogItem:
+      type: object
+      required:
+      - created
+      - data
+      properties:
+        created:
+          type: string
+          format: date-time
+        data:
+          type: string
+        logLevel:
+          type: string
+          enum:
+          - error
+          - warn
+          - info
+          - debug
+    DeploymentTarget_2:
+      type: object
+      required:
+      - name
+      - description
+      - image
+      - imageClasses
+      - format
+      - hasEonCompiler
+      - hasTensorRT
+      - hasTensaiFlow
+      - hasDRPAI
+      - hasTIDL
+      - hasAkida
+      - hasMemryx
+      - hasStAton
+      - hasCevaNpn
+      - hasNordicAxon
+      - hasQaic
+      - hideOptimizations
+      - uiSection
+      - supportedEngines
+      - preferredEngine
+      - modelVariants
+      - docsUrl
+      - parameters
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        image:
+          type: string
+        imageClasses:
+          type: string
+        format:
+          type: string
+        latencyDevice:
+          type: string
+        hasEonCompiler:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasTensorRT:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasTensaiFlow:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasDRPAI:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasTIDL:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasAkida:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasMemryx:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasStAton:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasCevaNpn:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasNordicAxon:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasQaic:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hideOptimizations:
+          type: boolean
+        badge:
+          type: object
+          required:
+          - name
+          - description
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+        uiSection:
+          type: string
+          enum:
+          - library
+          - firmware
+          - mobile
+          - hidden
+        customDeployId:
+          type: integer
+        customDeployOrganizationId:
+          type: integer
+        integrateUrl:
+          type: string
+        ownerOrganizationName:
+          type: string
+        supportedEngines:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentTargetEngine_2'
+        preferredEngine:
+          $ref: '#/components/schemas/DeploymentTargetEngine_2'
+        url:
+          type: string
+        docsUrl:
+          type: string
+        firmwareRepoUrl:
+          type: string
+        modelVariants:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentTargetVariant'
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/DSPGroupItem'
+        redirect:
+          type: object
+          description: An optional redirect field for integration partners to be shown in addition to the docs link, i.e. for directing users to a partner's website or application once deployment completes. This is experimental and may change in the future.
+          properties:
+            url:
+              type: string
+            text:
+              type: string
+    GetDeploymentHistoryResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - hasDeployment
+        - deployment
         properties:
-          hasDeployment:
-            type: boolean
-          version:
+          deployment:
+            $ref: '#/components/schemas/DeploymentHistory'
+    BuildPublicDeploymentJobResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - deploymentVersion
+        properties:
+          jobId:
+            description: Set if a job was created (or was already running) for this deployment. Use this ID to poll to the job logs via 'GetPublicDeploymentStatusResponse'.
             type: integer
-  parameters:
-    DeploymentTypeParameter:
-      name: type
-      in: query
-      required: true
-      description: The name of the built target. You can find this by listing all deployment targets through `listDeploymentTargetsForProject` (via `GET /v1/api/{projectId}/deployment/targets`) and see the `format` type.
-      schema:
-        type: string
-    ModelTypeParameter:
-      name: modelType
-      in: query
-      required: false
-      description: Optional model type of the build (if not, it uses the settings in the Keras block)
-      schema:
-        $ref: '#/components/schemas/KerasModelTypeEnum'
-    ModelEngineParameter:
-      name: engine
-      in: query
-      required: false
-      description: Optional engine for the build (if not, it uses the default engine for the deployment target)
-      schema:
-        $ref: '#/components/schemas/DeploymentTargetEngine'
-    ProjectIdParameter:
-      name: projectId
-      in: path
-      required: true
-      description: Project ID
-      schema:
-        type: integer
-    OptionalImpulseIdParameter:
-      name: impulseId
-      in: query
-      required: false
-      description: Impulse ID. If this is unset then the default impulse is used.
-      schema:
-        type: integer
+          deploymentVersion:
+            type: integer
+            description: Deployment version. Use `downloadHistoricDeployment` to download the deployment using this identifier (once the job is finished).
+    LearnBlockType_2:
+      type: string
+      description: The type of learning block (anomaly, keras, keras-transfer-image, keras-transfer-kws, keras-object-detection, keras-regression, keras-freeform). Each behaves differently.
+      enum:
+      - anomaly
+      - anomaly-gmm
+      - keras
+      - keras-transfer-image
+      - keras-transfer-kws
+      - keras-object-detection
+      - keras-regression
+      - keras-akida
+      - keras-akida-transfer-image
+      - keras-akida-object-detection
+      - keras-visual-anomaly
+      - keras-freeform
+      - keras-anomaly
+      - vlm
+    DeploymentTargetVariant:
+      type: object
+      required:
+      - variant
+      - supported
+      properties:
+        variant:
+          $ref: '#/components/schemas/KerasModelVariantEnum'
+        supported:
+          type: boolean
+        hint:
+          type: string
+    CreatedUpdatedByUser:
+      type: object
+      required:
+      - id
+      - name
+      - username
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        username:
+          type: string
+        photo:
+          type: string
+    DeploymentHistory:
+      type: object
+      required:
+      - created
+      - deploymentVersion
+      - deploymentFormat
+      - engine
+      - impulseId
+      - impulseName
+      - impulseIsDeleted
+      - impulseHasChangedSinceDeployment
+      - downloadUrl
+      - createdByBuildPublicDeploymentJob
+      properties:
+        created:
+          type: string
+          format: date-time
+          description: Date when the model was deployed
+        deploymentVersion:
+          type: integer
+        deploymentFormat:
+          type: string
+        deploymentTarget:
+          $ref: '#/components/schemas/ProjectDeploymentTarget'
+        engine:
+          $ref: '#/components/schemas/DeploymentTargetEngine_2'
+        modelType:
+          $ref: '#/components/schemas/KerasModelTypeEnum'
+        impulseId:
+          type: integer
+        impulseName:
+          type: string
+        impulseIsDeleted:
+          type: boolean
+        createdByUser:
+          description: The user who created this deployment (empty if created through API).
+          $ref: '#/components/schemas/CreatedUpdatedByUser'
+        impulseHasChangedSinceDeployment:
+          description: Set to true if the deployment no longer exactly matches the impulse it was created from (e.g. model was trained since the deployment was created, or some thresholds have changed)
+          type: boolean
+        downloadUrl:
+          type: string
+        createdByBuildPublicDeploymentJob:
+          description: If set, then this deployment was created by an anonymous user through buildPublicDeploymentJob.
+          type: boolean
+    KerasModelVariantEnum:
+      type: string
+      enum:
+      - int8
+      - float32
+      - akida
+    ListDeploymentHistoryResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - deployments
+        - totalDeploymentCount
+        properties:
+          deployments:
+            type: array
+            items:
+              $ref: '#/components/schemas/DeploymentHistory'
+          totalDeploymentCount:
+            type: integer
+    DSPGroupItem:
+      type: object
+      required:
+      - name
+      - type
+      - param
+      - defaultValue
+      - readonly
+      - shouldShow
+      - required
+      - showClickToSet
+      properties:
+        name:
+          type: string
+          example: Scale axes
+        value:
+          type: string
+        defaultValue:
+          type: string
+        type:
+          type: string
+          example: text
+        help:
+          type: string
+          example: Divide axes by this number
+        param:
+          type: string
+          example: scale-axes
+        selectOptions:
+          type: array
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+                description: What is the string that will be set if this option is selected?
+              selected:
+                type: boolean
+              optionLabel:
+                type: string
+                description: What is the label that will be shown to the user for this option?
+              priority:
+                type: number
+                description: The following options are optional.  See Learn Block Auto Config in Notion. Higher priority will get chosen based on limits below.
+              romEstimate:
+                type: number
+                description: Estimated ROM footprint for this choice.  Will be tested against ROM budget in Studio.
+              needsOps:
+                type: array
+                items:
+                  type: string
+                  description: ML operator needed by this choice.
+              needsFeatures:
+                type: array
+                items:
+                  type: string
+                  description: Feature needed by this choice. (non op related)
+        readonly:
+          type: boolean
+        shouldShow:
+          type: boolean
+        showIf:
+          type: object
+          required:
+          - parameter
+          - operator
+          - value
+          properties:
+            parameter:
+              type: string
+            operator:
+              type: string
+              enum:
+              - eq
+              - neq
+            value:
+              type: string
+        invalidText:
+          type: string
+        section:
+          type: string
+          description: Interface section to render parameter in.
+          enum:
+          - advanced
+          - augmentation
+          - modelProfiling
+        multiline:
+          type: boolean
+          description: Only valid for type "string". Will render a multiline text area.
+        required:
+          type: boolean
+        hint:
+          type: string
+          description: If set, shows a hint below the input.
+        placeholder:
+          type: string
+          description: Sets the placeholder text on the input element (for types "string", "int", "float" and "secret")
+        showClickToSet:
+          type: boolean
+          description: If enabled, render a disabled input element with 'Click to set'
+        valid:
+          type: array
+          items:
+            type: object
+          description: Valid values for parameter.
+        items:
+          type: object
+          description: Recursive definition for items of a parameter with type 'array'.
+        properties:
+          type: object
+          description: Recursive definition for a parameter with type 'object'.
+        minVal:
+          type: number
+          description: Minimum value for parameters of type 'int' or 'float'.
+        maxVal:
+          type: number
+          description: Maximum value for parameters of type 'int' or 'float'.
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey
@@ -630,3 +1344,34 @@ components:
       type: apiKey
       in: header
       name: x-jwt-token
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: /v1/oauth/authorize
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        implicit:
+          authorizationUrl: /v1/oauth/authorize
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        password:
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        clientCredentials:
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+x-refined-from:
+- edge-impulse-openapi.yml
+- edge-impulse-studio-openapi-2026-09-06.yml

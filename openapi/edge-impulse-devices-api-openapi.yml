@@ -2,12 +2,9 @@ openapi: 3.2.0
 info:
   title: Edge Impulse Devices API
   version: 1.0.0
+  description: 'Operations tagged Devices across 2 of this provider''s published API definitions: edge-impulse-openapi.yml, edge-impulse-studio-openapi-2026-09-06.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://studio.edgeimpulse.com/v1
-security:
-- ApiKeyAuthentication: []
-- JWTAuthentication: []
-- JWTHttpHeaderAuthentication: []
 tags:
 - name: Devices
 paths:
@@ -27,6 +24,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListDevicesResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/device/{deviceId}:
     get:
       summary: Get device
@@ -44,6 +47,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetDeviceResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
     delete:
       summary: Delete device
       description: Delete a device. When this device sends a new message to ingestion or connects to remote management the device will be recreated.
@@ -60,6 +67,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/device/{deviceId}/start-sampling:
     post:
       summary: Start sampling
@@ -83,6 +96,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StartSamplingResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/device/{deviceId}/debug-stream/inference/start:
     post:
       summary: Start inference debug stream
@@ -100,6 +119,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StartDeviceDebugStreamResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/device/{deviceId}/debug-stream/snapshot/start:
     post:
       summary: Start snapshot debug stream
@@ -123,6 +148,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StartDeviceDebugStreamResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/device/{deviceId}/debug-stream/keep-alive:
     post:
       summary: Keep debug stream alive
@@ -146,6 +177,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/device/{deviceId}/debug-stream/stop:
     post:
       summary: Stop debug stream
@@ -169,6 +206,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/device/{deviceId}/get-impulse-records:
     post:
       summary: Get impulse records
@@ -192,6 +235,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/devices/create:
     post:
       summary: Create device
@@ -214,6 +263,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/devices/{deviceId}/rename:
     post:
       summary: Rename device
@@ -237,6 +292,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/{projectId}/devices/{deviceId}/request-model-update:
     post:
       summary: Trigger model update request
@@ -254,78 +315,39 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
 components:
   schemas:
-    StartSamplingResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        properties:
-          id:
-            type: integer
-    CreateDeviceRequest:
+    RenameDeviceRequest:
       type: object
       required:
-      - deviceId
-      - deviceType
-      - ifNotExists
+      - name
       properties:
-        deviceId:
+        name:
           type: string
-          description: Globally unique device identifier (e.g. MAC address)
-          example: ac:87:a3:0a:2d:1b
-        deviceType:
-          type: string
-          description: Device type, for example the exact model of the device. Should be the same for all similar devices
-          example: DISCO_L475VG_IOT01A
-        ifNotExists:
-          type: boolean
-          description: Whether to throw an error when this device already exists.
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
-    ListDevicesResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - devices
-        properties:
-          devices:
-            type: array
-            items:
-              $ref: '#/components/schemas/Device'
-    GetImpulseRecordsRequest:
-      type: object
-      properties:
-        index:
-          type: integer
-        range:
-          type: object
-          properties:
-            first:
-              type: integer
-            last:
-              type: integer
-        list:
-          type: array
-          items:
-            type: integer
-    StopDeviceDebugStreamRequest:
+          description: New name for this device
+          example: Jan's development board
+    KeepDeviceDebugStreamAliveRequest:
       type: object
       required:
       - streamId
       properties:
         streamId:
           type: integer
+    StartDeviceDebugStreamResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - streamId
+        properties:
+          streamId:
+            type: integer
     StartSamplingRequest:
       type: object
       required:
@@ -353,29 +375,6 @@ components:
         sensor:
           type: string
           description: The sensor to sample from.
-    KeepDeviceDebugStreamAliveRequest:
-      type: object
-      required:
-      - streamId
-      properties:
-        streamId:
-          type: integer
-    RenameDeviceRequest:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: New name for this device
-          example: Jan's development board
-    GetDeviceResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        properties:
-          device:
-            $ref: '#/components/schemas/Device'
     Device:
       type: object
       required:
@@ -473,6 +472,83 @@ components:
               - classification
               - objectDetection
               - constrainedObjectDetection
+    StartSamplingResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          id:
+            type: integer
+    ListDevicesResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - devices
+        properties:
+          devices:
+            type: array
+            items:
+              $ref: '#/components/schemas/Device'
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    GetImpulseRecordsRequest:
+      type: object
+      properties:
+        index:
+          type: integer
+        range:
+          type: object
+          properties:
+            first:
+              type: integer
+            last:
+              type: integer
+        list:
+          type: array
+          items:
+            type: integer
+    CreateDeviceRequest:
+      type: object
+      required:
+      - deviceId
+      - deviceType
+      - ifNotExists
+      properties:
+        deviceId:
+          type: string
+          description: Globally unique device identifier (e.g. MAC address)
+          example: ac:87:a3:0a:2d:1b
+        deviceType:
+          type: string
+          description: Device type, for example the exact model of the device. Should be the same for all similar devices
+          example: DISCO_L475VG_IOT01A
+        ifNotExists:
+          type: boolean
+          description: Whether to throw an error when this device already exists.
+    StopDeviceDebugStreamRequest:
+      type: object
+      required:
+      - streamId
+      properties:
+        streamId:
+          type: integer
+    GetDeviceResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          device:
+            $ref: '#/components/schemas/Device'
     StartDeviceSnapshotDebugStreamRequest:
       type: object
       required:
@@ -483,23 +559,46 @@ components:
           enum:
           - high
           - low
-    StartDeviceDebugStreamResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - streamId
-        properties:
-          streamId:
-            type: integer
+    StartSamplingRequest_2:
+      type: object
+      required:
+      - label
+      - lengthMs
+      - category
+      - intervalMs
+      properties:
+        label:
+          type: string
+          description: Label to be used during sampling.
+        lengthMs:
+          type: integer
+          description: Requested length of the sample (in ms).
+        category:
+          description: Which acquisition category to sample data into.
+          $ref: '#/components/schemas/RawDataCategory'
+        intervalMs:
+          type: number
+          description: Interval between samples (can be calculated like `1/hz * 1000`)
+        sensor:
+          type: string
+          description: The sensor to sample from.
+        labelColor:
+          type: string
+          description: Text color of label displayed on supported clients. Value can be any supported CSS color value
+        collectedSampleCount:
+          type: number
+          description: A hint to supported clients to show the number of samples currently collected
+        targetSampleCount:
+          type: number
+          description: A hint to supported clients to show the desired number of samples to be collected
+    RawDataCategory:
+      type: string
+      enum:
+      - training
+      - testing
+      - validation
+      - post-processing
   parameters:
-    DeviceIdParameter:
-      name: deviceId
-      in: path
-      required: true
-      description: Device ID
-      schema:
-        type: string
     ProjectIdParameter:
       name: projectId
       in: path
@@ -507,6 +606,13 @@ components:
       description: Project ID
       schema:
         type: integer
+    DeviceIdParameter:
+      name: deviceId
+      in: path
+      required: true
+      description: Device ID
+      schema:
+        type: string
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey
@@ -520,3 +626,34 @@ components:
       type: apiKey
       in: header
       name: x-jwt-token
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: /v1/oauth/authorize
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        implicit:
+          authorizationUrl: /v1/oauth/authorize
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        password:
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        clientCredentials:
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+x-refined-from:
+- edge-impulse-openapi.yml
+- edge-impulse-studio-openapi-2026-09-06.yml

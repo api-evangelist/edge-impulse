@@ -2,12 +2,9 @@ openapi: 3.2.0
 info:
   title: Edge Impulse Organization Portals API
   version: 1.0.0
+  description: 'Operations tagged OrganizationPortals across 2 of this provider''s published API definitions: edge-impulse-openapi.yml, edge-impulse-studio-openapi-2026-09-06.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://studio.edgeimpulse.com/v1
-security:
-- ApiKeyAuthentication: []
-- JWTAuthentication: []
-- JWTHttpHeaderAuthentication: []
 tags:
 - name: OrganizationPortals
 paths:
@@ -27,6 +24,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListOrganizationPortalsResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/organizations/{organizationId}/portals/{portalId}:
     get:
       summary: Retrieve upload portal information
@@ -44,6 +47,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetOrganizationPortalResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/organizations/{organizationId}/portals/{portalId}/verify:
     get:
       summary: Verify upload portal information
@@ -61,6 +70,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/VerifyOrganizationBucketResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/organizations/{organizationId}/portals/create:
     post:
       summary: Create upload portal
@@ -83,6 +98,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CreateOrganizationPortalResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/organizations/{organizationId}/portals/{portalId}/update:
     put:
       summary: Update upload portal
@@ -106,6 +127,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/UpdateOrganizationPortalResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/organizations/{organizationId}/portals/{portalId}/rotate-token:
     delete:
       summary: Rotate upload portal token
@@ -123,6 +150,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/organizations/{organizationId}/portals/{portalId}/delete:
     delete:
       summary: Delete upload portal
@@ -140,166 +173,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
 components:
   schemas:
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
-    CreateOrganizationPortalResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        - url
-        properties:
-          id:
-            type: integer
-            description: Portal ID for the new upload portal
-          url:
-            type: string
-            description: URL to the portal
-          signedUrl:
-            type: string
-            description: pre-signed upload URL. Only set if using a non-built-in bucket.
-          bucketBucket:
-            type: string
-            description: Only set if using a non-built-in bucket.
-    UpdateOrganizationPortalResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - url
-        properties:
-          url:
-            type: string
-            description: URL to the portal
-          signedUrl:
-            type: string
-            description: pre-signed upload URL, only set if not using the Edge Impulse hosted bucket.
-          bucketBucket:
-            type: string
-            description: Only set if not using the Edge Impulse hosted bucket.
-    CreateOrganizationPortalRequest:
-      type: object
-      required:
-      - name
-      - bucketId
-      - bucketPath
-      properties:
-        name:
-          type: string
-          example: EdgeImpulse Inc.
-          description: The name of the upload portal.
-        description:
-          type: string
-          example: EdgeImpulse Inc. Portal description
-          description: The purpose and description of the upload portal.
-        bucketId:
-          type: integer
-          example: 1
-          description: The S3 bucket id to store the uploaded data. Set to '0' to select a bucket hosted by Edge Impulse.
-        bucketPath:
-          type: string
-          example: /path/in/bucket
-          description: The path in the bucket the upload portal will write to.
-    ListOrganizationPortalsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - portals
-        properties:
-          portals:
-            type: array
-            items:
-              type: object
-              required:
-              - id
-              - name
-              - url
-              - token
-              - bucketId
-              - bucketName
-              - bucketPath
-              - bucketUrl
-              - created
-              properties:
-                id:
-                  type: integer
-                name:
-                  type: string
-                description:
-                  type: string
-                url:
-                  type: string
-                bucketId:
-                  type: integer
-                bucketName:
-                  type: string
-                bucketPath:
-                  type: string
-                bucketUrl:
-                  type: string
-                created:
-                  type: string
-                  format: date-time
-    GetOrganizationPortalResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        - name
-        - url
-        - token
-        - bucketName
-        - bucketPath
-        properties:
-          id:
-            type: integer
-            description: Portal ID for the new upload portal
-          name:
-            type: string
-            example: EdgeImpulse Inc.
-            description: The name of the upload portal.
-          description:
-            type: string
-            example: EdgeImpulse Inc. Portal description
-            description: The purpose and description of the upload portal.
-          url:
-            type: string
-            example: edgeImpulse
-            description: The url postfix of the upload portal.
-          token:
-            type: string
-            example: SECRET_TOKEN
-            description: The token used to validate access to the upload portal.
-          bucketName:
-            type: string
-            example: my-s3-bucket
-            description: The S3 bucket name to store the uploaded data.
-          bucketId:
-            type: integer
-            example: 1
-            description: S3 bucket ID. If missing, then this is using the Edge Impulse hosted bucket.
-          bucketPath:
-            type: string
-            example: /path/to/bucket
-            description: The S3 bucket path where uploaded data is stored.
-          bucketUrl:
-            type: string
-            example: s3://bucketname/path/to/bucket
-            description: The full S3 bucket path where uploaded data is stored.
     VerifyOrganizationBucketResponse:
       description: "Response object for verifying an organization's bucket connectivity.\n\nWorkflow:\n1. The client initiates verification by sending a GET request to /api/organizations/{organizationId}/buckets/verify with bucket and credential details.\n2. The server responds with this VerifyOrganizationBucketResponse object.\n3. The client checks the connectionStatus:\n   - If \"connected\": Verification is complete. Other properties (files, hasInfoLabelsFile, signedUrl) are available.\n   - If \"connecting\": Verification is in progress. The client should continue polling. Other properties are not yet available.\n   - If \"error\": Verification failed. Check connectionError for details. Other properties are not available.\n4. If connectionStatus is \"connecting\", the client should periodically poll the endpoint until the status changes to \"connected\" or \"error\".\n"
       allOf:
@@ -380,6 +261,258 @@ components:
               where the endpoint must be reformatted. This field will be undefined for other storage providers.
 
               '
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    ListOrganizationPortalsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - portals
+        properties:
+          portals:
+            type: array
+            items:
+              type: object
+              required:
+              - id
+              - name
+              - url
+              - token
+              - bucketId
+              - bucketName
+              - bucketPath
+              - bucketUrl
+              - created
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                description:
+                  type: string
+                url:
+                  type: string
+                bucketId:
+                  type: integer
+                bucketName:
+                  type: string
+                bucketPath:
+                  type: string
+                bucketUrl:
+                  type: string
+                created:
+                  type: string
+                  format: date-time
+    CreateOrganizationPortalResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        - url
+        properties:
+          id:
+            type: integer
+            description: Portal ID for the new upload portal
+          url:
+            type: string
+            description: URL to the portal
+          signedUrl:
+            type: string
+            description: pre-signed upload URL. Only set if using a non-built-in bucket.
+          bucketBucket:
+            type: string
+            description: Only set if using a non-built-in bucket.
+    UpdateOrganizationPortalResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - url
+        properties:
+          url:
+            type: string
+            description: URL to the portal
+          signedUrl:
+            type: string
+            description: pre-signed upload URL, only set if not using the Edge Impulse hosted bucket.
+          bucketBucket:
+            type: string
+            description: Only set if not using the Edge Impulse hosted bucket.
+    GetOrganizationPortalResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        - name
+        - url
+        - token
+        - bucketName
+        - bucketPath
+        properties:
+          id:
+            type: integer
+            description: Portal ID for the new upload portal
+          name:
+            type: string
+            example: EdgeImpulse Inc.
+            description: The name of the upload portal.
+          description:
+            type: string
+            example: EdgeImpulse Inc. Portal description
+            description: The purpose and description of the upload portal.
+          url:
+            type: string
+            example: edgeImpulse
+            description: The url postfix of the upload portal.
+          token:
+            type: string
+            example: SECRET_TOKEN
+            description: The token used to validate access to the upload portal.
+          bucketName:
+            type: string
+            example: my-s3-bucket
+            description: The S3 bucket name to store the uploaded data.
+          bucketId:
+            type: integer
+            example: 1
+            description: S3 bucket ID. If missing, then this is using the Edge Impulse hosted bucket.
+          bucketPath:
+            type: string
+            example: /path/to/bucket
+            description: The S3 bucket path where uploaded data is stored.
+          bucketUrl:
+            type: string
+            example: s3://bucketname/path/to/bucket
+            description: The full S3 bucket path where uploaded data is stored.
+    CreateOrganizationPortalRequest:
+      type: object
+      required:
+      - name
+      - bucketId
+      - bucketPath
+      properties:
+        name:
+          type: string
+          example: EdgeImpulse Inc.
+          description: The name of the upload portal.
+        description:
+          type: string
+          example: EdgeImpulse Inc. Portal description
+          description: The purpose and description of the upload portal.
+        bucketId:
+          type: integer
+          example: 1
+          description: The S3 bucket id to store the uploaded data. Set to '0' to select a bucket hosted by Edge Impulse.
+        bucketPath:
+          type: string
+          example: /path/in/bucket
+          description: The path in the bucket the upload portal will write to.
+    ListOrganizationPortalsResponse_2:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - portals
+        properties:
+          portals:
+            type: array
+            items:
+              type: object
+              required:
+              - id
+              - name
+              - url
+              - token
+              - bucketId
+              - bucketName
+              - bucketPath
+              - bucketUrl
+              - created
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+                description:
+                  type: string
+                url:
+                  type: string
+                bucketId:
+                  type: integer
+                bucketName:
+                  type: string
+                bucketPath:
+                  type: string
+                bucketUrl:
+                  type: string
+                storageProvider:
+                  type: string
+                created:
+                  type: string
+                  format: date-time
+    GetOrganizationPortalResponse_2:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        - name
+        - url
+        - token
+        - bucketName
+        - bucketPath
+        properties:
+          id:
+            type: integer
+            description: Portal ID for the new upload portal
+          name:
+            type: string
+            example: EdgeImpulse Inc.
+            description: The name of the upload portal.
+          description:
+            type: string
+            example: EdgeImpulse Inc. Portal description
+            description: The purpose and description of the upload portal.
+          url:
+            type: string
+            example: edgeImpulse
+            description: The url postfix of the upload portal.
+          token:
+            type: string
+            example: SECRET_TOKEN
+            description: The token used to validate access to the upload portal.
+          bucketName:
+            type: string
+            example: my-s3-bucket
+            description: The S3 bucket name to store the uploaded data.
+          bucketId:
+            type: integer
+            example: 1
+            description: S3 bucket ID. If missing, then this is using the Edge Impulse hosted bucket.
+          bucketPath:
+            type: string
+            example: /path/to/bucket
+            description: The S3 bucket path where uploaded data is stored.
+          bucketUrl:
+            type: string
+            example: s3://bucketname/path/to/bucket
+            description: The full S3 bucket path where uploaded data is stored.
+          storageProvider:
+            type: string
+            example: s3
+            description: The storage provider type (s3, azure, google, other).
   parameters:
     OrganizationIdParameter:
       name: organizationId
@@ -408,3 +541,34 @@ components:
       type: apiKey
       in: header
       name: x-jwt-token
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: /v1/oauth/authorize
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        implicit:
+          authorizationUrl: /v1/oauth/authorize
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        password:
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        clientCredentials:
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+x-refined-from:
+- edge-impulse-openapi.yml
+- edge-impulse-studio-openapi-2026-09-06.yml

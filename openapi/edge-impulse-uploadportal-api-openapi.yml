@@ -2,12 +2,9 @@ openapi: 3.2.0
 info:
   title: Edge Impulse Upload Portal API
   version: 1.0.0
+  description: 'Operations tagged UploadPortal across 2 of this provider''s published API definitions: edge-impulse-openapi.yml, edge-impulse-studio-openapi-2026-09-06.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://studio.edgeimpulse.com/v1
-security:
-- ApiKeyAuthentication: []
-- JWTAuthentication: []
-- JWTHttpHeaderAuthentication: []
 tags:
 - name: UploadPortal
 paths:
@@ -27,6 +24,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PortalInfoResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/portals/{portalId}/upload-link:
     post:
       summary: Create pre-signed S3 upload link
@@ -49,6 +52,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CreateSignedUploadLinkResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/portals/{portalId}/files:
     post:
       summary: List files in portal
@@ -71,6 +80,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListPortalFilesInFolderResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/portals/{portalId}/files/delete:
     post:
       summary: Delete file from portal
@@ -93,6 +108,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/portals/{portalId}/files/rename:
     post:
       summary: Rename file from portal
@@ -115,6 +136,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/portals/{portalId}/files/download:
     post:
       summary: Download file from portal
@@ -137,6 +164,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DownloadPortalFileResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/portals/{portalId}/files/view:
     get:
       summary: View file from portal
@@ -157,19 +190,14 @@ paths:
               schema:
                 type: string
                 format: binary
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
 components:
   schemas:
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
     DeletePortalFileRequest:
       type: object
       required:
@@ -178,17 +206,6 @@ components:
         path:
           type: string
           description: S3 path (within the portal)
-    CreateSignedUploadLinkResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        properties:
-          url:
-            type: string
-            description: S3 Upload Link
-          ETag:
-            type: string
-            description: S3 File Tag
     ListPortalFilesInFolderRequest:
       type: object
       required:
@@ -203,22 +220,28 @@ components:
         onlyFetchFolders:
           type: boolean
           description: If set, then no files will be returned
-    CreateSignedUploadLinkRequest:
+    CreateSignedUploadLinkResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          url:
+            type: string
+            description: S3 Upload Link
+          ETag:
+            type: string
+            description: S3 File Tag
+    GenericApiResponse:
       type: object
       required:
-      - fileName
-      - fileSize
-      - fileHash
+      - success
       properties:
-        fileName:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
           type: string
-          description: file name
-        fileSize:
-          type: integer
-          description: file size in bytes
-        fileHash:
-          type: string
-          description: hash to identify file changes
+          description: Optional error description (set if 'success' was false)
     PortalFile:
       type: object
       required:
@@ -243,16 +266,14 @@ components:
           enum:
           - folder
           - file
-    DownloadPortalFileResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - url
-        properties:
-          url:
-            type: string
-            description: Signed URL to download the file
+    DownloadPortalFileRequest:
+      type: object
+      required:
+      - path
+      properties:
+        path:
+          type: string
+          description: S3 path (within the portal)
     ListPortalFilesInFolderResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -266,26 +287,6 @@ components:
               $ref: '#/components/schemas/PortalFile'
           continuationToken:
             type: string
-    RenamePortalFileRequest:
-      type: object
-      required:
-      - oldPath
-      - newPath
-      properties:
-        oldPath:
-          type: string
-          description: S3 path (within the portal)
-        newPath:
-          type: string
-          description: S3 path (within the portal)
-    DownloadPortalFileRequest:
-      type: object
-      required:
-      - path
-      properties:
-        path:
-          type: string
-          description: S3 path (within the portal)
     PortalInfoResponse:
       type: object
       required:
@@ -308,14 +309,69 @@ components:
           type: string
         bucketName:
           type: string
+    RenamePortalFileRequest:
+      type: object
+      required:
+      - oldPath
+      - newPath
+      properties:
+        oldPath:
+          type: string
+          description: S3 path (within the portal)
+        newPath:
+          type: string
+          description: S3 path (within the portal)
+    CreateSignedUploadLinkRequest:
+      type: object
+      required:
+      - fileName
+      - fileSize
+      - fileHash
+      properties:
+        fileName:
+          type: string
+          description: file name
+        fileSize:
+          type: integer
+          description: file size in bytes
+        fileHash:
+          type: string
+          description: hash to identify file changes
+    DownloadPortalFileResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - url
+        properties:
+          url:
+            type: string
+            description: Signed URL to download the file
+    PortalInfoResponse_2:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        - name
+        - description
+        - organizationId
+        - organizationName
+        - bucketName
+        properties:
+          name:
+            type: string
+          description:
+            type: string
+          organizationId:
+            type: integer
+          organizationName:
+            type: string
+          organizationLogo:
+            type: string
+          bucketName:
+            type: string
   parameters:
-    PortalPathParameter:
-      name: path
-      in: query
-      required: true
-      description: Path to file in portal
-      schema:
-        type: string
     PortalIdParameter:
       name: portalId
       in: path
@@ -323,6 +379,13 @@ components:
       description: Portal ID
       schema:
         type: integer
+    PortalPathParameter:
+      name: path
+      in: query
+      required: true
+      description: Path to file in portal
+      schema:
+        type: string
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey
@@ -336,3 +399,34 @@ components:
       type: apiKey
       in: header
       name: x-jwt-token
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: /v1/oauth/authorize
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        implicit:
+          authorizationUrl: /v1/oauth/authorize
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        password:
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        clientCredentials:
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+x-refined-from:
+- edge-impulse-openapi.yml
+- edge-impulse-studio-openapi-2026-09-06.yml

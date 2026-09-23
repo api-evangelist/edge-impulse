@@ -9,7 +9,7 @@ security:
 - JWTAuthentication: []
 - JWTHttpHeaderAuthentication: []
 tags:
-- name: ThirdPartyAuth
+- name: Third Party Auth
 paths:
   /api/third-party-auth:
     get:
@@ -21,7 +21,7 @@ paths:
       - permissions:
         - thirdpartyauth:read
       tags:
-      - ThirdPartyAuth
+      - Third Party Auth
       responses:
         '200':
           description: OK
@@ -38,7 +38,7 @@ paths:
       - permissions:
         - thirdpartyauth:write
       tags:
-      - ThirdPartyAuth
+      - Third Party Auth
       requestBody:
         required: true
         content:
@@ -62,7 +62,7 @@ paths:
       - permissions:
         - thirdpartyauth:read
       tags:
-      - ThirdPartyAuth
+      - Third Party Auth
       parameters:
       - $ref: '#/components/parameters/AuthIdParameter'
       responses:
@@ -81,7 +81,7 @@ paths:
       - permissions:
         - thirdpartyauth:write
       tags:
-      - ThirdPartyAuth
+      - Third Party Auth
       parameters:
       - $ref: '#/components/parameters/AuthIdParameter'
       requestBody:
@@ -106,7 +106,7 @@ paths:
       - permissions:
         - thirdpartyauth:write
       tags:
-      - ThirdPartyAuth
+      - Third Party Auth
       parameters:
       - $ref: '#/components/parameters/AuthIdParameter'
       responses:
@@ -123,7 +123,7 @@ paths:
       operationId: authorizeThirdParty
       x-internal-api: true
       tags:
-      - ThirdPartyAuth
+      - Third Party Auth
       parameters:
       - $ref: '#/components/parameters/ProjectIdParameter'
       - $ref: '#/components/parameters/AuthIdParameter'
@@ -141,7 +141,7 @@ paths:
       summary: Create or login a user
       description: Login as a user as a third-party authentication provider. If the user does not exists, it's automatically created. You can only log in as users that were previously created by you.
       tags:
-      - ThirdPartyAuth
+      - Third Party Auth
       x-middleware:
       - RequiresThirdPartyAuthApiKey
       parameters:
@@ -162,6 +162,21 @@ paths:
               schema:
                 $ref: '#/components/schemas/CreateUserThirdPartyResponse'
 components:
+  parameters:
+    ProjectIdParameter:
+      name: projectId
+      in: path
+      required: true
+      description: Project ID
+      schema:
+        type: integer
+    AuthIdParameter:
+      name: authId
+      in: path
+      required: true
+      description: Auth ID
+      schema:
+        type: integer
   schemas:
     GenericApiResponse:
       type: object
@@ -174,90 +189,6 @@ components:
         error:
           type: string
           description: Optional error description (set if 'success' was false)
-    CreateThirdPartyAuthResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        - secretKey
-        - apiKey
-        properties:
-          id:
-            type: integer
-          secretKey:
-            type: string
-          apiKey:
-            type: string
-    UpdateThirdPartyAuthRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        logo:
-          type: string
-        domains:
-          type: array
-          items:
-            type: string
-    ThirdPartyAuth:
-      type: object
-      required:
-      - id
-      - name
-      - description
-      - logo
-      - domains
-      - created
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        description:
-          type: string
-        logo:
-          type: string
-        domains:
-          type: array
-          items:
-            type: string
-        created:
-          type: string
-          format: date-time
-    GetThirdPartyAuthResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - auth
-        properties:
-          auth:
-            $ref: '#/components/schemas/ThirdPartyAuth'
-    CreateThirdPartyAuthRequest:
-      type: object
-      required:
-      - name
-      - description
-      - logo
-      - domains
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        logo:
-          type: string
-        domains:
-          type: array
-          items:
-            type: string
-        secretKey:
-          type: string
-        apiKey:
-          type: string
     CreateUserThirdPartyResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -273,14 +204,6 @@ components:
             - userAlreadyExists
           jwtToken:
             type: string
-    AuthorizeThirdPartyRequest:
-      type: object
-      required:
-      - nextUrl
-      properties:
-        nextUrl:
-          description: The URL to redirect to after authorization is completed.
-          type: string
     CreateUserThirdPartyRequest:
       type: object
       required:
@@ -307,6 +230,89 @@ components:
         privacyPolicy:
           type: boolean
           description: Whether the user accepted the privacy policy
+    CreateThirdPartyAuthRequest:
+      type: object
+      required:
+      - name
+      - description
+      - logo
+      - domains
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        domains:
+          type: array
+          items:
+            type: string
+        secretKey:
+          type: string
+        apiKey:
+          type: string
+    AuthorizeThirdPartyRequest:
+      type: object
+      required:
+      - nextUrl
+      properties:
+        nextUrl:
+          description: The URL to redirect to after authorization is completed.
+          type: string
+    ThirdPartyAuth:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - logo
+      - domains
+      - created
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        domains:
+          type: array
+          items:
+            type: string
+        created:
+          type: string
+          format: date-time
+    UpdateThirdPartyAuthRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        domains:
+          type: array
+          items:
+            type: string
+    CreateThirdPartyAuthResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        - secretKey
+        - apiKey
+        properties:
+          id:
+            type: integer
+          secretKey:
+            type: string
+          apiKey:
+            type: string
     GetAllThirdPartyAuthResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -318,21 +324,15 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/ThirdPartyAuth'
-  parameters:
-    AuthIdParameter:
-      name: authId
-      in: path
-      required: true
-      description: Auth ID
-      schema:
-        type: integer
-    ProjectIdParameter:
-      name: projectId
-      in: path
-      required: true
-      description: Project ID
-      schema:
-        type: integer
+    GetThirdPartyAuthResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - auth
+        properties:
+          auth:
+            $ref: '#/components/schemas/ThirdPartyAuth'
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey

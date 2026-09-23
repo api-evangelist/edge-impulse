@@ -1,0 +1,1090 @@
+openapi: 3.2.0
+info:
+  title: Edge Impulse Whitelabels API
+  version: 1.0.0
+  description: 'Operations tagged Whitelabels across 2 of this provider''s published API definitions: edge-impulse-openapi.yml, edge-impulse-studio-openapi-2026-09-06.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://studio.edgeimpulse.com/v1
+tags:
+- name: White Labels
+paths:
+  /api/whitelabels:
+    get:
+      summary: List the registered white labels
+      description: Retrieve the list of registered white labels.
+      x-internal-api: true
+      security:
+      - permissions:
+        - whitelabels:read
+      tags:
+      - White Labels
+      operationId: getAllWhitelabels
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAllWhitelabelsResponse'
+    post:
+      summary: Create a new white label
+      x-internal-api: true
+      security:
+      - permissions:
+        - whitelabels:write
+      tags:
+      - White Labels
+      operationId: createWhitelabel
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateWhitelabelRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateWhitelabelResponse'
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
+  /api/whitelabel/{whitelabelIdentifier}:
+    get:
+      summary: White label information
+      description: Retrieve all the information about this white label.
+      x-internal-api: true
+      security:
+      - permissions:
+        - whitelabels:read
+      tags:
+      - White Labels
+      operationId: getWhitelabel
+      parameters:
+      - $ref: '#/components/parameters/WhitelabelIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetWhitelabelResponse'
+    put:
+      summary: Update white label
+      description: Update the white label with the given id.
+      x-internal-api: true
+      security:
+      - permissions:
+        - whitelabels:write
+      tags:
+      - White Labels
+      operationId: updateWhitelabel
+      parameters:
+      - $ref: '#/components/parameters/WhitelabelIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWhitelabelInternalRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+    delete:
+      summary: Deletes a white label
+      description: Deletes the white label with the given id.
+      x-internal-api: true
+      security:
+      - permissions:
+        - whitelabels:write
+      tags:
+      - White Labels
+      operationId: deleteWhitelabel
+      parameters:
+      - $ref: '#/components/parameters/WhitelabelIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
+  /api/whitelabel/{whitelabelIdentifier}/domain:
+    get:
+      summary: Get white label domain
+      description: Get a white label domain given its unique identifier.
+      operationId: getWhitelabelDomain
+      security: []
+      tags:
+      - White Labels
+      parameters:
+      - $ref: '#/components/parameters/WhitelabelIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetWhitelabelDomainResponse'
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
+  /api/whitelabel/{whitelabelIdentifier}/deploymentTargets:
+    post:
+      summary: Update deployment targets
+      description: Update some or all of the deployment targets enabled for this white label.
+      operationId: updateDeploymentTargets
+      tags:
+      - White Labels
+      parameters:
+      - $ref: '#/components/parameters/WhitelabelIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateWhitelabelDeploymentTargetsRequest'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
+  /api/whitelabel/{whitelabelIdentifier}/impulse/blocks:
+    get:
+      summary: Get impulse blocks
+      description: Lists all possible DSP and ML blocks available for this white label.
+      operationId: getAllImpulseBlocks
+      tags:
+      - White Labels
+      parameters:
+      - $ref: '#/components/parameters/WhitelabelIdParameter'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetImpulseBlocksResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
+components:
+  schemas:
+    CreateWhitelabelResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        - themeId
+        properties:
+          id:
+            type: integer
+            description: Unique whitelabel identifier
+          themeId:
+            type: integer
+            description: Unique identifier for the theme associated with the white label
+    UpdateWhitelabelDeploymentTargetsRequest:
+      type: object
+      properties:
+        targets:
+          type: array
+          description: The names of the deployment targets that are enabled for this whitelabel.
+          items:
+            type: string
+    DeploymentOptionsOrder:
+      type: array
+      description: Optional attribute allowing a whitelabel to customize the order of deployment options in the deployment view, given as an in-order list of deployment options.
+      items:
+        type: string
+        description: Deployment option name
+        example: org-1
+    GetImpulseBlocksResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - inputBlocks
+        - dspBlocks
+        - learnBlocks
+        properties:
+          inputBlocks:
+            type: array
+            items:
+              $ref: '#/components/schemas/InputBlock'
+          dspBlocks:
+            type: array
+            items:
+              $ref: '#/components/schemas/DSPBlock'
+          learnBlocks:
+            type: array
+            items:
+              $ref: '#/components/schemas/LearnBlock'
+    DevelopmentBoardResponse:
+      type: object
+      required:
+      - id
+      - name
+      - image
+      - docsUrl
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        image:
+          type: string
+        docsUrl:
+          type: string
+    GetWhitelabelResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          whitelabel:
+            $ref: '#/components/schemas/Whitelabel'
+    DSPNamedAxis:
+      type: object
+      required:
+      - name
+      - description
+      - required
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        required:
+          type: boolean
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    ProjectType:
+      type: string
+      enum:
+      - kws
+      - audio
+      - object-detection
+      - image
+      - accelerometer
+      - other
+    GetWhitelabelDomainResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - domain
+        properties:
+          domain:
+            type: string
+          logo:
+            type: string
+    PublicProjectTierAvailability:
+      description: For public blocks, this indicates the project tiers for which this block is available.
+      type: string
+      enum:
+      - enterprise-only
+      - pro-or-enterprise
+      - all-projects
+    Whitelabel:
+      type: object
+      required:
+      - id
+      - name
+      - domain
+      - themeId
+      - identityProviders
+      - allowPasswordAuth
+      - deploymentTargets
+      - allDeploymentTargets
+      - allowSignup
+      - allowFreeProjects
+      - supportedProjectTypes
+      - allowNewProjectUi
+      - learningBlocks
+      - allLearningBlocks
+      - developmentBoards
+      - allDevelopmentBoards
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        domain:
+          type: string
+        ownerOrganizationId:
+          type: integer
+        themeId:
+          type: integer
+        theme:
+          $ref: '#/components/schemas/Theme'
+        identityProviders:
+          type: array
+          items:
+            type: string
+        allowPasswordAuth:
+          type: boolean
+        deploymentTargets:
+          description: List of deployment targets enabled for this white label
+          type: array
+          items:
+            type: string
+        allDeploymentTargets:
+          description: List of all supported deployment targets
+          type: array
+          items:
+            type: string
+        customDeploymentBlocks:
+          description: List of custom deployment blocks available to this white label
+          type: array
+          items:
+            type: object
+            required:
+            - name
+            - id
+            properties:
+              name:
+                type: string
+                description: The name of the custom deployment block
+              id:
+                type: number
+                description: The custom deployment block ID
+        deploymentOptionsOrder:
+          $ref: '#/components/schemas/DeploymentOptionsOrder'
+        allowSignup:
+          type: boolean
+        allowFreeProjects:
+          type: boolean
+        exposePublicProjects:
+          type: boolean
+        defaultDeploymentTarget:
+          type:
+          - string
+          - 'null'
+          description: The name of the default deployment target for this white label
+          example: C++ Library
+        supportedProjectTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectType'
+        allowNewProjectUi:
+          type: boolean
+          description: Whether the new project UI should be enabled for this white label or not.
+        learningBlocks:
+          description: List of learning blocks enabled for this white label
+          type: array
+          items:
+            type: string
+        allLearningBlocks:
+          description: List of all supported learning blocks
+          type: array
+          items:
+            type: object
+            required:
+            - title
+            - type
+            properties:
+              title:
+                type: string
+                description: The name of the learning block
+              type:
+                type: string
+                description: The learning block type
+        developmentBoards:
+          type: array
+          items:
+            $ref: '#/components/schemas/DevelopmentBoardResponse'
+        allDevelopmentBoards:
+          type: array
+          items:
+            $ref: '#/components/schemas/DevelopmentBoardResponse'
+        organizationsLimit:
+          type: integer
+          description: The maximum number of organizations that can be created under this white label.
+    CreateWhitelabelRequest:
+      type: object
+      required:
+      - name
+      - domain
+      - ownerOrganizationId
+      properties:
+        name:
+          type: string
+          example: Octopus's Garden
+          description: The name of the white label.
+        domain:
+          type: string
+          example: underthesea.com
+          description: The domain where the white label lives.
+        ownerOrganizationId:
+          type: integer
+        identityProviders:
+          type: array
+          items:
+            type: string
+          description: The list of allowed identity providers.
+          example: '[google, okta, github]'
+        allowPasswordAuth:
+          type: boolean
+          description: Whether this white label accepts password based authentication.
+        deploymentTargets:
+          type: array
+          items:
+            type: string
+          description: The list of deployment targets to show on the UI
+          example: '[''C++ library'', ''Arduino library'', ''Arduino Nano 33 BLE Sense'']'
+        documentationUrl:
+          type: string
+          example: https://docs.edgeimpulse.com/renesas/
+          description: Custom documentation URL
+        allowSignup:
+          type: boolean
+          description: Whether this white label allow sign ups or not.
+        allowFreeProjects:
+          type: boolean
+          description: Whether this white label allows the creation of free projects.
+        sandboxed:
+          type: boolean
+          description: Whether this white label should work in sandboxed mode or not.
+        exposePublicProjects:
+          type: boolean
+          description: Whether public projects created in this white label scope should be exposed through the Public Projects API or not.
+        learningBlocks:
+          type: array
+          items:
+            type: string
+          description: The list of learning block types to show on the UI
+          example: '[''keras'']'
+        organizationsLimit:
+          type:
+          - integer
+          - 'null'
+          description: The maximum number of organizations that can be created under this white label.
+    UpdateWhitelabelInternalRequest:
+      type: object
+      properties:
+        organizationsLimit:
+          type:
+          - integer
+          - 'null'
+          description: The maximum number of organizations that can be created under this white label.
+    Theme:
+      type: object
+      required:
+      - id
+      - name
+      - favicon
+      - logos
+      - colors
+      properties:
+        id:
+          type: integer
+        ownerUserId:
+          type: integer
+        ownerOrganizationId:
+          type: integer
+        name:
+          type: string
+        favicon:
+          type: object
+          properties:
+            favicon32:
+              type: string
+            favicon57:
+              type: string
+            favicon76:
+              type: string
+            favicon96:
+              type: string
+            favicon120:
+              type: string
+            favicon128:
+              type: string
+            favicon144:
+              type: string
+            favicon152:
+              type: string
+            favicon180:
+              type: string
+            favicon228:
+              type: string
+        logos:
+          type: object
+          properties:
+            primary:
+              type: string
+            primaryPng:
+              type: string
+            primaryWhite:
+              type: string
+            loginLogo:
+              type: string
+            loginLogoWhite:
+              type: string
+            mark:
+              type: string
+            markWhite:
+              type: string
+            deviceLogo:
+              type: string
+        colors:
+          type: object
+          properties:
+            primaryColor:
+              type: string
+            primaryColorRgb:
+              type: array
+              items:
+                type: number
+            primaryColorGradientEnd:
+              type: string
+    BlockType:
+      type: string
+      enum:
+      - official
+      - personal
+      - enterprise
+      - pro-or-enterprise
+      - community
+    InputBlock:
+      type: object
+      required:
+      - type
+      - title
+      - author
+      - description
+      - name
+      - recommend
+      - blockType
+      properties:
+        type:
+          type: string
+          enum:
+          - time-series
+          - image
+          - features
+        title:
+          type: string
+          example: Time series
+        author:
+          type: string
+          example: Edge Impulse Inc.
+        description:
+          type: string
+        name:
+          type: string
+          example: Time series
+        recommended:
+          type: boolean
+        blockType:
+          $ref: '#/components/schemas/BlockType'
+    DSPBlock:
+      type: object
+      required:
+      - type
+      - title
+      - author
+      - description
+      - name
+      - recommend
+      - experimental
+      - latestImplementationVersion
+      - blockType
+      properties:
+        type:
+          type: string
+          example: spectral-analysis
+        title:
+          type: string
+          example: Spectral features
+        author:
+          type: string
+          example: Edge Impulse Inc.
+        description:
+          type: string
+        name:
+          type: string
+          example: Spectral analysis
+        recommended:
+          type: boolean
+        experimental:
+          type: boolean
+        latestImplementationVersion:
+          type: integer
+        organizationId:
+          type: integer
+        organizationDspId:
+          type: integer
+        blockType:
+          $ref: '#/components/schemas/BlockType'
+        namedAxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DSPNamedAxis'
+    LearnBlock:
+      type: object
+      required:
+      - type
+      - title
+      - author
+      - description
+      - name
+      - recommend
+      - blockType
+      properties:
+        type:
+          type: string
+          example: spectral-analysis
+        title:
+          type: string
+          example: Spectral features
+        author:
+          type: string
+          example: Edge Impulse Inc.
+        description:
+          type: string
+        name:
+          type: string
+          example: Spectral analysis
+        recommended:
+          type: boolean
+        organizationModelId:
+          type: integer
+        publicProjectTierAvailability:
+          $ref: '#/components/schemas/PublicProjectTierAvailability'
+        isPublicEnterpriseOnly:
+          type: boolean
+          description: Whether this block is publicly available to only enterprise users
+        blockType:
+          $ref: '#/components/schemas/BlockType'
+        displayCategory:
+          $ref: '#/components/schemas/BlockDisplayCategory'
+    GetAllWhitelabelsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - whitelabels
+        properties:
+          whitelabels:
+            type: array
+            items:
+              $ref: '#/components/schemas/Whitelabel'
+    BlockDisplayCategory:
+      description: Category to display this block in the UI.
+      type: string
+      enum:
+      - classical
+      - tao
+    DSPBlock_2:
+      type: object
+      required:
+      - type
+      - title
+      - author
+      - description
+      - name
+      - recommended
+      - experimental
+      - latestImplementationVersion
+      - blockType
+      - variants
+      properties:
+        type:
+          type: string
+          example: spectral-analysis
+        title:
+          type: string
+          example: Spectral features
+        author:
+          type: string
+          example: Edge Impulse Inc.
+        description:
+          type: string
+        name:
+          type: string
+          example: Spectral analysis
+        recommended:
+          type: boolean
+        experimental:
+          type: boolean
+        latestImplementationVersion:
+          type: integer
+        organizationId:
+          type: integer
+        organizationDspId:
+          type: integer
+        blockType:
+          $ref: '#/components/schemas/BlockType_2'
+        namedAxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/DSPNamedAxis'
+        supportedTargets:
+          description: List of target devices that support this DSP block. If undefined this block works on all targets.
+          type: array
+          items:
+            type: string
+            example: brainchip-akd1000
+    GetImpulseBlocksResponse_2:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - inputBlocks
+        - dspBlocks
+        - learnBlocks
+        - postProcessingBlocks
+        properties:
+          inputBlocks:
+            type: array
+            items:
+              $ref: '#/components/schemas/InputBlock_2'
+          dspBlocks:
+            type: array
+            items:
+              $ref: '#/components/schemas/DSPBlock_2'
+          learnBlocks:
+            type: array
+            items:
+              $ref: '#/components/schemas/LearnBlock_2'
+          postProcessingBlocks:
+            type: array
+            items:
+              $ref: '#/components/schemas/PostProcessingBlock'
+    BlockType_2:
+      type: string
+      enum:
+      - official
+      - personal
+      - enterprise
+      - community
+    BlockDisplayCategory_2:
+      description: Category to display this block in the UI.
+      type: string
+      enum:
+      - classical
+      - tao
+      - developer-preview
+    InputBlock_2:
+      type: object
+      required:
+      - type
+      - title
+      - author
+      - description
+      - name
+      - blockType
+      properties:
+        type:
+          $ref: '#/components/schemas/InputBlockType'
+        title:
+          type: string
+          example: Time series
+        author:
+          type: string
+          example: Edge Impulse Inc.
+        description:
+          type: string
+        name:
+          type: string
+          example: Time series
+        blockType:
+          $ref: '#/components/schemas/BlockType_2'
+    PostProcessingBlock:
+      type: object
+      required:
+      - type
+      - title
+      - author
+      - description
+      - name
+      - recommended
+      - experimental
+      - latestImplementationVersion
+      - blockType
+      - defaultParameters
+      properties:
+        type:
+          type: string
+          example: object-tracking
+        title:
+          type: string
+          example: Object tracking
+        author:
+          type: string
+          example: Edge Impulse Inc.
+        description:
+          type: string
+        name:
+          type: string
+          example: Object tracking
+        recommended:
+          type: boolean
+        experimental:
+          type: boolean
+        latestImplementationVersion:
+          type: integer
+        blockType:
+          $ref: '#/components/schemas/BlockType_2'
+        supportedTargets:
+          description: List of target devices that support this DSP block. If undefined this block works on all targets.
+          type: array
+          items:
+            type: string
+            example: brainchip-akd1000
+        defaultParameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/DSPGroupItem'
+    LearnBlock_2:
+      type: object
+      required:
+      - type
+      - title
+      - author
+      - description
+      - name
+      - recommended
+      - blockType
+      properties:
+        type:
+          type: string
+          example: spectral-analysis
+        title:
+          type: string
+          example: Spectral features
+        author:
+          type: string
+          example: Edge Impulse Inc.
+        description:
+          type: string
+        name:
+          type: string
+          example: Spectral analysis
+        recommended:
+          type: boolean
+        organizationModelId:
+          type: integer
+        publicProjectTierAvailability:
+          $ref: '#/components/schemas/PublicProjectTierAvailability_2'
+        isPublicEnterpriseOnly:
+          type: boolean
+          description: Whether this block is publicly available to only enterprise users
+        blockType:
+          $ref: '#/components/schemas/BlockType_2'
+        displayCategory:
+          $ref: '#/components/schemas/BlockDisplayCategory_2'
+        supportedTargets:
+          description: List of target devices that support this learn block. If undefined this block works on all targets.
+          type: array
+          items:
+            type: string
+            example: brainchip-akd1000
+    PublicProjectTierAvailability_2:
+      description: For public blocks, this indicates the project tiers for which this block is available.
+      type: string
+      enum:
+      - enterprise-only
+      - all-projects
+      - all-projects-including-whitelabels
+    InputBlockType:
+      type: string
+      enum:
+      - time-series
+      - image
+      - features
+    DSPGroupItem:
+      type: object
+      required:
+      - name
+      - type
+      - param
+      - defaultValue
+      - readonly
+      - shouldShow
+      - required
+      - showClickToSet
+      properties:
+        name:
+          type: string
+          example: Scale axes
+        value:
+          type: string
+        defaultValue:
+          type: string
+        type:
+          type: string
+          example: text
+        help:
+          type: string
+          example: Divide axes by this number
+        param:
+          type: string
+          example: scale-axes
+        selectOptions:
+          type: array
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+                description: What is the string that will be set if this option is selected?
+              selected:
+                type: boolean
+              optionLabel:
+                type: string
+                description: What is the label that will be shown to the user for this option?
+              priority:
+                type: number
+                description: The following options are optional.  See Learn Block Auto Config in Notion. Higher priority will get chosen based on limits below.
+              romEstimate:
+                type: number
+                description: Estimated ROM footprint for this choice.  Will be tested against ROM budget in Studio.
+              needsOps:
+                type: array
+                items:
+                  type: string
+                  description: ML operator needed by this choice.
+              needsFeatures:
+                type: array
+                items:
+                  type: string
+                  description: Feature needed by this choice. (non op related)
+        readonly:
+          type: boolean
+        shouldShow:
+          type: boolean
+        showIf:
+          type: object
+          required:
+          - parameter
+          - operator
+          - value
+          properties:
+            parameter:
+              type: string
+            operator:
+              type: string
+              enum:
+              - eq
+              - neq
+            value:
+              type: string
+        invalidText:
+          type: string
+        section:
+          type: string
+          description: Interface section to render parameter in.
+          enum:
+          - advanced
+          - augmentation
+          - modelProfiling
+        multiline:
+          type: boolean
+          description: Only valid for type "string". Will render a multiline text area.
+        required:
+          type: boolean
+        hint:
+          type: string
+          description: If set, shows a hint below the input.
+        placeholder:
+          type: string
+          description: Sets the placeholder text on the input element (for types "string", "int", "float" and "secret")
+        showClickToSet:
+          type: boolean
+          description: If enabled, render a disabled input element with 'Click to set'
+        valid:
+          type: array
+          items:
+            type: object
+          description: Valid values for parameter.
+        items:
+          type: object
+          description: Recursive definition for items of a parameter with type 'array'.
+        properties:
+          type: object
+          description: Recursive definition for a parameter with type 'object'.
+        minVal:
+          type: number
+          description: Minimum value for parameters of type 'int' or 'float'.
+        maxVal:
+          type: number
+          description: Maximum value for parameters of type 'int' or 'float'.
+  parameters:
+    WhitelabelIdParameter:
+      name: whitelabelIdentifier
+      in: path
+      required: true
+      description: Whitelabel ID
+      schema:
+        type: integer
+  securitySchemes:
+    ApiKeyAuthentication:
+      type: apiKey
+      in: header
+      name: x-api-key
+    JWTAuthentication:
+      type: apiKey
+      in: cookie
+      name: jwt
+    JWTHttpHeaderAuthentication:
+      type: apiKey
+      in: header
+      name: x-jwt-token
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: /v1/oauth/authorize
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        implicit:
+          authorizationUrl: /v1/oauth/authorize
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        password:
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        clientCredentials:
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+x-refined-from:
+- edge-impulse-openapi.yml
+- edge-impulse-studio-openapi-2026-09-06.yml

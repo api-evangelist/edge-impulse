@@ -2,12 +2,9 @@ openapi: 3.2.0
 info:
   title: Edge Impulse Export API
   version: 1.0.0
+  description: 'Operations tagged Export across 2 of this provider''s published API definitions: edge-impulse-openapi.yml, edge-impulse-studio-openapi-2026-09-06.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://studio.edgeimpulse.com/v1
-security:
-- ApiKeyAuthentication: []
-- JWTAuthentication: []
-- JWTHttpHeaderAuthentication: []
 tags:
 - name: Export
 paths:
@@ -27,8 +24,46 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ExportGetUrlResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
+  /api/{projectId}/export/download:
+    get:
+      summary: Download export
+      description: Download the data export. This'll redirect you to a signed S3 URL.
+      operationId: downloadExport
+      x-oauth-scopes:
+      - projects:data:read
+      tags:
+      - Export
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      responses:
+        '302':
+          description: Signed S3 URL
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+      - OAuth2: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
 components:
   schemas:
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
     ExportGetUrlResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -45,17 +80,6 @@ components:
           url:
             description: Set if hasExport is true
             type: string
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
   parameters:
     ProjectIdParameter:
       name: projectId
@@ -77,3 +101,34 @@ components:
       type: apiKey
       in: header
       name: x-jwt-token
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: /v1/oauth/authorize
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        implicit:
+          authorizationUrl: /v1/oauth/authorize
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        password:
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        clientCredentials:
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+x-refined-from:
+- edge-impulse-openapi.yml
+- edge-impulse-studio-openapi-2026-09-06.yml

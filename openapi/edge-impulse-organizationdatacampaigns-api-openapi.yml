@@ -2,12 +2,9 @@ openapi: 3.2.0
 info:
   title: Edge Impulse Organization Data Campaigns API
   version: 1.0.0
+  description: 'Operations tagged OrganizationDataCampaigns across 2 of this provider''s published API definitions: edge-impulse-openapi.yml, edge-impulse-studio-openapi-2026-09-06.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://studio.edgeimpulse.com/v1
-security:
-- ApiKeyAuthentication: []
-- JWTAuthentication: []
-- JWTHttpHeaderAuthentication: []
 tags:
 - name: OrganizationDataCampaigns
 paths:
@@ -27,6 +24,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetOrganizationDataCampaignDashboardsResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
     post:
       summary: Add data campaign dashboard
       description: Add a new data campaign dashboard
@@ -48,6 +49,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AddOrganizationDataCampaignDashboardResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/organizations/{organizationId}/campaign-dashboard/{campaignDashboardId}:
     get:
       summary: Get data campaign dashboard
@@ -65,6 +72,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetOrganizationDataCampaignDashboardResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
     post:
       summary: Update data campaign dashboard
       description: Update a data campaign dashboard
@@ -87,6 +98,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
     delete:
       summary: Delete data campaign dashboard
       description: Delete a data campaign dashboard
@@ -103,6 +118,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/organizations/{organizationId}/campaign-dashboard/{campaignDashboardId}/campaigns:
     get:
       summary: Get data campaigns
@@ -120,6 +141,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetOrganizationDataCampaignsResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/organizations/{organizationId}/campaign-dashboard/{campaignDashboardId}/screenshot:
     post:
       summary: Upload a dashboard screenshot
@@ -144,6 +171,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/organizations/{organizationId}/campaigns:
     post:
       summary: Add a data campaign
@@ -166,6 +199,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AddOrganizationDataCampaignResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/organizations/{organizationId}/campaigns/{campaignId}:
     get:
       summary: Get data campaign
@@ -183,6 +222,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetOrganizationDataCampaignResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
     post:
       summary: Update data campaign
       description: Update a data campaign
@@ -205,6 +248,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
     delete:
       summary: Delete data campaign
       description: Delete a data campaign
@@ -221,6 +268,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/organizations/{organizationId}/campaigns/{campaignId}/diff:
     post:
       summary: Get diff for data campaign
@@ -244,6 +297,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/OrganizationDataCampaignDiffResponse'
+      security:
+      - ApiKeyAuthentication: []
+      - JWTAuthentication: []
+      - JWTHttpHeaderAuthentication: []
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
 components:
   schemas:
     DataCampaignGraph:
@@ -305,6 +364,67 @@ components:
         nextUpdate:
           type: string
           format: date-time
+    UpdateOrganizationDataCampaignRequest:
+      type: object
+      properties:
+        dataCampaignDashboardId:
+          type: integer
+        name:
+          type: string
+        coordinatorUids:
+          description: List of user IDs that coordinate this campaign
+          type: array
+          items:
+            type: integer
+        logo:
+          type: string
+        description:
+          type: string
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataCampaignQuery'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataCampaignLink'
+        datasets:
+          type: array
+          items:
+            type: string
+        pipelineIds:
+          type: array
+          items:
+            type: integer
+        projectIds:
+          type: array
+          items:
+            type: integer
+    GetOrganizationDataCampaignDashboardsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - dashboards
+        properties:
+          dashboards:
+            type: array
+            items:
+              $ref: '#/components/schemas/DataCampaignDashboard'
+    GetOrganizationDataCampaignResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - campaign
+        - graphs
+        properties:
+          campaign:
+            $ref: '#/components/schemas/DataCampaign'
+          graphs:
+            type: array
+            items:
+              $ref: '#/components/schemas/DataCampaignGraph'
     OrganizationDataCampaignDiffRequest:
       type: object
       required:
@@ -326,17 +446,99 @@ components:
               graphValueId:
                 type: integer
                 description: Which point in the graph was clicked (from "graphs.values")
-    GetOrganizationDataCampaignDashboardsResponse:
+    GetOrganizationDataCampaignsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - dashboards
+        - campaigns
         properties:
-          dashboards:
+          campaigns:
             type: array
             items:
-              $ref: '#/components/schemas/DataCampaignDashboard'
+              type: object
+              required:
+              - campaign
+              - graphs
+              properties:
+                campaign:
+                  $ref: '#/components/schemas/DataCampaign'
+                graphs:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/DataCampaignGraph'
+    DataCampaign:
+      type: object
+      required:
+      - id
+      - dataCampaignDashboardId
+      - created
+      - name
+      - description
+      - coordinatorUids
+      - pipelineIds
+      - queries
+      - links
+      - datasets
+      - projectIds
+      properties:
+        id:
+          type: integer
+        dataCampaignDashboardId:
+          type: integer
+        created:
+          type: string
+          format: date-time
+        name:
+          type: string
+        description:
+          type: string
+        coordinatorUids:
+          description: List of user IDs that coordinate this campaign
+          type: array
+          items:
+            type: integer
+        logo:
+          type: string
+        queries:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataCampaignQuery'
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/DataCampaignLink'
+        datasets:
+          type: array
+          items:
+            type: string
+        pipelineIds:
+          type: array
+          items:
+            type: integer
+        projectIds:
+          type: array
+          items:
+            type: integer
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    UploadImageRequest:
+      type: object
+      required:
+      - image
+      properties:
+        image:
+          type: string
+          format: binary
     AddOrganizationDataCampaignDashboardRequest:
       type: object
       required:
@@ -360,53 +562,6 @@ components:
           - never
         showNoOfDays:
           type: integer
-    GetOrganizationDataCampaignsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - campaigns
-        properties:
-          campaigns:
-            type: array
-            items:
-              type: object
-              required:
-              - campaign
-              - graphs
-              properties:
-                campaign:
-                  $ref: '#/components/schemas/DataCampaign'
-                graphs:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/DataCampaignGraph'
-    DataCampaignQuery:
-      type: object
-      required:
-      - name
-      - dataset
-      - query
-      properties:
-        name:
-          type: string
-        dataset:
-          type: string
-        query:
-          type: string
-    DataCampaignLink:
-      type: object
-      required:
-      - icon
-      - name
-      - link
-      properties:
-        icon:
-          type: string
-        name:
-          type: string
-        link:
-          type: string
     AddOrganizationDataCampaignDashboardResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -467,14 +622,28 @@ components:
           type: array
           items:
             type: integer
-    UploadImageRequest:
+    DataCampaignQuery:
       type: object
       required:
-      - image
+      - name
+      - dataset
+      - query
       properties:
-        image:
+        name:
           type: string
-          format: binary
+        dataset:
+          type: string
+        query:
+          type: string
+    AddOrganizationDataCampaignResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - dataCampaignId
+        properties:
+          dataCampaignId:
+            type: integer
     DataCampaignDashboard:
       type: object
       required:
@@ -507,15 +676,6 @@ components:
           - never
         showNoOfDays:
           type: integer
-    GetOrganizationDataCampaignDashboardResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - dashboard
-        properties:
-          dashboard:
-            $ref: '#/components/schemas/DataCampaignDashboard'
     OrganizationDataCampaignDiffResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -552,129 +712,15 @@ components:
                   type: array
                   items:
                     type: string
-    DataCampaign:
-      type: object
-      required:
-      - id
-      - dataCampaignDashboardId
-      - created
-      - name
-      - description
-      - coordinatorUids
-      - pipelineIds
-      - queries
-      - links
-      - datasets
-      - projectIds
-      properties:
-        id:
-          type: integer
-        dataCampaignDashboardId:
-          type: integer
-        created:
-          type: string
-          format: date-time
-        name:
-          type: string
-        description:
-          type: string
-        coordinatorUids:
-          description: List of user IDs that coordinate this campaign
-          type: array
-          items:
-            type: integer
-        logo:
-          type: string
-        queries:
-          type: array
-          items:
-            $ref: '#/components/schemas/DataCampaignQuery'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/DataCampaignLink'
-        datasets:
-          type: array
-          items:
-            type: string
-        pipelineIds:
-          type: array
-          items:
-            type: integer
-        projectIds:
-          type: array
-          items:
-            type: integer
-    GetOrganizationDataCampaignResponse:
+    GetOrganizationDataCampaignDashboardResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - campaign
-        - graphs
+        - dashboard
         properties:
-          campaign:
-            $ref: '#/components/schemas/DataCampaign'
-          graphs:
-            type: array
-            items:
-              $ref: '#/components/schemas/DataCampaignGraph'
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
-    AddOrganizationDataCampaignResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - dataCampaignId
-        properties:
-          dataCampaignId:
-            type: integer
-    UpdateOrganizationDataCampaignRequest:
-      type: object
-      properties:
-        dataCampaignDashboardId:
-          type: integer
-        name:
-          type: string
-        coordinatorUids:
-          description: List of user IDs that coordinate this campaign
-          type: array
-          items:
-            type: integer
-        logo:
-          type: string
-        description:
-          type: string
-        queries:
-          type: array
-          items:
-            $ref: '#/components/schemas/DataCampaignQuery'
-        links:
-          type: array
-          items:
-            $ref: '#/components/schemas/DataCampaignLink'
-        datasets:
-          type: array
-          items:
-            type: string
-        pipelineIds:
-          type: array
-          items:
-            type: integer
-        projectIds:
-          type: array
-          items:
-            type: integer
+          dashboard:
+            $ref: '#/components/schemas/DataCampaignDashboard'
     UpdateOrganizationDataCampaignDashboardRequest:
       type: object
       properties:
@@ -693,11 +739,25 @@ components:
           - never
         showNoOfDays:
           type: integer
+    DataCampaignLink:
+      type: object
+      required:
+      - icon
+      - name
+      - link
+      properties:
+        icon:
+          type: string
+        name:
+          type: string
+        link:
+          type: string
   parameters:
-    OrganizationDataCampaignIdPathParameter:
-      name: campaignId
+    OrganizationIdParameter:
+      name: organizationId
       in: path
       required: true
+      description: Organization ID
       schema:
         type: integer
     OrganizationDataCampaignDashboardIdPathParameter:
@@ -706,11 +766,10 @@ components:
       required: true
       schema:
         type: integer
-    OrganizationIdParameter:
-      name: organizationId
+    OrganizationDataCampaignIdPathParameter:
+      name: campaignId
       in: path
       required: true
-      description: Organization ID
       schema:
         type: integer
   securitySchemes:
@@ -726,3 +785,34 @@ components:
       type: apiKey
       in: header
       name: x-jwt-token
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: /v1/oauth/authorize
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        implicit:
+          authorizationUrl: /v1/oauth/authorize
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        password:
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        clientCredentials:
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+x-refined-from:
+- edge-impulse-openapi.yml
+- edge-impulse-studio-openapi-2026-09-06.yml

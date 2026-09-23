@@ -9,17 +9,16 @@ security:
 - JWTAuthentication: []
 - JWTHttpHeaderAuthentication: []
 tags:
-- name: FeatureFlags
+- name: Feature Flags
 paths:
   /api-feature-flags:
     get:
       summary: Get the current global feature flags and whether they are enabled
       security: []
       x-internal-api: true
-      description: Get the current global feature flags and whether they are enabled
       operationId: getFeatureFlags
       tags:
-      - FeatureFlags
+      - Feature Flags
       responses:
         '200':
           description: OK
@@ -29,6 +28,24 @@ paths:
                 $ref: '#/components/schemas/GetFeatureFlagsResponse'
 components:
   schemas:
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    Feature:
+      type: string
+      enum:
+      - signup-thank-you-page
+      - stripe-live-mode
+      - azure-storage
+      description: Known feature identifiers.
     GetFeatureFlagsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -50,24 +67,6 @@ components:
                 enabled:
                   type: boolean
                   description: Whether the feature is enabled.
-    Feature:
-      type: string
-      enum:
-      - signup-thank-you-page
-      - stripe-live-mode
-      - azure-storage
-      description: Known feature identifiers.
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey

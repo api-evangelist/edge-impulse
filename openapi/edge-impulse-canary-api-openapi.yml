@@ -14,7 +14,6 @@ paths:
   /api/canary:
     get:
       summary: Get the decision to whether the requested URL goes on canary deployment or not
-      description: Get the decision to whether the requested URL goes on canary deployment or not
       x-internal-api: true
       x-required-headers:
       - x-edge-lambda
@@ -34,17 +33,6 @@ paths:
                 $ref: '#/components/schemas/CanaryResponse'
 components:
   schemas:
-    CanaryResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - routeToCanary
-        properties:
-          routeToCanary:
-            type: boolean
-            description: Whether the request should be routed to the canary or not.
-            example: true
     GenericApiResponse:
       type: object
       required:
@@ -56,6 +44,17 @@ components:
         error:
           type: string
           description: Optional error description (set if 'success' was false)
+    CanaryResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - routeToCanary
+        properties:
+          routeToCanary:
+            type: boolean
+            description: Whether the request should be routed to the canary or not.
+            example: true
   parameters:
     RequestedUrlParameter:
       name: requestedUrl

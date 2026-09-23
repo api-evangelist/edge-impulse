@@ -1,0 +1,177 @@
+openapi: 3.2.0
+info:
+  title: Edge Impulse Integrations API
+  version: 1.0.0
+servers:
+- url: https://studio.edgeimpulse.com/v1
+security:
+- ApiKeyAuthentication: []
+- JWTAuthentication: []
+- JWTHttpHeaderAuthentication: []
+- OAuth2: []
+tags:
+- name: Integrations
+paths:
+  /api/{projectId}/integrations/tensorboard/start:
+    post:
+      summary: Start TensorBoard integration
+      description: Start a TensorBoard session for the requested learn blocks
+      operationId: startTensorBoardSession
+      tags:
+      - Integrations
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartTensorBoardSessionRequest'
+      x-oauth-scopes: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartIntegrationSessionResponse'
+  /api/{projectId}/integrations/tensorboard/{resourceId}:
+    get:
+      summary: Get TensorBoard session status
+      description: Get the status of a TensorBoard session
+      operationId: getTensorBoardSessionStatus
+      tags:
+      - Integrations
+      parameters:
+      - $ref: '#/components/parameters/ProjectIdParameter'
+      - $ref: '#/components/parameters/IntegrationResourceIdParameter'
+      x-oauth-scopes: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetIntegrationSessionStatusResponse'
+components:
+  schemas:
+    StartTensorBoardSessionRequest:
+      type: object
+      required:
+      - blockIds
+      properties:
+        blockIds:
+          description: IDs of learn blocks to compare in a TensorBoard session
+          type: array
+          items:
+            type: number
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    StartIntegrationSessionResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: string
+            description: Unique integration resource identifier. Pass this to getIntegrationSessionStatus to check the status of the integration session.
+            example: learn-3-2-1
+    GetIntegrationSessionStatusResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - sessionStatus
+        properties:
+          sessionStatus:
+            $ref: '#/components/schemas/IntegrationSessionStatus'
+    IntegrationSessionStatus:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          description: Integration session status
+          type: string
+          enum:
+          - pending
+          - active
+          - error
+          - stopped
+        additionalInfo:
+          description: Any relevant additional information, e.g. the reason the session has stopped or any error messages.
+          type: string
+  parameters:
+    ProjectIdParameter:
+      name: projectId
+      in: path
+      required: true
+      description: Project ID
+      schema:
+        type: integer
+    IntegrationResourceIdParameter:
+      name: resourceId
+      in: path
+      required: true
+      description: 'Unique resource ID for an integration session.
+
+        When an integration is launched we create a new session for it.
+
+        Each session is uniquely identifiable by the project ID and resource ID.
+
+        '
+      example: learn-3-2-1
+      schema:
+        type: string
+  securitySchemes:
+    ApiKeyAuthentication:
+      type: apiKey
+      in: header
+      name: x-api-key
+    JWTAuthentication:
+      type: apiKey
+      in: cookie
+      name: jwt
+    JWTHttpHeaderAuthentication:
+      type: apiKey
+      in: header
+      name: x-jwt-token
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: /v1/oauth/authorize
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        implicit:
+          authorizationUrl: /v1/oauth/authorize
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        password:
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        clientCredentials:
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information

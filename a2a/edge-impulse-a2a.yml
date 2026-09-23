@@ -3,12 +3,9 @@ method: probed
 source: https://docs.edgeimpulse.com/.well-known/agent-card.json
 provider: Edge Impulse
 providerId: edge-impulse
-description: >-
-  A2A Agent Card published by Edge Impulse on its documentation host. Discovered by
-  probing /.well-known/agent-card.json across every host this record knows
-  (edgeimpulse.com, www.edgeimpulse.com, docs.edgeimpulse.com, studio.edgeimpulse.com,
-  forum.edgeimpulse.com); only the docs host serves one. Saved verbatim, never authored.
-card: a2a/edge-impulse-agent-card.json
+description: A2A Agent Card published by Edge Impulse on its documentation host. Discovered by probing /.well-known/agent-card.json across every host this record knows (edgeimpulse.com, www.edgeimpulse.com, docs.edgeimpulse.com, studio.edgeimpulse.com, forum.edgeimpulse.com); only the docs host serves one. Saved verbatim, never authored.
+card:
+  file: a2a/edge-impulse-agent-card.json
 discovery:
   path: /.well-known/agent-card.json
   canonical: true
@@ -29,28 +26,21 @@ grade:
     default_input_modes_present: true
     default_output_modes_present: true
 deviations:
-  - id: protocol-version-behind
-    severity: informational
-    note: >-
-      protocolVersion is "0.3", not "1.0.0" — the card is valid but declares an
-      earlier A2A protocol revision than the current specification.
-  - id: agent-scope-is-documentation
-    severity: informational
-    note: >-
-      name/provider.organization are "Edge Impulse Documentation" and url is the docs
-      site root, so the advertised agent is the documentation assistant, not the
-      Studio API. The card's single skill points at a published Agent Skill file.
+- id: protocol-version-behind
+  severity: informational
+  note: protocolVersion is "0.3", not "1.0.0" — the card is valid but declares an earlier A2A protocol revision than the current specification.
+- id: agent-scope-is-documentation
+  severity: informational
+  note: name/provider.organization are "Edge Impulse Documentation" and url is the docs site root, so the advertised agent is the documentation assistant, not the Studio API. The card's single skill points at a published Agent Skill file.
 skills_advertised:
-  - id: edgeimpulse
-    name: Edgeimpulse
-    url: https://docs.edgeimpulse.com/.well-known/agent-skills/edgeimpulse/skill.md
-    saved_as: skills/edge-impulse-edgeimpulse.md
+- id: edgeimpulse
+  name: Edgeimpulse
+  url: https://docs.edgeimpulse.com/.well-known/agent-skills/edgeimpulse/skill.md
+  saved_as: skills/edge-impulse-edgeimpulse.md
 related:
   mcp: mcp/edge-impulse-mcp.yml
   skills: skills/_index.yml
-notes: >-
-  A hit here was also a lead for MCP discovery — Edge Impulse serves a live, anonymous
-  remote MCP endpoint at https://docs.edgeimpulse.com/mcp on the same host.
+notes: A hit here was also a lead for MCP discovery — Edge Impulse serves a live, anonymous remote MCP endpoint at https://docs.edgeimpulse.com/mcp on the same host.
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -2,14 +2,11 @@ openapi: 3.2.0
 info:
   title: Edge Impulse Email Verification API
   version: 1.0.0
+  description: 'Operations tagged EmailVerification across 2 of this provider''s published API definitions: edge-impulse-openapi.yml, edge-impulse-studio-openapi-2026-09-06.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://studio.edgeimpulse.com/v1
-security:
-- ApiKeyAuthentication: []
-- JWTAuthentication: []
-- JWTHttpHeaderAuthentication: []
 tags:
-- name: EmailVerification
+- name: Email Verification
 paths:
   /api/emails/{email}/request-verification:
     post:
@@ -19,7 +16,7 @@ paths:
       x-internal-api: true
       operationId: requestEmailVerification
       tags:
-      - EmailVerification
+      - Email Verification
       parameters:
       - $ref: '#/components/parameters/EmailParameter'
       requestBody:
@@ -35,6 +32,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EntityCreatedResponse'
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/emails/verify:
     post:
       summary: Verify email
@@ -43,7 +42,7 @@ paths:
       x-internal-api: true
       operationId: verifyEmail
       tags:
-      - EmailVerification
+      - Email Verification
       requestBody:
         required: true
         content:
@@ -57,13 +56,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/VerifyEmailResponse'
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/emails/validate:
     post:
       summary: Validate email for account sign-up
       security: []
       description: Validate whether an email is valid for sign up. Using an email that fails this check can result in the associated account missing communications and features that are distributed through email.
       tags:
-      - EmailVerification
+      - Email Verification
       operationId: validateEmail
       requestBody:
         required: true
@@ -78,6 +79,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ValidateEmailResponse'
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
   /api/emails/{emailId}:
     get:
       summary: Get email verification status
@@ -86,7 +89,7 @@ paths:
       x-internal-api: true
       operationId: getEmailVerificationStatus
       tags:
-      - EmailVerification
+      - Email Verification
       parameters:
       - $ref: '#/components/parameters/EmailIdParameter'
       responses:
@@ -96,34 +99,20 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetEmailVerificationStatusResponse'
+    servers:
+    - url: https://studio.edgeimpulse.com/v1
 components:
   schemas:
-    RequestEmailVerificationRequest:
-      type: object
-      required:
-      - redirectUrl
-      properties:
-        redirectUrl:
-          type: string
-          description: URL to redirect the user after email verification.
-    ActivateUserOrVerifyEmailRequest:
-      type: object
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          description: Activation or verification code (sent via email)
-    EntityCreatedResponse:
+    GetEmailVerificationStatusResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - id
+        - verified
         properties:
-          id:
-            type: integer
-            description: Unique identifier of the created entity.
+          verified:
+            type: boolean
+            description: Whether the email address has been verified.
     GenericApiResponse:
       type: object
       required:
@@ -135,20 +124,16 @@ components:
         error:
           type: string
           description: Optional error description (set if 'success' was false)
-    VerifyEmailResponse:
+    EntityCreatedResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
+        required:
+        - id
         properties:
-          email:
-            type: string
-            description: Email address that was verified.
-          userId:
-            type: number
-            description: ID of the user associated with the verified email address, if any.
-          redirectUrl:
-            type: string
-            description: URL to redirect the user to after email verification.
+          id:
+            type: integer
+            description: Unique identifier of the created entity.
     ValidateEmailResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -184,16 +169,6 @@ components:
             type: string
             example: edgeimpulse.com
             description: The second part of the email address (after the @ sign)
-    GetEmailVerificationStatusResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - verified
-        properties:
-          verified:
-            type: boolean
-            description: Whether the email address has been verified.
     EmailValidationRequest:
       type: object
       required:
@@ -203,14 +178,37 @@ components:
           type: string
           description: E-mail address to validate
           example: jan@edgeimpulse.com
+    VerifyEmailResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          email:
+            type: string
+            description: Email address that was verified.
+          userId:
+            type: number
+            description: ID of the user associated with the verified email address, if any.
+          redirectUrl:
+            type: string
+            description: URL to redirect the user to after email verification.
+    RequestEmailVerificationRequest:
+      type: object
+      required:
+      - redirectUrl
+      properties:
+        redirectUrl:
+          type: string
+          description: URL to redirect the user after email verification.
+    ActivateUserOrVerifyEmailRequest:
+      type: object
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          description: Activation or verification code (sent via email)
   parameters:
-    EmailIdParameter:
-      name: emailId
-      in: path
-      required: true
-      description: Unique identifier for an email verification request
-      schema:
-        type: integer
     EmailParameter:
       name: email
       in: path
@@ -218,6 +216,13 @@ components:
       description: Email address
       schema:
         type: string
+    EmailIdParameter:
+      name: emailId
+      in: path
+      required: true
+      description: Unique identifier for an email verification request
+      schema:
+        type: integer
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey
@@ -231,3 +236,34 @@ components:
       type: apiKey
       in: header
       name: x-jwt-token
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: /v1/oauth/authorize
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        implicit:
+          authorizationUrl: /v1/oauth/authorize
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        password:
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+        clientCredentials:
+          tokenUrl: /v1/oauth/token
+          scopes:
+            openid: Access to basic profile information
+            email: Access to email address
+            profile: Access to full profile information
+x-refined-from:
+- edge-impulse-openapi.yml
+- edge-impulse-studio-openapi-2026-09-06.yml
