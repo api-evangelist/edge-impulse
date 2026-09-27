@@ -73,17 +73,6 @@ paths:
                 $ref: '#/components/schemas/GenericApiResponse'
 components:
   schemas:
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
     LogAnalyticsEventRequest:
       type: object
       required:
@@ -97,6 +86,17 @@ components:
           type: string
         eventProperties:
           type: object
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
     LogWebsitePageviewRequest:
       type: object
       required:

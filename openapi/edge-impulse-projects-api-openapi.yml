@@ -1458,348 +1458,54 @@ paths:
     - url: https://studio.edgeimpulse.com/v1
 components:
   schemas:
-    ListPublicProjectTypesResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - $ref: '#/components/schemas/ListPublicProjectTypes'
-    ProjectTierEnum:
-      type: string
-      description: The project tier. This is "enterprise" for all organization projects, or the user tier for all user projects.
-      enum:
-      - free
-      - community-plus
-      - professional
-      - enterprise
-    Download:
-      type: object
-      required:
-      - name
-      - type
-      - link
-      properties:
-        id:
-          type: string
-          example: The ID of the download, if available
-        name:
-          type: string
-          example: Training data
-        type:
-          type: string
-          example: NPY file
-        size:
-          type: string
-          example: 73 items
-        link:
-          type: string
-          example: /api/1/raw-data/training/x
-        impulseId:
-          type: number
-          example: The ID of the impulse associated with this download, if available
-    UploadReadmeImageResponse:
+    ListAIActionsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - url
+        - actions
         properties:
-          url:
-            type: string
-    ListPublicProjectTypes:
-      type: object
-      required:
-      - projectTypes
-      properties:
-        projectTypes:
-          type: array
-          description: Array with project types
-          items:
-            type: object
-            required:
-            - value
-            - label
-            properties:
-              value:
-                $ref: '#/components/schemas/ProjectType'
-              label:
-                type: string
-    AddProjectApiKeyRequest:
-      allOf:
-      - $ref: '#/components/schemas/AddApiKeyRequest'
-      - type: object
-        required:
-        - isDevelopmentKey
-        - role
-        properties:
-          isDevelopmentKey:
-            type: boolean
-            description: Whether this key should be used as a development key.
-          role:
-            type: string
-            enum:
-            - admin
-            - readonly
-            - ingestiononly
-    Sensor:
-      type: object
-      required:
-      - name
-      - units
-      properties:
-        name:
-          type: string
-          description: Name of the axis
-          example: accX
-        units:
-          type: string
-          description: Type of data on this axis. Needs to comply to SenML units (see https://www.iana.org/assignments/senml/senml.xhtml).
-    EntityCreatedResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: integer
-            description: Unique identifier of the created entity.
-    UploadImageRequest:
-      type: object
-      required:
-      - image
-      properties:
-        image:
-          type: string
-          format: binary
-    ListEmailResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - emails
-        properties:
-          emails:
-            type: array
-            description: List of emails
-            items:
-              type: object
-              required:
-              - from
-              - to
-              - created
-              - subject
-              - bodyText
-              - bodyHTML
-              - sent
-              - providerResponse
-              properties:
-                userId:
-                  type: integer
-                projectId:
-                  type: integer
-                from:
-                  type: string
-                to:
-                  type: string
-                created:
-                  type: string
-                  format: date-time
-                subject:
-                  type: string
-                bodyText:
-                  type: string
-                bodyHTML:
-                  type: string
-                sent:
-                  type: boolean
-                providerResponse:
-                  type: string
-    ProjectPublicData:
-      type: object
-      required:
-      - id
-      - name
-      - description
-      - created
-      - owner
-      - publicUrl
-      - projectType
-      - pageViewCount
-      - cloneCount
-      - tags
-      properties:
-        id:
-          type: integer
-          example: 1
-        name:
-          type: string
-          example: Water hammer detection
-        description:
-          type: string
-        created:
-          type: string
-          format: date-time
-          example: '2019-07-21T17:32:28Z'
-        owner:
-          type: string
-          description: User or organization that owns the project
-        ownerAvatar:
-          type: string
-          description: URL to the project owner avatar, if any
-        publicUrl:
-          type: string
-          description: URL of the latest public version of the project, if any
-          example: https://studio.edgeimpulse.com/public/40479/latest
-        projectType:
-          $ref: '#/components/schemas/ProjectType'
-        pageViewCount:
-          type: integer
-        cloneCount:
-          type: integer
-        totalSamplesCount:
-          type: string
-        trainingAccuracy:
-          type: number
-          description: Accuracy on training set.
-        testAccuracy:
-          type: number
-          description: Accuracy on test set.
-        readme:
-          type: object
-          description: Present if a readme is set for this project
-          required:
-          - markdown
-          - html
-          properties:
-            markdown:
-              type: string
-            html:
-              type: string
-        tags:
-          type: array
-          items:
-            type: string
-          description: List of project tags
-          example:
-          - FOMO
-          - birds
-    ListSamplesResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - samples
-        - totalCount
-        properties:
-          samples:
+          actions:
             type: array
             items:
-              $ref: '#/components/schemas/Sample'
-          totalCount:
-            type: integer
-    AIActionsConfigStep:
+              $ref: '#/components/schemas/AIAction'
+    LatencyDevice:
       type: object
       required:
-      - transformationBlockId
-      - parameters
+      - mcu
+      - name
+      - selected
+      - int8Latency
+      - int8ConvLatency
+      - float32Latency
+      - float32ConvLatency
+      - helpText
       properties:
-        transformationBlockId:
-          description: The selected transformation block ID.
-          type: integer
-        parameters:
-          description: Parameters for the transformation block. These map back to the parameters in OrganizationTransformationBlock 'parameters' property.
-          type: object
-          additionalProperties:
-            type: string
-    LastModificationDateResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - modificationDate
-        properties:
-          lastModificationDate:
-            type: string
-            format: date-time
-          lastVersionDate:
-            type: string
-            format: date-time
-    ProjectVisibility:
-      type: string
-      enum:
-      - public
-      - private
-      description: The visibility of the project, either public or private. Public projects can be viewed by anyone on the internet and edited by collaborators. Private projects can only be viewed and edited by collaborators.
-    ProjectDataAxesSummaryResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - dataAxisSummary
-        properties:
-          dataAxisSummary:
-            type: object
-            description: Summary of the amount of data (in ms.) per sensor axis
-            additionalProperties:
-              type: integer
-    PreviewAIActionsSamplesRequest:
-      type: object
-      required:
-      - saveConfig
-      - dataCategory
-      - maxDataPreviewCount
-      properties:
-        saveConfig:
-          description: If this is passed in, the `previewConfig` of the AI action is overwritten (requires actionId to be a valid action).
+        mcu:
+          type: string
+        name:
+          type: string
+        selected:
           type: boolean
-        dataCategory:
-          description: Type of data to preview. A random subset of this data will be returned.
-          $ref: '#/components/schemas/AIActionsDataCategory'
-        dataMetadataKey:
-          description: Metadata key to filter on. Required if dataCategory is equal to "dataWithoutMetadataKey" or "dataWithMetadata".
+        int8Latency:
+          type: number
+        int8ConvLatency:
+          type: number
+        float32Latency:
+          type: number
+        float32ConvLatency:
+          type: number
+        helpText:
           type: string
-        dataMetadataValue:
-          description: Metadata value to filter on. Required if dataCategory is equal to "dataWithMetadata".
-          type: string
-        maxDataPreviewCount:
-          description: Max. amount of data items to return.
-          type: integer
-    SetProjectComputeTimeRequest:
+    SetProjectDspFileSizeRequest:
       type: object
       description: Only parameters set on this object will be updated.
       required:
-      - jobLimitM
+      - dspFileSizeMb
       properties:
-        jobLimitM:
+        dspFileSizeMb:
           type: integer
-          description: New job limit in seconds.
-    UploadCsvWizardUploadedFileRequest:
-      type: object
-      required:
-      - file
-      properties:
-        file:
-          type: string
-          format: binary
-    BoundingBox:
-      type: object
-      description: This has the _absolute values_ for x/y/w/h (so 0..x (where x is the w/h of the image))
-      required:
-      - label
-      - x
-      - y
-      - width
-      - height
-      properties:
-        label:
-          type: string
-        x:
-          type: integer
-        y:
-          type: integer
-        width:
-          type: integer
-        height:
-          type: integer
+          description: DSP File size in MB (default is 4096 MB)
     ApplicationBudget:
       type: object
       description: Specifies limits for your specific application, as available RAM and ROM for the model's operation and the maximum allowed latency.
@@ -1810,122 +1516,22 @@ components:
           $ref: '#/components/schemas/ResourceRange'
         memoryOverhead:
           $ref: '#/components/schemas/TargetMemory'
-    Device:
+    MemorySpec:
+      type: object
+      description: Describes performance characteristics of a particular memory type
+      properties:
+        fastBytes:
+          $ref: '#/components/schemas/ResourceRange'
+        slowBytes:
+          $ref: '#/components/schemas/ResourceRange'
+    UploadCsvWizardUploadedFileRequest:
       type: object
       required:
-      - id
-      - deviceId
-      - created
-      - lastSeen
-      - name
-      - deviceType
-      - sensors
-      - remote_mgmt_connected
-      - supportsSnapshotStreaming
-      - remoteMgmtMode
+      - file
       properties:
-        id:
-          type: integer
-          example: 1
-        deviceId:
+        file:
           type: string
-          description: Unique identifier (such as MAC address) for a device
-          example: 38:f9:d3:d7:62:03
-        created:
-          type: string
-          format: date-time
-          example: '2019-07-21T17:32:28Z'
-        lastSeen:
-          type: string
-          format: date-time
-          example: '2019-08-31T17:32:28Z'
-          description: Last message that was received from the device (ignoring keep-alive)
-        name:
-          type: string
-          example: m6d.1 desk sensor
-        deviceType:
-          type: string
-          example: DISCO-L475VG
-        sensors:
-          type: array
-          items:
-            type: object
-            required:
-            - name
-            - maxSampleLengthS
-            - frequencies
-            properties:
-              name:
-                type: string
-                example: Built-in accelerometer
-              maxSampleLengthS:
-                type: integer
-                description: Maximum supported sample length in seconds
-              frequencies:
-                type: array
-                description: Supported frequencies for this sensor in Hz.
-                example:
-                - 62.5
-                - 100
-                items:
-                  type: number
-        remote_mgmt_connected:
-          type: boolean
-          description: Whether the device is connected to the remote management interface. This property is deprecated, use `remoteMgmtMode` instead.
-        remote_mgmt_host:
-          type: string
-          description: The remote management host that the device is connected to
-        supportsSnapshotStreaming:
-          type: boolean
-        remoteMgmtMode:
-          description: Replaces `remote_mgmt_connected`. Shows whether the device is connected to the remote management interface, and in which mode.
-          type: string
-          enum:
-          - disconnected
-          - ingestion
-          - inference
-        inferenceInfo:
-          type: object
-          description: If `remoteMgmtMode` is set to `inference` this object shows information about the model that's ran on device.
-          required:
-          - projectId
-          - projectOwner
-          - projectName
-          - deployedVersion
-          properties:
-            projectId:
-              type: integer
-            projectOwner:
-              type: string
-            projectName:
-              type: string
-            deployedVersion:
-              type: integer
-            modelType:
-              type: string
-              enum:
-              - classification
-              - objectDetection
-              - constrainedObjectDetection
-    ListProjects:
-      type: object
-      required:
-      - projects
-      properties:
-        projects:
-          type: array
-          description: Array with projects
-          items:
-            $ref: '#/components/schemas/Project'
-    GetModelVariantsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - modelVariants
-        properties:
-          modelVariants:
-            $ref: '#/components/schemas/AllProjectModelVariants'
+          format: binary
     ListVersionsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -2012,6 +1618,45 @@ components:
           runModelTestingWhileVersioning:
             type: boolean
             description: Whether the 'Run model testing while versioning' checkbox should be enabled.
+    AddApiKeyRequest:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Description of the key
+        apiKey:
+          type: string
+          description: 'Optional: API key. This needs to start with `ei_` and will need to be at least 32 characters long. If this field is not passed in, a new API key is generated for you.'
+    ProjectCollaborator:
+      allOf:
+      - $ref: '#/components/schemas/User'
+      - type: object
+        required:
+        - isOwner
+        properties:
+          isOwner:
+            type: boolean
+    ResourceRange:
+      type: object
+      description: Describes range of expected availability for an arbitrary resource
+      properties:
+        minimum:
+          type: number
+        maximum:
+          type: number
+    DevelopmentBoardsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - developmentBoards
+        properties:
+          developmentBoards:
+            type: array
+            items:
+              $ref: '#/components/schemas/DevelopmentBoardResponse'
     AIAction:
       type: object
       required:
@@ -2084,278 +1729,359 @@ components:
         cacheUnchangedSteps:
           description: If enabled, will load cached results from the previous preview job for unchanged jobs. Disable this if you're developing your own custom AI Labeling job, and want to always re-run all steps.
           type: boolean
-    ListPublicProjects:
-      type: object
+    SetAIActionsOrderRequest:
       required:
-      - projects
-      - totalProjectCount
+      - orderByActionId
       properties:
-        projects:
+        orderByActionId:
           type: array
-          description: Array with public projects
           items:
-            $ref: '#/components/schemas/ProjectPublicData'
-        totalProjectCount:
-          type: integer
-    ProjectDataIntervalResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - intervalMs
-        properties:
-          intervalMs:
             type: integer
-    CreateProjectRequest:
+    Download:
       type: object
       required:
-      - projectName
+      - name
+      - type
+      - link
       properties:
-        projectName:
+        id:
           type: string
-          example: EEG trials
-          description: The name of the first project.
-        projectVisibility:
-          $ref: '#/components/schemas/ProjectVisibility'
-        originalProjectVersionId:
-          type: integer
-          description: The ID of the version that was used to restore this project.
-    ModelEngineShortEnum:
-      type: string
-      enum:
-      - tflite-eon
-      - tflite-eon-ram-optimized
-      - tflite
-    ListApiKeysResponse:
+          example: The ID of the download, if available
+        name:
+          type: string
+          example: Training data
+        type:
+          type: string
+          example: NPY file
+        size:
+          type: string
+          example: 73 items
+        link:
+          type: string
+          example: /api/1/raw-data/training/x
+        impulseId:
+          type: number
+          example: The ID of the impulse associated with this download, if available
+    ProjectInfoSummaryResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - apiKeys
+        - id
+        - owner
+        - name
+        - studioUrl
         properties:
-          apiKeys:
+          id:
+            type: integer
+          owner:
+            type: string
+          name:
+            type: string
+          studioUrl:
+            type: string
+    AddHmacKeyRequest:
+      type: object
+      required:
+      - name
+      - hmacKey
+      - isDevelopmentKey
+      properties:
+        name:
+          type: string
+          description: Description of the key
+        hmacKey:
+          type: string
+          description: HMAC key.
+        isDevelopmentKey:
+          type: boolean
+          description: Whether this key should be used as a development key.
+    ListPublicVersionsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - versions
+        properties:
+          versions:
             type: array
-            description: List of API keys.
             items:
               type: object
               required:
-              - id
-              - name
-              - apiKey
-              - isDevelopmentKey
-              - created
-              - role
+              - version
+              - publicProjectId
+              - publicProjectUrl
               properties:
-                id:
+                version:
                   type: integer
-                apiKey:
+                publicProjectId:
+                  type: integer
+                publicProjectUrl:
                   type: string
-                isDevelopmentKey:
-                  type: boolean
-                name:
+    AllProjectModelVariants:
+      type: array
+      description: All model variants relevant for all learn blocks in the project
+      items:
+        $ref: '#/components/schemas/ProjectModelVariant'
+    ListEmailResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - emails
+        properties:
+          emails:
+            type: array
+            description: List of emails
+            items:
+              type: object
+              required:
+              - from
+              - to
+              - created
+              - subject
+              - bodyText
+              - bodyHTML
+              - sent
+              - providerResponse
+              properties:
+                userId:
+                  type: integer
+                projectId:
+                  type: integer
+                from:
+                  type: string
+                to:
                   type: string
                 created:
                   type: string
                   format: date-time
-                role:
+                subject:
                   type: string
-                  enum:
-                  - admin
-                  - readonly
-                  - ingestiononly
-                  - wladmin
-    SampleProposedChanges:
-      type: object
-      properties:
-        label:
-          type: string
-          description: New label (single-label)
-        isDisabled:
-          type: boolean
-          description: True if the current sample should be disabled; or false if it should not be disabled.
-        boundingBoxes:
-          type: array
-          description: List of bounding boxes. The existing bounding boxes on the sample will be replaced (so if you want to add new bounding boxes, use the existing list as a basis).
-          items:
-            $ref: '#/components/schemas/BoundingBox'
-        metadata:
-          type: object
-          description: Free form associated metadata. The existing metadata on the sample will be replaced (so if you want to add new metadata, use the existing list as a basis).
-          additionalProperties:
-            type: string
-        structuredLabels:
-          type: array
-          description: New label (multi-label)
-          items:
-            $ref: '#/components/schemas/StructuredLabel'
-    GenericApiResponse:
+                bodyText:
+                  type: string
+                bodyHTML:
+                  type: string
+                sent:
+                  type: boolean
+                providerResponse:
+                  type: string
+    ListProjectsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - $ref: '#/components/schemas/ListProjects'
+    ListPublicProjectTypes:
       type: object
       required:
-      - success
+      - projectTypes
       properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
-    AIActionsDataCategory:
-      type: string
-      enum:
-      - allData
-      - unlabeledData
-      - dataWithoutMetadataKey
-      - dataWithMetadata
-    ProjectType:
-      type: string
-      enum:
-      - kws
-      - audio
-      - object-detection
-      - image
-      - accelerometer
-      - other
-    ProjectDataSummary:
-      type: object
-      required:
-      - totalLengthMs
-      - labels
-      - dataCount
-      properties:
-        totalLengthMs:
-          type: number
-          description: Total length (in ms.) of all data in the training set
-          example: '726336'
-        labels:
+        projectTypes:
           type: array
-          description: Labels in the training set
+          description: Array with project types
           items:
-            type: string
-        dataCount:
-          type: integer
-          example: Number of files in the training set
-    Project:
+            type: object
+            required:
+            - value
+            - label
+            properties:
+              value:
+                $ref: '#/components/schemas/ProjectType'
+              label:
+                type: string
+    Sample:
       type: object
       required:
       - id
-      - name
-      - description
+      - filename
+      - signatureValidate
       - created
-      - owner
-      - collaborators
-      - labelingMethod
-      - metadata
-      - isEnterpriseProject
-      - whitelabelId
-      - tier
-      - hasPublicVersion
-      - isPublic
-      - allowsLivePublicAccess
-      - ownerIsDeveloperProfile
-      - indPauseProcessingSamples
-      - publicProjectListed
+      - lastModified
+      - category
+      - coldstorageFilename
+      - label
+      - intervalMs
+      - frequency
+      - originalIntervalMs
+      - originalFrequency
+      - deviceType
+      - sensors
+      - valuesCount
+      - added
+      - boundingBoxes
+      - boundingBoxesType
+      - chartType
+      - isDisabled
+      - isProcessing
+      - processingError
+      - isCropped
+      - projectId
+      - sha256Hash
       properties:
         id:
           type: integer
-          example: 1
-        name:
+          example: 2
+        filename:
           type: string
-          example: Water hammer detection
-        description:
+          example: idle01.d8Ae
+        signatureValidate:
+          type: boolean
+          description: Whether signature validation passed
+          example: true
+        signatureMethod:
           type: string
+          example: HS256
+        signatureKey:
+          type: string
+          description: Either the shared key or the public key that was used to validate the sample
         created:
           type: string
           format: date-time
-          example: '2019-07-21T17:32:28Z'
-        owner:
-          type: string
-          description: User or organization that owns the project
-        lastAccessed:
-          type: string
-          format: date-time
-          example: '2019-07-21T17:32:28Z'
+          description: Timestamp when the sample was created on device, or if no accurate time was known on device, the time that the file was processed by the ingestion service.
         lastModified:
           type: string
           format: date-time
-          example: '2019-07-21T17:32:28Z'
-        lastModificationDetails:
+          description: Timestamp when the sample was last modified.
+        category:
           type: string
-          description: Details about the last modification
-          example: Data sample added
-        logo:
+          example: training
+        coldstorageFilename:
           type: string
-          description: Custom logo for this project (not available for all projects)
-        ownerUserId:
-          type: integer
-        ownerOrganizationId:
-          type: integer
-        ownerAvatar:
+        label:
           type: string
-          description: URL of the project owner avatar, if any.
-        ownerIsDeveloperProfile:
-          type: boolean
-        developerProfileUserId:
-          type: integer
-          description: User ID of the developer profile, if any.
-        collaborators:
+          example: healthy-machine
+        intervalMs:
+          type: number
+          description: Interval between two windows (1000 / frequency). If the data was resampled, then this lists the resampled interval.
+          example: 16
+        frequency:
+          type: number
+          description: Frequency of the sample. If the data was resampled, then this lists the resampled frequency.
+          example: 62.5
+        originalIntervalMs:
+          type: number
+          description: Interval between two windows (1000 / frequency) in the source data (before resampling).
+          example: 16
+        originalFrequency:
+          type: number
+          description: Frequency of the sample in the source data (before resampling).
+          example: 62.5
+        deviceName:
+          type: string
+        deviceType:
+          type: string
+        sensors:
           type: array
           items:
-            $ref: '#/components/schemas/ProjectCollaborator'
-        labelingMethod:
+            $ref: '#/components/schemas/Sensor'
+        valuesCount:
+          type: integer
+          description: Number of readings in this file
+        totalLengthMs:
+          type: number
+          description: Total length (in ms.) of this file
+        added:
           type: string
+          format: date-time
+          description: Timestamp when the sample was added to the current acquisition bucket.
+        boundingBoxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/BoundingBox'
+        boundingBoxesType:
+          type: string
+          enum:
+          - object_detection
+          - constrained_object_detection
+        chartType:
+          type: string
+          enum:
+          - chart
+          - image
+          - video
+          - table
+        thumbnailVideo:
+          type: string
+        thumbnailVideoFull:
+          type: string
+        isDisabled:
+          type: boolean
+          description: True if the current sample is excluded from use
+        isProcessing:
+          type: boolean
+          description: True if the current sample is still processing (e.g. for video)
+        processingJobId:
+          type: integer
+          description: Set when sample is processing and a job has picked up the request
+        processingError:
+          type: boolean
+          description: Set when processing this sample failed
+        processingErrorString:
+          type: string
+          description: Error (only set when processing this sample failed)
+        isCropped:
+          type: boolean
+          description: Whether the sample is cropped from another sample (and has crop start / end info)
+        metadata:
+          type: object
+          description: Sample free form associated metadata
+          additionalProperties:
+            type: string
+        projectId:
+          type: integer
+          description: Unique identifier of the project this sample belongs to
+        projectOwnerName:
+          type: string
+          description: Name of the owner of the project this sample belongs to
+        projectName:
+          type: string
+          description: Name of the project this sample belongs to
+        projectLabelingMethod:
+          type: string
+          description: What labeling flow the project this sample belongs to uses
           enum:
           - single_label
           - object_detection
-        metadata:
-          type: object
-          description: Metadata about the project
-        dataExplorerScreenshot:
+        sha256Hash:
           type: string
-        isEnterpriseProject:
-          type: boolean
-          description: Whether this is an enterprise project
-        whitelabelId:
-          type:
-          - integer
-          - 'null'
-          description: Unique identifier of the white label this project belongs to, if any.
-        tags:
+          description: Data sample SHA 256 hash (including CBOR envelope if applicable)
+        structuredLabels:
+          type: array
+          items:
+            $ref: '#/components/schemas/StructuredLabel'
+        structuredLabelsList:
           type: array
           items:
             type: string
-          description: List of project tags
-          example:
-          - FOMO
-          - beers
-        category:
-          type: string
-          description: Project category
-          example: Image classification
-        license:
-          type: string
-          description: Public project license, if any.
-        tier:
-          $ref: '#/components/schemas/ProjectTierEnum'
-        hasPublicVersion:
-          type: boolean
-          description: Whether this project has been published or not.
-        isPublic:
-          type: boolean
-          description: 'Whether this is a public version of a project. A version is a snapshot of a project at a certain point in time, which can be used to periodically save the state of a project. Versions can be private (just for internal use and reference) or public, available to everyone. A public version can be cloned by anyone, restoring the state of the project at the time into a new, separate project.
-
-            '
-        allowsLivePublicAccess:
-          type: boolean
-          description: 'Whether this project allows live, public access. Unlike a public version, a live public project is not fixed in time, and always includes the latest project changes. Similar to public versions, a live public project can be cloned by anyone, creating a new, separate project.
-
-            '
-        indPauseProcessingSamples:
-          type: boolean
-        publicProjectListed:
-          type: boolean
-          description: 'If the project allows public access, whether to list it the public projects overview response. If not listed, the project is still accessible via direct link. If the project does not allow public access, this field has no effect.
-
-            '
+        createdBySyntheticDataJobId:
+          type: integer
+          description: If this sample was created by a synthetic data job, it's referenced here.
+        imageDimensions:
+          type: object
+          required:
+          - width
+          - height
+          properties:
+            width:
+              type: integer
+            height:
+              type: integer
+    AddProjectApiKeyRequest:
+      allOf:
+      - $ref: '#/components/schemas/AddApiKeyRequest'
+      - type: object
+        required:
+        - isDevelopmentKey
+        - role
+        properties:
+          isDevelopmentKey:
+            type: boolean
+            description: Whether this key should be used as a development key.
+          role:
+            type: string
+            enum:
+            - admin
+            - readonly
+            - ingestiononly
     Job:
       type: object
       required:
@@ -2419,57 +2145,6 @@ components:
         categoryCount:
           type: integer
           description: Some job categories keep a counter on the job number, e.g. in synthetic data, so we know what the 1st, 2nd etc. job was in the UI.
-    MemorySpec:
-      type: object
-      description: Describes performance characteristics of a particular memory type
-      properties:
-        fastBytes:
-          $ref: '#/components/schemas/ResourceRange'
-        slowBytes:
-          $ref: '#/components/schemas/ResourceRange'
-    DevelopmentKeysResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - $ref: '#/components/schemas/DevelopmentKeys'
-    RemoveCollaboratorRequest:
-      type: object
-      required:
-      - usernameOrEmail
-      properties:
-        usernameOrEmail:
-          type: string
-          description: Username or e-mail address
-    GetAIActionResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - action
-        properties:
-          action:
-            $ref: '#/components/schemas/AIAction'
-    ProjectCollaborator:
-      allOf:
-      - $ref: '#/components/schemas/User'
-      - type: object
-        required:
-        - isOwner
-        properties:
-          isOwner:
-            type: boolean
-    TransferOwnershipOrganizationRequest:
-      type: object
-      required:
-      - organizationId
-      properties:
-        organizationId:
-          type: integer
-    KerasModelVariantEnum:
-      type: string
-      enum:
-      - int8
-      - float32
-      - akida
     UpdateProjectRequest:
       type: object
       description: Only fields set in this object will be updated.
@@ -2630,173 +2305,17 @@ components:
         aiActionsGridColumnCount:
           type: integer
           description: Number of grid columns in AI Actions
-    DevelopmentKeys:
-      type: object
-      properties:
-        apiKey:
-          type: string
-          description: API Key
-        hmacKey:
-          type: string
-          description: HMAC Key
-    ListHmacKeysResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - hmacKeys
-        properties:
-          hmacKeys:
-            type: array
-            description: List of HMAC keys
-            items:
-              type: object
-              required:
-              - id
-              - hmacKey
-              - isDevelopmentKey
-              - name
-              - created
-              properties:
-                id:
-                  type: integer
-                hmacKey:
-                  type: string
-                isDevelopmentKey:
-                  type: boolean
-                name:
-                  type: string
-                created:
-                  type: string
-                  format: date-time
-    DevelopmentBoardResponse:
+    GenericApiResponse:
       type: object
       required:
-      - id
-      - name
-      - image
-      - docsUrl
+      - success
       properties:
-        id:
-          type: integer
-        name:
-          type: string
-        image:
-          type: string
-        docsUrl:
-          type: string
-    LatencyDevice:
-      type: object
-      required:
-      - mcu
-      - name
-      - selected
-      - int8Latency
-      - int8ConvLatency
-      - float32Latency
-      - float32ConvLatency
-      - helpText
-      properties:
-        mcu:
-          type: string
-        name:
-          type: string
-        selected:
+        success:
           type: boolean
-        int8Latency:
-          type: number
-        int8ConvLatency:
-          type: number
-        float32Latency:
-          type: number
-        float32ConvLatency:
-          type: number
-        helpText:
+          description: Whether the operation succeeded
+        error:
           type: string
-    GetSyntheticDataConfigResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - recentJobs
-        properties:
-          recentJobs:
-            type: array
-            items:
-              type: object
-              required:
-              - job
-              - samples
-              properties:
-                job:
-                  $ref: '#/components/schemas/Job'
-                samples:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/Sample'
-          lastUsedTransformationBlockId:
-            type: integer
-          lastUsedParameters:
-            type: object
-            additionalProperties:
-              type: string
-    StructuredLabel:
-      type: object
-      description: 'A structured label contains a label, and the range for which this label is valid. `endIndex` is inclusive. E.g. `{ startIndex: 10, endIndex: 13, label: ''running'' }` means that the values at index 10, 11, 12, 13 are labeled ''running''. To get time codes you can multiple by the sample''s `intervalMs` property.'
-      required:
-      - startIndex
-      - endIndex
-      - label
-      properties:
-        startIndex:
-          type: integer
-          description: Start index of the label (e.g. 0)
-        endIndex:
-          type: integer
-          description: 'End index of the label (e.g. 3). This value is inclusive, so { startIndex: 0, endIndex: 3 } covers 0, 1, 2, 3.'
-        label:
-          type: string
-          description: The label for this section.
-    ProjectTrainingDataSummaryResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - dataSummary
-        properties:
-          dataSummary:
-            type: object
-            required:
-            - labels
-            - dataCount
-            properties:
-              labels:
-                type: array
-                description: Labels in the training set
-                items:
-                  type: string
-              dataCount:
-                type: integer
-                example: Number of files in the training set
-    AIActionsConfig:
-      type: object
-      required:
-      - dataCategory
-      - steps
-      properties:
-        dataCategory:
-          description: Type of data to run this AI action on.
-          $ref: '#/components/schemas/AIActionsDataCategory'
-        dataMetadataKey:
-          description: Metadata key to filter on. Required if dataCategory is equal to "dataWithoutMetadataKey" or "dataWithMetadata".
-          type: string
-        dataMetadataValue:
-          description: Metadata value to filter on. Required if dataCategory is equal to "dataWithMetadata".
-          type: string
-        steps:
-          type: array
-          items:
-            $ref: '#/components/schemas/AIActionsConfigStep'
+          description: Optional error description (set if 'success' was false)
     UpdateAIActionRequest:
       required:
       - steps
@@ -2835,11 +2354,913 @@ components:
         sortOrder:
           description: Numeric value (1..n) where this action should be shown in the action list (and in which order the actions should run when started from a data source).
           type: integer
-    AllProjectModelVariants:
-      type: array
-      description: All model variants relevant for all learn blocks in the project
-      items:
-        $ref: '#/components/schemas/ProjectModelVariant'
+    ListPublicProjectTypesResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - $ref: '#/components/schemas/ListPublicProjectTypes'
+    ProjectType:
+      type: string
+      enum:
+      - kws
+      - audio
+      - object-detection
+      - image
+      - accelerometer
+      - other
+    ProjectTrainingDataSummaryResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - dataSummary
+        properties:
+          dataSummary:
+            type: object
+            required:
+            - labels
+            - dataCount
+            properties:
+              labels:
+                type: array
+                description: Labels in the training set
+                items:
+                  type: string
+              dataCount:
+                type: integer
+                example: Number of files in the training set
+    DevelopmentKeysResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - $ref: '#/components/schemas/DevelopmentKeys'
+    TargetProcessor:
+      type: object
+      properties:
+        part:
+          type: string
+          description: The exact part number, if available
+        format:
+          type: string
+          description: Processor type, serving as a broad descriptor for the intended use-case
+          example: low-end MCU
+        architecture:
+          type: string
+          description: Processor family, informing about the processor's instruction set and core design
+          example: Cortex-M
+        specificArchitecture:
+          type: string
+          description: Processor architecture, informing about the specific processor, if known
+          example: Cortex-M0+
+        accelerator:
+          type: string
+          description: Target accelerator, if any
+          example: Arm Cortex-U55
+        fpu:
+          type: boolean
+          description: Does the target processor have a floating point unit
+        clockRateMhz:
+          description: Clock rate of the processor
+          $ref: '#/components/schemas/ResourceRange'
+        memory:
+          $ref: '#/components/schemas/TargetMemory'
+    ListPublicProjectsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - $ref: '#/components/schemas/ListPublicProjects'
+    ProjectModelVariant:
+      type: object
+      required:
+      - variant
+      - isReferenceVariant
+      - isEnabled
+      - isSelected
+      properties:
+        variant:
+          $ref: '#/components/schemas/KerasModelVariantEnum'
+        isReferenceVariant:
+          type: boolean
+          description: True if this model variant is the default or "reference variant" for this project
+        isEnabled:
+          type: boolean
+          description: True if profiling for this model variant is enabled for the current project
+        isSelected:
+          type: boolean
+          description: True if this is the selected model variant for this project, used to keep the same view after refreshing. Update this via defaultProfilingVariant in UpdateProjectRequest.
+    ProjectDownloadsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - downloads
+        properties:
+          downloads:
+            type: array
+            items:
+              $ref: '#/components/schemas/Download'
+    ProjectDismissNotificationRequest:
+      type: object
+      required:
+      - notification
+      properties:
+        notification:
+          type: string
+    UpdateVersionRequest:
+      type: object
+      properties:
+        description:
+          type: string
+    UploadReadmeImageResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - url
+        properties:
+          url:
+            type: string
+    Permission:
+      type: string
+      enum:
+      - admin:infra:disallowedEmailDomains:write
+      - admin:infra:featureFlags:read
+      - admin:infra:featureFlags:write
+      - admin:infra:config:read
+      - admin:infra:config:write
+      - admin:infra:migrations:read
+      - admin:infra:migrations:write
+      - admin:metrics:read
+      - admin:metrics:write
+      - admin:organizations:read
+      - admin:organizations:write
+      - admin:organizations:members:write
+      - admin:projects:members:write
+      - admin:projects:read
+      - admin:projects:write
+      - admin:trials:read
+      - admin:trials:write
+      - admin:users:permissions:write
+      - admin:users:read
+      - admin:users:write
+      - admin:jobs:read
+      - admin:emails:verification:code:read
+      - projects:limits:write
+      - projects:training:keras:write
+      - thirdpartyauth:read
+      - thirdpartyauth:write
+      - users:emails:read
+      - whitelabels:read
+      - whitelabels:write
+    ListPublicProjects:
+      type: object
+      required:
+      - projects
+      - totalProjectCount
+      properties:
+        projects:
+          type: array
+          description: Array with public projects
+          items:
+            $ref: '#/components/schemas/ProjectPublicData'
+        totalProjectCount:
+          type: integer
+    ProjectVisibility:
+      type: string
+      enum:
+      - public
+      - private
+      description: The visibility of the project, either public or private. Public projects can be viewed by anyone on the internet and edited by collaborators. Private projects can only be viewed and edited by collaborators.
+    GetSyntheticDataConfigResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - recentJobs
+        properties:
+          recentJobs:
+            type: array
+            items:
+              type: object
+              required:
+              - job
+              - samples
+              properties:
+                job:
+                  $ref: '#/components/schemas/Job'
+                samples:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Sample'
+          lastUsedTransformationBlockId:
+            type: integer
+          lastUsedParameters:
+            type: object
+            additionalProperties:
+              type: string
+    User:
+      type: object
+      required:
+      - id
+      - username
+      - name
+      - email
+      - created
+      - staffInfo
+      - pending
+      - activated
+      - mfaConfigured
+      properties:
+        id:
+          type: integer
+          example: 1
+        username:
+          type: string
+          example: janjongboom
+        name:
+          type: string
+          example: Jan Jongboom
+        email:
+          type: string
+          example: quijote@edgeimpulse.com
+        photo:
+          type: string
+          example: https://usercdn.edgeimpulse.com/photos/1.jpg
+        created:
+          type: string
+          format: date-time
+          example: '2019-08-31T17:32:28Z'
+        lastSeen:
+          type: string
+          format: date-time
+          example: '2019-08-31T17:32:28Z'
+        staffInfo:
+          $ref: '#/components/schemas/StaffInfo'
+        pending:
+          type: boolean
+        lastTosAcceptanceDate:
+          type: string
+          format: date-time
+          example: '2019-08-31T17:32:28Z'
+        jobTitle:
+          type: string
+          example: Software Engineer
+        permissions:
+          description: List of permissions the user has
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+        companyName:
+          type: string
+          example: Edge Impulse Inc.
+        activated:
+          type: boolean
+          description: Whether the user has activated their account or not.
+        mfaConfigured:
+          type: boolean
+          description: Whether the user has configured multi-factor authentication
+        stripeCustomerId:
+          type: string
+          description: Stripe customer ID, if any.
+        hasPendingPayments:
+          type: boolean
+          description: Whether the user has pending payments.
+        tier:
+          $ref: '#/components/schemas/UserTierEnum'
+    TargetMemory:
+      type: object
+      description: RAM and ROM specifications of target
+      properties:
+        ram:
+          $ref: '#/components/schemas/MemorySpec'
+        rom:
+          $ref: '#/components/schemas/MemorySpec'
+    Project:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - created
+      - owner
+      - collaborators
+      - labelingMethod
+      - metadata
+      - isEnterpriseProject
+      - whitelabelId
+      - tier
+      - hasPublicVersion
+      - isPublic
+      - allowsLivePublicAccess
+      - ownerIsDeveloperProfile
+      - indPauseProcessingSamples
+      - publicProjectListed
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Water hammer detection
+        description:
+          type: string
+        created:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        owner:
+          type: string
+          description: User or organization that owns the project
+        lastAccessed:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        lastModified:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        lastModificationDetails:
+          type: string
+          description: Details about the last modification
+          example: Data sample added
+        logo:
+          type: string
+          description: Custom logo for this project (not available for all projects)
+        ownerUserId:
+          type: integer
+        ownerOrganizationId:
+          type: integer
+        ownerAvatar:
+          type: string
+          description: URL of the project owner avatar, if any.
+        ownerIsDeveloperProfile:
+          type: boolean
+        developerProfileUserId:
+          type: integer
+          description: User ID of the developer profile, if any.
+        collaborators:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectCollaborator'
+        labelingMethod:
+          type: string
+          enum:
+          - single_label
+          - object_detection
+        metadata:
+          type: object
+          description: Metadata about the project
+        dataExplorerScreenshot:
+          type: string
+        isEnterpriseProject:
+          type: boolean
+          description: Whether this is an enterprise project
+        whitelabelId:
+          type:
+          - integer
+          - 'null'
+          description: Unique identifier of the white label this project belongs to, if any.
+        tags:
+          type: array
+          items:
+            type: string
+          description: List of project tags
+          example:
+          - FOMO
+          - beers
+        category:
+          type: string
+          description: Project category
+          example: Image classification
+        license:
+          type: string
+          description: Public project license, if any.
+        tier:
+          $ref: '#/components/schemas/ProjectTierEnum'
+        hasPublicVersion:
+          type: boolean
+          description: Whether this project has been published or not.
+        isPublic:
+          type: boolean
+          description: 'Whether this is a public version of a project. A version is a snapshot of a project at a certain point in time, which can be used to periodically save the state of a project. Versions can be private (just for internal use and reference) or public, available to everyone. A public version can be cloned by anyone, restoring the state of the project at the time into a new, separate project.
+
+            '
+        allowsLivePublicAccess:
+          type: boolean
+          description: 'Whether this project allows live, public access. Unlike a public version, a live public project is not fixed in time, and always includes the latest project changes. Similar to public versions, a live public project can be cloned by anyone, creating a new, separate project.
+
+            '
+        indPauseProcessingSamples:
+          type: boolean
+        publicProjectListed:
+          type: boolean
+          description: 'If the project allows public access, whether to list it the public projects overview response. If not listed, the project is still accessible via direct link. If the project does not allow public access, this field has no effect.
+
+            '
+    StructuredLabel:
+      type: object
+      description: 'A structured label contains a label, and the range for which this label is valid. `endIndex` is inclusive. E.g. `{ startIndex: 10, endIndex: 13, label: ''running'' }` means that the values at index 10, 11, 12, 13 are labeled ''running''. To get time codes you can multiple by the sample''s `intervalMs` property.'
+      required:
+      - startIndex
+      - endIndex
+      - label
+      properties:
+        startIndex:
+          type: integer
+          description: Start index of the label (e.g. 0)
+        endIndex:
+          type: integer
+          description: 'End index of the label (e.g. 3). This value is inclusive, so { startIndex: 0, endIndex: 3 } covers 0, 1, 2, 3.'
+        label:
+          type: string
+          description: The label for this section.
+    GetCsvWizardUploadedFileInfo:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - hasFile
+        properties:
+          hasFile:
+            type: boolean
+          link:
+            type: string
+    ProjectPublicData:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - created
+      - owner
+      - publicUrl
+      - projectType
+      - pageViewCount
+      - cloneCount
+      - tags
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Water hammer detection
+        description:
+          type: string
+        created:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        owner:
+          type: string
+          description: User or organization that owns the project
+        ownerAvatar:
+          type: string
+          description: URL to the project owner avatar, if any
+        publicUrl:
+          type: string
+          description: URL of the latest public version of the project, if any
+          example: https://studio.edgeimpulse.com/public/40479/latest
+        projectType:
+          $ref: '#/components/schemas/ProjectType'
+        pageViewCount:
+          type: integer
+        cloneCount:
+          type: integer
+        totalSamplesCount:
+          type: string
+        trainingAccuracy:
+          type: number
+          description: Accuracy on training set.
+        testAccuracy:
+          type: number
+          description: Accuracy on test set.
+        readme:
+          type: object
+          description: Present if a readme is set for this project
+          required:
+          - markdown
+          - html
+          properties:
+            markdown:
+              type: string
+            html:
+              type: string
+        tags:
+          type: array
+          items:
+            type: string
+          description: List of project tags
+          example:
+          - FOMO
+          - birds
+    GetModelVariantsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - modelVariants
+        properties:
+          modelVariants:
+            $ref: '#/components/schemas/AllProjectModelVariants'
+    Device:
+      type: object
+      required:
+      - id
+      - deviceId
+      - created
+      - lastSeen
+      - name
+      - deviceType
+      - sensors
+      - remote_mgmt_connected
+      - supportsSnapshotStreaming
+      - remoteMgmtMode
+      properties:
+        id:
+          type: integer
+          example: 1
+        deviceId:
+          type: string
+          description: Unique identifier (such as MAC address) for a device
+          example: 38:f9:d3:d7:62:03
+        created:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        lastSeen:
+          type: string
+          format: date-time
+          example: '2019-08-31T17:32:28Z'
+          description: Last message that was received from the device (ignoring keep-alive)
+        name:
+          type: string
+          example: m6d.1 desk sensor
+        deviceType:
+          type: string
+          example: DISCO-L475VG
+        sensors:
+          type: array
+          items:
+            type: object
+            required:
+            - name
+            - maxSampleLengthS
+            - frequencies
+            properties:
+              name:
+                type: string
+                example: Built-in accelerometer
+              maxSampleLengthS:
+                type: integer
+                description: Maximum supported sample length in seconds
+              frequencies:
+                type: array
+                description: Supported frequencies for this sensor in Hz.
+                example:
+                - 62.5
+                - 100
+                items:
+                  type: number
+        remote_mgmt_connected:
+          type: boolean
+          description: Whether the device is connected to the remote management interface. This property is deprecated, use `remoteMgmtMode` instead.
+        remote_mgmt_host:
+          type: string
+          description: The remote management host that the device is connected to
+        supportsSnapshotStreaming:
+          type: boolean
+        remoteMgmtMode:
+          description: Replaces `remote_mgmt_connected`. Shows whether the device is connected to the remote management interface, and in which mode.
+          type: string
+          enum:
+          - disconnected
+          - ingestion
+          - inference
+        inferenceInfo:
+          type: object
+          description: If `remoteMgmtMode` is set to `inference` this object shows information about the model that's ran on device.
+          required:
+          - projectId
+          - projectOwner
+          - projectName
+          - deployedVersion
+          properties:
+            projectId:
+              type: integer
+            projectOwner:
+              type: string
+            projectName:
+              type: string
+            deployedVersion:
+              type: integer
+            modelType:
+              type: string
+              enum:
+              - classification
+              - objectDetection
+              - constrainedObjectDetection
+    ProjectDataSummary:
+      type: object
+      required:
+      - totalLengthMs
+      - labels
+      - dataCount
+      properties:
+        totalLengthMs:
+          type: number
+          description: Total length (in ms.) of all data in the training set
+          example: '726336'
+        labels:
+          type: array
+          description: Labels in the training set
+          items:
+            type: string
+        dataCount:
+          type: integer
+          example: Number of files in the training set
+    AIActionsDataCategory:
+      type: string
+      enum:
+      - allData
+      - unlabeledData
+      - dataWithoutMetadataKey
+      - dataWithMetadata
+    ProjectDataAxesSummaryResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - dataAxisSummary
+        properties:
+          dataAxisSummary:
+            type: object
+            description: Summary of the amount of data (in ms.) per sensor axis
+            additionalProperties:
+              type: integer
+    ListSamplesResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - samples
+        - totalCount
+        properties:
+          samples:
+            type: array
+            items:
+              $ref: '#/components/schemas/Sample'
+          totalCount:
+            type: integer
+    DevelopmentKeys:
+      type: object
+      properties:
+        apiKey:
+          type: string
+          description: API Key
+        hmacKey:
+          type: string
+          description: HMAC Key
+    ListProjects:
+      type: object
+      required:
+      - projects
+      properties:
+        projects:
+          type: array
+          description: Array with projects
+          items:
+            $ref: '#/components/schemas/Project'
+    PreviewAIActionsSamplesRequest:
+      type: object
+      required:
+      - saveConfig
+      - dataCategory
+      - maxDataPreviewCount
+      properties:
+        saveConfig:
+          description: If this is passed in, the `previewConfig` of the AI action is overwritten (requires actionId to be a valid action).
+          type: boolean
+        dataCategory:
+          description: Type of data to preview. A random subset of this data will be returned.
+          $ref: '#/components/schemas/AIActionsDataCategory'
+        dataMetadataKey:
+          description: Metadata key to filter on. Required if dataCategory is equal to "dataWithoutMetadataKey" or "dataWithMetadata".
+          type: string
+        dataMetadataValue:
+          description: Metadata value to filter on. Required if dataCategory is equal to "dataWithMetadata".
+          type: string
+        maxDataPreviewCount:
+          description: Max. amount of data items to return.
+          type: integer
+    CreateProjectRequest:
+      type: object
+      required:
+      - projectName
+      properties:
+        projectName:
+          type: string
+          example: EEG trials
+          description: The name of the first project.
+        projectVisibility:
+          $ref: '#/components/schemas/ProjectVisibility'
+        originalProjectVersionId:
+          type: integer
+          description: The ID of the version that was used to restore this project.
+    ListApiKeysResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - apiKeys
+        properties:
+          apiKeys:
+            type: array
+            description: List of API keys.
+            items:
+              type: object
+              required:
+              - id
+              - name
+              - apiKey
+              - isDevelopmentKey
+              - created
+              - role
+              properties:
+                id:
+                  type: integer
+                apiKey:
+                  type: string
+                isDevelopmentKey:
+                  type: boolean
+                name:
+                  type: string
+                created:
+                  type: string
+                  format: date-time
+                role:
+                  type: string
+                  enum:
+                  - admin
+                  - readonly
+                  - ingestiononly
+                  - wladmin
+    BoundingBox:
+      type: object
+      description: This has the _absolute values_ for x/y/w/h (so 0..x (where x is the w/h of the image))
+      required:
+      - label
+      - x
+      - y
+      - width
+      - height
+      properties:
+        label:
+          type: string
+        x:
+          type: integer
+        y:
+          type: integer
+        width:
+          type: integer
+        height:
+          type: integer
+    ModelEngineShortEnum:
+      type: string
+      enum:
+      - tflite-eon
+      - tflite-eon-ram-optimized
+      - tflite
+    ListHmacKeysResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - hmacKeys
+        properties:
+          hmacKeys:
+            type: array
+            description: List of HMAC keys
+            items:
+              type: object
+              required:
+              - id
+              - hmacKey
+              - isDevelopmentKey
+              - name
+              - created
+              properties:
+                id:
+                  type: integer
+                hmacKey:
+                  type: string
+                isDevelopmentKey:
+                  type: boolean
+                name:
+                  type: string
+                created:
+                  type: string
+                  format: date-time
+    UserTierEnum:
+      type: string
+      description: The user account tier.
+      enum:
+      - free
+      - community-plus
+      - professional
+      - enterprise
+    SampleProposedChanges:
+      type: object
+      properties:
+        label:
+          type: string
+          description: New label (single-label)
+        isDisabled:
+          type: boolean
+          description: True if the current sample should be disabled; or false if it should not be disabled.
+        boundingBoxes:
+          type: array
+          description: List of bounding boxes. The existing bounding boxes on the sample will be replaced (so if you want to add new bounding boxes, use the existing list as a basis).
+          items:
+            $ref: '#/components/schemas/BoundingBox'
+        metadata:
+          type: object
+          description: Free form associated metadata. The existing metadata on the sample will be replaced (so if you want to add new metadata, use the existing list as a basis).
+          additionalProperties:
+            type: string
+        structuredLabels:
+          type: array
+          description: New label (multi-label)
+          items:
+            $ref: '#/components/schemas/StructuredLabel'
+    Sensor:
+      type: object
+      required:
+      - name
+      - units
+      properties:
+        name:
+          type: string
+          description: Name of the axis
+          example: accX
+        units:
+          type: string
+          description: Type of data on this axis. Needs to comply to SenML units (see https://www.iana.org/assignments/senml/senml.xhtml).
+    LastModificationDateResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - modificationDate
+        properties:
+          lastModificationDate:
+            type: string
+            format: date-time
+          lastVersionDate:
+            type: string
+            format: date-time
+    TargetConstraints:
+      type: object
+      required:
+      - targetDevices
+      - applicationBudgets
+      properties:
+        selectedTargetBasedOn:
+          type: string
+          description: A type explaining how the target was chosen. If updating this manually, use the 'user-configured' type
+          enum:
+          - user-configured
+          - default
+          - default-accepted
+          - recent-project
+          - connected-device
+        targetDevices:
+          type: array
+          description: The potential targets for the project, where each entry captures hardware attributes that allow target guidance throughout the Studio workflow. The first target in the list is considered as the selected target for the project.
+          items:
+            $ref: '#/components/schemas/TargetConstraintsDevice'
+        applicationBudgets:
+          type: array
+          description: A list of application budgets to be configured based on target device. An application budget enables guidance on performance and resource usage. The first application budget in the list is considered as the selected budget for the project.
+          items:
+            $ref: '#/components/schemas/ApplicationBudget'
+    StaffInfo:
+      type: object
+      required:
+      - isStaff
+      - hasSudoRights
+      properties:
+        isStaff:
+          type: boolean
+        hasSudoRights:
+          type: boolean
+        companyName:
+          type: string
+    RemoveCollaboratorRequest:
+      type: object
+      required:
+      - usernameOrEmail
+      properties:
+        usernameOrEmail:
+          type: string
+          description: Username or e-mail address
     CreateProjectResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -2854,28 +3275,13 @@ components:
           apiKey:
             type: string
             description: API key for the new project
-    ListPublicVersionsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - versions
-        properties:
-          versions:
-            type: array
-            items:
-              type: object
-              required:
-              - version
-              - publicProjectId
-              - publicProjectUrl
-              properties:
-                version:
-                  type: integer
-                publicProjectId:
-                  type: integer
-                publicProjectUrl:
-                  type: string
+    TransferOwnershipOrganizationRequest:
+      type: object
+      required:
+      - organizationId
+      properties:
+        organizationId:
+          type: integer
     SocketTokenResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -2894,61 +3300,84 @@ components:
               expires:
                 type: string
                 format: date-time
-    AddApiKeyResponse:
+    EntityCreatedResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
         - id
-        - apiKey
         properties:
           id:
             type: integer
-            description: ID of the new API key
-          apiKey:
-            type: string
-            description: New API Key (starts with "ei_...") - this'll be shared only once.
-    StaffInfo:
+            description: Unique identifier of the created entity.
+    SetProjectComputeTimeRequest:
       type: object
+      description: Only parameters set on this object will be updated.
       required:
-      - isStaff
-      - hasSudoRights
+      - jobLimitM
       properties:
-        isStaff:
-          type: boolean
-        hasSudoRights:
-          type: boolean
-        companyName:
-          type: string
-    UpdateProjectTagsRequest:
-      type: object
-      required:
-      - tags
-      properties:
-        tags:
-          type: array
-          items:
-            type: string
-    DevelopmentBoardsResponse:
+        jobLimitM:
+          type: integer
+          description: New job limit in seconds.
+    ProjectDataIntervalResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - developmentBoards
+        - intervalMs
         properties:
-          developmentBoards:
-            type: array
-            items:
-              $ref: '#/components/schemas/DevelopmentBoardResponse'
-    SetProjectDspFileSizeRequest:
+          intervalMs:
+            type: integer
+    GetAIActionResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - action
+        properties:
+          action:
+            $ref: '#/components/schemas/AIAction'
+    UploadImageRequest:
       type: object
-      description: Only parameters set on this object will be updated.
       required:
-      - dspFileSizeMb
+      - image
       properties:
-        dspFileSizeMb:
-          type: integer
-          description: DSP File size in MB (default is 4096 MB)
+        image:
+          type: string
+          format: binary
+    GetTargetConstraintsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          targetConstraints:
+            $ref: '#/components/schemas/TargetConstraints'
+    ProjectTierEnum:
+      type: string
+      description: The project tier. This is "enterprise" for all organization projects, or the user tier for all user projects.
+      enum:
+      - free
+      - community-plus
+      - professional
+      - enterprise
+    TargetConstraintsDevice:
+      type: object
+      properties:
+        processors:
+          type: array
+          description: Target processors
+          items:
+            $ref: '#/components/schemas/TargetProcessor'
+        board:
+          type: string
+          description: The exact dev board part number, if available
+        name:
+          type: string
+          description: Display name in Studio
+        latencyDevice:
+          type: string
+          description: MCU identifier, if available
+          example: cortex-m4f-80mhz
     AddCollaboratorRequest:
       type: object
       required:
@@ -2957,11 +3386,20 @@ components:
         usernameOrEmail:
           type: string
           description: Username or e-mail address
-    UpdateVersionRequest:
+    AIActionsConfigStep:
       type: object
+      required:
+      - transformationBlockId
+      - parameters
       properties:
-        description:
-          type: string
+        transformationBlockId:
+          description: The selected transformation block ID.
+          type: integer
+        parameters:
+          description: Parameters for the transformation block. These map back to the parameters in OrganizationTransformationBlock 'parameters' property.
+          type: object
+          additionalProperties:
+            type: string
     ProjectInfoResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -3269,620 +3707,85 @@ components:
           defaultImpulseId:
             type: integer
             description: Default selected impulse (by ID).
-    SetAIActionsOrderRequest:
+    AIActionsConfig:
+      type: object
       required:
-      - orderByActionId
+      - dataCategory
+      - steps
       properties:
-        orderByActionId:
+        dataCategory:
+          description: Type of data to run this AI action on.
+          $ref: '#/components/schemas/AIActionsDataCategory'
+        dataMetadataKey:
+          description: Metadata key to filter on. Required if dataCategory is equal to "dataWithoutMetadataKey" or "dataWithMetadata".
+          type: string
+        dataMetadataValue:
+          description: Metadata value to filter on. Required if dataCategory is equal to "dataWithMetadata".
+          type: string
+        steps:
           type: array
           items:
-            type: integer
-    ProjectInfoSummaryResponse:
+            $ref: '#/components/schemas/AIActionsConfigStep'
+    AddApiKeyResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
         - id
-        - owner
-        - name
-        - studioUrl
+        - apiKey
         properties:
           id:
             type: integer
-          owner:
+            description: ID of the new API key
+          apiKey:
             type: string
-          name:
-            type: string
-          studioUrl:
-            type: string
-    ProjectDismissNotificationRequest:
+            description: New API Key (starts with "ei_...") - this'll be shared only once.
+    UpdateProjectTagsRequest:
       type: object
       required:
-      - notification
+      - tags
       properties:
-        notification:
-          type: string
-    ResourceRange:
-      type: object
-      description: Describes range of expected availability for an arbitrary resource
-      properties:
-        minimum:
-          type: number
-        maximum:
-          type: number
-    AddHmacKeyRequest:
+        tags:
+          type: array
+          items:
+            type: string
+    DevelopmentBoardResponse:
       type: object
       required:
+      - id
       - name
-      - hmacKey
-      - isDevelopmentKey
+      - image
+      - docsUrl
       properties:
+        id:
+          type: integer
         name:
           type: string
-          description: Description of the key
-        hmacKey:
+        image:
           type: string
-          description: HMAC key.
-        isDevelopmentKey:
-          type: boolean
-          description: Whether this key should be used as a development key.
-    GetTargetConstraintsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        properties:
-          targetConstraints:
-            $ref: '#/components/schemas/TargetConstraints'
-    Permission:
+        docsUrl:
+          type: string
+    KerasModelVariantEnum:
       type: string
       enum:
-      - admin:infra:disallowedEmailDomains:write
-      - admin:infra:featureFlags:read
-      - admin:infra:featureFlags:write
-      - admin:infra:config:read
-      - admin:infra:config:write
-      - admin:infra:migrations:read
-      - admin:infra:migrations:write
-      - admin:metrics:read
-      - admin:metrics:write
-      - admin:organizations:read
-      - admin:organizations:write
-      - admin:organizations:members:write
-      - admin:projects:members:write
-      - admin:projects:read
-      - admin:projects:write
-      - admin:trials:read
-      - admin:trials:write
-      - admin:users:permissions:write
-      - admin:users:read
-      - admin:users:write
-      - admin:jobs:read
-      - admin:emails:verification:code:read
-      - projects:limits:write
-      - projects:training:keras:write
-      - thirdpartyauth:read
-      - thirdpartyauth:write
-      - users:emails:read
-      - whitelabels:read
-      - whitelabels:write
-    ProjectModelVariant:
-      type: object
-      required:
-      - variant
-      - isReferenceVariant
-      - isEnabled
-      - isSelected
-      properties:
-        variant:
-          $ref: '#/components/schemas/KerasModelVariantEnum'
-        isReferenceVariant:
-          type: boolean
-          description: True if this model variant is the default or "reference variant" for this project
-        isEnabled:
-          type: boolean
-          description: True if profiling for this model variant is enabled for the current project
-        isSelected:
-          type: boolean
-          description: True if this is the selected model variant for this project, used to keep the same view after refreshing. Update this via defaultProfilingVariant in UpdateProjectRequest.
-    ListPublicProjectsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - $ref: '#/components/schemas/ListPublicProjects'
-    TargetMemory:
-      type: object
-      description: RAM and ROM specifications of target
-      properties:
-        ram:
-          $ref: '#/components/schemas/MemorySpec'
-        rom:
-          $ref: '#/components/schemas/MemorySpec'
-    TargetConstraints:
-      type: object
-      required:
-      - targetDevices
-      - applicationBudgets
-      properties:
-        selectedTargetBasedOn:
-          type: string
-          description: A type explaining how the target was chosen. If updating this manually, use the 'user-configured' type
-          enum:
-          - user-configured
-          - default
-          - default-accepted
-          - recent-project
-          - connected-device
-        targetDevices:
-          type: array
-          description: The potential targets for the project, where each entry captures hardware attributes that allow target guidance throughout the Studio workflow. The first target in the list is considered as the selected target for the project.
-          items:
-            $ref: '#/components/schemas/TargetConstraintsDevice'
-        applicationBudgets:
-          type: array
-          description: A list of application budgets to be configured based on target device. An application budget enables guidance on performance and resource usage. The first application budget in the list is considered as the selected budget for the project.
-          items:
-            $ref: '#/components/schemas/ApplicationBudget'
-    User:
-      type: object
-      required:
-      - id
-      - username
-      - name
-      - email
-      - created
-      - staffInfo
-      - pending
-      - activated
-      - mfaConfigured
-      properties:
-        id:
-          type: integer
-          example: 1
-        username:
-          type: string
-          example: janjongboom
-        name:
-          type: string
-          example: Jan Jongboom
-        email:
-          type: string
-          example: quijote@edgeimpulse.com
-        photo:
-          type: string
-          example: https://usercdn.edgeimpulse.com/photos/1.jpg
-        created:
-          type: string
-          format: date-time
-          example: '2019-08-31T17:32:28Z'
-        lastSeen:
-          type: string
-          format: date-time
-          example: '2019-08-31T17:32:28Z'
-        staffInfo:
-          $ref: '#/components/schemas/StaffInfo'
-        pending:
-          type: boolean
-        lastTosAcceptanceDate:
-          type: string
-          format: date-time
-          example: '2019-08-31T17:32:28Z'
-        jobTitle:
-          type: string
-          example: Software Engineer
-        permissions:
-          description: List of permissions the user has
-          type: array
-          items:
-            $ref: '#/components/schemas/Permission'
-        companyName:
-          type: string
-          example: Edge Impulse Inc.
-        activated:
-          type: boolean
-          description: Whether the user has activated their account or not.
-        mfaConfigured:
-          type: boolean
-          description: Whether the user has configured multi-factor authentication
-        stripeCustomerId:
-          type: string
-          description: Stripe customer ID, if any.
-        hasPendingPayments:
-          type: boolean
-          description: Whether the user has pending payments.
-        tier:
-          $ref: '#/components/schemas/UserTierEnum'
-    UserTierEnum:
-      type: string
-      description: The user account tier.
-      enum:
-      - free
-      - community-plus
-      - professional
-      - enterprise
-    AddApiKeyRequest:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Description of the key
-        apiKey:
-          type: string
-          description: 'Optional: API key. This needs to start with `ei_` and will need to be at least 32 characters long. If this field is not passed in, a new API key is generated for you.'
-    GetCsvWizardUploadedFileInfo:
+      - int8
+      - float32
+      - akida
+    GetCurrentApiKeyInfoResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - hasFile
-        properties:
-          hasFile:
-            type: boolean
-          link:
-            type: string
-    TargetConstraintsDevice:
-      type: object
-      properties:
-        processors:
-          type: array
-          description: Target processors
-          items:
-            $ref: '#/components/schemas/TargetProcessor'
-        board:
-          type: string
-          description: The exact dev board part number, if available
-        name:
-          type: string
-          description: Display name in Studio
-        latencyDevice:
-          type: string
-          description: MCU identifier, if available
-          example: cortex-m4f-80mhz
-    TargetProcessor:
-      type: object
-      properties:
-        part:
-          type: string
-          description: The exact part number, if available
-        format:
-          type: string
-          description: Processor type, serving as a broad descriptor for the intended use-case
-          example: low-end MCU
-        architecture:
-          type: string
-          description: Processor family, informing about the processor's instruction set and core design
-          example: Cortex-M
-        specificArchitecture:
-          type: string
-          description: Processor architecture, informing about the specific processor, if known
-          example: Cortex-M0+
-        accelerator:
-          type: string
-          description: Target accelerator, if any
-          example: Arm Cortex-U55
-        fpu:
-          type: boolean
-          description: Does the target processor have a floating point unit
-        clockRateMhz:
-          description: Clock rate of the processor
-          $ref: '#/components/schemas/ResourceRange'
-        memory:
-          $ref: '#/components/schemas/TargetMemory'
-    ListAIActionsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - actions
-        properties:
-          actions:
-            type: array
-            items:
-              $ref: '#/components/schemas/AIAction'
-    Sample:
-      type: object
-      required:
-      - id
-      - filename
-      - signatureValidate
-      - created
-      - lastModified
-      - category
-      - coldstorageFilename
-      - label
-      - intervalMs
-      - frequency
-      - originalIntervalMs
-      - originalFrequency
-      - deviceType
-      - sensors
-      - valuesCount
-      - added
-      - boundingBoxes
-      - boundingBoxesType
-      - chartType
-      - isDisabled
-      - isProcessing
-      - processingError
-      - isCropped
-      - projectId
-      - sha256Hash
-      properties:
-        id:
-          type: integer
-          example: 2
-        filename:
-          type: string
-          example: idle01.d8Ae
-        signatureValidate:
-          type: boolean
-          description: Whether signature validation passed
-          example: true
-        signatureMethod:
-          type: string
-          example: HS256
-        signatureKey:
-          type: string
-          description: Either the shared key or the public key that was used to validate the sample
-        created:
-          type: string
-          format: date-time
-          description: Timestamp when the sample was created on device, or if no accurate time was known on device, the time that the file was processed by the ingestion service.
-        lastModified:
-          type: string
-          format: date-time
-          description: Timestamp when the sample was last modified.
-        category:
-          type: string
-          example: training
-        coldstorageFilename:
-          type: string
-        label:
-          type: string
-          example: healthy-machine
-        intervalMs:
-          type: number
-          description: Interval between two windows (1000 / frequency). If the data was resampled, then this lists the resampled interval.
-          example: 16
-        frequency:
-          type: number
-          description: Frequency of the sample. If the data was resampled, then this lists the resampled frequency.
-          example: 62.5
-        originalIntervalMs:
-          type: number
-          description: Interval between two windows (1000 / frequency) in the source data (before resampling).
-          example: 16
-        originalFrequency:
-          type: number
-          description: Frequency of the sample in the source data (before resampling).
-          example: 62.5
-        deviceName:
-          type: string
-        deviceType:
-          type: string
-        sensors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Sensor'
-        valuesCount:
-          type: integer
-          description: Number of readings in this file
-        totalLengthMs:
-          type: number
-          description: Total length (in ms.) of this file
-        added:
-          type: string
-          format: date-time
-          description: Timestamp when the sample was added to the current acquisition bucket.
-        boundingBoxes:
-          type: array
-          items:
-            $ref: '#/components/schemas/BoundingBox'
-        boundingBoxesType:
-          type: string
-          enum:
-          - object_detection
-          - constrained_object_detection
-        chartType:
-          type: string
-          enum:
-          - chart
-          - image
-          - video
-          - table
-        thumbnailVideo:
-          type: string
-        thumbnailVideoFull:
-          type: string
-        isDisabled:
-          type: boolean
-          description: True if the current sample is excluded from use
-        isProcessing:
-          type: boolean
-          description: True if the current sample is still processing (e.g. for video)
-        processingJobId:
-          type: integer
-          description: Set when sample is processing and a job has picked up the request
-        processingError:
-          type: boolean
-          description: Set when processing this sample failed
-        processingErrorString:
-          type: string
-          description: Error (only set when processing this sample failed)
-        isCropped:
-          type: boolean
-          description: Whether the sample is cropped from another sample (and has crop start / end info)
-        metadata:
-          type: object
-          description: Sample free form associated metadata
-          additionalProperties:
-            type: string
-        projectId:
-          type: integer
-          description: Unique identifier of the project this sample belongs to
-        projectOwnerName:
-          type: string
-          description: Name of the owner of the project this sample belongs to
-        projectName:
-          type: string
-          description: Name of the project this sample belongs to
-        projectLabelingMethod:
-          type: string
-          description: What labeling flow the project this sample belongs to uses
-          enum:
-          - single_label
-          - object_detection
-        sha256Hash:
-          type: string
-          description: Data sample SHA 256 hash (including CBOR envelope if applicable)
-        structuredLabels:
-          type: array
-          items:
-            $ref: '#/components/schemas/StructuredLabel'
-        structuredLabelsList:
-          type: array
-          items:
-            type: string
-        createdBySyntheticDataJobId:
-          type: integer
-          description: If this sample was created by a synthetic data job, it's referenced here.
-        imageDimensions:
-          type: object
-          required:
-          - width
-          - height
-          properties:
-            width:
-              type: integer
-            height:
-              type: integer
-    ListProjectsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - $ref: '#/components/schemas/ListProjects'
-    ProjectDownloadsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - downloads
-        properties:
-          downloads:
-            type: array
-            items:
-              $ref: '#/components/schemas/Download'
-    LastUpdatedByProjectApiKey:
-      type: object
-      description: The project API key that last updated a sample.
-      required:
-      - type
-      - id
-      properties:
-        type:
-          type: string
-          enum:
-          - projectApiKey
-        id:
-          type: integer
-          description: The ID of the project API key that last updated the sample.
-    AddIngestionOnlyProjectApiKeyRequest:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Description of the key
-    ApiKeyExtension:
-      type: object
-      required:
-      - id
-      - name
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-    AddProjectApiKeyRequest_2:
-      allOf:
-      - $ref: '#/components/schemas/AddApiKeyRequest'
-      - type: object
-        required:
-        - isDevelopmentKey
+        - apiKeyId
+        - projectId
         - role
         properties:
-          isDevelopmentKey:
-            type: boolean
-            description: Whether this key should be used as a development key.
+          apiKeyId:
+            type: integer
+          projectId:
+            type: integer
           role:
             $ref: '#/components/schemas/ProjectApiKeyRole'
-          ttl:
-            type: integer
-            description: 'Optional: time to live in seconds.'
-          extensionId:
-            type: integer
-            description: 'Optional: extension ID when this API key is created for a project extension.'
-    Sensor_2:
-      type: object
-      required:
-      - index
-      - name
-      - units
-      properties:
-        index:
-          type: integer
-          description: Index of the sensor (globally, so you can refer back to it in e.g. getSampleAsAudio)
-        name:
-          type: string
-          description: Name of the axis
-          example: accX
-        units:
-          type: string
-          description: Type of data on this axis. Needs to comply to SenML units (see https://www.iana.org/assignments/senml/senml.xhtml).
-    TutorialType:
-      type: string
-      description: The type of in-product guided tutorial to show in the getting started wizard
-      enum:
-      - kws
-      - cv
-    DatasetSplitOptions:
-      type: object
-      required:
-      - trainingSplitRatio
-      - testingSplitRatio
-      properties:
-        trainingSplitRatio:
-          type: number
-          description: Proportion of the dataset to use for training.
-        testingSplitRatio:
-          type: number
-          description: Proportion of the dataset to use for testing.
-        validationSplitRatio:
-          type: number
-          description: Proportion of the dataset to use for validation. This is experimental and may change in the future.
-        excludeDisabledSamples:
-          type: boolean
-          description: Whether to exclude samples that are marked as disabled.
-          default: false
-        stratifyBy:
-          type: object
-          description: Optional balancing targets for the split.
-          properties:
-            label:
-              type: boolean
-              description: Whether to stratify by label.
-            metadataKeys:
-              type: array
-              items:
-                type: string
-              description: Metadata keys to use as balancing targets. If more than one is selected, they are combined into composite assignment buckets.
-        keepTogetherMetadataKeys:
-          type: array
-          items:
-            type: string
-          description: 'List of metadata keys whose matching values must stay together in a single split. This is useful for leakage prevention across train, validation, and test.
-
-            '
     ListVersionsResponse_2:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -3991,56 +3894,6 @@ components:
           description: Labels to treat as non-anomalous during classification or model testing in Studio, defaults to ['no anomaly']
           items:
             type: string
-    ProjectDataIntervalResponse_2:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - intervalMs
-        - frequencyHz
-        - byDatastream
-        properties:
-          intervalMs:
-            type: number
-          frequencyHz:
-            type: number
-          byDatastream:
-            type: array
-            description: Only filled if project has "multi_datastreams" experiment enabled. Otherwise an empty array.
-            items:
-              type: object
-              required:
-              - type
-              - intervalMs
-              - frequencyHz
-              - sensors
-              properties:
-                type:
-                  type: string
-                  enum:
-                  - video
-                  - image
-                  - time-series
-                  - features
-                intervalMs:
-                  type: number
-                frequencyHz:
-                  type: number
-                sensors:
-                  type: array
-                  items:
-                    type: object
-                    required:
-                    - name
-                    - units
-                    properties:
-                      name:
-                        type: string
-                        description: Name of the axis
-                        example: accX
-                      units:
-                        type: string
-                        description: Type of data on this axis. Needs to comply to SenML units (see https://www.iana.org/assignments/senml/senml.xhtml).
     GetHmacDevkeyResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -4049,256 +3902,308 @@ components:
           hmacKey:
             type: string
             description: HMAC Key
-    PublicProjectLicense:
-      type: string
-      enum:
-      - Apache-2.0
-      - BSD-3-Clause
-      - BSD-3-Clause-Clear
-    CreateProjectRequest_2:
-      type: object
-      required:
-      - projectName
-      properties:
-        projectName:
-          type: string
-          example: EEG trials
-          description: The name of the first project.
-        projectVisibility:
-          $ref: '#/components/schemas/ProjectVisibility'
-        originalProjectVersionId:
-          type: integer
-          description: The ID of the version that was used to restore this project.
-        showGettingStartedWizard:
-          type: boolean
-          description: Whether to show the getting started wizard use-case chooser screen after the project is created
-        tutorialKey:
-          $ref: '#/components/schemas/TutorialType'
-          description: Optional in-product tutorial to launch after the project is create
-        createApiKey:
-          description: Whether to create an API key. If set to FALSE, the "apiKey" property on the response will be empty. If this field is not set, it will default to TRUE.
-          type: boolean
-    ListApiKeysResponse_2:
+    ProjectInfoSummaryResponse_2:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - apiKeys
+        - id
+        - owner
+        - name
+        - studioUrl
+        - viewCount
+        - cloneCount
         properties:
-          apiKeys:
-            type: array
-            description: List of API keys.
-            items:
-              $ref: '#/components/schemas/ProjectApiKey'
-    LastUpdatedByDatasetVersionRestore:
+          id:
+            type: integer
+          owner:
+            type: string
+          name:
+            type: string
+          studioUrl:
+            type: string
+          viewCount:
+            type: integer
+          cloneCount:
+            type: integer
+    SampleLabelMapLabels:
+      description: 'Structured sample labels in the form of a key-value map.
+
+        This property is optional and only defined for samples with key-value labels.
+
+        '
+      discriminator:
+        propertyName: type
+        mapping:
+          key-values: '#/components/schemas/SampleKeyValueLabels'
+      oneOf:
+      - $ref: '#/components/schemas/SampleKeyValueLabels'
+    SampleDatastream:
       type: object
-      description: The dataset restore  that last updated a sample.
       required:
-      - type
-      - datasetVersionId
-      - groupKey
+      - index
+      - chartType
+      - intervalMs
+      - frequencyHz
+      - sensors
+      - valuesCount
+      - totalLengthMs
       properties:
-        type:
+        index:
+          type: integer
+        chartType:
           type: string
           enum:
-          - datasetVersionRestore
-        datasetVersionId:
+          - chart
+          - image
+          - video
+          - table
+        intervalMs:
+          description: Interval between two windows (1000 / frequency).
+          type: number
+        frequencyHz:
+          description: Frequency of the datastream
+          type: number
+        sensors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sensor_2'
+        valuesCount:
           type: integer
-          description: The ID of the dataset version that last updated the sample.
-        groupKey:
-          type: string
-          description: A random grouping ID to keep restore snapshots isolated.
-        actor:
-          description: The actor that started the dataset restore operation.
+          description: Number of readings in this datastream.
+        imageDimensions:
           type: object
+          required:
+          - width
+          - height
+          properties:
+            width:
+              type: integer
+            height:
+              type: integer
+        totalLengthMs:
+          type: number
+          description: Total length (in ms.) of the datastream
+    Sample_2:
+      type: object
+      required:
+      - id
+      - filename
+      - signatureValidate
+      - created
+      - lastModified
+      - category
+      - coldstorageFilename
+      - label
+      - intervalMs
+      - frequency
+      - originalIntervalMs
+      - originalFrequency
+      - deviceType
+      - sensors
+      - valuesCount
+      - added
+      - boundingBoxes
+      - boundingBoxesType
+      - chartType
+      - isDisabled
+      - isProcessing
+      - processingError
+      - isCropped
+      - projectId
+      - sha256Hash
+      - datastreams
+      properties:
+        id:
+          type: integer
+          example: 2
+        filename:
+          type: string
+          example: idle01.d8Ae
+        signatureValidate:
+          type: boolean
+          description: Whether signature validation passed
+          example: true
+        signatureMethod:
+          type: string
+          example: HS256
+        signatureKey:
+          type: string
+          description: Either the shared key or the public key that was used to validate the sample
+        created:
+          type: string
+          format: date-time
+          description: Timestamp when the sample was created on device, or if no accurate time was known on device, the time that the file was processed by the ingestion service.
+        lastModified:
+          type: string
+          format: date-time
+          description: Timestamp when the sample was last modified.
+        category:
+          example: training
+          $ref: '#/components/schemas/RawDataCategory'
+        coldstorageFilename:
+          type: string
+        label:
+          type: string
+          example: healthy-machine
+        intervalMs:
+          type: number
+          description: 'Interval between two windows (1000 / frequency). NOTE: Previously this value could change depending on whether the sample was resampled. This behavior has been removed.'
+          example: 16
+        frequency:
+          type: number
+          description: 'Frequency of the sample. NOTE: Previously this value could change depending on whether the sample was resampled. This behavior has been removed.'
+          example: 62.5
+        originalIntervalMs:
+          type: number
+          description: DEPRECATED. See "intervalMs".
+          example: 16
+        originalFrequency:
+          type: number
+          description: DEPRECATED. See "frequency".
+          example: 62.5
+        deviceName:
+          type: string
+        deviceType:
+          type: string
+        sensors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sensor_2'
+        valuesCount:
+          type: integer
+          description: Number of readings in this file. If you have multiple datastreams, this is the value count from the datastream with the highest frequency.
+        totalLengthMs:
+          type: number
+          description: Total length (in ms.) of this file
+        added:
+          type: string
+          format: date-time
+          description: Timestamp when the sample was added to the current acquisition bucket.
+        boundingBoxes:
+          type: array
+          items:
+            $ref: '#/components/schemas/BoundingBox'
+        boundingBoxesType:
+          type: string
+          enum:
+          - object_detection
+          - constrained_object_detection
+        chartType:
+          type: string
+          enum:
+          - chart
+          - image
+          - video
+          - table
+        thumbnailVideo:
+          type: string
+        thumbnailVideoFull:
+          type: string
+        isDisabled:
+          type: boolean
+          description: True if the current sample is excluded from use
+        isProcessing:
+          type: boolean
+          description: True if the current sample is still processing (e.g. for video)
+        processingJobId:
+          type: integer
+          description: Set when sample is processing and a job has picked up the request
+        processingError:
+          type: boolean
+          description: Set when processing this sample failed
+        processingErrorString:
+          type: string
+          description: Error (only set when processing this sample failed)
+        isCropped:
+          type: boolean
+          description: Whether the sample is cropped from another sample (and has crop start / end info)
+        metadata:
+          type: object
+          description: Sample free form associated metadata
+          additionalProperties:
+            type: string
+        projectId:
+          type: integer
+          description: Unique identifier of the project this sample belongs to
+        projectOwnerName:
+          type: string
+          description: Name of the owner of the project this sample belongs to
+        projectName:
+          type: string
+          description: Name of the project this sample belongs to
+        projectLabelingMethod:
+          description: What labeling flow the project this sample belongs to uses
+          $ref: '#/components/schemas/ProjectLabelingMethod'
+        sha256Hash:
+          type: string
+          description: Data sample SHA 256 hash (including CBOR envelope if applicable)
+        structuredLabels:
+          type: array
+          items:
+            $ref: '#/components/schemas/StructuredLabel_2'
+        structuredLabelsList:
+          type: array
+          items:
+            type: string
+        createdBySyntheticDataJobId:
+          type: integer
+          description: If this sample was created by a synthetic data job, it's referenced here.
+        imageDimensions:
+          type: object
+          required:
+          - width
+          - height
+          properties:
+            width:
+              type: integer
+            height:
+              type: integer
+        videoUrl:
+          type: string
+          description: Video link, cropped and in original resolution.
+        videoUrlFull:
+          type: string
+          description: Video link in original resolution.
+        labelMap:
+          $ref: '#/components/schemas/SampleLabelMapLabels'
+        lastUpdatedBy:
+          description: Information about the entity that last updated a sample. This can be a user, a project API key, an OAuth client, or a dataset version restore operation.
+          discriminator:
+            propertyName: type
+            mapping:
+              user: '#/components/schemas/LastUpdatedByUser'
+              projectApiKey: '#/components/schemas/LastUpdatedByProjectApiKey'
+              oauthClient: '#/components/schemas/LastUpdatedByOAuthClient'
+              datasetVersionRestore: '#/components/schemas/LastUpdatedByDatasetVersionRestore'
           oneOf:
           - $ref: '#/components/schemas/LastUpdatedByUser'
           - $ref: '#/components/schemas/LastUpdatedByProjectApiKey'
           - $ref: '#/components/schemas/LastUpdatedByOAuthClient'
-    AIActionsDataCategory_2:
-      type: string
-      enum:
-      - allData
-      - unlabeledData
-      - enabledData
-      - dataWithoutMetadataKey
-      - dataWithMetadata
-    ProjectDataSummary_2:
-      type: object
-      required:
-      - totalLengthMs
-      - labels
-      - totalLabels
-      - dataCount
-      properties:
-        totalLengthMs:
-          type: number
-          description: Total length (in ms.) of all data in the training set
-          example: '726336'
-        labels:
-          type: array
-          description: Labels in the training set.
-          items:
-            type: string
-        totalLabels:
-          type: integer
-          description: Total number of distinct labels in the training set.
-        min:
-          type: integer
-          description: Minimum regression value. Only set for regression datasets.
-        max:
-          type: integer
-          description: Maximum regression value. Only set for regression datasets.
-        mean:
-          type: number
-          description: Mean regression value. Only set for regression datasets.
-        dataCount:
-          type: integer
-          description: Number of files in the training set
-    ProjectApiKeyRole:
-      type: string
-      enum:
-      - admin
-      - readonly
-      - ingestiononly
-      - ingestion_deployment
-    Project_2:
-      type: object
-      required:
-      - id
-      - name
-      - description
-      - created
-      - owner
-      - collaborators
-      - labelingMethod
-      - metadata
-      - isEnterpriseProject
-      - whitelabelId
-      - tier
-      - hasPublicVersion
-      - isPublic
-      - allowsLivePublicAccess
-      - ownerIsDeveloperProfile
-      - indPauseProcessingSamples
-      - publicProjectListed
-      properties:
-        id:
-          type: integer
-          example: 1
-        name:
-          type: string
-          example: Water hammer detection
-        description:
-          type: string
-        created:
-          type: string
-          format: date-time
-          example: '2019-07-21T17:32:28Z'
-        owner:
-          type: string
-          description: User or organization that owns the project
-        lastAccessed:
-          type: string
-          format: date-time
-          example: '2019-07-21T17:32:28Z'
-        lastModified:
-          type: string
-          format: date-time
-          example: '2019-07-21T17:32:28Z'
-        lastModificationDetails:
-          type: string
-          description: Details about the last modification
-          example: Data sample added
-        logo:
-          type: string
-          description: Custom logo for this project (not available for all projects)
-        ownerUserId:
-          type: integer
-        ownerOrganizationId:
-          type: integer
-        ownerAvatar:
-          type: string
-          description: URL of the project owner avatar, if any.
-        ownerIsDeveloperProfile:
-          type: boolean
-        developerProfileUserId:
-          type: integer
-          description: User ID of the developer profile, if any.
-        collaborators:
+          - $ref: '#/components/schemas/LastUpdatedByDatasetVersionRestore'
+        datastreams:
           type: array
           items:
-            $ref: '#/components/schemas/ProjectCollaborator'
-        labelingMethod:
-          $ref: '#/components/schemas/ProjectLabelingMethod'
-        metadata:
-          type: object
-          description: Metadata about the project
-        dataExplorerScreenshot:
-          type: string
-        isEnterpriseProject:
-          type: boolean
-          description: Whether this is an enterprise project
-        whitelabelId:
-          type:
-          - integer
-          - 'null'
-          description: Unique identifier of the white label this project belongs to, if any.
-        whitelabelName:
-          type: string
-          description: Name of the white label this project belongs to, if any.
-        tags:
-          type: array
-          items:
-            type: string
-          description: List of project tags
-          example:
-          - FOMO
-          - beers
-        category:
-          type: string
-          description: Project category
-          enum:
-          - Accelerometer
-          - Audio
-          - Images
-          - Keyword spotting
-          - Object detection
-          - Other
-        license:
-          $ref: '#/components/schemas/PublicProjectLicense'
-          description: Public project license, if any.
-        tier:
-          $ref: '#/components/schemas/ProjectTierEnum'
-        hasPublicVersion:
-          type: boolean
-          description: Whether this project has been published or not.
-        isPublic:
-          type: boolean
-          description: 'Whether this is a public version of a project. A version is a snapshot of a project at a certain point in time, which can be used to periodically save the state of a project. Versions can be private (just for internal use and reference) or public, available to everyone. A public version can be cloned by anyone, restoring the state of the project at the time into a new, separate project.
-
-            '
-        allowsLivePublicAccess:
-          type: boolean
-          description: 'Whether this project allows live, public access. Unlike a public version, a live public project is not fixed in time, and always includes the latest project changes. Similar to public versions, a live public project can be cloned by anyone, creating a new, separate project.
-
-            '
-        indPauseProcessingSamples:
-          type: boolean
-        publicProjectListed:
-          type: boolean
-          description: 'If the project allows public access, whether to list it the public projects overview response. If not listed, the project is still accessible via direct link. If the project does not allow public access, this field has no effect.
-
-            '
-        deletedDate:
-          type: string
-          format: date-time
-        fullDeletionDate:
-          type: string
-          format: date-time
-        scheduledFullDeletionDate:
-          type: string
-          format: date-time
+            $ref: '#/components/schemas/SampleDatastream'
+    AddProjectApiKeyRequest_2:
+      allOf:
+      - $ref: '#/components/schemas/AddApiKeyRequest'
+      - type: object
+        required:
+        - isDevelopmentKey
+        - role
+        properties:
+          isDevelopmentKey:
+            type: boolean
+            description: Whether this key should be used as a development key.
+          role:
+            $ref: '#/components/schemas/ProjectApiKeyRole'
+          ttl:
+            type: integer
+            description: 'Optional: time to live in seconds.'
+          extensionId:
+            type: integer
+            description: 'Optional: extension ID when this API key is created for a project extension.'
     Job_2:
       type: object
       required:
@@ -4358,109 +4263,6 @@ components:
         metadata:
           type: object
           description: Structured job metadata
-    ProjectApiKey:
-      type: object
-      required:
-      - id
-      - name
-      - apiKey
-      - isDevelopmentKey
-      - created
-      - role
-      properties:
-        id:
-          type: integer
-        apiKey:
-          type: string
-        isDevelopmentKey:
-          type: boolean
-        name:
-          type: string
-        created:
-          type: string
-          format: date-time
-        role:
-          type: string
-          enum:
-          - admin
-          - readonly
-          - ingestiononly
-          - ingestion_deployment
-          - wladmin
-        createdByUser:
-          $ref: '#/components/schemas/CreatedUpdatedByUser'
-        lastUsed:
-          description: When this API key was last used.
-          type: object
-          required:
-          - date
-          properties:
-            date:
-              type: string
-              format: date-time
-            country:
-              type: string
-              example: United States
-              description: If available, the country from which the API key was last used.
-            ipAddress:
-              type: string
-              description: If available, the IP address from which the API key was last used.
-        expires:
-          description: If the key has a ttl set, when the key will expire
-          type: string
-          format: date-time
-        createdViaOAuthClientId:
-          description: OAuth client_id that created this API key through an OAuth-scoped key endpoint.
-          type: string
-        createdForExtension:
-          description: Extension info for API keys created for a project extension.
-          $ref: '#/components/schemas/ApiKeyExtension'
-    SampleDatastream:
-      type: object
-      required:
-      - index
-      - chartType
-      - intervalMs
-      - frequencyHz
-      - sensors
-      - valuesCount
-      - totalLengthMs
-      properties:
-        index:
-          type: integer
-        chartType:
-          type: string
-          enum:
-          - chart
-          - image
-          - video
-          - table
-        intervalMs:
-          description: Interval between two windows (1000 / frequency).
-          type: number
-        frequencyHz:
-          description: Frequency of the datastream
-          type: number
-        sensors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Sensor_2'
-        valuesCount:
-          type: integer
-          description: Number of readings in this datastream.
-        imageDimensions:
-          type: object
-          required:
-          - width
-          - height
-          properties:
-            width:
-              type: integer
-            height:
-              type: integer
-        totalLengthMs:
-          type: number
-          description: Total length (in ms.) of the datastream
     UpdateProjectRequest_2:
       type: object
       description: Only fields set in this object will be updated.
@@ -4647,51 +4449,31 @@ components:
         explicitValidationEnabled:
           type: boolean
           description: Enables a first-class validation dataset alongside training and testing.
-    SampleKeyValueLabels:
+    LastUpdatedByDatasetVersionRestore:
       type: object
+      description: The dataset restore  that last updated a sample.
       required:
       - type
-      - labels
+      - datasetVersionId
+      - groupKey
       properties:
         type:
           type: string
           enum:
-          - key-values
-        labels:
-          type: object
-          additionalProperties:
-            type: string
-    ListHmacKeysResponse_2:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - hmacKeys
-        properties:
-          hmacKeys:
-            type: array
-            description: List of HMAC keys
-            items:
-              $ref: '#/components/schemas/ProjectHmacKey'
-    StructuredLabel_2:
-      type: object
-      description: 'A structured label contains a label, and the range for which this label is valid. `endIndex` is inclusive. E.g. `{ startIndex: 10, endIndex: 13, label: ''running'' }` means that the values at index 10, 11, 12, 13 are labeled ''running''. To get time codes you can multiple by the sample''s `intervalMs` property.'
-      required:
-      - startIndex
-      - endIndex
-      - label
-      properties:
-        startIndex:
+          - datasetVersionRestore
+        datasetVersionId:
           type: integer
-          description: Start index of the label (e.g. 0)
-        endIndex:
-          type: integer
-          description: 'End index of the label (e.g. 3). This value is inclusive, so { startIndex: 0, endIndex: 3 } covers 0, 1, 2, 3.'
-        label:
+          description: The ID of the dataset version that last updated the sample.
+        groupKey:
           type: string
-          description: The label for this section.
-        labelMap:
-          $ref: '#/components/schemas/SampleLabelMapLabels'
+          description: A random grouping ID to keep restore snapshots isolated.
+        actor:
+          description: The actor that started the dataset restore operation.
+          type: object
+          oneOf:
+          - $ref: '#/components/schemas/LastUpdatedByUser'
+          - $ref: '#/components/schemas/LastUpdatedByProjectApiKey'
+          - $ref: '#/components/schemas/LastUpdatedByOAuthClient'
     ProjectTrainingDataSummaryResponse_2:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -4737,6 +4519,314 @@ components:
                   type: array
                   items:
                     type: string
+    SampleKeyValueLabels:
+      type: object
+      required:
+      - type
+      - labels
+      properties:
+        type:
+          type: string
+          enum:
+          - key-values
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+    Permission_2:
+      type: string
+      enum:
+      - admin:infra:datasetVersioning:queue:write
+      - admin:infra:disallowedEmailDomains:read
+      - admin:infra:disallowedEmailDomains:write
+      - admin:infra:featureFlags:read
+      - admin:infra:featureFlags:write
+      - admin:infra:config:read
+      - admin:infra:config:write
+      - admin:infra:migrations:read
+      - admin:infra:migrations:write
+      - admin:metrics:read
+      - admin:metrics:write
+      - admin:oauth:read
+      - admin:oauth:write
+      - admin:organizations:read
+      - admin:organizations:write
+      - admin:organizations:members:write
+      - admin:projects:members:write
+      - admin:projects:read
+      - admin:projects:write
+      - admin:trashbin:write
+      - admin:trials:read
+      - admin:trials:write
+      - admin:users:permissions:write
+      - admin:users:read
+      - admin:users:signupApprovals:read
+      - admin:users:signupApprovals:write
+      - admin:users:write
+      - admin:jobs:read
+      - admin:emails:verification:code:read
+      - admin:sso:read
+      - admin:sso:domainIdps:write
+      - admin:vlm:model:read
+      - admin:vlm:model:write
+      - projects:limits:write
+      - projects:training:keras:write
+      - projects:data:versioning:write
+      - users:emails:read
+      - whitelabels:read
+      - whitelabels:write
+      - test:data:write
+      - test:users:read
+      - test:users:write
+    TutorialType:
+      type: string
+      description: The type of in-product guided tutorial to show in the getting started wizard
+      enum:
+      - kws
+      - cv
+    LastUpdatedByOAuthClient:
+      type: object
+      description: The OAuth client that last updated a sample, and the user it is acting on behalf of.
+      required:
+      - type
+      - oauthClientId
+      properties:
+        type:
+          type: string
+          enum:
+          - oauthClient
+        oauthClientId:
+          type: string
+          description: The ID of the OAuth client that last updated the sample.
+        userId:
+          type: integer
+          description: The user ID the OAuth client is acting on behalf of.
+    User_2:
+      type: object
+      required:
+      - id
+      - username
+      - name
+      - email
+      - created
+      - staffInfo
+      - pending
+      - activated
+      - mfaConfigured
+      properties:
+        id:
+          type: integer
+          example: 1
+        username:
+          type: string
+          example: janjongboom
+        name:
+          type: string
+          example: Jan Jongboom
+        email:
+          type: string
+          example: quijote@edgeimpulse.com
+        photo:
+          type: string
+          example: https://usercdn.edgeimpulse.com/photos/1.jpg
+        created:
+          type: string
+          format: date-time
+          example: '2019-08-31T17:32:28Z'
+        lastSeen:
+          type: string
+          format: date-time
+          example: '2019-08-31T17:32:28Z'
+        staffInfo:
+          $ref: '#/components/schemas/StaffInfo'
+        pending:
+          type: boolean
+        jobTitle:
+          type: string
+          example: Software Engineer
+        permissions:
+          description: List of permissions the user has
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission_2'
+        companyName:
+          type: string
+          example: Edge Impulse Inc.
+        activated:
+          type: boolean
+          description: Whether the user has activated their account or not.
+        mfaConfigured:
+          type: boolean
+          description: Whether the user has configured multi-factor authentication
+        stripeCustomerId:
+          type: string
+          description: Stripe customer ID, if any.
+        hasPendingPayments:
+          type: boolean
+          description: Whether the user has pending payments.
+        tier:
+          $ref: '#/components/schemas/UserTierEnum'
+        idps:
+          type: array
+          description: List of identity providers (e.g. Google, GitHub) that the user has used to sign in with
+          items:
+            type: string
+    Project_2:
+      type: object
+      required:
+      - id
+      - name
+      - description
+      - created
+      - owner
+      - collaborators
+      - labelingMethod
+      - metadata
+      - isEnterpriseProject
+      - whitelabelId
+      - tier
+      - hasPublicVersion
+      - isPublic
+      - allowsLivePublicAccess
+      - ownerIsDeveloperProfile
+      - indPauseProcessingSamples
+      - publicProjectListed
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Water hammer detection
+        description:
+          type: string
+        created:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        owner:
+          type: string
+          description: User or organization that owns the project
+        lastAccessed:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        lastModified:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        lastModificationDetails:
+          type: string
+          description: Details about the last modification
+          example: Data sample added
+        logo:
+          type: string
+          description: Custom logo for this project (not available for all projects)
+        ownerUserId:
+          type: integer
+        ownerOrganizationId:
+          type: integer
+        ownerAvatar:
+          type: string
+          description: URL of the project owner avatar, if any.
+        ownerIsDeveloperProfile:
+          type: boolean
+        developerProfileUserId:
+          type: integer
+          description: User ID of the developer profile, if any.
+        collaborators:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectCollaborator'
+        labelingMethod:
+          $ref: '#/components/schemas/ProjectLabelingMethod'
+        metadata:
+          type: object
+          description: Metadata about the project
+        dataExplorerScreenshot:
+          type: string
+        isEnterpriseProject:
+          type: boolean
+          description: Whether this is an enterprise project
+        whitelabelId:
+          type:
+          - integer
+          - 'null'
+          description: Unique identifier of the white label this project belongs to, if any.
+        whitelabelName:
+          type: string
+          description: Name of the white label this project belongs to, if any.
+        tags:
+          type: array
+          items:
+            type: string
+          description: List of project tags
+          example:
+          - FOMO
+          - beers
+        category:
+          type: string
+          description: Project category
+          enum:
+          - Accelerometer
+          - Audio
+          - Images
+          - Keyword spotting
+          - Object detection
+          - Other
+        license:
+          $ref: '#/components/schemas/PublicProjectLicense'
+          description: Public project license, if any.
+        tier:
+          $ref: '#/components/schemas/ProjectTierEnum'
+        hasPublicVersion:
+          type: boolean
+          description: Whether this project has been published or not.
+        isPublic:
+          type: boolean
+          description: 'Whether this is a public version of a project. A version is a snapshot of a project at a certain point in time, which can be used to periodically save the state of a project. Versions can be private (just for internal use and reference) or public, available to everyone. A public version can be cloned by anyone, restoring the state of the project at the time into a new, separate project.
+
+            '
+        allowsLivePublicAccess:
+          type: boolean
+          description: 'Whether this project allows live, public access. Unlike a public version, a live public project is not fixed in time, and always includes the latest project changes. Similar to public versions, a live public project can be cloned by anyone, creating a new, separate project.
+
+            '
+        indPauseProcessingSamples:
+          type: boolean
+        publicProjectListed:
+          type: boolean
+          description: 'If the project allows public access, whether to list it the public projects overview response. If not listed, the project is still accessible via direct link. If the project does not allow public access, this field has no effect.
+
+            '
+        deletedDate:
+          type: string
+          format: date-time
+        fullDeletionDate:
+          type: string
+          format: date-time
+        scheduledFullDeletionDate:
+          type: string
+          format: date-time
+    StructuredLabel_2:
+      type: object
+      description: 'A structured label contains a label, and the range for which this label is valid. `endIndex` is inclusive. E.g. `{ startIndex: 10, endIndex: 13, label: ''running'' }` means that the values at index 10, 11, 12, 13 are labeled ''running''. To get time codes you can multiple by the sample''s `intervalMs` property.'
+      required:
+      - startIndex
+      - endIndex
+      - label
+      properties:
+        startIndex:
+          type: integer
+          description: Start index of the label (e.g. 0)
+        endIndex:
+          type: integer
+          description: 'End index of the label (e.g. 3). This value is inclusive, so { startIndex: 0, endIndex: 3 } covers 0, 1, 2, 3.'
+        label:
+          type: string
+          description: The label for this section.
+        labelMap:
+          $ref: '#/components/schemas/SampleLabelMapLabels'
     ProjectHmacKey:
       type: object
       required:
@@ -4759,6 +4849,300 @@ components:
           format: date-time
         createdByUser:
           $ref: '#/components/schemas/CreatedUpdatedByUser'
+    ApiKeyExtension:
+      type: object
+      required:
+      - id
+      - name
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    ProjectDataSummary_2:
+      type: object
+      required:
+      - totalLengthMs
+      - labels
+      - totalLabels
+      - dataCount
+      properties:
+        totalLengthMs:
+          type: number
+          description: Total length (in ms.) of all data in the training set
+          example: '726336'
+        labels:
+          type: array
+          description: Labels in the training set.
+          items:
+            type: string
+        totalLabels:
+          type: integer
+          description: Total number of distinct labels in the training set.
+        min:
+          type: integer
+          description: Minimum regression value. Only set for regression datasets.
+        max:
+          type: integer
+          description: Maximum regression value. Only set for regression datasets.
+        mean:
+          type: number
+          description: Mean regression value. Only set for regression datasets.
+        dataCount:
+          type: integer
+          description: Number of files in the training set
+    AIActionsDataCategory_2:
+      type: string
+      enum:
+      - allData
+      - unlabeledData
+      - enabledData
+      - dataWithoutMetadataKey
+      - dataWithMetadata
+    RawDataCategory:
+      type: string
+      enum:
+      - training
+      - testing
+      - validation
+      - post-processing
+    ProjectApiKey:
+      type: object
+      required:
+      - id
+      - name
+      - apiKey
+      - isDevelopmentKey
+      - created
+      - role
+      properties:
+        id:
+          type: integer
+        apiKey:
+          type: string
+        isDevelopmentKey:
+          type: boolean
+        name:
+          type: string
+        created:
+          type: string
+          format: date-time
+        role:
+          type: string
+          enum:
+          - admin
+          - readonly
+          - ingestiononly
+          - ingestion_deployment
+          - wladmin
+        createdByUser:
+          $ref: '#/components/schemas/CreatedUpdatedByUser'
+        lastUsed:
+          description: When this API key was last used.
+          type: object
+          required:
+          - date
+          properties:
+            date:
+              type: string
+              format: date-time
+            country:
+              type: string
+              example: United States
+              description: If available, the country from which the API key was last used.
+            ipAddress:
+              type: string
+              description: If available, the IP address from which the API key was last used.
+        expires:
+          description: If the key has a ttl set, when the key will expire
+          type: string
+          format: date-time
+        createdViaOAuthClientId:
+          description: OAuth client_id that created this API key through an OAuth-scoped key endpoint.
+          type: string
+        createdForExtension:
+          description: Extension info for API keys created for a project extension.
+          $ref: '#/components/schemas/ApiKeyExtension'
+    CreateProjectRequest_2:
+      type: object
+      required:
+      - projectName
+      properties:
+        projectName:
+          type: string
+          example: EEG trials
+          description: The name of the first project.
+        projectVisibility:
+          $ref: '#/components/schemas/ProjectVisibility'
+        originalProjectVersionId:
+          type: integer
+          description: The ID of the version that was used to restore this project.
+        showGettingStartedWizard:
+          type: boolean
+          description: Whether to show the getting started wizard use-case chooser screen after the project is created
+        tutorialKey:
+          $ref: '#/components/schemas/TutorialType'
+          description: Optional in-product tutorial to launch after the project is create
+        createApiKey:
+          description: Whether to create an API key. If set to FALSE, the "apiKey" property on the response will be empty. If this field is not set, it will default to TRUE.
+          type: boolean
+    DatasetSplitOptions:
+      type: object
+      required:
+      - trainingSplitRatio
+      - testingSplitRatio
+      properties:
+        trainingSplitRatio:
+          type: number
+          description: Proportion of the dataset to use for training.
+        testingSplitRatio:
+          type: number
+          description: Proportion of the dataset to use for testing.
+        validationSplitRatio:
+          type: number
+          description: Proportion of the dataset to use for validation. This is experimental and may change in the future.
+        excludeDisabledSamples:
+          type: boolean
+          description: Whether to exclude samples that are marked as disabled.
+          default: false
+        stratifyBy:
+          type: object
+          description: Optional balancing targets for the split.
+          properties:
+            label:
+              type: boolean
+              description: Whether to stratify by label.
+            metadataKeys:
+              type: array
+              items:
+                type: string
+              description: Metadata keys to use as balancing targets. If more than one is selected, they are combined into composite assignment buckets.
+        keepTogetherMetadataKeys:
+          type: array
+          items:
+            type: string
+          description: 'List of metadata keys whose matching values must stay together in a single split. This is useful for leakage prevention across train, validation, and test.
+
+            '
+    ListApiKeysResponse_2:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - apiKeys
+        properties:
+          apiKeys:
+            type: array
+            description: List of API keys.
+            items:
+              $ref: '#/components/schemas/ProjectApiKey'
+    AddIngestionOnlyProjectApiKeyRequest:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Description of the key
+    LastUpdatedByProjectApiKey:
+      type: object
+      description: The project API key that last updated a sample.
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+          enum:
+          - projectApiKey
+        id:
+          type: integer
+          description: The ID of the project API key that last updated the sample.
+    ListHmacKeysResponse_2:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - hmacKeys
+        properties:
+          hmacKeys:
+            type: array
+            description: List of HMAC keys
+            items:
+              $ref: '#/components/schemas/ProjectHmacKey'
+    Sensor_2:
+      type: object
+      required:
+      - index
+      - name
+      - units
+      properties:
+        index:
+          type: integer
+          description: Index of the sensor (globally, so you can refer back to it in e.g. getSampleAsAudio)
+        name:
+          type: string
+          description: Name of the axis
+          example: accX
+        units:
+          type: string
+          description: Type of data on this axis. Needs to comply to SenML units (see https://www.iana.org/assignments/senml/senml.xhtml).
+    PublicProjectLicense:
+      type: string
+      enum:
+      - Apache-2.0
+      - BSD-3-Clause
+      - BSD-3-Clause-Clear
+    ProjectDataIntervalResponse_2:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - intervalMs
+        - frequencyHz
+        - byDatastream
+        properties:
+          intervalMs:
+            type: number
+          frequencyHz:
+            type: number
+          byDatastream:
+            type: array
+            description: Only filled if project has "multi_datastreams" experiment enabled. Otherwise an empty array.
+            items:
+              type: object
+              required:
+              - type
+              - intervalMs
+              - frequencyHz
+              - sensors
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - video
+                  - image
+                  - time-series
+                  - features
+                intervalMs:
+                  type: number
+                frequencyHz:
+                  type: number
+                sensors:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - name
+                    - units
+                    properties:
+                      name:
+                        type: string
+                        description: Name of the axis
+                        example: accX
+                      units:
+                        type: string
+                        description: Type of data on this axis. Needs to comply to SenML units (see https://www.iana.org/assignments/senml/senml.xhtml).
     CreatedUpdatedByUser:
       type: object
       required:
@@ -4774,13 +5158,20 @@ components:
           type: string
         photo:
           type: string
-    RawDataCategory:
-      type: string
-      enum:
-      - training
-      - testing
-      - validation
-      - post-processing
+    LastUpdatedByUser:
+      type: object
+      description: The user who last updated a sample.
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+          enum:
+          - user
+        id:
+          type: integer
+          description: The ID of the user that last updated the sample.
     ProjectInfoResponse_2:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -5199,411 +5590,41 @@ components:
           explicitValidationEnabled:
             type: boolean
             description: Whether this project has a first-class validation dataset alongside training and testing.
-    ProjectInfoSummaryResponse_2:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        - owner
-        - name
-        - studioUrl
-        - viewCount
-        - cloneCount
-        properties:
-          id:
-            type: integer
-          owner:
-            type: string
-          name:
-            type: string
-          studioUrl:
-            type: string
-          viewCount:
-            type: integer
-          cloneCount:
-            type: integer
-    SampleLabelMapLabels:
-      description: 'Structured sample labels in the form of a key-value map.
-
-        This property is optional and only defined for samples with key-value labels.
-
-        '
-      discriminator:
-        propertyName: type
-        mapping:
-          key-values: '#/components/schemas/SampleKeyValueLabels'
-      oneOf:
-      - $ref: '#/components/schemas/SampleKeyValueLabels'
-    GetCurrentApiKeyInfoResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - apiKeyId
-        - projectId
-        - role
-        properties:
-          apiKeyId:
-            type: integer
-          projectId:
-            type: integer
-          role:
-            $ref: '#/components/schemas/ProjectApiKeyRole'
-    Permission_2:
+    ProjectApiKeyRole:
       type: string
       enum:
-      - admin:infra:datasetVersioning:queue:write
-      - admin:infra:disallowedEmailDomains:read
-      - admin:infra:disallowedEmailDomains:write
-      - admin:infra:featureFlags:read
-      - admin:infra:featureFlags:write
-      - admin:infra:config:read
-      - admin:infra:config:write
-      - admin:infra:migrations:read
-      - admin:infra:migrations:write
-      - admin:metrics:read
-      - admin:metrics:write
-      - admin:oauth:read
-      - admin:oauth:write
-      - admin:organizations:read
-      - admin:organizations:write
-      - admin:organizations:members:write
-      - admin:projects:members:write
-      - admin:projects:read
-      - admin:projects:write
-      - admin:trashbin:write
-      - admin:trials:read
-      - admin:trials:write
-      - admin:users:permissions:write
-      - admin:users:read
-      - admin:users:signupApprovals:read
-      - admin:users:signupApprovals:write
-      - admin:users:write
-      - admin:jobs:read
-      - admin:emails:verification:code:read
-      - admin:sso:read
-      - admin:sso:domainIdps:write
-      - admin:vlm:model:read
-      - admin:vlm:model:write
-      - projects:limits:write
-      - projects:training:keras:write
-      - projects:data:versioning:write
-      - users:emails:read
-      - whitelabels:read
-      - whitelabels:write
-      - test:data:write
-      - test:users:read
-      - test:users:write
-    LastUpdatedByOAuthClient:
-      type: object
-      description: The OAuth client that last updated a sample, and the user it is acting on behalf of.
-      required:
-      - type
-      - oauthClientId
-      properties:
-        type:
-          type: string
-          enum:
-          - oauthClient
-        oauthClientId:
-          type: string
-          description: The ID of the OAuth client that last updated the sample.
-        userId:
-          type: integer
-          description: The user ID the OAuth client is acting on behalf of.
+      - admin
+      - readonly
+      - ingestiononly
+      - ingestion_deployment
     ProjectLabelingMethod:
       type: string
       enum:
       - single_label
       - object_detection
       - label_map
-    User_2:
-      type: object
-      required:
-      - id
-      - username
-      - name
-      - email
-      - created
-      - staffInfo
-      - pending
-      - activated
-      - mfaConfigured
-      properties:
-        id:
-          type: integer
-          example: 1
-        username:
-          type: string
-          example: janjongboom
-        name:
-          type: string
-          example: Jan Jongboom
-        email:
-          type: string
-          example: quijote@edgeimpulse.com
-        photo:
-          type: string
-          example: https://usercdn.edgeimpulse.com/photos/1.jpg
-        created:
-          type: string
-          format: date-time
-          example: '2019-08-31T17:32:28Z'
-        lastSeen:
-          type: string
-          format: date-time
-          example: '2019-08-31T17:32:28Z'
-        staffInfo:
-          $ref: '#/components/schemas/StaffInfo'
-        pending:
-          type: boolean
-        jobTitle:
-          type: string
-          example: Software Engineer
-        permissions:
-          description: List of permissions the user has
-          type: array
-          items:
-            $ref: '#/components/schemas/Permission_2'
-        companyName:
-          type: string
-          example: Edge Impulse Inc.
-        activated:
-          type: boolean
-          description: Whether the user has activated their account or not.
-        mfaConfigured:
-          type: boolean
-          description: Whether the user has configured multi-factor authentication
-        stripeCustomerId:
-          type: string
-          description: Stripe customer ID, if any.
-        hasPendingPayments:
-          type: boolean
-          description: Whether the user has pending payments.
-        tier:
-          $ref: '#/components/schemas/UserTierEnum'
-        idps:
-          type: array
-          description: List of identity providers (e.g. Google, GitHub) that the user has used to sign in with
-          items:
-            type: string
-    Sample_2:
-      type: object
-      required:
-      - id
-      - filename
-      - signatureValidate
-      - created
-      - lastModified
-      - category
-      - coldstorageFilename
-      - label
-      - intervalMs
-      - frequency
-      - originalIntervalMs
-      - originalFrequency
-      - deviceType
-      - sensors
-      - valuesCount
-      - added
-      - boundingBoxes
-      - boundingBoxesType
-      - chartType
-      - isDisabled
-      - isProcessing
-      - processingError
-      - isCropped
-      - projectId
-      - sha256Hash
-      - datastreams
-      properties:
-        id:
-          type: integer
-          example: 2
-        filename:
-          type: string
-          example: idle01.d8Ae
-        signatureValidate:
-          type: boolean
-          description: Whether signature validation passed
-          example: true
-        signatureMethod:
-          type: string
-          example: HS256
-        signatureKey:
-          type: string
-          description: Either the shared key or the public key that was used to validate the sample
-        created:
-          type: string
-          format: date-time
-          description: Timestamp when the sample was created on device, or if no accurate time was known on device, the time that the file was processed by the ingestion service.
-        lastModified:
-          type: string
-          format: date-time
-          description: Timestamp when the sample was last modified.
-        category:
-          example: training
-          $ref: '#/components/schemas/RawDataCategory'
-        coldstorageFilename:
-          type: string
-        label:
-          type: string
-          example: healthy-machine
-        intervalMs:
-          type: number
-          description: 'Interval between two windows (1000 / frequency). NOTE: Previously this value could change depending on whether the sample was resampled. This behavior has been removed.'
-          example: 16
-        frequency:
-          type: number
-          description: 'Frequency of the sample. NOTE: Previously this value could change depending on whether the sample was resampled. This behavior has been removed.'
-          example: 62.5
-        originalIntervalMs:
-          type: number
-          description: DEPRECATED. See "intervalMs".
-          example: 16
-        originalFrequency:
-          type: number
-          description: DEPRECATED. See "frequency".
-          example: 62.5
-        deviceName:
-          type: string
-        deviceType:
-          type: string
-        sensors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Sensor_2'
-        valuesCount:
-          type: integer
-          description: Number of readings in this file. If you have multiple datastreams, this is the value count from the datastream with the highest frequency.
-        totalLengthMs:
-          type: number
-          description: Total length (in ms.) of this file
-        added:
-          type: string
-          format: date-time
-          description: Timestamp when the sample was added to the current acquisition bucket.
-        boundingBoxes:
-          type: array
-          items:
-            $ref: '#/components/schemas/BoundingBox'
-        boundingBoxesType:
-          type: string
-          enum:
-          - object_detection
-          - constrained_object_detection
-        chartType:
-          type: string
-          enum:
-          - chart
-          - image
-          - video
-          - table
-        thumbnailVideo:
-          type: string
-        thumbnailVideoFull:
-          type: string
-        isDisabled:
-          type: boolean
-          description: True if the current sample is excluded from use
-        isProcessing:
-          type: boolean
-          description: True if the current sample is still processing (e.g. for video)
-        processingJobId:
-          type: integer
-          description: Set when sample is processing and a job has picked up the request
-        processingError:
-          type: boolean
-          description: Set when processing this sample failed
-        processingErrorString:
-          type: string
-          description: Error (only set when processing this sample failed)
-        isCropped:
-          type: boolean
-          description: Whether the sample is cropped from another sample (and has crop start / end info)
-        metadata:
-          type: object
-          description: Sample free form associated metadata
-          additionalProperties:
-            type: string
-        projectId:
-          type: integer
-          description: Unique identifier of the project this sample belongs to
-        projectOwnerName:
-          type: string
-          description: Name of the owner of the project this sample belongs to
-        projectName:
-          type: string
-          description: Name of the project this sample belongs to
-        projectLabelingMethod:
-          description: What labeling flow the project this sample belongs to uses
-          $ref: '#/components/schemas/ProjectLabelingMethod'
-        sha256Hash:
-          type: string
-          description: Data sample SHA 256 hash (including CBOR envelope if applicable)
-        structuredLabels:
-          type: array
-          items:
-            $ref: '#/components/schemas/StructuredLabel_2'
-        structuredLabelsList:
-          type: array
-          items:
-            type: string
-        createdBySyntheticDataJobId:
-          type: integer
-          description: If this sample was created by a synthetic data job, it's referenced here.
-        imageDimensions:
-          type: object
-          required:
-          - width
-          - height
-          properties:
-            width:
-              type: integer
-            height:
-              type: integer
-        videoUrl:
-          type: string
-          description: Video link, cropped and in original resolution.
-        videoUrlFull:
-          type: string
-          description: Video link in original resolution.
-        labelMap:
-          $ref: '#/components/schemas/SampleLabelMapLabels'
-        lastUpdatedBy:
-          description: Information about the entity that last updated a sample. This can be a user, a project API key, an OAuth client, or a dataset version restore operation.
-          discriminator:
-            propertyName: type
-            mapping:
-              user: '#/components/schemas/LastUpdatedByUser'
-              projectApiKey: '#/components/schemas/LastUpdatedByProjectApiKey'
-              oauthClient: '#/components/schemas/LastUpdatedByOAuthClient'
-              datasetVersionRestore: '#/components/schemas/LastUpdatedByDatasetVersionRestore'
-          oneOf:
-          - $ref: '#/components/schemas/LastUpdatedByUser'
-          - $ref: '#/components/schemas/LastUpdatedByProjectApiKey'
-          - $ref: '#/components/schemas/LastUpdatedByOAuthClient'
-          - $ref: '#/components/schemas/LastUpdatedByDatasetVersionRestore'
-        datastreams:
-          type: array
-          items:
-            $ref: '#/components/schemas/SampleDatastream'
-    LastUpdatedByUser:
-      type: object
-      description: The user who last updated a sample.
-      required:
-      - type
-      - id
-      properties:
-        type:
-          type: string
-          enum:
-          - user
-        id:
-          type: integer
-          description: The ID of the user that last updated the sample.
   parameters:
+    IncludeDisabledParameter:
+      name: includeDisabled
+      in: query
+      required: false
+      description: Whether to include disabled samples. Defaults to true
+      schema:
+        type: boolean
+    OptionalImpulseIdParameter:
+      name: impulseId
+      in: query
+      required: false
+      description: Impulse ID. If this is unset then the default impulse is used.
+      schema:
+        type: integer
+    ProjectIdParameter:
+      name: projectId
+      in: path
+      required: true
+      description: Project ID
+      schema:
+        type: integer
     FiltersProjectTypesParameter:
       name: projectTypes
       in: query
@@ -5612,62 +5633,11 @@ components:
       schema:
         type: string
       example: accelerometer,audio,object-detection
-    VersionIdParameter:
-      name: versionId
+    HmacIdParameter:
+      name: hmacId
       in: path
       required: true
-      description: Version ID
-      schema:
-        type: integer
-    IncludeDisabledParameter:
-      name: includeDisabled
-      in: query
-      required: false
-      description: Whether to include disabled samples. Defaults to true
-      schema:
-        type: boolean
-    SortQueryParameter:
-      name: sort
-      in: query
-      required: false
-      description: Fields and order to sort query by
-      schema:
-        type: string
-        description: Comma separated list of fields to sort query by. Prefix with a minus (-) sign to indicate descending order. Default order is ascending
-        example: id,-name
-    ProjectIdParameter:
-      name: projectId
-      in: path
-      required: true
-      description: Project ID
-      schema:
-        type: integer
-    ActionIdParameter:
-      name: actionId
-      in: path
-      required: true
-      description: AI Action ID
-      schema:
-        type: integer
-    OptionalImpulseIdParameter:
-      name: impulseId
-      in: query
-      required: false
-      description: Impulse ID. If this is unset then the default impulse is used.
-      schema:
-        type: integer
-    LimitResultsParameter:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of results
-      schema:
-        type: integer
-    ApiKeyIdParameter:
-      name: apiKeyId
-      in: path
-      required: true
-      description: API key ID
+      description: Hmac key ID
       schema:
         type: integer
     OffsetResultsParameter:
@@ -5677,11 +5647,18 @@ components:
       description: Offset in results, can be used in conjunction with LimitResultsParameter to implement paging.
       schema:
         type: integer
-    HmacIdParameter:
-      name: hmacId
+    ApiKeyIdParameter:
+      name: apiKeyId
       in: path
       required: true
-      description: Hmac key ID
+      description: API key ID
+      schema:
+        type: integer
+    ActionIdParameter:
+      name: actionId
+      in: path
+      required: true
+      description: AI Action ID
       schema:
         type: integer
     FiltersProjectNameParameter:
@@ -5698,6 +5675,29 @@ components:
       description: Whether to include non-processed samples. Defaults to true
       schema:
         type: boolean
+    VersionIdParameter:
+      name: versionId
+      in: path
+      required: true
+      description: Version ID
+      schema:
+        type: integer
+    SortQueryParameter:
+      name: sort
+      in: query
+      required: false
+      description: Fields and order to sort query by
+      schema:
+        type: string
+        description: Comma separated list of fields to sort query by. Prefix with a minus (-) sign to indicate descending order. Default order is ascending
+        example: id,-name
+    LimitResultsParameter:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of results
+      schema:
+        type: integer
     TruncateLabelsParameter:
       name: truncateLabels
       in: query

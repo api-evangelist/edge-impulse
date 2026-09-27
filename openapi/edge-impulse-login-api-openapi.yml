@@ -65,17 +65,6 @@ components:
           redirectUrl:
             type: string
             description: Redirect URL to follow to complete login
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
     GetJWTRequest:
       type: object
       required:
@@ -103,6 +92,17 @@ components:
         totpToken:
           type: string
           description: TOTP Token. Required if a user has multi-factor authentication with a TOTP token enabled. If a user has MFA enabled, but no totpToken is submitted; then an error starting with "ERR_TOTP_TOKEN IS REQUIRED" is returned. Use this to then prompt for an MFA token and re-login.
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
     GetSSODomainIdPsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'

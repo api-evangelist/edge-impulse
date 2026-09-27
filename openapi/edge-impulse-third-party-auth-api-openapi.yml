@@ -162,33 +162,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/CreateUserThirdPartyResponse'
 components:
-  parameters:
-    ProjectIdParameter:
-      name: projectId
-      in: path
-      required: true
-      description: Project ID
-      schema:
-        type: integer
-    AuthIdParameter:
-      name: authId
-      in: path
-      required: true
-      description: Auth ID
-      schema:
-        type: integer
   schemas:
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
     CreateUserThirdPartyResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -230,6 +204,73 @@ components:
         privacyPolicy:
           type: boolean
           description: Whether the user accepted the privacy policy
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    CreateThirdPartyAuthResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        - secretKey
+        - apiKey
+        properties:
+          id:
+            type: integer
+          secretKey:
+            type: string
+          apiKey:
+            type: string
+    UpdateThirdPartyAuthRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        domains:
+          type: array
+          items:
+            type: string
+    GetAllThirdPartyAuthResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - auths
+        properties:
+          auths:
+            type: array
+            items:
+              $ref: '#/components/schemas/ThirdPartyAuth'
+    GetThirdPartyAuthResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - auth
+        properties:
+          auth:
+            $ref: '#/components/schemas/ThirdPartyAuth'
+    AuthorizeThirdPartyRequest:
+      type: object
+      required:
+      - nextUrl
+      properties:
+        nextUrl:
+          description: The URL to redirect to after authorization is completed.
+          type: string
     CreateThirdPartyAuthRequest:
       type: object
       required:
@@ -251,14 +292,6 @@ components:
         secretKey:
           type: string
         apiKey:
-          type: string
-    AuthorizeThirdPartyRequest:
-      type: object
-      required:
-      - nextUrl
-      properties:
-        nextUrl:
-          description: The URL to redirect to after authorization is completed.
           type: string
     ThirdPartyAuth:
       type: object
@@ -285,54 +318,21 @@ components:
         created:
           type: string
           format: date-time
-    UpdateThirdPartyAuthRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        logo:
-          type: string
-        domains:
-          type: array
-          items:
-            type: string
-    CreateThirdPartyAuthResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        - secretKey
-        - apiKey
-        properties:
-          id:
-            type: integer
-          secretKey:
-            type: string
-          apiKey:
-            type: string
-    GetAllThirdPartyAuthResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - auths
-        properties:
-          auths:
-            type: array
-            items:
-              $ref: '#/components/schemas/ThirdPartyAuth'
-    GetThirdPartyAuthResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - auth
-        properties:
-          auth:
-            $ref: '#/components/schemas/ThirdPartyAuth'
+  parameters:
+    AuthIdParameter:
+      name: authId
+      in: path
+      required: true
+      description: Auth ID
+      schema:
+        type: integer
+    ProjectIdParameter:
+      name: projectId
+      in: path
+      required: true
+      description: Project ID
+      schema:
+        type: integer
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey

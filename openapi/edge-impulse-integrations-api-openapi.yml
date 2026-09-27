@@ -55,6 +55,15 @@ paths:
                 $ref: '#/components/schemas/GetIntegrationSessionStatusResponse'
 components:
   schemas:
+    GetIntegrationSessionStatusResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - sessionStatus
+        properties:
+          sessionStatus:
+            $ref: '#/components/schemas/IntegrationSessionStatus'
     StartTensorBoardSessionRequest:
       type: object
       required:
@@ -87,15 +96,6 @@ components:
             type: string
             description: Unique integration resource identifier. Pass this to getIntegrationSessionStatus to check the status of the integration session.
             example: learn-3-2-1
-    GetIntegrationSessionStatusResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - sessionStatus
-        properties:
-          sessionStatus:
-            $ref: '#/components/schemas/IntegrationSessionStatus'
     IntegrationSessionStatus:
       type: object
       required:

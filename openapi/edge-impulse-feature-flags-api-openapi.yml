@@ -39,13 +39,6 @@ components:
         error:
           type: string
           description: Optional error description (set if 'success' was false)
-    Feature:
-      type: string
-      enum:
-      - signup-thank-you-page
-      - stripe-live-mode
-      - azure-storage
-      description: Known feature identifiers.
     GetFeatureFlagsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -67,6 +60,13 @@ components:
                 enabled:
                   type: boolean
                   description: Whether the feature is enabled.
+    Feature:
+      type: string
+      enum:
+      - signup-thank-you-page
+      - stripe-live-mode
+      - azure-storage
+      description: Known feature identifiers.
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey

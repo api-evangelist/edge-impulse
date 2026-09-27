@@ -198,50 +198,16 @@ paths:
     - url: https://studio.edgeimpulse.com/v1
 components:
   schemas:
-    DeletePortalFileRequest:
-      type: object
-      required:
-      - path
-      properties:
-        path:
-          type: string
-          description: S3 path (within the portal)
-    ListPortalFilesInFolderRequest:
-      type: object
-      required:
-      - prefix
-      properties:
-        prefix:
-          type: string
-          description: S3 prefix
-        continuationToken:
-          type: string
-          description: Only one S3 page (1000 items typically) is returned. Pass in the continuationToken on the next request to receive the next page.
-        onlyFetchFolders:
-          type: boolean
-          description: If set, then no files will be returned
-    CreateSignedUploadLinkResponse:
+    DownloadPortalFileResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
+        required:
+        - url
         properties:
           url:
             type: string
-            description: S3 Upload Link
-          ETag:
-            type: string
-            description: S3 File Tag
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
+            description: Signed URL to download the file
     PortalFile:
       type: object
       required:
@@ -266,27 +232,6 @@ components:
           enum:
           - folder
           - file
-    DownloadPortalFileRequest:
-      type: object
-      required:
-      - path
-      properties:
-        path:
-          type: string
-          description: S3 path (within the portal)
-    ListPortalFilesInFolderResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - files
-        properties:
-          files:
-            type: array
-            items:
-              $ref: '#/components/schemas/PortalFile'
-          continuationToken:
-            type: string
     PortalInfoResponse:
       type: object
       required:
@@ -309,6 +254,57 @@ components:
           type: string
         bucketName:
           type: string
+    DownloadPortalFileRequest:
+      type: object
+      required:
+      - path
+      properties:
+        path:
+          type: string
+          description: S3 path (within the portal)
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    DeletePortalFileRequest:
+      type: object
+      required:
+      - path
+      properties:
+        path:
+          type: string
+          description: S3 path (within the portal)
+    ListPortalFilesInFolderResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - files
+        properties:
+          files:
+            type: array
+            items:
+              $ref: '#/components/schemas/PortalFile'
+          continuationToken:
+            type: string
+    CreateSignedUploadLinkResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          url:
+            type: string
+            description: S3 Upload Link
+          ETag:
+            type: string
+            description: S3 File Tag
     RenamePortalFileRequest:
       type: object
       required:
@@ -321,6 +317,20 @@ components:
         newPath:
           type: string
           description: S3 path (within the portal)
+    ListPortalFilesInFolderRequest:
+      type: object
+      required:
+      - prefix
+      properties:
+        prefix:
+          type: string
+          description: S3 prefix
+        continuationToken:
+          type: string
+          description: Only one S3 page (1000 items typically) is returned. Pass in the continuationToken on the next request to receive the next page.
+        onlyFetchFolders:
+          type: boolean
+          description: If set, then no files will be returned
     CreateSignedUploadLinkRequest:
       type: object
       required:
@@ -337,16 +347,6 @@ components:
         fileHash:
           type: string
           description: hash to identify file changes
-    DownloadPortalFileResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - url
-        properties:
-          url:
-            type: string
-            description: Signed URL to download the file
     PortalInfoResponse_2:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -372,13 +372,6 @@ components:
           bucketName:
             type: string
   parameters:
-    PortalIdParameter:
-      name: portalId
-      in: path
-      required: true
-      description: Portal ID
-      schema:
-        type: integer
     PortalPathParameter:
       name: path
       in: query
@@ -386,6 +379,13 @@ components:
       description: Path to file in portal
       schema:
         type: string
+    PortalIdParameter:
+      name: portalId
+      in: path
+      required: true
+      description: Portal ID
+      schema:
+        type: integer
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey
