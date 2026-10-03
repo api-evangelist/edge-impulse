@@ -439,17 +439,174 @@ paths:
     - url: https://studio.edgeimpulse.com/v1
 components:
   schemas:
-    ProjectDeploymentTargetsResponse:
+    StartJobResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - targets
+        - id
         properties:
-          targets:
+          id:
+            type: integer
+            description: Job identifier. Status updates will include this identifier.
+            example: 12873488112
+    EvaluateResultValue:
+      type: object
+      properties:
+        raw:
+          description: The value based on the model alone
+          type: number
+        withAnomaly:
+          description: The value including the result of anomaly detection
+          type: number
+    FindSyntiantPosteriorRequest:
+      type: object
+      required:
+      - targetWords
+      - referenceSet
+      properties:
+        targetWords:
+          type: array
+          items:
+            type: string
+        referenceSet:
+          type: string
+          enum:
+          - 600_seconds
+          - full
+          - custom
+          - no_calibration
+        wavFile:
+          type: string
+          format: binary
+        metaCsvFile:
+          type: string
+          format: binary
+        deploymentTarget:
+          type: string
+          enum:
+          - syntiant-ndp101
+          - syntiant-ndp101-lib
+          - syntiant-ndp120-lib
+          - syntiant-ndp120-lib-tdk-v14
+          - syntiant-nicla-ndp120
+          - syntiant-avnet-rasyn
+          - syntiant-ndp120-lib-ndp-v1-15-0
+    LearnBlockType:
+      type: string
+      description: The type of learning block (anomaly, keras, keras-transfer-image, keras-transfer-kws, keras-object-detection, keras-regression). Each behaves differently.
+      enum:
+      - anomaly
+      - anomaly-gmm
+      - keras
+      - keras-transfer-image
+      - keras-transfer-kws
+      - keras-object-detection
+      - keras-regression
+      - keras-akida
+      - keras-akida-transfer-image
+      - keras-akida-object-detection
+      - keras-visual-anomaly
+    ModelVariantStats:
+      type: object
+      required:
+      - modelType
+      - learnBlockType
+      - learnBlockId
+      - confusionMatrix
+      - confusionMatrixRowHeaders
+      - confusionMatrixColumnHeaders
+      - accuracy
+      - trainingLabels
+      - classificationLabels
+      properties:
+        modelType:
+          description: The type of model
+          $ref: '#/components/schemas/KerasModelTypeEnum'
+        learnBlockId:
+          description: The learning block this model variant is from
+          type: integer
+        learnBlockType:
+          $ref: '#/components/schemas/LearnBlockType'
+        confusionMatrix:
+          description: A map from actual labels to predicted labels, where actual labels are listed in `trainingLabels` and possible predicted labels are listed in `classificationLabels`.
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: object
+              $ref: '#/components/schemas/EvaluateResultValue'
+        trainingLabels:
+          description: The labels present in the model's training data. These are all present in the first dimension of the confusion matrix.
+          type: array
+          items:
+            type: string
+        classificationLabels:
+          description: The possible labels resulting from classification. These may be present in the second dimension of the confusion matrix.
+          type: array
+          items:
+            type: string
+        totalWindowCount:
+          description: The total number of windows that were evaluated
+          type: integer
+        totalCorrectWindowCount:
+          description: The total number of windows that the model classified correctly
+          $ref: '#/components/schemas/EvaluateResultValue'
+        accuracy:
+          description: The model's accuracy as a percentage
+          $ref: '#/components/schemas/EvaluateResultValue'
+    DeploymentTargetEngine:
+      type: string
+      enum:
+      - tflite
+      - tflite-eon
+      - tflite-eon-ram-optimized
+      - tensorrt
+      - tensaiflow
+      - drp-ai
+      - tidl
+      - akida
+      - syntiant
+      - memryx
+      - neox
+      - ethos-linux
+      - st-aton
+    SetSyntiantPosteriorRequest:
+      type: object
+      required:
+      - parameters
+      properties:
+        parameters:
+          type: object
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    KerasModelTypeEnum:
+      type: string
+      enum:
+      - int8
+      - float32
+      - akida
+      - requiresRetrain
+    EvaluateJobResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - result
+        properties:
+          result:
             type: array
             items:
-              $ref: '#/components/schemas/ProjectDeploymentTarget'
+              $ref: '#/components/schemas/ModelVariantStats'
     DeploymentTargetsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -461,6 +618,90 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/DeploymentTarget'
+    GetDeploymentResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - hasDeployment
+        properties:
+          hasDeployment:
+            type: boolean
+          version:
+            type: integer
+    ProjectDeploymentTarget:
+      allOf:
+      - $ref: '#/components/schemas/DeploymentTarget'
+      - type: object
+        required:
+        - recommendedForProject
+        - disabledForProject
+        properties:
+          recommendedForProject:
+            type: boolean
+            description: Whether this deployment target is recommended for the project based on connected devices.
+          disabledForProject:
+            type: boolean
+            description: Whether this deployment target is disabled for the project based on various attributes of the project.
+          reasonTargetDisabled:
+            type: string
+            description: If the deployment target is disabled for the project, this gives the reason why.
+    GetSyntiantPosteriorResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - hasPosteriorParameters
+        properties:
+          hasPosteriorParameters:
+            type: boolean
+          parameters:
+            type: object
+    GetLastDeploymentBuildResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - hasBuild
+        properties:
+          hasBuild:
+            type: boolean
+            description: Does the deployment build still exist? (Builds are deleted if they are no longer valid for the project)
+          lastBuild:
+            type: object
+            required:
+            - version
+            - deploymentType
+            - engine
+            - created
+            properties:
+              version:
+                type: integer
+                description: The build version, incremented after each deployment build
+              deploymentType:
+                type: string
+                description: Deployment type of the build
+              engine:
+                $ref: '#/components/schemas/DeploymentTargetEngine'
+              modelType:
+                $ref: '#/components/schemas/KerasModelTypeEnum'
+              created:
+                type: string
+                format: date-time
+                description: The time this build was created
+          lastDeploymentTarget:
+            $ref: '#/components/schemas/ProjectDeploymentTarget'
+    ProjectDeploymentTargetsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - targets
+        properties:
+          targets:
+            type: array
+            items:
+              $ref: '#/components/schemas/ProjectDeploymentTarget'
     DeploymentTarget:
       type: object
       required:
@@ -556,393 +797,6 @@ components:
           type: string
         firmwareRepoUrl:
           type: string
-    ProjectDeploymentTarget:
-      allOf:
-      - $ref: '#/components/schemas/DeploymentTarget'
-      - type: object
-        required:
-        - recommendedForProject
-        - disabledForProject
-        properties:
-          recommendedForProject:
-            type: boolean
-            description: Whether this deployment target is recommended for the project based on connected devices.
-          disabledForProject:
-            type: boolean
-            description: Whether this deployment target is disabled for the project based on various attributes of the project.
-          reasonTargetDisabled:
-            type: string
-            description: If the deployment target is disabled for the project, this gives the reason why.
-    EvaluateResultValue:
-      type: object
-      properties:
-        raw:
-          description: The value based on the model alone
-          type: number
-        withAnomaly:
-          description: The value including the result of anomaly detection
-          type: number
-    StartJobResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: integer
-            description: Job identifier. Status updates will include this identifier.
-            example: 12873488112
-    GetSyntiantPosteriorResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - hasPosteriorParameters
-        properties:
-          hasPosteriorParameters:
-            type: boolean
-          parameters:
-            type: object
-    FindSyntiantPosteriorRequest:
-      type: object
-      required:
-      - targetWords
-      - referenceSet
-      properties:
-        targetWords:
-          type: array
-          items:
-            type: string
-        referenceSet:
-          type: string
-          enum:
-          - 600_seconds
-          - full
-          - custom
-          - no_calibration
-        wavFile:
-          type: string
-          format: binary
-        metaCsvFile:
-          type: string
-          format: binary
-        deploymentTarget:
-          type: string
-          enum:
-          - syntiant-ndp101
-          - syntiant-ndp101-lib
-          - syntiant-ndp120-lib
-          - syntiant-ndp120-lib-tdk-v14
-          - syntiant-nicla-ndp120
-          - syntiant-avnet-rasyn
-          - syntiant-ndp120-lib-ndp-v1-15-0
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
-    KerasModelTypeEnum:
-      type: string
-      enum:
-      - int8
-      - float32
-      - akida
-      - requiresRetrain
-    GetLastDeploymentBuildResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - hasBuild
-        properties:
-          hasBuild:
-            type: boolean
-            description: Does the deployment build still exist? (Builds are deleted if they are no longer valid for the project)
-          lastBuild:
-            type: object
-            required:
-            - version
-            - deploymentType
-            - engine
-            - created
-            properties:
-              version:
-                type: integer
-                description: The build version, incremented after each deployment build
-              deploymentType:
-                type: string
-                description: Deployment type of the build
-              engine:
-                $ref: '#/components/schemas/DeploymentTargetEngine'
-              modelType:
-                $ref: '#/components/schemas/KerasModelTypeEnum'
-              created:
-                type: string
-                format: date-time
-                description: The time this build was created
-          lastDeploymentTarget:
-            $ref: '#/components/schemas/ProjectDeploymentTarget'
-    GetDeploymentResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - hasDeployment
-        properties:
-          hasDeployment:
-            type: boolean
-          version:
-            type: integer
-    SetSyntiantPosteriorRequest:
-      type: object
-      required:
-      - parameters
-      properties:
-        parameters:
-          type: object
-    LearnBlockType:
-      type: string
-      description: The type of learning block (anomaly, keras, keras-transfer-image, keras-transfer-kws, keras-object-detection, keras-regression). Each behaves differently.
-      enum:
-      - anomaly
-      - anomaly-gmm
-      - keras
-      - keras-transfer-image
-      - keras-transfer-kws
-      - keras-object-detection
-      - keras-regression
-      - keras-akida
-      - keras-akida-transfer-image
-      - keras-akida-object-detection
-      - keras-visual-anomaly
-    EvaluateJobResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - result
-        properties:
-          result:
-            type: array
-            items:
-              $ref: '#/components/schemas/ModelVariantStats'
-    DeploymentTargetEngine:
-      type: string
-      enum:
-      - tflite
-      - tflite-eon
-      - tflite-eon-ram-optimized
-      - tensorrt
-      - tensaiflow
-      - drp-ai
-      - tidl
-      - akida
-      - syntiant
-      - memryx
-      - neox
-      - ethos-linux
-      - st-aton
-    ModelVariantStats:
-      type: object
-      required:
-      - modelType
-      - learnBlockType
-      - learnBlockId
-      - confusionMatrix
-      - confusionMatrixRowHeaders
-      - confusionMatrixColumnHeaders
-      - accuracy
-      - trainingLabels
-      - classificationLabels
-      properties:
-        modelType:
-          description: The type of model
-          $ref: '#/components/schemas/KerasModelTypeEnum'
-        learnBlockId:
-          description: The learning block this model variant is from
-          type: integer
-        learnBlockType:
-          $ref: '#/components/schemas/LearnBlockType'
-        confusionMatrix:
-          description: A map from actual labels to predicted labels, where actual labels are listed in `trainingLabels` and possible predicted labels are listed in `classificationLabels`.
-          type: object
-          additionalProperties:
-            type: object
-            additionalProperties:
-              type: object
-              $ref: '#/components/schemas/EvaluateResultValue'
-        trainingLabels:
-          description: The labels present in the model's training data. These are all present in the first dimension of the confusion matrix.
-          type: array
-          items:
-            type: string
-        classificationLabels:
-          description: The possible labels resulting from classification. These may be present in the second dimension of the confusion matrix.
-          type: array
-          items:
-            type: string
-        totalWindowCount:
-          description: The total number of windows that were evaluated
-          type: integer
-        totalCorrectWindowCount:
-          description: The total number of windows that the model classified correctly
-          $ref: '#/components/schemas/EvaluateResultValue'
-        accuracy:
-          description: The model's accuracy as a percentage
-          $ref: '#/components/schemas/EvaluateResultValue'
-    GetDeploymentHistoryResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - deployment
-        properties:
-          deployment:
-            $ref: '#/components/schemas/DeploymentHistory'
-    DeploymentTarget_2:
-      type: object
-      required:
-      - name
-      - description
-      - image
-      - imageClasses
-      - format
-      - hasEonCompiler
-      - hasTensorRT
-      - hasTensaiFlow
-      - hasDRPAI
-      - hasTIDL
-      - hasAkida
-      - hasMemryx
-      - hasStAton
-      - hasCevaNpn
-      - hasNordicAxon
-      - hasQaic
-      - hideOptimizations
-      - uiSection
-      - supportedEngines
-      - preferredEngine
-      - modelVariants
-      - docsUrl
-      - parameters
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        image:
-          type: string
-        imageClasses:
-          type: string
-        format:
-          type: string
-        latencyDevice:
-          type: string
-        hasEonCompiler:
-          type: boolean
-          description: Preferably use supportedEngines / preferredEngine
-        hasTensorRT:
-          type: boolean
-          description: Preferably use supportedEngines / preferredEngine
-        hasTensaiFlow:
-          type: boolean
-          description: Preferably use supportedEngines / preferredEngine
-        hasDRPAI:
-          type: boolean
-          description: Preferably use supportedEngines / preferredEngine
-        hasTIDL:
-          type: boolean
-          description: Preferably use supportedEngines / preferredEngine
-        hasAkida:
-          type: boolean
-          description: Preferably use supportedEngines / preferredEngine
-        hasMemryx:
-          type: boolean
-          description: Preferably use supportedEngines / preferredEngine
-        hasStAton:
-          type: boolean
-          description: Preferably use supportedEngines / preferredEngine
-        hasCevaNpn:
-          type: boolean
-          description: Preferably use supportedEngines / preferredEngine
-        hasNordicAxon:
-          type: boolean
-          description: Preferably use supportedEngines / preferredEngine
-        hasQaic:
-          type: boolean
-          description: Preferably use supportedEngines / preferredEngine
-        hideOptimizations:
-          type: boolean
-        badge:
-          type: object
-          required:
-          - name
-          - description
-          properties:
-            name:
-              type: string
-            description:
-              type: string
-        uiSection:
-          type: string
-          enum:
-          - library
-          - firmware
-          - mobile
-          - hidden
-        customDeployId:
-          type: integer
-        customDeployOrganizationId:
-          type: integer
-        integrateUrl:
-          type: string
-        ownerOrganizationName:
-          type: string
-        supportedEngines:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeploymentTargetEngine_2'
-        preferredEngine:
-          $ref: '#/components/schemas/DeploymentTargetEngine_2'
-        url:
-          type: string
-        docsUrl:
-          type: string
-        firmwareRepoUrl:
-          type: string
-        modelVariants:
-          type: array
-          items:
-            $ref: '#/components/schemas/DeploymentTargetVariant'
-        parameters:
-          type: array
-          items:
-            $ref: '#/components/schemas/DSPGroupItem'
-        redirect:
-          type: object
-          description: An optional redirect field for integration partners to be shown in addition to the docs link, i.e. for directing users to a partner's website or application once deployment completes. This is experimental and may change in the future.
-          properties:
-            url:
-              type: string
-            text:
-              type: string
-    BuildPublicDeploymentJobRequest:
-      type: object
-      required:
-      - deploymentType
-      - modelType
-      properties:
-        deploymentType:
-          type: string
-        modelType:
-          $ref: '#/components/schemas/KerasModelVariantEnum'
     DeploymentHistory:
       type: object
       required:
@@ -988,21 +842,85 @@ components:
         createdByBuildPublicDeploymentJob:
           description: If set, then this deployment was created by an anonymous user through buildPublicDeploymentJob.
           type: boolean
-    CreatedUpdatedByUser:
+    BuildPublicDeploymentJobRequest:
       type: object
       required:
-      - id
-      - name
-      - username
+      - deploymentType
+      - modelType
       properties:
-        id:
-          type: integer
-        name:
+        deploymentType:
           type: string
-        username:
+        modelType:
+          $ref: '#/components/schemas/KerasModelVariantEnum'
+    LearnBlockType_2:
+      type: string
+      description: The type of learning block (anomaly, keras, keras-transfer-image, keras-transfer-kws, keras-object-detection, keras-regression, keras-freeform). Each behaves differently.
+      enum:
+      - anomaly
+      - anomaly-gmm
+      - keras
+      - keras-transfer-image
+      - keras-transfer-kws
+      - keras-object-detection
+      - keras-regression
+      - keras-akida
+      - keras-akida-transfer-image
+      - keras-akida-object-detection
+      - keras-visual-anomaly
+      - keras-freeform
+      - keras-anomaly
+      - vlm
+    JobLogItem:
+      type: object
+      required:
+      - created
+      - data
+      properties:
+        created:
           type: string
-        photo:
+          format: date-time
+        data:
           type: string
+        logLevel:
+          type: string
+          enum:
+          - error
+          - warn
+          - info
+          - debug
+    BuildPublicDeploymentJobResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - deploymentVersion
+        properties:
+          jobId:
+            description: Set if a job was created (or was already running) for this deployment. Use this ID to poll to the job logs via 'GetPublicDeploymentStatusResponse'.
+            type: integer
+          deploymentVersion:
+            type: integer
+            description: Deployment version. Use `downloadHistoricDeployment` to download the deployment using this identifier (once the job is finished).
+    DeploymentTargetEngine_2:
+      type: string
+      enum:
+      - tflite
+      - tflite-eon
+      - tflite-eon-ram-optimized
+      - tensorrt
+      - tensaiflow
+      - drp-ai
+      - tidl
+      - akida
+      - syntiant
+      - memryx
+      - neox
+      - ethos-linux
+      - st-aton
+      - ceva-npn
+      - nordic-axon
+      - vlm-connector
+      - qaic
     GetPublicDeploymentStatusResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -1153,49 +1071,27 @@ components:
         maxVal:
           type: number
           description: Maximum value for parameters of type 'int' or 'float'.
-    BuildPublicDeploymentJobResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - deploymentVersion
-        properties:
-          jobId:
-            description: Set if a job was created (or was already running) for this deployment. Use this ID to poll to the job logs via 'GetPublicDeploymentStatusResponse'.
-            type: integer
-          deploymentVersion:
-            type: integer
-            description: Deployment version. Use `downloadHistoricDeployment` to download the deployment using this identifier (once the job is finished).
-    DeploymentTargetVariant:
+    CreatedUpdatedByUser:
       type: object
       required:
-      - variant
-      - supported
+      - id
+      - name
+      - username
       properties:
-        variant:
-          $ref: '#/components/schemas/KerasModelVariantEnum'
-        supported:
-          type: boolean
-        hint:
+        id:
+          type: integer
+        name:
           type: string
-    LearnBlockType_2:
+        username:
+          type: string
+        photo:
+          type: string
+    KerasModelVariantEnum:
       type: string
-      description: The type of learning block (anomaly, keras, keras-transfer-image, keras-transfer-kws, keras-object-detection, keras-regression, keras-freeform). Each behaves differently.
       enum:
-      - anomaly
-      - anomaly-gmm
-      - keras
-      - keras-transfer-image
-      - keras-transfer-kws
-      - keras-object-detection
-      - keras-regression
-      - keras-akida
-      - keras-akida-transfer-image
-      - keras-akida-object-detection
-      - keras-visual-anomaly
-      - keras-freeform
-      - keras-anomaly
-      - vlm
+      - int8
+      - float32
+      - akida
     ListDeploymentHistoryResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -1210,58 +1106,162 @@ components:
               $ref: '#/components/schemas/DeploymentHistory'
           totalDeploymentCount:
             type: integer
-    DeploymentTargetEngine_2:
-      type: string
-      enum:
-      - tflite
-      - tflite-eon
-      - tflite-eon-ram-optimized
-      - tensorrt
-      - tensaiflow
-      - drp-ai
-      - tidl
-      - akida
-      - syntiant
-      - memryx
-      - neox
-      - ethos-linux
-      - st-aton
-      - ceva-npn
-      - nordic-axon
-      - vlm-connector
-      - qaic
-    JobLogItem:
+    GetDeploymentHistoryResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - deployment
+        properties:
+          deployment:
+            $ref: '#/components/schemas/DeploymentHistory'
+    DeploymentTarget_2:
       type: object
       required:
-      - created
-      - data
+      - name
+      - description
+      - image
+      - imageClasses
+      - format
+      - hasEonCompiler
+      - hasTensorRT
+      - hasTensaiFlow
+      - hasDRPAI
+      - hasTIDL
+      - hasAkida
+      - hasMemryx
+      - hasStAton
+      - hasCevaNpn
+      - hasNordicAxon
+      - hasQaic
+      - hideOptimizations
+      - uiSection
+      - supportedEngines
+      - preferredEngine
+      - modelVariants
+      - docsUrl
+      - parameters
       properties:
-        created:
+        name:
           type: string
-          format: date-time
-        data:
+        description:
           type: string
-        logLevel:
+        image:
+          type: string
+        imageClasses:
+          type: string
+        format:
+          type: string
+        latencyDevice:
+          type: string
+        hasEonCompiler:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasTensorRT:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasTensaiFlow:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasDRPAI:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasTIDL:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasAkida:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasMemryx:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasStAton:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasCevaNpn:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasNordicAxon:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hasQaic:
+          type: boolean
+          description: Preferably use supportedEngines / preferredEngine
+        hideOptimizations:
+          type: boolean
+        badge:
+          type: object
+          required:
+          - name
+          - description
+          properties:
+            name:
+              type: string
+            description:
+              type: string
+        uiSection:
           type: string
           enum:
-          - error
-          - warn
-          - info
-          - debug
-    KerasModelVariantEnum:
-      type: string
-      enum:
-      - int8
-      - float32
-      - akida
+          - library
+          - firmware
+          - mobile
+          - hidden
+        customDeployId:
+          type: integer
+        customDeployOrganizationId:
+          type: integer
+        integrateUrl:
+          type: string
+        ownerOrganizationName:
+          type: string
+        supportedEngines:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentTargetEngine_2'
+        preferredEngine:
+          $ref: '#/components/schemas/DeploymentTargetEngine_2'
+        url:
+          type: string
+        docsUrl:
+          type: string
+        firmwareRepoUrl:
+          type: string
+        modelVariants:
+          type: array
+          items:
+            $ref: '#/components/schemas/DeploymentTargetVariant'
+        parameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/DSPGroupItem'
+        redirect:
+          type: object
+          description: An optional redirect field for integration partners to be shown in addition to the docs link, i.e. for directing users to a partner's website or application once deployment completes. This is experimental and may change in the future.
+          properties:
+            url:
+              type: string
+            text:
+              type: string
+    DeploymentTargetVariant:
+      type: object
+      required:
+      - variant
+      - supported
+      properties:
+        variant:
+          $ref: '#/components/schemas/KerasModelVariantEnum'
+        supported:
+          type: boolean
+        hint:
+          type: string
   parameters:
-    ModelTypeParameter:
-      name: modelType
+    ModelEngineParameter:
+      name: engine
       in: query
       required: false
-      description: Optional model type of the build (if not, it uses the settings in the Keras block)
+      description: Optional engine for the build (if not, it uses the default engine for the deployment target)
       schema:
-        $ref: '#/components/schemas/KerasModelTypeEnum'
+        $ref: '#/components/schemas/DeploymentTargetEngine'
     OptionalImpulseIdParameter:
       name: impulseId
       in: query
@@ -1276,18 +1276,31 @@ components:
       description: Project ID
       schema:
         type: integer
-    ModelEngineParameter:
-      name: engine
+    ModelTypeParameter:
+      name: modelType
       in: query
       required: false
-      description: Optional engine for the build (if not, it uses the default engine for the deployment target)
+      description: Optional model type of the build (if not, it uses the settings in the Keras block)
       schema:
-        $ref: '#/components/schemas/DeploymentTargetEngine'
+        $ref: '#/components/schemas/KerasModelTypeEnum'
     DeploymentTypeParameter:
       name: type
       in: query
       required: true
       description: The name of the built target. You can find this by listing all deployment targets through `listDeploymentTargetsForProject` (via `GET /v1/api/{projectId}/deployment/targets`) and see the `format` type.
+      schema:
+        type: string
+    DeploymentVersionParameter:
+      name: deploymentVersion
+      in: path
+      required: true
+      description: Deployment version ID
+      schema:
+        type: integer
+    FilterByDeploymentFormatParameter:
+      name: deploymentFormat
+      in: query
+      required: false
       schema:
         type: string
     OffsetResultsParameter:
@@ -1304,12 +1317,6 @@ components:
       description: Impulse ID. If this is unset, data for all impulses is returned.
       schema:
         type: integer
-    FilterByDeploymentFormatParameter:
-      name: deploymentFormat
-      in: query
-      required: false
-      schema:
-        type: string
     JobIdParameter:
       name: jobId
       in: path
@@ -1322,13 +1329,6 @@ components:
       in: query
       required: false
       description: Maximum number of results
-      schema:
-        type: integer
-    DeploymentVersionParameter:
-      name: deploymentVersion
-      in: path
-      required: true
-      description: Deployment version ID
       schema:
         type: integer
   securitySchemes:

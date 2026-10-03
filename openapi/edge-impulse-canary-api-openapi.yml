@@ -32,14 +32,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/CanaryResponse'
 components:
-  parameters:
-    RequestedUrlParameter:
-      name: requestedUrl
-      in: query
-      required: true
-      description: Full url (host included) that is requested
-      schema:
-        type: string
   schemas:
     GenericApiResponse:
       type: object
@@ -63,6 +55,14 @@ components:
             type: boolean
             description: Whether the request should be routed to the canary or not.
             example: true
+  parameters:
+    RequestedUrlParameter:
+      name: requestedUrl
+      in: query
+      required: true
+      description: Full url (host included) that is requested
+      schema:
+        type: string
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey

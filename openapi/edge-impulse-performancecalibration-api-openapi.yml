@@ -285,17 +285,24 @@ paths:
     - url: https://studio.edgeimpulse.com/v1
 components:
   schemas:
-    GetPerformanceCalibrationGroundTruthResponse:
+    GetPerformanceCalibrationParametersResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          params:
+            $ref: '#/components/schemas/PerformanceCalibrationParameters'
+    GetPerformanceCalibrationParameterSetsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - samples
+        - parameterSets
         properties:
-          samples:
+          parameterSets:
             type: array
             items:
-              $ref: '#/components/schemas/PerformanceCalibrationGroundTruth'
+              $ref: '#/components/schemas/PerformanceCalibrationParameterSet'
     GetPostProcessingResultsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -330,24 +337,6 @@ components:
               type: array
               items:
                 type: number
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
-    GetPerformanceCalibrationParametersResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        properties:
-          params:
-            $ref: '#/components/schemas/PerformanceCalibrationParameters'
     PerformanceCalibrationSaveParameterSetRequest:
       type: object
       required:
@@ -355,56 +344,6 @@ components:
       properties:
         params:
           $ref: '#/components/schemas/PerformanceCalibrationParameters'
-    PerformanceCalibrationParametersStandard:
-      type: object
-      required:
-      - averageWindowDurationMs
-      - detectionThreshold
-      - suppressionMs
-      properties:
-        averageWindowDurationMs:
-          type: number
-          description: The length of the averaging window in milliseconds.
-          example: 1000
-        detectionThreshold:
-          type: number
-          description: The minimum threshold for detection, from 0-1.
-          example: 0.8
-        suppressionMs:
-          type: number
-          description: The amount of time new matches will be ignored after a positive result.
-          example: 500
-    PerformanceCalibrationUploadLabeledAudioRequest:
-      type: object
-      required:
-      - zip
-      properties:
-        zip:
-          type: string
-          format: binary
-    PerformanceCalibrationUploadLabeledAudioResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - uploadKey
-        properties:
-          uploadKey:
-            type: string
-    GetPerformanceCalibrationStatusResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - available
-        properties:
-          available:
-            type: boolean
-          unsupportedProjectError:
-            type: string
-            description: If the current project is unsupported by performance calibration, this field explains the reason why. Otherwise, it is undefined.
-          options:
-            $ref: '#/components/schemas/StartPerformanceCalibrationRequest'
     StartPerformanceCalibrationRequest:
       type: object
       required:
@@ -424,73 +363,20 @@ components:
         sampleLengthMinutes:
           type: number
           description: The length of sample to create (required for synthetic samples)
-    PerformanceCalibrationParameters:
-      type: object
-      required:
-      - type
-      - version
-      properties:
-        type:
-          type: string
-          description: The post-processing algorithm type.
-          enum:
-          - standard
-        version:
-          type: integer
-          description: The version number of the post-processing algorithm.
-          example: 1
-        parametersStandard:
-          $ref: '#/components/schemas/PerformanceCalibrationParametersStandard'
-    GetPerformanceCalibrationParameterSetsResponse:
+    GetPerformanceCalibrationStatusResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - parameterSets
+        - available
         properties:
-          parameterSets:
-            type: array
-            items:
-              $ref: '#/components/schemas/PerformanceCalibrationParameterSet'
-    PerformanceCalibrationDetection:
-      type: object
-      required:
-      - time
-      - label
-      properties:
-        time:
-          type: integer
-          description: The time of the detection in milliseconds
-        label:
-          type: string
-          description: The label that was detected
-    PerformanceCalibrationFalsePositive:
-      type: object
-      required:
-      - type
-      - detectionTime
-      properties:
-        type:
-          type: string
-          enum:
-          - incorrect
-          - duplicate
-          - spurious
-          description: The type of false positive. Incorrect is when a detection matches the wrong ground truth. Duplicate is when the same ground truth was detected more than once. The first correct detection is considered a true positive but subsequent detections are considered false positives. Spurious is when the detection was not associated with any ground truth.
-        detectionTime:
-          type: integer
-          description: The time of the detection in milliseconds
-        groundTruthLabel:
-          type: string
-          description: The label of any associated ground truth
-        groundTruthStart:
-          type: number
-          description: The start time of any associated ground truth
-        sampleIds:
-          type: array
-          description: All of the sample IDs in the affected region
-          items:
-            type: integer
+          available:
+            type: boolean
+          unsupportedProjectError:
+            type: string
+            description: If the current project is unsupported by performance calibration, this field explains the reason why. Otherwise, it is undefined.
+          options:
+            $ref: '#/components/schemas/StartPerformanceCalibrationRequest'
     GetPerformanceCalibrationRawResultResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -502,6 +388,45 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/PerformanceCalibrationRawDetection'
+    GetPerformanceCalibrationGroundTruthResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - samples
+        properties:
+          samples:
+            type: array
+            items:
+              $ref: '#/components/schemas/PerformanceCalibrationGroundTruth'
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    PerformanceCalibrationRawDetection:
+      type: object
+      required:
+      - start
+      - end
+      - result
+      properties:
+        start:
+          type: integer
+          description: The start time of the detected window in milliseconds
+        end:
+          type: integer
+          description: The end time of the detected window in milliseconds
+        result:
+          type: array
+          items:
+            type: number
     PerformanceCalibrationGroundTruth:
       type: object
       required:
@@ -553,23 +478,31 @@ components:
               idx:
                 type: integer
                 description: For debugging. The index of the sample in the original Y array.
-    PerformanceCalibrationRawDetection:
+    PerformanceCalibrationUploadLabeledAudioRequest:
       type: object
       required:
-      - start
-      - end
-      - result
+      - zip
       properties:
-        start:
+        zip:
+          type: string
+          format: binary
+    PerformanceCalibrationParameters:
+      type: object
+      required:
+      - type
+      - version
+      properties:
+        type:
+          type: string
+          description: The post-processing algorithm type.
+          enum:
+          - standard
+        version:
           type: integer
-          description: The start time of the detected window in milliseconds
-        end:
-          type: integer
-          description: The end time of the detected window in milliseconds
-        result:
-          type: array
-          items:
-            type: number
+          description: The version number of the post-processing algorithm.
+          example: 1
+        parametersStandard:
+          $ref: '#/components/schemas/PerformanceCalibrationParametersStandard'
     PerformanceCalibrationParameterSet:
       type: object
       required:
@@ -649,19 +582,86 @@ components:
         windowSizeMs:
           type: number
           description: The size of the input block window in milliseconds.
+    PerformanceCalibrationParametersStandard:
+      type: object
+      required:
+      - averageWindowDurationMs
+      - detectionThreshold
+      - suppressionMs
+      properties:
+        averageWindowDurationMs:
+          type: number
+          description: The length of the averaging window in milliseconds.
+          example: 1000
+        detectionThreshold:
+          type: number
+          description: The minimum threshold for detection, from 0-1.
+          example: 0.8
+        suppressionMs:
+          type: number
+          description: The amount of time new matches will be ignored after a positive result.
+          example: 500
+    PerformanceCalibrationUploadLabeledAudioResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - uploadKey
+        properties:
+          uploadKey:
+            type: string
+    PerformanceCalibrationFalsePositive:
+      type: object
+      required:
+      - type
+      - detectionTime
+      properties:
+        type:
+          type: string
+          enum:
+          - incorrect
+          - duplicate
+          - spurious
+          description: The type of false positive. Incorrect is when a detection matches the wrong ground truth. Duplicate is when the same ground truth was detected more than once. The first correct detection is considered a true positive but subsequent detections are considered false positives. Spurious is when the detection was not associated with any ground truth.
+        detectionTime:
+          type: integer
+          description: The time of the detection in milliseconds
+        groundTruthLabel:
+          type: string
+          description: The label of any associated ground truth
+        groundTruthStart:
+          type: number
+          description: The start time of any associated ground truth
+        sampleIds:
+          type: array
+          description: All of the sample IDs in the affected region
+          items:
+            type: integer
+    PerformanceCalibrationDetection:
+      type: object
+      required:
+      - time
+      - label
+      properties:
+        time:
+          type: integer
+          description: The time of the detection in milliseconds
+        label:
+          type: string
+          description: The label that was detected
   parameters:
-    OptionalImpulseIdParameter:
-      name: impulseId
-      in: query
-      required: false
-      description: Impulse ID. If this is unset then the default impulse is used.
-      schema:
-        type: integer
     ProjectIdParameter:
       name: projectId
       in: path
       required: true
       description: Project ID
+      schema:
+        type: integer
+    OptionalImpulseIdParameter:
+      name: impulseId
+      in: query
+      required: false
+      description: Impulse ID. If this is unset then the default impulse is used.
       schema:
         type: integer
   securitySchemes:

@@ -103,76 +103,6 @@ paths:
     - url: https://studio.edgeimpulse.com/v1
 components:
   schemas:
-    EntityCreatedResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: integer
-            description: Unique identifier of the created entity.
-    ActivateUserOrVerifyEmailRequest:
-      type: object
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          description: Activation or verification code (sent via email)
-    RequestEmailVerificationRequest:
-      type: object
-      required:
-      - redirectUrl
-      properties:
-        redirectUrl:
-          type: string
-          description: URL to redirect the user after email verification.
-    VerifyEmailResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        properties:
-          email:
-            type: string
-            description: Email address that was verified.
-          userId:
-            type: number
-            description: ID of the user associated with the verified email address, if any.
-          redirectUrl:
-            type: string
-            description: URL to redirect the user to after email verification.
-    EmailValidationRequest:
-      type: object
-      required:
-      - email
-      properties:
-        email:
-          type: string
-          description: E-mail address to validate
-          example: jan@edgeimpulse.com
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
-    GetEmailVerificationStatusResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - verified
-        properties:
-          verified:
-            type: boolean
-            description: Whether the email address has been verified.
     ValidateEmailResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -208,14 +138,77 @@ components:
             type: string
             example: edgeimpulse.com
             description: The second part of the email address (after the @ sign)
+    EntityCreatedResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: Unique identifier of the created entity.
+    GetEmailVerificationStatusResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - verified
+        properties:
+          verified:
+            type: boolean
+            description: Whether the email address has been verified.
+    ActivateUserOrVerifyEmailRequest:
+      type: object
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          description: Activation or verification code (sent via email)
+    RequestEmailVerificationRequest:
+      type: object
+      required:
+      - redirectUrl
+      properties:
+        redirectUrl:
+          type: string
+          description: URL to redirect the user after email verification.
+    EmailValidationRequest:
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          description: E-mail address to validate
+          example: jan@edgeimpulse.com
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    VerifyEmailResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          email:
+            type: string
+            description: Email address that was verified.
+          userId:
+            type: number
+            description: ID of the user associated with the verified email address, if any.
+          redirectUrl:
+            type: string
+            description: URL to redirect the user to after email verification.
   parameters:
-    EmailIdParameter:
-      name: emailId
-      in: path
-      required: true
-      description: Unique identifier for an email verification request
-      schema:
-        type: integer
     EmailParameter:
       name: email
       in: path
@@ -223,6 +216,13 @@ components:
       description: Email address
       schema:
         type: string
+    EmailIdParameter:
+      name: emailId
+      in: path
+      required: true
+      description: Unique identifier for an email verification request
+      schema:
+        type: integer
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey

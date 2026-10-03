@@ -432,9 +432,6 @@ paths:
     - url: https://studio.edgeimpulse.com/v1
 components:
   schemas:
-    TunerCreateTrialDSPBlock:
-      type: object
-      additionalProperties: true
     TransferLearningModel:
       type: object
       required:
@@ -490,6 +487,41 @@ components:
             $ref: '#/components/schemas/DSPGroupItem'
         displayCategory:
           $ref: '#/components/schemas/BlockDisplayCategory'
+    TunerSpaceLearnBlock:
+      type: object
+      additionalProperties: true
+    OptimizeDSPParametersResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - parameters
+        properties:
+          parameters:
+            type: object
+    BlockType:
+      type: string
+      enum:
+      - official
+      - personal
+      - enterprise
+      - pro-or-enterprise
+      - community
+    LearnBlockType:
+      type: string
+      description: The type of learning block (anomaly, keras, keras-transfer-image, keras-transfer-kws, keras-object-detection, keras-regression). Each behaves differently.
+      enum:
+      - anomaly
+      - anomaly-gmm
+      - keras
+      - keras-transfer-image
+      - keras-transfer-kws
+      - keras-object-detection
+      - keras-regression
+      - keras-akida
+      - keras-akida-transfer-image
+      - keras-akida-object-detection
+      - keras-visual-anomaly
     KerasVisualLayerType:
       type: string
       enum:
@@ -527,185 +559,6 @@ components:
       - fomo_akidanet_a50
       - fomo_ad_gmm
       - fomo_ad_patchcore
-    TunerCompleteSearch:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-    TunerTrial:
-      type: object
-      required:
-      - id
-      - name
-      - status
-      - blocks
-      - impulse
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        status:
-          type: string
-          enum:
-          - pending
-          - running
-          - completed
-          - failed
-        lastCompletedEpoch:
-          type: string
-          format: date-time
-        lastCompletedTraining:
-          type: string
-          format: date-time
-        retries:
-          type: integer
-        currentEpoch:
-          type: integer
-        workerId:
-          type: string
-        blocks:
-          type: array
-          items:
-            type: object
-            required:
-            - id
-            - type
-            - retries
-            - status
-            - blockId
-            properties:
-              id:
-                type: integer
-              lastActive:
-                type: string
-                format: date-time
-              retries:
-                type: integer
-              status:
-                type: string
-                enum:
-                - pending
-                - running
-                - completed
-                - failed
-              type:
-                type: string
-                enum:
-                - input
-                - dsp
-                - learn
-              modelBlockIndex:
-                type: integer
-                description: Index of corresponding DSP/learn block in the impulse model passed to createTrial()
-        impulse:
-          $ref: '#/components/schemas/TunerTrialImpulse'
-        experiment:
-          type: string
-        original_trial_id:
-          type: string
-        model:
-          type: object
-          additionalProperties: true
-        dspJobId:
-          type: object
-          properties:
-            training:
-              type: number
-            testing:
-              type: number
-        learnJobId:
-          type: number
-        devicePerformance:
-          type: object
-          additionalProperties: true
-        optimizationRound:
-          type: number
-        progress:
-          type: object
-          required:
-          - epoch
-          - loss
-          - val_loss
-          - accuracy
-          - val_accuracy
-          properties:
-            epoch:
-              type: number
-            loss:
-              type: number
-            val_loss:
-              type: number
-            accuracy:
-              type: number
-            val_accuracy:
-              type: number
-        metrics:
-          type: object
-          properties:
-            test:
-              type: object
-              properties:
-                float32:
-                  $ref: '#/components/schemas/KerasModelMetadataMetrics'
-                int8:
-                  $ref: '#/components/schemas/KerasModelMetadataMetrics'
-            train:
-              type: object
-              properties:
-                float32:
-                  $ref: '#/components/schemas/KerasModelMetadataMetrics'
-                int8:
-                  $ref: '#/components/schemas/KerasModelMetadataMetrics'
-            validation:
-              type: object
-              properties:
-                float32:
-                  $ref: '#/components/schemas/KerasModelMetadataMetrics'
-                int8:
-                  $ref: '#/components/schemas/KerasModelMetadataMetrics'
-        impulseAddedToProject:
-          type: object
-          required:
-          - impulseId
-          - link
-          properties:
-            impulseId:
-              type: integer
-            link:
-              type: string
-    JobStatus:
-      type: string
-      enum:
-      - cancelled
-      - creating
-      - failed
-      - pending
-      - running
-      - success
-    OptimizeSpaceResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - impulse
-        properties:
-          impulse:
-            type: array
-            description: List of impulses specifying the EON Tuner search space
-            items:
-              $ref: '#/components/schemas/TunerSpaceImpulse'
-    TunerSpaceInputBlock:
-      type: object
-      additionalProperties: true
-    BlockDisplayCategory:
-      description: Category to display this block in the UI.
-      type: string
-      enum:
-      - classical
-      - tao
     AdditionalMetric:
       type: object
       required:
@@ -723,54 +576,14 @@ components:
           type: string
         link:
           type: string
-    ScoreTrialResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - latency
-        - ram
-        - rom
-        - score
-        properties:
-          score:
-            type: number
-          latency:
-            type: object
-            required:
-            - dspMips
-            - dspMs
-            - learnMaccs
-            - learnMs
-            properties:
-              dspMips:
-                type: number
-              dspMs:
-                type: number
-              learnMaccs:
-                type: number
-              learnMs:
-                type: number
-          ram:
-            type: object
-            required:
-            - dsp
-            - learn
-            properties:
-              dsp:
-                type: number
-              learn:
-                type: number
-          rom:
-            type: object
-            required:
-            - dsp
-            - learn
-            properties:
-              dsp:
-                type: number
-              learn:
-                type: number
+    TunerCreateTrialInputBlock:
+      type: object
+      additionalProperties: true
+    UpdateTunerRunRequest:
+      type: object
+      properties:
+        name:
+          type: string
     TunerRun:
       type: object
       required:
@@ -800,21 +613,200 @@ components:
           description: List of impulses specifying the EON Tuner search space
           items:
             $ref: '#/components/schemas/TunerSpaceImpulse'
-    TunerCreateTrialImpulse:
+    OptimizeStateResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - config
+        - status
+        - trials
+        - workers
+        - projectDataType
+        - tunerJobIsRunning
+        - nextRunIndex
+        - isWhitelabel
+        properties:
+          config:
+            $ref: '#/components/schemas/OptimizeConfig'
+          status:
+            type: object
+            required:
+            - numPendingTrials
+            - numRunningTrials
+            - numCompletedTrials
+            - numFailedTrials
+            - numReadyWorkers
+            - numBusyWorkers
+            - numPendingWorkers
+            - status
+            properties:
+              numPendingTrials:
+                type: integer
+              numRunningTrials:
+                type: integer
+              numCompletedTrials:
+                type: integer
+              numFailedTrials:
+                type: integer
+              numReadyWorkers:
+                type: integer
+              numBusyWorkers:
+                type: integer
+              numPendingWorkers:
+                type: integer
+              status:
+                type: string
+                enum:
+                - creating
+                - ready
+                - running
+                - completed
+          tunerJobId:
+            description: Actual tuner process, job message events will be tagged with this ID
+            type: integer
+          tunerCoordinatorJobId:
+            description: The coordinator pod, attach the job runner to this process for finished events
+            type: integer
+          continuationJobId:
+            description: Job ID for the initial job this job continuous the hyperparameter search process for.
+            type: integer
+          tuningAlgorithm:
+            type: string
+            description: Tuning algorithm to use to search hyperparameter space
+            enum:
+            - random
+            - hyperband
+            - bayesian
+            - custom
+          tunerJobIsRunning:
+            description: Whether the job is active (if false => finished)
+            type: boolean
+          trials:
+            type: array
+            items:
+              $ref: '#/components/schemas/TunerTrial'
+          projectDataType:
+            type: string
+            enum:
+            - audio
+            - image
+            - motion
+            - other
+          jobError:
+            type: string
+          workers:
+            type: array
+            items:
+              type: object
+              required:
+              - workerId
+              - status
+              properties:
+                workerId:
+                  type: string
+                status:
+                  type: string
+                  enum:
+                  - pending
+                  - ready
+                  - busy
+          nextRunIndex:
+            type: integer
+          isWhitelabel:
+            type: boolean
+    LogStdoutResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - stdout
+        - totalCount
+        properties:
+          stdout:
+            type: array
+            items:
+              type: object
+              required:
+              - created
+              - data
+              properties:
+                created:
+                  type: string
+                  format: date-time
+                data:
+                  type: string
+                logLevel:
+                  type: string
+                  enum:
+                  - error
+                  - warn
+                  - info
+                  - debug
+          totalCount:
+            type: integer
+            description: Total number of logs (only the last 1000 lines are returned)
+    WindowSettingsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - windowSettingsEvent
+        - windowSettingsContinuous
+        properties:
+          windowSettingsEvent:
+            type: array
+            items:
+              $ref: '#/components/schemas/WindowSettings'
+          windowSettingsContinuous:
+            type: array
+            items:
+              $ref: '#/components/schemas/WindowSettings'
+    OptimizeConfigResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - $ref: '#/components/schemas/OptimizeConfig'
+      - type: object
+        properties:
+          device:
+            type: object
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    JobStatus:
+      type: string
+      enum:
+      - cancelled
+      - creating
+      - failed
+      - pending
+      - running
+      - success
+    KerasModelTypeEnum:
+      type: string
+      enum:
+      - int8
+      - float32
+      - akida
+      - requiresRetrain
+    TunerCreateTrialDSPBlock:
+      type: object
+      additionalProperties: true
+    TunerTrialImpulse:
       type: object
       required:
       - inputBlock
       - dspBlock
       - learnBlock
       properties:
-        id:
-          type: string
-        experiment:
-          type: string
-        original_trial_id:
-          type: string
-        optimizationRound:
-          type: number
         inputBlocks:
           type: array
           items:
@@ -827,131 +819,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TunerCreateTrialLearnBlock'
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
-    TunerSpaceImpulse:
-      type: object
-      required:
-      - inputBlocks
-      - dspBlocks
-      - learnBlocks
-      properties:
-        parameters:
-          type: object
-          description: Hyperparameters with potential values that can be used in any block in this impulse
-        inputBlocks:
-          type: array
-          description: Input Blocks that are part of this impulse
-          items:
-            $ref: '#/components/schemas/TunerSpaceInputBlock'
-        dspBlocks:
-          type: array
-          description: DSP Blocks that are part of this impulse
-          items:
-            $ref: '#/components/schemas/TunerSpaceDSPBlock'
-        learnBlocks:
-          type: array
-          description: Learning Blocks that are part of this impulse
-          items:
-            type: array
-            items:
-              $ref: '#/components/schemas/TunerSpaceLearnBlock'
-    TunerSpaceDSPBlock:
-      type: object
-      additionalProperties: true
-    OptimizeTransferLearningModelsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - models
-        properties:
-          models:
-            type: object
-            required:
-            - image
-            - objectDetection
-            - kws
-            - regression
-            - classification
-            properties:
-              image:
-                type: array
-                items:
-                  $ref: '#/components/schemas/TransferLearningModel'
-              objectDetection:
-                type: array
-                items:
-                  $ref: '#/components/schemas/TransferLearningModel'
-              kws:
-                type: array
-                items:
-                  $ref: '#/components/schemas/TransferLearningModel'
-              regression:
-                type: array
-                items:
-                  $ref: '#/components/schemas/TransferLearningModel'
-              classification:
-                type: array
-                items:
-                  $ref: '#/components/schemas/TransferLearningModel'
-    BlockType:
-      type: string
-      enum:
-      - official
-      - personal
-      - enterprise
-      - pro-or-enterprise
-      - community
-    TunerCreateTrialLearnBlock:
-      type: object
-      additionalProperties: true
-    ModelPrediction:
-      type: object
-      required:
-      - sampleId
-      - startMs
-      - endMs
-      - prediction
-      properties:
-        sampleId:
-          type: integer
-        startMs:
-          type: number
-        endMs:
-          type: number
-        label:
-          type: string
-        prediction:
-          type: string
-        predictionCorrect:
-          type: boolean
-        f1Score:
-          type: number
-          description: Only set for object detection projects
-        anomalyScores:
-          type: array
-          description: Only set for visual anomaly projects. 2D array of shape (n, n) with raw anomaly scores, where n varies based on the image input size and the specific visual anomaly algorithm used. The scores corresponds to each grid cell in the image's spatial matrix.
-          items:
-            type: array
-            items:
-              type: number
-    KerasModelTypeEnum:
-      type: string
-      enum:
-      - int8
-      - float32
-      - akida
-      - requiresRetrain
     DSPGroupItem:
       type: object
       required:
@@ -1030,143 +897,6 @@ components:
         placeholder:
           type: string
           description: Sets the placeholder text on the input element (for types "string", "int", "float" and "secret")
-    KerasModelMetadataMetrics:
-      type: object
-      required:
-      - type
-      - loss
-      - confusionMatrix
-      - report
-      - onDevicePerformance
-      - visualization
-      - isSupportedOnMcu
-      - additionalMetrics
-      properties:
-        type:
-          description: The type of model
-          $ref: '#/components/schemas/KerasModelTypeEnum'
-        loss:
-          type: number
-          description: The model's loss on the validation set after training
-        accuracy:
-          type: number
-          description: The model's accuracy on the validation set after training
-        confusionMatrix:
-          type: array
-          example:
-          - - 31
-            - 1
-            - 0
-          - - 2
-            - 27
-            - 3
-          - - 1
-            - 0
-            - 39
-          items:
-            type: array
-            items:
-              type: number
-        report:
-          type: object
-          description: Precision, recall, F1 and support scores
-        onDevicePerformance:
-          type: array
-          items:
-            type: object
-            required:
-            - mcu
-            - name
-            - isDefault
-            - latency
-            - tflite
-            - eon
-            properties:
-              mcu:
-                type: string
-              name:
-                type: string
-              isDefault:
-                type: boolean
-              latency:
-                type: number
-              tflite:
-                type: object
-                required:
-                - ramRequired
-                - romRequired
-                - arenaSize
-                - modelSize
-                properties:
-                  ramRequired:
-                    type: integer
-                  romRequired:
-                    type: integer
-                  arenaSize:
-                    type: integer
-                  modelSize:
-                    type: integer
-              eon:
-                type: object
-                required:
-                - ramRequired
-                - romRequired
-                - arenaSize
-                - modelSize
-                properties:
-                  ramRequired:
-                    type: integer
-                  romRequired:
-                    type: integer
-                  arenaSize:
-                    type: integer
-                  modelSize:
-                    type: integer
-              eon_ram_optimized:
-                type: object
-                required:
-                - ramRequired
-                - romRequired
-                - arenaSize
-                - modelSize
-                properties:
-                  ramRequired:
-                    type: integer
-                  romRequired:
-                    type: integer
-                  arenaSize:
-                    type: integer
-                  modelSize:
-                    type: integer
-              customMetrics:
-                description: Custom, device-specific performance metrics
-                type: array
-                items:
-                  $ref: '#/components/schemas/KerasCustomMetric'
-        predictions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModelPrediction'
-        visualization:
-          type: string
-          enum:
-          - featureExplorer
-          - dataExplorer
-          - none
-        isSupportedOnMcu:
-          type: boolean
-        mcuSupportError:
-          type: string
-        profilingJobId:
-          description: If this is set, then we're still profiling this model. Subscribe to job updates to see when it's done (afterward the metadata will be updated).
-          type: integer
-        profilingJobFailed:
-          description: If this is set, then the profiling job failed (get the status by getting the job logs for 'profilingJobId').
-          type: boolean
-        additionalMetrics:
-          type: array
-          items:
-            $ref: '#/components/schemas/AdditionalMetric'
     OptimizeConfig:
       type: object
       required:
@@ -1373,18 +1103,43 @@ components:
             impulseTitle:
               type: string
               description: Search space source impulse title
-    KerasCustomMetric:
+    PublicProjectTierAvailability:
+      description: For public blocks, this indicates the project tiers for which this block is available.
+      type: string
+      enum:
+      - enterprise-only
+      - pro-or-enterprise
+      - all-projects
+    ModelPrediction:
       type: object
       required:
-      - name
-      - value
+      - sampleId
+      - startMs
+      - endMs
+      - prediction
       properties:
-        name:
-          description: The name of the metric
+        sampleId:
+          type: integer
+        startMs:
+          type: number
+        endMs:
+          type: number
+        label:
           type: string
-        value:
-          description: The value of this metric for this model type
+        prediction:
           type: string
+        predictionCorrect:
+          type: boolean
+        f1Score:
+          type: number
+          description: Only set for object detection projects
+        anomalyScores:
+          type: array
+          description: Only set for visual anomaly projects. 2D array of shape (n, n) with raw anomaly scores, where n varies based on the image input size and the specific visual anomaly algorithm used. The scores corresponds to each grid cell in the image's spatial matrix.
+          items:
+            type: array
+            items:
+              type: number
     AllLearnBlocksResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -1421,37 +1176,6 @@ components:
                   $ref: '#/components/schemas/BlockDisplayCategory'
                 publicProjectTierAvailability:
                   $ref: '#/components/schemas/PublicProjectTierAvailability'
-    TunerTrialImpulse:
-      type: object
-      required:
-      - inputBlock
-      - dspBlock
-      - learnBlock
-      properties:
-        inputBlocks:
-          type: array
-          items:
-            $ref: '#/components/schemas/TunerCreateTrialInputBlock'
-        dspBlocks:
-          type: array
-          items:
-            $ref: '#/components/schemas/TunerCreateTrialDSPBlock'
-        learnBlocks:
-          type: array
-          items:
-            $ref: '#/components/schemas/TunerCreateTrialLearnBlock'
-    OptimizeDSPParametersResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - parameters
-        properties:
-          parameters:
-            type: object
-    TunerCreateTrialInputBlock:
-      type: object
-      additionalProperties: true
     WindowSettings:
       type: object
       required:
@@ -1477,193 +1201,174 @@ components:
           type: number
         valid:
           type: boolean
-    LearnBlockType:
-      type: string
-      description: The type of learning block (anomaly, keras, keras-transfer-image, keras-transfer-kws, keras-object-detection, keras-regression). Each behaves differently.
-      enum:
-      - anomaly
-      - anomaly-gmm
-      - keras
-      - keras-transfer-image
-      - keras-transfer-kws
-      - keras-object-detection
-      - keras-regression
-      - keras-akida
-      - keras-akida-transfer-image
-      - keras-akida-object-detection
-      - keras-visual-anomaly
-    TunerSpaceLearnBlock:
+    TunerCompleteSearch:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+    TunerSpaceDSPBlock:
       type: object
       additionalProperties: true
-    OptimizeConfigResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - $ref: '#/components/schemas/OptimizeConfig'
-      - type: object
-        properties:
-          device:
-            type: object
-    UpdateTunerRunRequest:
+    TunerCreateTrialLearnBlock:
       type: object
+      additionalProperties: true
+    KerasModelMetadataMetrics:
+      type: object
+      required:
+      - type
+      - loss
+      - confusionMatrix
+      - report
+      - onDevicePerformance
+      - visualization
+      - isSupportedOnMcu
+      - additionalMetrics
       properties:
-        name:
-          type: string
-    OptimizeStateResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - config
-        - status
-        - trials
-        - workers
-        - projectDataType
-        - tunerJobIsRunning
-        - nextRunIndex
-        - isWhitelabel
-        properties:
-          config:
-            $ref: '#/components/schemas/OptimizeConfig'
-          status:
+        type:
+          description: The type of model
+          $ref: '#/components/schemas/KerasModelTypeEnum'
+        loss:
+          type: number
+          description: The model's loss on the validation set after training
+        accuracy:
+          type: number
+          description: The model's accuracy on the validation set after training
+        confusionMatrix:
+          type: array
+          example:
+          - - 31
+            - 1
+            - 0
+          - - 2
+            - 27
+            - 3
+          - - 1
+            - 0
+            - 39
+          items:
+            type: array
+            items:
+              type: number
+        report:
+          type: object
+          description: Precision, recall, F1 and support scores
+        onDevicePerformance:
+          type: array
+          items:
             type: object
             required:
-            - numPendingTrials
-            - numRunningTrials
-            - numCompletedTrials
-            - numFailedTrials
-            - numReadyWorkers
-            - numBusyWorkers
-            - numPendingWorkers
-            - status
+            - mcu
+            - name
+            - isDefault
+            - latency
+            - tflite
+            - eon
             properties:
-              numPendingTrials:
-                type: integer
-              numRunningTrials:
-                type: integer
-              numCompletedTrials:
-                type: integer
-              numFailedTrials:
-                type: integer
-              numReadyWorkers:
-                type: integer
-              numBusyWorkers:
-                type: integer
-              numPendingWorkers:
-                type: integer
-              status:
+              mcu:
                 type: string
-                enum:
-                - creating
-                - ready
-                - running
-                - completed
-          tunerJobId:
-            description: Actual tuner process, job message events will be tagged with this ID
-            type: integer
-          tunerCoordinatorJobId:
-            description: The coordinator pod, attach the job runner to this process for finished events
-            type: integer
-          continuationJobId:
-            description: Job ID for the initial job this job continuous the hyperparameter search process for.
-            type: integer
-          tuningAlgorithm:
-            type: string
-            description: Tuning algorithm to use to search hyperparameter space
-            enum:
-            - random
-            - hyperband
-            - bayesian
-            - custom
-          tunerJobIsRunning:
-            description: Whether the job is active (if false => finished)
-            type: boolean
-          trials:
+              name:
+                type: string
+              isDefault:
+                type: boolean
+              latency:
+                type: number
+              tflite:
+                type: object
+                required:
+                - ramRequired
+                - romRequired
+                - arenaSize
+                - modelSize
+                properties:
+                  ramRequired:
+                    type: integer
+                  romRequired:
+                    type: integer
+                  arenaSize:
+                    type: integer
+                  modelSize:
+                    type: integer
+              eon:
+                type: object
+                required:
+                - ramRequired
+                - romRequired
+                - arenaSize
+                - modelSize
+                properties:
+                  ramRequired:
+                    type: integer
+                  romRequired:
+                    type: integer
+                  arenaSize:
+                    type: integer
+                  modelSize:
+                    type: integer
+              eon_ram_optimized:
+                type: object
+                required:
+                - ramRequired
+                - romRequired
+                - arenaSize
+                - modelSize
+                properties:
+                  ramRequired:
+                    type: integer
+                  romRequired:
+                    type: integer
+                  arenaSize:
+                    type: integer
+                  modelSize:
+                    type: integer
+              customMetrics:
+                description: Custom, device-specific performance metrics
+                type: array
+                items:
+                  $ref: '#/components/schemas/KerasCustomMetric'
+        predictions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelPrediction'
+        visualization:
+          type: string
+          enum:
+          - featureExplorer
+          - dataExplorer
+          - none
+        isSupportedOnMcu:
+          type: boolean
+        mcuSupportError:
+          type: string
+        profilingJobId:
+          description: If this is set, then we're still profiling this model. Subscribe to job updates to see when it's done (afterward the metadata will be updated).
+          type: integer
+        profilingJobFailed:
+          description: If this is set, then the profiling job failed (get the status by getting the job logs for 'profilingJobId').
+          type: boolean
+        additionalMetrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdditionalMetric'
+    OptimizeSpaceResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - impulse
+        properties:
+          impulse:
             type: array
+            description: List of impulses specifying the EON Tuner search space
             items:
-              $ref: '#/components/schemas/TunerTrial'
-          projectDataType:
-            type: string
-            enum:
-            - audio
-            - image
-            - motion
-            - other
-          jobError:
-            type: string
-          workers:
-            type: array
-            items:
-              type: object
-              required:
-              - workerId
-              - status
-              properties:
-                workerId:
-                  type: string
-                status:
-                  type: string
-                  enum:
-                  - pending
-                  - ready
-                  - busy
-          nextRunIndex:
-            type: integer
-          isWhitelabel:
-            type: boolean
-    PublicProjectTierAvailability:
-      description: For public blocks, this indicates the project tiers for which this block is available.
+              $ref: '#/components/schemas/TunerSpaceImpulse'
+    BlockDisplayCategory:
+      description: Category to display this block in the UI.
       type: string
       enum:
-      - enterprise-only
-      - pro-or-enterprise
-      - all-projects
-    LogStdoutResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - stdout
-        - totalCount
-        properties:
-          stdout:
-            type: array
-            items:
-              type: object
-              required:
-              - created
-              - data
-              properties:
-                created:
-                  type: string
-                  format: date-time
-                data:
-                  type: string
-                logLevel:
-                  type: string
-                  enum:
-                  - error
-                  - warn
-                  - info
-                  - debug
-          totalCount:
-            type: integer
-            description: Total number of logs (only the last 1000 lines are returned)
-    WindowSettingsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - windowSettingsEvent
-        - windowSettingsContinuous
-        properties:
-          windowSettingsEvent:
-            type: array
-            items:
-              $ref: '#/components/schemas/WindowSettings'
-          windowSettingsContinuous:
-            type: array
-            items:
-              $ref: '#/components/schemas/WindowSettings'
+      - classical
+      - tao
     ListTunerRunsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -1675,83 +1380,112 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/TunerRun'
-    TransferLearningModel_2:
+    TunerSpaceInputBlock:
+      type: object
+      additionalProperties: true
+    ScoreTrialResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - latency
+        - ram
+        - rom
+        - score
+        properties:
+          score:
+            type: number
+          latency:
+            type: object
+            required:
+            - dspMips
+            - dspMs
+            - learnMaccs
+            - learnMs
+            properties:
+              dspMips:
+                type: number
+              dspMs:
+                type: number
+              learnMaccs:
+                type: number
+              learnMs:
+                type: number
+          ram:
+            type: object
+            required:
+            - dsp
+            - learn
+            properties:
+              dsp:
+                type: number
+              learn:
+                type: number
+          rom:
+            type: object
+            required:
+            - dsp
+            - learn
+            properties:
+              dsp:
+                type: number
+              learn:
+                type: number
+    TunerCreateTrialImpulse:
       type: object
       required:
-      - name
-      - shortName
-      - description
-      - hasNeurons
-      - hasDropout
-      - type
-      - learnBlockType
-      - author
-      - blockType
-      - hasExpertMode
+      - inputBlock
+      - dspBlock
+      - learnBlock
       properties:
-        name:
+        id:
           type: string
-        shortName:
+        experiment:
           type: string
-        abbreviatedName:
+        original_trial_id:
           type: string
-        description:
-          type: string
-        hasNeurons:
-          type: boolean
-        hasDropout:
-          type: boolean
-        defaultNeurons:
-          type: integer
-        defaultDropout:
+        optimizationRound:
           type: number
-        defaultLearningRate:
-          type: number
-        defaultTrainingCycles:
-          type: number
-        hasImageAugmentation:
-          type: boolean
-        type:
-          $ref: '#/components/schemas/KerasVisualLayerType'
-        learnBlockType:
-          $ref: '#/components/schemas/LearnBlockType_2'
-        organizationModelId:
-          type: integer
-        implementationVersion:
-          type: integer
-        repositoryUrl:
-          type: string
-          description: URL to the source code of this custom learn block.
-        customBlockRef:
-          type: string
-          description: Unique stable string key used to create and find this custom block.
-        author:
-          type: string
-        blockType:
-          $ref: '#/components/schemas/BlockType_2'
-        customParameters:
+        inputBlocks:
           type: array
           items:
-            $ref: '#/components/schemas/DSPGroupItem_2'
-        displayCategory:
-          $ref: '#/components/schemas/BlockDisplayCategory_2'
-        blockNoLongerAvailable:
+            $ref: '#/components/schemas/TunerCreateTrialInputBlock'
+        dspBlocks:
+          type: array
+          items:
+            $ref: '#/components/schemas/TunerCreateTrialDSPBlock'
+        learnBlocks:
+          type: array
+          items:
+            $ref: '#/components/schemas/TunerCreateTrialLearnBlock'
+    TunerSpaceImpulse:
+      type: object
+      required:
+      - inputBlocks
+      - dspBlocks
+      - learnBlocks
+      properties:
+        parameters:
           type: object
-          description: If this object is set, then you can no longer train this block. The reason (or a migration path) is in the `reasonMarkdown` and `reasonHtml` properties.
-          required:
-          - reasonMarkdown
-          - reasonHtml
-          properties:
-            reasonMarkdown:
-              description: Reason or migration path for current users of this block, in Markdown format.
-              type: string
-            reasonHtml:
-              description: Reason or migration path for current users of this block, in HTML format.
-              type: string
-        hasExpertMode:
-          description: Whether this block can be switched to expert mode.
-          type: boolean
-    TunerTrial_2:
+          description: Hyperparameters with potential values that can be used in any block in this impulse
+        inputBlocks:
+          type: array
+          description: Input Blocks that are part of this impulse
+          items:
+            $ref: '#/components/schemas/TunerSpaceInputBlock'
+        dspBlocks:
+          type: array
+          description: DSP Blocks that are part of this impulse
+          items:
+            $ref: '#/components/schemas/TunerSpaceDSPBlock'
+        learnBlocks:
+          type: array
+          description: Learning Blocks that are part of this impulse
+          items:
+            type: array
+            items:
+              $ref: '#/components/schemas/TunerSpaceLearnBlock'
+    TunerTrial:
       type: object
       required:
       - id
@@ -1866,23 +1600,23 @@ components:
               type: object
               properties:
                 float32:
-                  $ref: '#/components/schemas/KerasModelMetadataMetrics_2'
+                  $ref: '#/components/schemas/KerasModelMetadataMetrics'
                 int8:
-                  $ref: '#/components/schemas/KerasModelMetadataMetrics_2'
+                  $ref: '#/components/schemas/KerasModelMetadataMetrics'
             train:
               type: object
               properties:
                 float32:
-                  $ref: '#/components/schemas/KerasModelMetadataMetrics_2'
+                  $ref: '#/components/schemas/KerasModelMetadataMetrics'
                 int8:
-                  $ref: '#/components/schemas/KerasModelMetadataMetrics_2'
+                  $ref: '#/components/schemas/KerasModelMetadataMetrics'
             validation:
               type: object
               properties:
                 float32:
-                  $ref: '#/components/schemas/KerasModelMetadataMetrics_2'
+                  $ref: '#/components/schemas/KerasModelMetadataMetrics'
                 int8:
-                  $ref: '#/components/schemas/KerasModelMetadataMetrics_2'
+                  $ref: '#/components/schemas/KerasModelMetadataMetrics'
         impulseAddedToProject:
           type: object
           required:
@@ -1893,36 +1627,285 @@ components:
               type: integer
             link:
               type: string
-        createdInPostProcessing:
-          type: boolean
-    BlockDisplayCategory_2:
-      description: Category to display this block in the UI.
-      type: string
-      enum:
-      - classical
-      - tao
-      - developer-preview
-    AllBlocksResponse:
+    KerasCustomMetric:
+      type: object
+      required:
+      - name
+      - value
+      properties:
+        name:
+          description: The name of the metric
+          type: string
+        value:
+          description: The value of this metric for this model type
+          type: string
+    OptimizeTransferLearningModelsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - input
-        - dsp
-        - learn
+        - models
         properties:
-          input:
-            type: array
-            items:
-              $ref: '#/components/schemas/TunerBlock'
-          dsp:
-            type: array
-            items:
-              $ref: '#/components/schemas/TunerBlock'
-          learn:
-            type: array
-            items:
-              $ref: '#/components/schemas/TunerBlock'
+          models:
+            type: object
+            required:
+            - image
+            - objectDetection
+            - kws
+            - regression
+            - classification
+            properties:
+              image:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransferLearningModel'
+              objectDetection:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransferLearningModel'
+              kws:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransferLearningModel'
+              regression:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransferLearningModel'
+              classification:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransferLearningModel'
+    TransferLearningModel_2:
+      type: object
+      required:
+      - name
+      - shortName
+      - description
+      - hasNeurons
+      - hasDropout
+      - type
+      - learnBlockType
+      - author
+      - blockType
+      - hasExpertMode
+      properties:
+        name:
+          type: string
+        shortName:
+          type: string
+        abbreviatedName:
+          type: string
+        description:
+          type: string
+        hasNeurons:
+          type: boolean
+        hasDropout:
+          type: boolean
+        defaultNeurons:
+          type: integer
+        defaultDropout:
+          type: number
+        defaultLearningRate:
+          type: number
+        defaultTrainingCycles:
+          type: number
+        hasImageAugmentation:
+          type: boolean
+        type:
+          $ref: '#/components/schemas/KerasVisualLayerType'
+        learnBlockType:
+          $ref: '#/components/schemas/LearnBlockType_2'
+        organizationModelId:
+          type: integer
+        implementationVersion:
+          type: integer
+        repositoryUrl:
+          type: string
+          description: URL to the source code of this custom learn block.
+        customBlockRef:
+          type: string
+          description: Unique stable string key used to create and find this custom block.
+        author:
+          type: string
+        blockType:
+          $ref: '#/components/schemas/BlockType_2'
+        customParameters:
+          type: array
+          items:
+            $ref: '#/components/schemas/DSPGroupItem_2'
+        displayCategory:
+          $ref: '#/components/schemas/BlockDisplayCategory_2'
+        blockNoLongerAvailable:
+          type: object
+          description: If this object is set, then you can no longer train this block. The reason (or a migration path) is in the `reasonMarkdown` and `reasonHtml` properties.
+          required:
+          - reasonMarkdown
+          - reasonHtml
+          properties:
+            reasonMarkdown:
+              description: Reason or migration path for current users of this block, in Markdown format.
+              type: string
+            reasonHtml:
+              description: Reason or migration path for current users of this block, in HTML format.
+              type: string
+        hasExpertMode:
+          description: Whether this block can be switched to expert mode.
+          type: boolean
+    TunerBlock:
+      type: object
+      required:
+      - type
+      - title
+      - blockType
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        blockType:
+          $ref: '#/components/schemas/BlockType_2'
+        author:
+          type: string
+        description:
+          type: string
+        name:
+          type: string
+        recommended:
+          type: boolean
+        organizationModelId:
+          type: number
+        params:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/DSPGroupItem_2'
+        defaultConfig:
+          type: object
+        variants:
+          type: object
+          additionalProperties:
+            type: object
+            properties:
+              title:
+                type: string
+              key:
+                type: string
+              regression:
+                type: boolean
+              objectDetection:
+                type: boolean
+              projectDataType:
+                type: string
+              searchSpaceTemplates:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    template:
+                      type: string
+                    group:
+                      type: string
+                    blocks:
+                      type: object
+                      properties:
+                        input:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                            variant:
+                              type: string
+                            params:
+                              type: object
+                        dsp:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                            variant:
+                              type: string
+                            params:
+                              type: object
+                        learn:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                            variant:
+                              type: string
+                            params:
+                              type: object
+              params:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    type: object
+    BoundingBoxWithScore:
+      type: object
+      description: This has the _ratio_ for x/y/w/h (so 0..1)
+      required:
+      - label
+      - x
+      - y
+      - width
+      - height
+      - score
+      properties:
+        label:
+          type: string
+        x:
+          type: number
+        y:
+          type: number
+        width:
+          type: number
+        height:
+          type: number
+        score:
+          type: number
+    BlockType_2:
+      type: string
+      enum:
+      - official
+      - personal
+      - enterprise
+      - community
+    LearnBlockType_2:
+      type: string
+      description: The type of learning block (anomaly, keras, keras-transfer-image, keras-transfer-kws, keras-object-detection, keras-regression, keras-freeform). Each behaves differently.
+      enum:
+      - anomaly
+      - anomaly-gmm
+      - keras
+      - keras-transfer-image
+      - keras-transfer-kws
+      - keras-object-detection
+      - keras-regression
+      - keras-akida
+      - keras-akida-transfer-image
+      - keras-akida-object-detection
+      - keras-visual-anomaly
+      - keras-freeform
+      - keras-anomaly
+      - vlm
+    JobLogItem:
+      type: object
+      required:
+      - created
+      - data
+      properties:
+        created:
+          type: string
+          format: date-time
+        data:
+          type: string
+        logLevel:
+          type: string
+          enum:
+          - error
+          - warn
+          - info
+          - debug
     TunerRun_2:
       type: object
       required:
@@ -1956,97 +1939,132 @@ components:
         visible:
           type: boolean
           description: Whether the run is visible in the UI
-    OptimizeTransferLearningModelsResponse_2:
+    OptimizeStateResponse_2:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - models
+        - config
+        - status
+        - trials
+        - workers
+        - projectDataType
+        - tunerJobIsRunning
+        - nextRunIndex
+        - canExtendSearch
+        - isWhitelabel
+        - totalTrainingTimeExceeded
         properties:
-          models:
+          config:
+            $ref: '#/components/schemas/OptimizeConfig_2'
+          status:
             type: object
             required:
-            - image
-            - objectDetection
-            - kws
-            - regression
-            - classification
+            - numPendingTrials
+            - numRunningTrials
+            - numCompletedTrials
+            - numFailedTrials
+            - numReadyWorkers
+            - numBusyWorkers
+            - numPendingWorkers
+            - status
             properties:
-              image:
-                type: array
-                items:
-                  $ref: '#/components/schemas/TransferLearningModel_2'
-              objectDetection:
-                type: array
-                items:
-                  $ref: '#/components/schemas/TransferLearningModel_2'
-              kws:
-                type: array
-                items:
-                  $ref: '#/components/schemas/TransferLearningModel_2'
-              regression:
-                type: array
-                items:
-                  $ref: '#/components/schemas/TransferLearningModel_2'
-              classification:
-                type: array
-                items:
-                  $ref: '#/components/schemas/TransferLearningModel_2'
-              anomaly:
-                type: array
-                items:
-                  $ref: '#/components/schemas/TransferLearningModel_2'
-              visualAnomaly:
-                type: array
-                items:
-                  $ref: '#/components/schemas/TransferLearningModel_2'
-    BlockType_2:
-      type: string
-      enum:
-      - official
-      - personal
-      - enterprise
-      - community
-    ModelPrediction_2:
-      type: object
-      required:
-      - sampleId
-      - startMs
-      - endMs
-      - prediction
-      properties:
-        sampleId:
-          type: integer
-        startMs:
-          type: number
-        endMs:
-          type: number
-        label:
-          type: string
-        prediction:
-          type: string
-        predictionCorrect:
-          type: boolean
-        f1Score:
-          type: number
-          description: Only set for object detection projects
-        anomalyScores:
-          type: array
-          description: Only set for visual anomaly projects. 2D array of shape (n, n) with raw anomaly scores, where n varies based on the image input size and the specific visual anomaly algorithm used. The scores corresponds to each grid cell in the image's spatial matrix.
-          items:
+              numPendingTrials:
+                type: integer
+              numRunningTrials:
+                type: integer
+              numCompletedTrials:
+                type: integer
+              numFailedTrials:
+                type: integer
+              numReadyWorkers:
+                type: integer
+              numBusyWorkers:
+                type: integer
+              numPendingWorkers:
+                type: integer
+              status:
+                type: string
+                enum:
+                - creating
+                - ready
+                - running
+                - completed
+          tunerJobId:
+            description: Actual tuner process, job message events will be tagged with this ID
+            type: integer
+          tunerCoordinatorJobId:
+            description: The coordinator pod, attach the job runner to this process for finished events
+            type: integer
+          continuationJobId:
+            description: Job ID for the initial job this job continuous the hyperparameter search process for.
+            type: integer
+          tuningAlgorithm:
+            type: string
+            description: Tuning algorithm to use to search hyperparameter space
+            enum:
+            - random
+            - hyperband
+            - bayesian
+            - custom
+          tunerJobIsRunning:
+            description: Whether the job is active (if false => finished)
+            type: boolean
+          trials:
             type: array
             items:
-              type: number
-        boundingBoxes:
-          type: array
-          description: Only set for object detection projects. Coordinates are scaled 0..1, not absolute values.
-          items:
-            $ref: '#/components/schemas/BoundingBoxWithScore'
-        labelMapPredictions:
-          type: object
-          description: For samples with structured labels (in the form of a key/value label map), this object will contain per-key prediction info for the sample.
-          additionalProperties:
+              $ref: '#/components/schemas/TunerTrial_2'
+          projectDataType:
             type: string
+            enum:
+            - audio
+            - image
+            - motion
+            - other
+          jobError:
+            type: string
+          workers:
+            type: array
+            items:
+              type: object
+              required:
+              - workerId
+              - status
+              properties:
+                workerId:
+                  type: string
+                status:
+                  type: string
+                  enum:
+                  - pending
+                  - ready
+                  - busy
+          nextRunIndex:
+            type: integer
+            description: Index of the next run to be created. Used to pre-populate the name of the next run.
+          canExtendSearch:
+            type: boolean
+            description: Whether the search can be extended to evaluate more candidate models. Extending is possible if the search space contains candidate models that are expected to perform better than the current best candidate. And extending is also possible if the previous run was paused due to the total runtime limit being exceeded.
+          isWhitelabel:
+            type: boolean
+          totalTrainingTimeExceeded:
+            type: boolean
+            description: Whether the total training time has exceeded the defined limit for the current run.
+    LogStdoutResponse_2:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - stdout
+        - totalCount
+        properties:
+          stdout:
+            type: array
+            items:
+              $ref: '#/components/schemas/JobLogItem'
+          totalCount:
+            type: integer
+            description: Total number of logs (only the last 1000 lines are returned)
     DSPGroupItem_2:
       type: object
       required:
@@ -2164,150 +2182,6 @@ components:
         maxVal:
           type: number
           description: Maximum value for parameters of type 'int' or 'float'.
-    KerasModelMetadataMetrics_2:
-      type: object
-      required:
-      - type
-      - loss
-      - confusionMatrix
-      - report
-      - onDevicePerformance
-      - visualization
-      - isSupportedOnMcu
-      - additionalMetrics
-      properties:
-        type:
-          description: The type of model
-          $ref: '#/components/schemas/KerasModelTypeEnum'
-        loss:
-          type: number
-          description: The model's loss on the validation set after training
-        accuracy:
-          type: number
-          description: The model's accuracy on the validation set after training
-        confusionMatrix:
-          type: array
-          example:
-          - - 31
-            - 1
-            - 0
-          - - 2
-            - 27
-            - 3
-          - - 1
-            - 0
-            - 39
-          items:
-            type: array
-            items:
-              type: number
-        report:
-          type: object
-          description: Precision, recall, F1 and support scores
-        onDevicePerformance:
-          type: array
-          items:
-            type: object
-            required:
-            - mcu
-            - name
-            - isDefault
-            - latency
-            - tflite
-            - eon
-            - hasPerformance
-            properties:
-              mcu:
-                type: string
-              name:
-                type: string
-              isDefault:
-                type: boolean
-              latency:
-                type: number
-              tflite:
-                type: object
-                required:
-                - ramRequired
-                - romRequired
-                - arenaSize
-                - modelSize
-                properties:
-                  ramRequired:
-                    type: integer
-                  romRequired:
-                    type: integer
-                  arenaSize:
-                    type: integer
-                  modelSize:
-                    type: integer
-              eon:
-                type: object
-                required:
-                - ramRequired
-                - romRequired
-                - arenaSize
-                - modelSize
-                properties:
-                  ramRequired:
-                    type: integer
-                  romRequired:
-                    type: integer
-                  arenaSize:
-                    type: integer
-                  modelSize:
-                    type: integer
-              eon_ram_optimized:
-                type: object
-                required:
-                - ramRequired
-                - romRequired
-                - arenaSize
-                - modelSize
-                properties:
-                  ramRequired:
-                    type: integer
-                  romRequired:
-                    type: integer
-                  arenaSize:
-                    type: integer
-                  modelSize:
-                    type: integer
-              customMetrics:
-                description: Custom, device-specific performance metrics
-                type: array
-                items:
-                  $ref: '#/components/schemas/KerasCustomMetric'
-              hasPerformance:
-                description: If false, then no metrics are available for this target
-                type: boolean
-              profilingError:
-                description: Specific error during profiling (e.g. model not supported)
-                type: string
-        predictions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ModelPrediction_2'
-        visualization:
-          type: string
-          enum:
-          - featureExplorer
-          - dataExplorer
-          - none
-        isSupportedOnMcu:
-          type: boolean
-        mcuSupportError:
-          type: string
-        profilingJobId:
-          description: If this is set, then we're still profiling this model. Subscribe to job updates to see when it's done (afterward the metadata will be updated).
-          type: integer
-        profilingJobFailed:
-          description: If this is set, then the profiling job failed (get the status by getting the job logs for 'profilingJobId').
-          type: boolean
-        additionalMetrics:
-          type: array
-          items:
-            $ref: '#/components/schemas/AdditionalMetric'
     OptimizeConfig_2:
       type: object
       required:
@@ -2524,153 +2398,6 @@ components:
             impulseTitle:
               type: string
               description: Search space source impulse title
-    LearnBlockType_2:
-      type: string
-      description: The type of learning block (anomaly, keras, keras-transfer-image, keras-transfer-kws, keras-object-detection, keras-regression, keras-freeform). Each behaves differently.
-      enum:
-      - anomaly
-      - anomaly-gmm
-      - keras
-      - keras-transfer-image
-      - keras-transfer-kws
-      - keras-object-detection
-      - keras-regression
-      - keras-akida
-      - keras-akida-transfer-image
-      - keras-akida-object-detection
-      - keras-visual-anomaly
-      - keras-freeform
-      - keras-anomaly
-      - vlm
-    OptimizeStateResponse_2:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - config
-        - status
-        - trials
-        - workers
-        - projectDataType
-        - tunerJobIsRunning
-        - nextRunIndex
-        - canExtendSearch
-        - isWhitelabel
-        - totalTrainingTimeExceeded
-        properties:
-          config:
-            $ref: '#/components/schemas/OptimizeConfig_2'
-          status:
-            type: object
-            required:
-            - numPendingTrials
-            - numRunningTrials
-            - numCompletedTrials
-            - numFailedTrials
-            - numReadyWorkers
-            - numBusyWorkers
-            - numPendingWorkers
-            - status
-            properties:
-              numPendingTrials:
-                type: integer
-              numRunningTrials:
-                type: integer
-              numCompletedTrials:
-                type: integer
-              numFailedTrials:
-                type: integer
-              numReadyWorkers:
-                type: integer
-              numBusyWorkers:
-                type: integer
-              numPendingWorkers:
-                type: integer
-              status:
-                type: string
-                enum:
-                - creating
-                - ready
-                - running
-                - completed
-          tunerJobId:
-            description: Actual tuner process, job message events will be tagged with this ID
-            type: integer
-          tunerCoordinatorJobId:
-            description: The coordinator pod, attach the job runner to this process for finished events
-            type: integer
-          continuationJobId:
-            description: Job ID for the initial job this job continuous the hyperparameter search process for.
-            type: integer
-          tuningAlgorithm:
-            type: string
-            description: Tuning algorithm to use to search hyperparameter space
-            enum:
-            - random
-            - hyperband
-            - bayesian
-            - custom
-          tunerJobIsRunning:
-            description: Whether the job is active (if false => finished)
-            type: boolean
-          trials:
-            type: array
-            items:
-              $ref: '#/components/schemas/TunerTrial_2'
-          projectDataType:
-            type: string
-            enum:
-            - audio
-            - image
-            - motion
-            - other
-          jobError:
-            type: string
-          workers:
-            type: array
-            items:
-              type: object
-              required:
-              - workerId
-              - status
-              properties:
-                workerId:
-                  type: string
-                status:
-                  type: string
-                  enum:
-                  - pending
-                  - ready
-                  - busy
-          nextRunIndex:
-            type: integer
-            description: Index of the next run to be created. Used to pre-populate the name of the next run.
-          canExtendSearch:
-            type: boolean
-            description: Whether the search can be extended to evaluate more candidate models. Extending is possible if the search space contains candidate models that are expected to perform better than the current best candidate. And extending is also possible if the previous run was paused due to the total runtime limit being exceeded.
-          isWhitelabel:
-            type: boolean
-          totalTrainingTimeExceeded:
-            type: boolean
-            description: Whether the total training time has exceeded the defined limit for the current run.
-    JobLogItem:
-      type: object
-      required:
-      - created
-      - data
-      properties:
-        created:
-          type: string
-          format: date-time
-        data:
-          type: string
-        logLevel:
-          type: string
-          enum:
-          - error
-          - warn
-          - info
-          - debug
     PublicProjectTierAvailability_2:
       description: For public blocks, this indicates the project tiers for which this block is available.
       type: string
@@ -2678,148 +2405,407 @@ components:
       - enterprise-only
       - all-projects
       - all-projects-including-whitelabels
-    TunerBlock:
+    ModelPrediction_2:
       type: object
       required:
-      - type
-      - title
-      - blockType
+      - sampleId
+      - startMs
+      - endMs
+      - prediction
       properties:
-        type:
-          type: string
-        title:
-          type: string
-        blockType:
-          $ref: '#/components/schemas/BlockType_2'
-        author:
-          type: string
-        description:
-          type: string
-        name:
-          type: string
-        recommended:
-          type: boolean
-        organizationModelId:
+        sampleId:
+          type: integer
+        startMs:
           type: number
-        params:
+        endMs:
+          type: number
+        label:
+          type: string
+        prediction:
+          type: string
+        predictionCorrect:
+          type: boolean
+        f1Score:
+          type: number
+          description: Only set for object detection projects
+        anomalyScores:
+          type: array
+          description: Only set for visual anomaly projects. 2D array of shape (n, n) with raw anomaly scores, where n varies based on the image input size and the specific visual anomaly algorithm used. The scores corresponds to each grid cell in the image's spatial matrix.
+          items:
+            type: array
+            items:
+              type: number
+        boundingBoxes:
+          type: array
+          description: Only set for object detection projects. Coordinates are scaled 0..1, not absolute values.
+          items:
+            $ref: '#/components/schemas/BoundingBoxWithScore'
+        labelMapPredictions:
           type: object
+          description: For samples with structured labels (in the form of a key/value label map), this object will contain per-key prediction info for the sample.
           additionalProperties:
-            $ref: '#/components/schemas/DSPGroupItem_2'
-        defaultConfig:
-          type: object
-        variants:
-          type: object
-          additionalProperties:
-            type: object
-            properties:
-              title:
-                type: string
-              key:
-                type: string
-              regression:
-                type: boolean
-              objectDetection:
-                type: boolean
-              projectDataType:
-                type: string
-              searchSpaceTemplates:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    template:
-                      type: string
-                    group:
-                      type: string
-                    blocks:
-                      type: object
-                      properties:
-                        input:
-                          type: object
-                          properties:
-                            type:
-                              type: string
-                            variant:
-                              type: string
-                            params:
-                              type: object
-                        dsp:
-                          type: object
-                          properties:
-                            type:
-                              type: string
-                            variant:
-                              type: string
-                            params:
-                              type: object
-                        learn:
-                          type: object
-                          properties:
-                            type:
-                              type: string
-                            variant:
-                              type: string
-                            params:
-                              type: object
-              params:
-                type: object
-                additionalProperties:
-                  type: array
-                  items:
-                    type: object
-    LogStdoutResponse_2:
+            type: string
+    AllBlocksResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - stdout
-        - totalCount
+        - input
+        - dsp
+        - learn
         properties:
-          stdout:
+          input:
             type: array
             items:
-              $ref: '#/components/schemas/JobLogItem'
-          totalCount:
-            type: integer
-            description: Total number of logs (only the last 1000 lines are returned)
-    BoundingBoxWithScore:
+              $ref: '#/components/schemas/TunerBlock'
+          dsp:
+            type: array
+            items:
+              $ref: '#/components/schemas/TunerBlock'
+          learn:
+            type: array
+            items:
+              $ref: '#/components/schemas/TunerBlock'
+    KerasModelMetadataMetrics_2:
       type: object
-      description: This has the _ratio_ for x/y/w/h (so 0..1)
       required:
-      - label
-      - x
-      - y
-      - width
-      - height
-      - score
+      - type
+      - loss
+      - confusionMatrix
+      - report
+      - onDevicePerformance
+      - visualization
+      - isSupportedOnMcu
+      - additionalMetrics
       properties:
-        label:
+        type:
+          description: The type of model
+          $ref: '#/components/schemas/KerasModelTypeEnum'
+        loss:
+          type: number
+          description: The model's loss on the validation set after training
+        accuracy:
+          type: number
+          description: The model's accuracy on the validation set after training
+        confusionMatrix:
+          type: array
+          example:
+          - - 31
+            - 1
+            - 0
+          - - 2
+            - 27
+            - 3
+          - - 1
+            - 0
+            - 39
+          items:
+            type: array
+            items:
+              type: number
+        report:
+          type: object
+          description: Precision, recall, F1 and support scores
+        onDevicePerformance:
+          type: array
+          items:
+            type: object
+            required:
+            - mcu
+            - name
+            - isDefault
+            - latency
+            - tflite
+            - eon
+            - hasPerformance
+            properties:
+              mcu:
+                type: string
+              name:
+                type: string
+              isDefault:
+                type: boolean
+              latency:
+                type: number
+              tflite:
+                type: object
+                required:
+                - ramRequired
+                - romRequired
+                - arenaSize
+                - modelSize
+                properties:
+                  ramRequired:
+                    type: integer
+                  romRequired:
+                    type: integer
+                  arenaSize:
+                    type: integer
+                  modelSize:
+                    type: integer
+              eon:
+                type: object
+                required:
+                - ramRequired
+                - romRequired
+                - arenaSize
+                - modelSize
+                properties:
+                  ramRequired:
+                    type: integer
+                  romRequired:
+                    type: integer
+                  arenaSize:
+                    type: integer
+                  modelSize:
+                    type: integer
+              eon_ram_optimized:
+                type: object
+                required:
+                - ramRequired
+                - romRequired
+                - arenaSize
+                - modelSize
+                properties:
+                  ramRequired:
+                    type: integer
+                  romRequired:
+                    type: integer
+                  arenaSize:
+                    type: integer
+                  modelSize:
+                    type: integer
+              customMetrics:
+                description: Custom, device-specific performance metrics
+                type: array
+                items:
+                  $ref: '#/components/schemas/KerasCustomMetric'
+              hasPerformance:
+                description: If false, then no metrics are available for this target
+                type: boolean
+              profilingError:
+                description: Specific error during profiling (e.g. model not supported)
+                type: string
+        predictions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ModelPrediction_2'
+        visualization:
           type: string
-        x:
+          enum:
+          - featureExplorer
+          - dataExplorer
+          - none
+        isSupportedOnMcu:
+          type: boolean
+        mcuSupportError:
+          type: string
+        profilingJobId:
+          description: If this is set, then we're still profiling this model. Subscribe to job updates to see when it's done (afterward the metadata will be updated).
+          type: integer
+        profilingJobFailed:
+          description: If this is set, then the profiling job failed (get the status by getting the job logs for 'profilingJobId').
+          type: boolean
+        additionalMetrics:
+          type: array
+          items:
+            $ref: '#/components/schemas/AdditionalMetric'
+    BlockDisplayCategory_2:
+      description: Category to display this block in the UI.
+      type: string
+      enum:
+      - classical
+      - tao
+      - developer-preview
+    TunerTrial_2:
+      type: object
+      required:
+      - id
+      - name
+      - status
+      - blocks
+      - impulse
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+          - pending
+          - running
+          - completed
+          - failed
+        lastCompletedEpoch:
+          type: string
+          format: date-time
+        lastCompletedTraining:
+          type: string
+          format: date-time
+        retries:
+          type: integer
+        currentEpoch:
+          type: integer
+        workerId:
+          type: string
+        blocks:
+          type: array
+          items:
+            type: object
+            required:
+            - id
+            - type
+            - retries
+            - status
+            - blockId
+            properties:
+              id:
+                type: integer
+              lastActive:
+                type: string
+                format: date-time
+              retries:
+                type: integer
+              status:
+                type: string
+                enum:
+                - pending
+                - running
+                - completed
+                - failed
+              type:
+                type: string
+                enum:
+                - input
+                - dsp
+                - learn
+              modelBlockIndex:
+                type: integer
+                description: Index of corresponding DSP/learn block in the impulse model passed to createTrial()
+        impulse:
+          $ref: '#/components/schemas/TunerTrialImpulse'
+        experiment:
+          type: string
+        original_trial_id:
+          type: string
+        model:
+          type: object
+          additionalProperties: true
+        dspJobId:
+          type: object
+          properties:
+            training:
+              type: number
+            testing:
+              type: number
+        learnJobId:
           type: number
-        y:
+        devicePerformance:
+          type: object
+          additionalProperties: true
+        optimizationRound:
           type: number
-        width:
-          type: number
-        height:
-          type: number
-        score:
-          type: number
+        progress:
+          type: object
+          required:
+          - epoch
+          - loss
+          - val_loss
+          - accuracy
+          - val_accuracy
+          properties:
+            epoch:
+              type: number
+            loss:
+              type: number
+            val_loss:
+              type: number
+            accuracy:
+              type: number
+            val_accuracy:
+              type: number
+        metrics:
+          type: object
+          properties:
+            test:
+              type: object
+              properties:
+                float32:
+                  $ref: '#/components/schemas/KerasModelMetadataMetrics_2'
+                int8:
+                  $ref: '#/components/schemas/KerasModelMetadataMetrics_2'
+            train:
+              type: object
+              properties:
+                float32:
+                  $ref: '#/components/schemas/KerasModelMetadataMetrics_2'
+                int8:
+                  $ref: '#/components/schemas/KerasModelMetadataMetrics_2'
+            validation:
+              type: object
+              properties:
+                float32:
+                  $ref: '#/components/schemas/KerasModelMetadataMetrics_2'
+                int8:
+                  $ref: '#/components/schemas/KerasModelMetadataMetrics_2'
+        impulseAddedToProject:
+          type: object
+          required:
+          - impulseId
+          - link
+          properties:
+            impulseId:
+              type: integer
+            link:
+              type: string
+        createdInPostProcessing:
+          type: boolean
+    OptimizeTransferLearningModelsResponse_2:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - models
+        properties:
+          models:
+            type: object
+            required:
+            - image
+            - objectDetection
+            - kws
+            - regression
+            - classification
+            properties:
+              image:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransferLearningModel_2'
+              objectDetection:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransferLearningModel_2'
+              kws:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransferLearningModel_2'
+              regression:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransferLearningModel_2'
+              classification:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransferLearningModel_2'
+              anomaly:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransferLearningModel_2'
+              visualAnomaly:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TransferLearningModel_2'
   parameters:
-    TunerCoordinatorJobIdParameter:
-      name: tunerCoordinatorJobId
-      in: path
-      required: true
-      description: Tuner coordinator job ID
-      schema:
-        type: integer
-    JobIdParameter:
-      name: jobId
-      in: path
-      required: true
-      description: Job ID
-      schema:
-        type: integer
     OptimizeOrganizationDspIdParameter:
       name: organizationDspId
       in: query
@@ -2846,6 +2832,20 @@ components:
       in: query
       required: true
       description: Organization ID
+      schema:
+        type: integer
+    TunerCoordinatorJobIdParameter:
+      name: tunerCoordinatorJobId
+      in: path
+      required: true
+      description: Tuner coordinator job ID
+      schema:
+        type: integer
+    JobIdParameter:
+      name: jobId
+      in: path
+      required: true
+      description: Job ID
       schema:
         type: integer
   securitySchemes:

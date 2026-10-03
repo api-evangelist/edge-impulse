@@ -129,7 +129,22 @@ paths:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
 components:
+  parameters:
+    ThemeIdParameter:
+      name: themeId
+      in: path
+      required: true
+      description: Theme ID
+      schema:
+        type: integer
   schemas:
+    GetThemeResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          theme:
+            $ref: '#/components/schemas/Theme'
     UploadImageRequest:
       type: object
       required:
@@ -138,60 +153,6 @@ components:
         image:
           type: string
           format: binary
-    GetThemeResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        properties:
-          theme:
-            $ref: '#/components/schemas/Theme'
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
-    GetThemesResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - themes
-        properties:
-          themes:
-            type: array
-            items:
-              $ref: '#/components/schemas/Theme'
-    UpdateThemeLogosRequest:
-      type: object
-      description: Only fields set in this object will be updated.
-      properties:
-        primary:
-          type: string
-          description: Primary logo URL
-        primaryWhite:
-          type: string
-          description: Primary logo for dark background URL
-        login:
-          type: string
-          description: Login logo URL
-        loginWhite:
-          type: string
-          description: Login logo for dark background URL
-        mark:
-          type: string
-          description: Mark URL
-        markWhite:
-          type: string
-          description: Mark for dark background URL
-        deviceLogo:
-          type: string
-          description: Device logo URL
     UpdateThemeColorsRequest:
       type: object
       description: Only fields set in this object will be updated.
@@ -272,14 +233,53 @@ components:
                 type: number
             primaryColorGradientEnd:
               type: string
-  parameters:
-    ThemeIdParameter:
-      name: themeId
-      in: path
-      required: true
-      description: Theme ID
-      schema:
-        type: integer
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    GetThemesResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - themes
+        properties:
+          themes:
+            type: array
+            items:
+              $ref: '#/components/schemas/Theme'
+    UpdateThemeLogosRequest:
+      type: object
+      description: Only fields set in this object will be updated.
+      properties:
+        primary:
+          type: string
+          description: Primary logo URL
+        primaryWhite:
+          type: string
+          description: Primary logo for dark background URL
+        login:
+          type: string
+          description: Login logo URL
+        loginWhite:
+          type: string
+          description: Login logo for dark background URL
+        mark:
+          type: string
+          description: Mark URL
+        markWhite:
+          type: string
+          description: Mark for dark background URL
+        deviceLogo:
+          type: string
+          description: Device logo URL
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey

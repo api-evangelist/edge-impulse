@@ -54,64 +54,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetIntegrationSessionStatusResponse'
 components:
-  schemas:
-    GetIntegrationSessionStatusResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - sessionStatus
-        properties:
-          sessionStatus:
-            $ref: '#/components/schemas/IntegrationSessionStatus'
-    StartTensorBoardSessionRequest:
-      type: object
-      required:
-      - blockIds
-      properties:
-        blockIds:
-          description: IDs of learn blocks to compare in a TensorBoard session
-          type: array
-          items:
-            type: number
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
-    StartIntegrationSessionResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: string
-            description: Unique integration resource identifier. Pass this to getIntegrationSessionStatus to check the status of the integration session.
-            example: learn-3-2-1
-    IntegrationSessionStatus:
-      type: object
-      required:
-      - status
-      properties:
-        status:
-          description: Integration session status
-          type: string
-          enum:
-          - pending
-          - active
-          - error
-          - stopped
-        additionalInfo:
-          description: Any relevant additional information, e.g. the reason the session has stopped or any error messages.
-          type: string
   parameters:
     ProjectIdParameter:
       name: projectId
@@ -134,6 +76,64 @@ components:
       example: learn-3-2-1
       schema:
         type: string
+  schemas:
+    IntegrationSessionStatus:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          description: Integration session status
+          type: string
+          enum:
+          - pending
+          - active
+          - error
+          - stopped
+        additionalInfo:
+          description: Any relevant additional information, e.g. the reason the session has stopped or any error messages.
+          type: string
+    StartTensorBoardSessionRequest:
+      type: object
+      required:
+      - blockIds
+      properties:
+        blockIds:
+          description: IDs of learn blocks to compare in a TensorBoard session
+          type: array
+          items:
+            type: number
+    GetIntegrationSessionStatusResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - sessionStatus
+        properties:
+          sessionStatus:
+            $ref: '#/components/schemas/IntegrationSessionStatus'
+    StartIntegrationSessionResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: string
+            description: Unique integration resource identifier. Pass this to getIntegrationSessionStatus to check the status of the integration session.
+            example: learn-3-2-1
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey

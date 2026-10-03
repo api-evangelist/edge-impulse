@@ -403,91 +403,70 @@ paths:
     servers:
     - url: https://studio.edgeimpulse.com/v1
 components:
-  parameters:
-    OrganizationIdParameter:
-      name: organizationId
-      in: path
-      required: true
-      description: Organization ID
-      schema:
-        type: integer
-    OffsetResultsParameter:
-      name: offset
-      in: query
-      required: false
-      description: Offset in results, can be used in conjunction with LimitResultsParameter to implement paging.
-      schema:
-        type: integer
-    TransformOffsetResultsParameter:
-      name: transformOffset
-      in: query
-      required: true
-      description: Offset in results of transformation jobs, can be used in conjunction with TransformLimitResultsParameter to implement paging.
-      schema:
-        type: integer
-    LimitResultsParameter:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of results
-      schema:
-        type: integer
-    OrganizationCreateProjectFileIdParameter:
-      name: createProjectFileId
-      in: path
-      required: true
-      description: Create project job file ID.
-      schema:
-        type: integer
-    TransformSelectionParameter:
-      name: selection
-      in: query
-      required: false
-      description: Type of selected rows, either 'all', 'created', 'in-progress' or 'failed' (defaults to 'all')
-      schema:
-        type: string
-    OrganizationCreateProjectIdParameter:
-      name: createProjectId
-      in: path
-      required: true
-      description: Create project job ID.
-      schema:
-        type: integer
-    IncludePipelineJobsParameter:
-      name: includePipelineJobs
-      in: query
-      required: false
-      description: If enabled, also includes jobs that are part of a pipeline
-      schema:
-        type: boolean
-    TransformLimitResultsParameter:
-      name: transformLimit
-      in: query
-      required: true
-      description: Maximum number of results of transformation jobs
-      schema:
-        type: integer
   schemas:
-    CreateProjectResponse:
+    StartJobResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
         - id
-        - apiKey
         properties:
           id:
             type: integer
-            description: Project ID for the new project
-          apiKey:
-            type: string
-            description: API key for the new project
+            description: Job identifier. Status updates will include this identifier.
+            example: 12873488112
+    ProjectVisibility:
+      type: string
+      enum:
+      - public
+      - private
+      description: The visibility of the project, either public or private. Public projects can be viewed by anyone on the internet and edited by collaborators. Private projects can only be viewed and edited by collaborators.
     TransformationJobOperatesOnEnum:
       type: string
       enum:
       - file
       - directory
       - standalone
+    OrganizationCreateProjectWithFiles:
+      allOf:
+      - $ref: '#/components/schemas/OrganizationCreateProject'
+      - type: object
+        required:
+        - files
+        - fileCountForFilter
+        properties:
+          files:
+            type: array
+            items:
+              type: object
+              required:
+              - id
+              - fileName
+              - bucketPath
+              - transformationJobStatus
+              - linkToDataItem
+              - lengthString
+              - sourceDatasetType
+              properties:
+                id:
+                  type: integer
+                fileName:
+                  type: string
+                bucketPath:
+                  type: string
+                transformationJobId:
+                  type: integer
+                transformationJobStatus:
+                  $ref: '#/components/schemas/TransformationJobStatusEnum'
+                linkToDataItem:
+                  type: string
+                lengthString:
+                  type: string
+                  description: Only set after job was finished
+                sourceDatasetType:
+                  $ref: '#/components/schemas/OrganizationDatasetTypeEnum'
+          fileCountForFilter:
+            type: integer
     OrganizationCreateProject:
       type: object
       required:
@@ -618,95 +597,6 @@ components:
           description: Total amount of compute used (friendly string)
         createdByUser:
           $ref: '#/components/schemas/CreatedUpdatedByUser'
-    OrganizationCreateProjectWithFiles:
-      allOf:
-      - $ref: '#/components/schemas/OrganizationCreateProject'
-      - type: object
-        required:
-        - files
-        - fileCountForFilter
-        properties:
-          files:
-            type: array
-            items:
-              type: object
-              required:
-              - id
-              - fileName
-              - bucketPath
-              - transformationJobStatus
-              - linkToDataItem
-              - lengthString
-              - sourceDatasetType
-              properties:
-                id:
-                  type: integer
-                fileName:
-                  type: string
-                bucketPath:
-                  type: string
-                transformationJobId:
-                  type: integer
-                transformationJobStatus:
-                  $ref: '#/components/schemas/TransformationJobStatusEnum'
-                linkToDataItem:
-                  type: string
-                lengthString:
-                  type: string
-                  description: Only set after job was finished
-                sourceDatasetType:
-                  $ref: '#/components/schemas/OrganizationDatasetTypeEnum'
-          fileCountForFilter:
-            type: integer
-    StartJobResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: integer
-            description: Job identifier. Status updates will include this identifier.
-            example: 12873488112
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
-    OrganizationDatasetTypeEnum:
-      type: string
-      enum:
-      - clinical
-      - files
-    CreatedUpdatedByUser:
-      type: object
-      required:
-      - id
-      - name
-      - username
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        username:
-          type: string
-        photo:
-          type: string
-    OrganizationCreateProjectStatusResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        properties:
-          status:
-            $ref: '#/components/schemas/OrganizationCreateProjectWithFiles'
     OrganizationCreateProjectResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -721,64 +611,17 @@ components:
           apiKey:
             type: string
             description: API key for the new project
-    OrganizationCreateProjectOutputDatasetPathRule:
-      description: Defines the folder structure for writing to the output dataset. Used only when uploading into a default (non-clinical) dataset.
-      type: string
-      enum:
-      - no-subfolders
-      - subfolder-per-item
-      - use-full-path
-    OrganizationCreateProjectPathFilter:
-      type: object
-      description: Filter, given as a dataset and path containing wildcards, used for creating transformation jobs
-      required:
-      - dataset
-      - filter
-      properties:
-        dataset:
-          type: string
-          description: Dataset name of files to transform
-        filter:
-          type: string
-          description: Path filter with wildcards, relative to the root of the dataset. For example, /folder/*.json will transform all JSON files in /folder (when operating on files)
-    TransformationJobStatusEnum:
-      type: string
-      enum:
-      - waiting
-      - created
-      - started
-      - finished
-      - failed
-    UploadCustomBlockRequest:
+    GenericApiResponse:
       type: object
       required:
-      - tar
-      - type
-      - blockId
+      - success
       properties:
-        tar:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
           type: string
-          format: binary
-        type:
-          type: string
-          enum:
-          - transform
-          - deploy
-          - dsp
-          - transferLearning
-        blockId:
-          type: integer
-    UpdateOrganizationCreateProjectRequest:
-      type: object
-      properties:
-        transformationParallel:
-          type: integer
-          description: Number of transformation jobs that can be ran in parallel
-        emailRecipientUids:
-          description: List of user IDs to notify when a Job succeeds
-          type: array
-          items:
-            type: integer
+          description: Optional error description (set if 'success' was false)
     UpdateOrganizationCreateEmptyProjectRequest:
       type: object
       required:
@@ -794,6 +637,46 @@ components:
           type: string
           example: jan@edgeimpulse.com
           description: The username or email of the owner of the project. This field is mandatory when authenticating via API key. If no email is provided when authenticating via JWT, the user ID attached to the JWT will be user as project owner.
+    OrganizationDatasetTypeEnum:
+      type: string
+      enum:
+      - clinical
+      - files
+    OrganizationCreateProjectPathFilter:
+      type: object
+      description: Filter, given as a dataset and path containing wildcards, used for creating transformation jobs
+      required:
+      - dataset
+      - filter
+      properties:
+        dataset:
+          type: string
+          description: Dataset name of files to transform
+        filter:
+          type: string
+          description: Path filter with wildcards, relative to the root of the dataset. For example, /folder/*.json will transform all JSON files in /folder (when operating on files)
+    OrganizationCreateProjectStatusResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          status:
+            $ref: '#/components/schemas/OrganizationCreateProjectWithFiles'
+    CreatedUpdatedByUser:
+      type: object
+      required:
+      - id
+      - name
+      - username
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        username:
+          type: string
+        photo:
+          type: string
     OrganizationGetCreateProjectsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -877,6 +760,35 @@ components:
                   description: Total amount of compute used (friendly string)
                 createdByUser:
                   $ref: '#/components/schemas/CreatedUpdatedByUser'
+    TransformationJobStatusEnum:
+      type: string
+      enum:
+      - waiting
+      - created
+      - started
+      - finished
+      - failed
+    CreateProjectResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        - apiKey
+        properties:
+          id:
+            type: integer
+            description: Project ID for the new project
+          apiKey:
+            type: string
+            description: API key for the new project
+    OrganizationCreateProjectOutputDatasetPathRule:
+      description: Defines the folder structure for writing to the output dataset. Used only when uploading into a default (non-clinical) dataset.
+      type: string
+      enum:
+      - no-subfolders
+      - subfolder-per-item
+      - use-full-path
     OrganizationCreateProjectRequest:
       type: object
       description: If uploadType is set to 'project', either projectId, newProjectName or both projectApiKey and projectHmacKey are required. projectId and newProjectName are only available through JWT tokens. If uploadType is set to 'dataset' then outputDatasetName can be set to '' to output in the same dataset, or set to a string to create (or append to) a new dataset.
@@ -947,12 +859,6 @@ components:
           description: List of custom parameters for this transformation job (see the list of parameters that the block exposes).
           additionalProperties:
             type: string
-    ProjectVisibility:
-      type: string
-      enum:
-      - public
-      - private
-      description: The visibility of the project, either public or private. Public projects can be viewed by anyone on the internet and edited by collaborators. Private projects can only be viewed and edited by collaborators.
     UpdateOrganizationAddCollaboratorRequest:
       type: object
       required:
@@ -965,24 +871,16 @@ components:
         userId:
           type: integer
           description: The user ID to add to the project. The user must be an admin of the organization.
-    CreateCustomBlockUploadLinkRequest:
+    UploadCustomBlockRequest:
       type: object
       required:
-      - fileName
-      - fileSize
-      - fileHash
+      - tar
       - type
       - blockId
       properties:
-        fileName:
+        tar:
           type: string
-          description: file name
-        fileSize:
-          type: integer
-          description: file size in bytes
-        fileHash:
-          type: string
-          description: hash to identify file changes
+          format: binary
         type:
           type: string
           enum:
@@ -992,6 +890,23 @@ components:
           - transferLearning
         blockId:
           type: integer
+    UpdateOrganizationCreateProjectRequest:
+      type: object
+      properties:
+        transformationParallel:
+          type: integer
+          description: Number of transformation jobs that can be ran in parallel
+        emailRecipientUids:
+          description: List of user IDs to notify when a Job succeeds
+          type: array
+          items:
+            type: integer
+    TutorialType:
+      type: string
+      description: The type of in-product guided tutorial to show in the getting started wizard
+      enum:
+      - kws
+      - cv
     OrganizationCreateProject_2:
       type: object
       required:
@@ -1123,37 +1038,6 @@ components:
           description: Total amount of compute used (friendly string)
         createdByUser:
           $ref: '#/components/schemas/CreatedUpdatedByUser'
-    FinalizeCustomBlockUploadRequest:
-      type: object
-      required:
-      - uploadKey
-      - fileName
-      - fileSize
-      - fileHash
-      - type
-      - blockId
-      properties:
-        uploadKey:
-          type: string
-          description: S3 object key for the staged upload
-        fileName:
-          type: string
-          description: file name
-        fileSize:
-          type: integer
-          description: file size in bytes
-        fileHash:
-          type: string
-          description: hash to identify file changes
-        type:
-          type: string
-          enum:
-          - transform
-          - deploy
-          - dsp
-          - transferLearning
-        blockId:
-          type: integer
     OrganizationCreateProjectResponse_2:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -1189,6 +1073,33 @@ components:
           uploadKey:
             type: string
             description: S3 object key for the staged upload
+    CreateCustomBlockUploadLinkRequest:
+      type: object
+      required:
+      - fileName
+      - fileSize
+      - fileHash
+      - type
+      - blockId
+      properties:
+        fileName:
+          type: string
+          description: file name
+        fileSize:
+          type: integer
+          description: file size in bytes
+        fileHash:
+          type: string
+          description: hash to identify file changes
+        type:
+          type: string
+          enum:
+          - transform
+          - deploy
+          - dsp
+          - transferLearning
+        blockId:
+          type: integer
     UpdateOrganizationCreateEmptyProjectRequest_2:
       type: object
       required:
@@ -1284,12 +1195,101 @@ components:
           description: List of custom parameters for this transformation job (see the list of parameters that the block exposes).
           additionalProperties:
             type: string
-    TutorialType:
-      type: string
-      description: The type of in-product guided tutorial to show in the getting started wizard
-      enum:
-      - kws
-      - cv
+    FinalizeCustomBlockUploadRequest:
+      type: object
+      required:
+      - uploadKey
+      - fileName
+      - fileSize
+      - fileHash
+      - type
+      - blockId
+      properties:
+        uploadKey:
+          type: string
+          description: S3 object key for the staged upload
+        fileName:
+          type: string
+          description: file name
+        fileSize:
+          type: integer
+          description: file size in bytes
+        fileHash:
+          type: string
+          description: hash to identify file changes
+        type:
+          type: string
+          enum:
+          - transform
+          - deploy
+          - dsp
+          - transferLearning
+        blockId:
+          type: integer
+  parameters:
+    OrganizationCreateProjectIdParameter:
+      name: createProjectId
+      in: path
+      required: true
+      description: Create project job ID.
+      schema:
+        type: integer
+    OffsetResultsParameter:
+      name: offset
+      in: query
+      required: false
+      description: Offset in results, can be used in conjunction with LimitResultsParameter to implement paging.
+      schema:
+        type: integer
+    OrganizationCreateProjectFileIdParameter:
+      name: createProjectFileId
+      in: path
+      required: true
+      description: Create project job file ID.
+      schema:
+        type: integer
+    TransformSelectionParameter:
+      name: selection
+      in: query
+      required: false
+      description: Type of selected rows, either 'all', 'created', 'in-progress' or 'failed' (defaults to 'all')
+      schema:
+        type: string
+    TransformLimitResultsParameter:
+      name: transformLimit
+      in: query
+      required: true
+      description: Maximum number of results of transformation jobs
+      schema:
+        type: integer
+    TransformOffsetResultsParameter:
+      name: transformOffset
+      in: query
+      required: true
+      description: Offset in results of transformation jobs, can be used in conjunction with TransformLimitResultsParameter to implement paging.
+      schema:
+        type: integer
+    OrganizationIdParameter:
+      name: organizationId
+      in: path
+      required: true
+      description: Organization ID
+      schema:
+        type: integer
+    LimitResultsParameter:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of results
+      schema:
+        type: integer
+    IncludePipelineJobsParameter:
+      name: includePipelineJobs
+      in: query
+      required: false
+      description: If enabled, also includes jobs that are part of a pipeline
+      schema:
+        type: boolean
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey

@@ -319,62 +319,6 @@ paths:
     - url: https://studio.edgeimpulse.com/v1
 components:
   schemas:
-    ClassifySampleResponseClassificationDetails:
-      type: object
-      properties:
-        boxes:
-          type: array
-          description: Bounding boxes predicted by localization model
-          items:
-            type: array
-            items:
-              type: number
-        labels:
-          type: array
-          description: Labels predicted by localization model
-          items:
-            type: number
-        scores:
-          type: array
-          description: Scores predicted by localization model
-          items:
-            type: number
-        mAP:
-          type: number
-          description: For object detection, the COCO mAP computed for the predictions on this image
-        f1:
-          type: number
-          description: For FOMO, the F1 score computed for the predictions on this image
-    StructuredLabel:
-      type: object
-      description: 'A structured label contains a label, and the range for which this label is valid. `endIndex` is inclusive. E.g. `{ startIndex: 10, endIndex: 13, label: ''running'' }` means that the values at index 10, 11, 12, 13 are labeled ''running''. To get time codes you can multiple by the sample''s `intervalMs` property.'
-      required:
-      - startIndex
-      - endIndex
-      - label
-      properties:
-        startIndex:
-          type: integer
-          description: Start index of the label (e.g. 0)
-        endIndex:
-          type: integer
-          description: 'End index of the label (e.g. 3). This value is inclusive, so { startIndex: 0, endIndex: 3 } covers 0, 1, 2, 3.'
-        label:
-          type: string
-          description: The label for this section.
-    Sensor:
-      type: object
-      required:
-      - name
-      - units
-      properties:
-        name:
-          type: string
-          description: Name of the axis
-          example: accX
-        units:
-          type: string
-          description: Type of data on this axis. Needs to comply to SenML units (see https://www.iana.org/assignments/senml/senml.xhtml).
     AnomalyResult:
       type: object
       properties:
@@ -396,6 +340,182 @@ components:
         maxScore:
           type: number
           description: Maximum value of the scores.
+    StartJobResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: Job identifier. Status updates will include this identifier.
+            example: 12873488112
+    BoundingBoxWithScore:
+      type: object
+      description: This has the _ratio_ for x/y/w/h (so 0..1)
+      required:
+      - label
+      - x
+      - y
+      - width
+      - height
+      - score
+      properties:
+        label:
+          type: string
+        x:
+          type: number
+        y:
+          type: number
+        width:
+          type: number
+        height:
+          type: number
+        score:
+          type: number
+    UploadImageRequest:
+      type: object
+      required:
+      - image
+      properties:
+        image:
+          type: string
+          format: binary
+    LearnBlockType:
+      type: string
+      description: The type of learning block (anomaly, keras, keras-transfer-image, keras-transfer-kws, keras-object-detection, keras-regression). Each behaves differently.
+      enum:
+      - anomaly
+      - anomaly-gmm
+      - keras
+      - keras-transfer-image
+      - keras-transfer-kws
+      - keras-object-detection
+      - keras-regression
+      - keras-akida
+      - keras-akida-transfer-image
+      - keras-akida-object-detection
+      - keras-visual-anomaly
+    AdditionalMetric:
+      type: object
+      required:
+      - name
+      - value
+      - fullPrecisionValue
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+        fullPrecisionValue:
+          type: number
+        tooltipText:
+          type: string
+        link:
+          type: string
+    Sensor:
+      type: object
+      required:
+      - name
+      - units
+      properties:
+        name:
+          type: string
+          description: Name of the axis
+          example: accX
+        units:
+          type: string
+          description: Type of data on this axis. Needs to comply to SenML units (see https://www.iana.org/assignments/senml/senml.xhtml).
+    RawSampleData:
+      type: object
+      required:
+      - sample
+      - payload
+      - totalPayloadLength
+      properties:
+        sample:
+          $ref: '#/components/schemas/Sample'
+        payload:
+          $ref: '#/components/schemas/RawSamplePayload'
+        totalPayloadLength:
+          type: integer
+          description: Total number of payload values
+    StructuredLabel:
+      type: object
+      description: 'A structured label contains a label, and the range for which this label is valid. `endIndex` is inclusive. E.g. `{ startIndex: 10, endIndex: 13, label: ''running'' }` means that the values at index 10, 11, 12, 13 are labeled ''running''. To get time codes you can multiple by the sample''s `intervalMs` property.'
+      required:
+      - startIndex
+      - endIndex
+      - label
+      properties:
+        startIndex:
+          type: integer
+          description: Start index of the label (e.g. 0)
+        endIndex:
+          type: integer
+          description: 'End index of the label (e.g. 3). This value is inclusive, so { startIndex: 0, endIndex: 3 } covers 0, 1, 2, 3.'
+        label:
+          type: string
+          description: The label for this section.
+    BoundingBox:
+      type: object
+      description: This has the _absolute values_ for x/y/w/h (so 0..x (where x is the w/h of the image))
+      required:
+      - label
+      - x
+      - y
+      - width
+      - height
+      properties:
+        label:
+          type: string
+        x:
+          type: integer
+        y:
+          type: integer
+        width:
+          type: integer
+        height:
+          type: integer
+    RawSamplePayload:
+      type: object
+      description: Sensor readings and metadata
+      required:
+      - device_type
+      - sensors
+      - values
+      properties:
+        device_name:
+          type: string
+          description: Unique identifier for this device. **Only** set this when the device has a globally unique identifier (e.g. MAC address).
+          example: ac:87:a3:0a:2d:1b
+        device_type:
+          type: string
+          description: Device type, for example the exact model of the device. Should be the same for all similar devices.
+          example: DISCO-L475VG-IOT01A
+        sensors:
+          type: array
+          description: Array with sensor axes
+          items:
+            $ref: '#/components/schemas/Sensor'
+        values:
+          type: array
+          description: 'Array of sensor values. One array item per interval, and as many items in this array as there are sensor axes. This type is returned if there are multiple axes.
+
+            '
+          items:
+            type: array
+            items:
+              type: number
+        cropStart:
+          type: integer
+          description: New start index of the cropped sample
+          example: 0
+        cropEnd:
+          type: integer
+          description: New end index of the cropped sample
+          example: 128
     Sample:
       type: object
       required:
@@ -573,6 +693,297 @@ components:
               type: integer
             height:
               type: integer
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    ClassifySampleResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - classifications
+        - sample
+        - windowSizeMs
+        - windowIncreaseMs
+        - alreadyInDatabase
+        properties:
+          classifications:
+            type: array
+            items:
+              $ref: '#/components/schemas/ClassifySampleResponseClassification'
+          sample:
+            $ref: '#/components/schemas/RawSampleData'
+          windowSizeMs:
+            type: integer
+            description: Size of the sliding window (as set by the impulse) in milliseconds.
+            example: 2996
+          windowIncreaseMs:
+            type: integer
+            description: Number of milliseconds that the sliding window increased with (as set by the impulse)
+            example: 10
+          alreadyInDatabase:
+            type: boolean
+            description: Whether this sample is already in the training database
+          warning:
+            type: string
+    ClassifyJobResponsePage:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - result
+        - predictions
+        properties:
+          result:
+            type: array
+            items:
+              $ref: '#/components/schemas/ModelResult'
+          predictions:
+            type: array
+            items:
+              $ref: '#/components/schemas/ModelPrediction'
+    ClassifySampleResponseMultipleVariants:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - classifications
+        - sample
+        - windowSizeMs
+        - windowIncreaseMs
+        - alreadyInDatabase
+        properties:
+          results:
+            type: array
+            items:
+              $ref: '#/components/schemas/ClassifySampleResponseVariantResults'
+          sample:
+            $ref: '#/components/schemas/RawSampleData'
+          windowSizeMs:
+            type: integer
+            description: Size of the sliding window (as set by the impulse) in milliseconds.
+            example: 2996
+          windowIncreaseMs:
+            type: integer
+            description: Number of milliseconds that the sliding window increased with (as set by the impulse)
+            example: 10
+          alreadyInDatabase:
+            type: boolean
+            description: Whether this sample is already in the training database
+    ClassifySampleResponseClassification:
+      type: object
+      required:
+      - learnBlock
+      - result
+      - expectedLabels
+      - minimumConfidenceRating
+      properties:
+        learnBlock:
+          $ref: '#/components/schemas/ImpulseLearnBlock'
+        result:
+          type: array
+          description: Classification result, one item per window.
+          example:
+          - idle: 0.0002
+            wave: 0.9998
+            anomaly: -0.42
+          items:
+            type: object
+            description: Classification value per label. For a neural network this will be the confidence, for anomalies the anomaly score.
+            additionalProperties:
+              type: number
+        anomalyResult:
+          type: array
+          description: Anomaly scores and computed metrics for visual anomaly detection, one item per window.
+          items:
+            $ref: '#/components/schemas/AnomalyResult'
+        structuredResult:
+          type: array
+          description: Results of inferencing that returns structured data, such as object detection
+          items:
+            $ref: '#/components/schemas/StructuredClassifyResult'
+        minimumConfidenceRating:
+          type: number
+          description: The minimum confidence rating for this block. For regression, this is the absolute error (which can be larger than 1).
+        details:
+          type: array
+          description: Structured outputs and computed metrics for some model types (e.g. object detection), one item per window.
+          items:
+            $ref: '#/components/schemas/ClassifySampleResponseClassificationDetails'
+        objectDetectionLastLayer:
+          $ref: '#/components/schemas/ObjectDetectionLastLayer'
+        expectedLabels:
+          type: array
+          description: An array with an expected label per window.
+          items:
+            $ref: '#/components/schemas/StructuredLabel'
+    ModelPrediction:
+      type: object
+      required:
+      - sampleId
+      - startMs
+      - endMs
+      - prediction
+      properties:
+        sampleId:
+          type: integer
+        startMs:
+          type: number
+        endMs:
+          type: number
+        label:
+          type: string
+        prediction:
+          type: string
+        predictionCorrect:
+          type: boolean
+        f1Score:
+          type: number
+          description: Only set for object detection projects
+        anomalyScores:
+          type: array
+          description: Only set for visual anomaly projects. 2D array of shape (n, n) with raw anomaly scores, where n varies based on the image input size and the specific visual anomaly algorithm used. The scores corresponds to each grid cell in the image's spatial matrix.
+          items:
+            type: array
+            items:
+              type: number
+    ClassifySampleResponseVariantResults:
+      type: object
+      required:
+      - variant
+      - classifications
+      properties:
+        variant:
+          description: The model variant
+          $ref: '#/components/schemas/KerasModelVariantEnum'
+        classifications:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClassifySampleResponseClassification'
+    ImpulseLearnBlock:
+      type: object
+      required:
+      - id
+      - type
+      - name
+      - dsp
+      - title
+      - primaryVersion
+      properties:
+        id:
+          type: integer
+          minimum: 1
+          description: Identifier for this block. Make sure to up this number when creating a new block, and don't re-use identifiers. If the block hasn't changed, keep the ID as-is. ID must be unique across the project and greather than zero (>0).
+        type:
+          $ref: '#/components/schemas/LearnBlockType'
+        name:
+          type: string
+          description: Block name, will be used in menus. If a block has a baseBlockId, this field is ignored and the base block's name is used instead.
+          example: NN Classifier
+        dsp:
+          type: array
+          description: DSP dependencies, identified by DSP block ID
+          items:
+            type: integer
+            example: 27
+        title:
+          type: string
+          description: Block title, used in the impulse UI
+          example: Classification (Keras)
+        description:
+          type: string
+          description: A short description of the block version, displayed in the block versioning UI
+          example: Reduced learning rate and more layers
+        createdBy:
+          type: string
+          description: The system component that created the block version (createImpulse | clone | tuner). Cannot be set via API.
+          example: createImpulse
+        createdAt:
+          type: string
+          format: date-time
+          description: The datetime that the block version was created. Cannot be set via API.
+    StructuredClassifyResult:
+      type: object
+      required:
+      - boxes
+      - scores
+      - mAP
+      - f1
+      - precision
+      - recall
+      properties:
+        boxes:
+          type: array
+          description: For object detection. An array of bounding box arrays, (x, y, width, height), one per detection in the image.
+          items:
+            type: array
+            items:
+              type: number
+        labels:
+          type: array
+          description: For object detection. An array of labels, one per detection in the image.
+          items:
+            type: string
+        scores:
+          type: array
+          description: For object detection. An array of probability scores, one per detection in the image.
+          items:
+            type: number
+        mAP:
+          type: number
+          description: For object detection. A score that indicates accuracy compared to the ground truth, if available.
+        f1:
+          type: number
+          description: For FOMO. A score that combines the precision and recall of a classifier into a single metric, if available.
+        precision:
+          type: number
+          description: A measure of how many of the positive predictions made are correct (true positives).
+        recall:
+          type: number
+          description: A measure of how many of the positive cases the classifier correctly predicted, over all the positive cases.
+        debugInfoJson:
+          type: string
+          description: Debug info in JSON format
+          example: "{\n    \"y_trues\": [\n        {\"x\": 0.854, \"y\": 0.453125, \"label\": 1},\n        {\"x\": 0.197, \"y\": 0.53125, \"label\": 2}\n    ],\n    \"y_preds\": [\n        {\"x\": 0.916, \"y\": 0.875, \"label\": 1},\n        {\"x\": 0.25, \"y\": 0.541, \"label\": 2}\n    ],\n    \"assignments\": [\n        {\"yp\": 1, \"yt\": 1, \"label\": 2, \"distance\": 0.053}\n    ],\n    \"normalised_min_distance\": 0.2,\n    \"all_pairwise_distances\": [\n        [0, 0, 0.426],\n        [1, 1, 0.053]\n    ],\n    \"unassigned_y_true_idxs\": [0],\n    \"unassigned_y_pred_idxs\": [0]\n}\n"
+    MetricsForModelVariant:
+      type: object
+      required:
+      - variant
+      properties:
+        variant:
+          description: The model variant
+          $ref: '#/components/schemas/KerasModelVariantEnum'
+        accuracy:
+          description: The overall accuracy for the given model variant
+          type: number
+    KerasModelVariantEnum:
+      type: string
+      enum:
+      - int8
+      - float32
+      - akida
+    ObjectDetectionLastLayer:
+      type: string
+      enum:
+      - mobilenet-ssd
+      - fomo
+      - yolov2-akida
+      - yolov5
+      - yolov5v5-drpai
+      - yolox
+      - yolov7
+      - tao-retinanet
+      - tao-ssd
+      - tao-yolov3
+      - tao-yolov4
     ClassifyJobResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -659,359 +1070,6 @@ components:
             description: List of all model variants for which classification results exist
             items:
               $ref: '#/components/schemas/KerasModelVariantEnum'
-    ClassifySampleResponseMultipleVariants:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - classifications
-        - sample
-        - windowSizeMs
-        - windowIncreaseMs
-        - alreadyInDatabase
-        properties:
-          results:
-            type: array
-            items:
-              $ref: '#/components/schemas/ClassifySampleResponseVariantResults'
-          sample:
-            $ref: '#/components/schemas/RawSampleData'
-          windowSizeMs:
-            type: integer
-            description: Size of the sliding window (as set by the impulse) in milliseconds.
-            example: 2996
-          windowIncreaseMs:
-            type: integer
-            description: Number of milliseconds that the sliding window increased with (as set by the impulse)
-            example: 10
-          alreadyInDatabase:
-            type: boolean
-            description: Whether this sample is already in the training database
-    MetricsForModelVariant:
-      type: object
-      required:
-      - variant
-      properties:
-        variant:
-          description: The model variant
-          $ref: '#/components/schemas/KerasModelVariantEnum'
-        accuracy:
-          description: The overall accuracy for the given model variant
-          type: number
-    AdditionalMetric:
-      type: object
-      required:
-      - name
-      - value
-      - fullPrecisionValue
-      properties:
-        name:
-          type: string
-        value:
-          type: string
-        fullPrecisionValue:
-          type: number
-        tooltipText:
-          type: string
-        link:
-          type: string
-    MetricsAllVariantsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        properties:
-          metrics:
-            type: array
-            items:
-              $ref: '#/components/schemas/MetricsForModelVariant'
-    KerasModelVariantEnum:
-      type: string
-      enum:
-      - int8
-      - float32
-      - akida
-    StartJobResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: integer
-            description: Job identifier. Status updates will include this identifier.
-            example: 12873488112
-    ClassifySampleResponseVariantResults:
-      type: object
-      required:
-      - variant
-      - classifications
-      properties:
-        variant:
-          description: The model variant
-          $ref: '#/components/schemas/KerasModelVariantEnum'
-        classifications:
-          type: array
-          items:
-            $ref: '#/components/schemas/ClassifySampleResponseClassification'
-    ClassifySampleResponseClassification:
-      type: object
-      required:
-      - learnBlock
-      - result
-      - expectedLabels
-      - minimumConfidenceRating
-      properties:
-        learnBlock:
-          $ref: '#/components/schemas/ImpulseLearnBlock'
-        result:
-          type: array
-          description: Classification result, one item per window.
-          example:
-          - idle: 0.0002
-            wave: 0.9998
-            anomaly: -0.42
-          items:
-            type: object
-            description: Classification value per label. For a neural network this will be the confidence, for anomalies the anomaly score.
-            additionalProperties:
-              type: number
-        anomalyResult:
-          type: array
-          description: Anomaly scores and computed metrics for visual anomaly detection, one item per window.
-          items:
-            $ref: '#/components/schemas/AnomalyResult'
-        structuredResult:
-          type: array
-          description: Results of inferencing that returns structured data, such as object detection
-          items:
-            $ref: '#/components/schemas/StructuredClassifyResult'
-        minimumConfidenceRating:
-          type: number
-          description: The minimum confidence rating for this block. For regression, this is the absolute error (which can be larger than 1).
-        details:
-          type: array
-          description: Structured outputs and computed metrics for some model types (e.g. object detection), one item per window.
-          items:
-            $ref: '#/components/schemas/ClassifySampleResponseClassificationDetails'
-        objectDetectionLastLayer:
-          $ref: '#/components/schemas/ObjectDetectionLastLayer'
-        expectedLabels:
-          type: array
-          description: An array with an expected label per window.
-          items:
-            $ref: '#/components/schemas/StructuredLabel'
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
-    ObjectDetectionLastLayer:
-      type: string
-      enum:
-      - mobilenet-ssd
-      - fomo
-      - yolov2-akida
-      - yolov5
-      - yolov5v5-drpai
-      - yolox
-      - yolov7
-      - tao-retinanet
-      - tao-ssd
-      - tao-yolov3
-      - tao-yolov4
-    ClassifyJobResponsePage:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - result
-        - predictions
-        properties:
-          result:
-            type: array
-            items:
-              $ref: '#/components/schemas/ModelResult'
-          predictions:
-            type: array
-            items:
-              $ref: '#/components/schemas/ModelPrediction'
-    RawSampleData:
-      type: object
-      required:
-      - sample
-      - payload
-      - totalPayloadLength
-      properties:
-        sample:
-          $ref: '#/components/schemas/Sample'
-        payload:
-          $ref: '#/components/schemas/RawSamplePayload'
-        totalPayloadLength:
-          type: integer
-          description: Total number of payload values
-    TestPretrainedModelResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        properties:
-          result:
-            type: object
-            description: Classification value per label. For a neural network this will be the confidence, for anomalies the anomaly score.
-            additionalProperties:
-              type: number
-          boundingBoxes:
-            type: array
-            items:
-              $ref: '#/components/schemas/BoundingBoxWithScore'
-    ModelPrediction:
-      type: object
-      required:
-      - sampleId
-      - startMs
-      - endMs
-      - prediction
-      properties:
-        sampleId:
-          type: integer
-        startMs:
-          type: number
-        endMs:
-          type: number
-        label:
-          type: string
-        prediction:
-          type: string
-        predictionCorrect:
-          type: boolean
-        f1Score:
-          type: number
-          description: Only set for object detection projects
-        anomalyScores:
-          type: array
-          description: Only set for visual anomaly projects. 2D array of shape (n, n) with raw anomaly scores, where n varies based on the image input size and the specific visual anomaly algorithm used. The scores corresponds to each grid cell in the image's spatial matrix.
-          items:
-            type: array
-            items:
-              type: number
-    UploadImageRequest:
-      type: object
-      required:
-      - image
-      properties:
-        image:
-          type: string
-          format: binary
-    StructuredClassifyResult:
-      type: object
-      required:
-      - boxes
-      - scores
-      - mAP
-      - f1
-      - precision
-      - recall
-      properties:
-        boxes:
-          type: array
-          description: For object detection. An array of bounding box arrays, (x, y, width, height), one per detection in the image.
-          items:
-            type: array
-            items:
-              type: number
-        labels:
-          type: array
-          description: For object detection. An array of labels, one per detection in the image.
-          items:
-            type: string
-        scores:
-          type: array
-          description: For object detection. An array of probability scores, one per detection in the image.
-          items:
-            type: number
-        mAP:
-          type: number
-          description: For object detection. A score that indicates accuracy compared to the ground truth, if available.
-        f1:
-          type: number
-          description: For FOMO. A score that combines the precision and recall of a classifier into a single metric, if available.
-        precision:
-          type: number
-          description: A measure of how many of the positive predictions made are correct (true positives).
-        recall:
-          type: number
-          description: A measure of how many of the positive cases the classifier correctly predicted, over all the positive cases.
-        debugInfoJson:
-          type: string
-          description: Debug info in JSON format
-          example: "{\n    \"y_trues\": [\n        {\"x\": 0.854, \"y\": 0.453125, \"label\": 1},\n        {\"x\": 0.197, \"y\": 0.53125, \"label\": 2}\n    ],\n    \"y_preds\": [\n        {\"x\": 0.916, \"y\": 0.875, \"label\": 1},\n        {\"x\": 0.25, \"y\": 0.541, \"label\": 2}\n    ],\n    \"assignments\": [\n        {\"yp\": 1, \"yt\": 1, \"label\": 2, \"distance\": 0.053}\n    ],\n    \"normalised_min_distance\": 0.2,\n    \"all_pairwise_distances\": [\n        [0, 0, 0.426],\n        [1, 1, 0.053]\n    ],\n    \"unassigned_y_true_idxs\": [0],\n    \"unassigned_y_pred_idxs\": [0]\n}\n"
-    GetSampleResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - $ref: '#/components/schemas/RawSampleData'
-    LearnBlockType:
-      type: string
-      description: The type of learning block (anomaly, keras, keras-transfer-image, keras-transfer-kws, keras-object-detection, keras-regression). Each behaves differently.
-      enum:
-      - anomaly
-      - anomaly-gmm
-      - keras
-      - keras-transfer-image
-      - keras-transfer-kws
-      - keras-object-detection
-      - keras-regression
-      - keras-akida
-      - keras-akida-transfer-image
-      - keras-akida-object-detection
-      - keras-visual-anomaly
-    ImpulseLearnBlock:
-      type: object
-      required:
-      - id
-      - type
-      - name
-      - dsp
-      - title
-      - primaryVersion
-      properties:
-        id:
-          type: integer
-          minimum: 1
-          description: Identifier for this block. Make sure to up this number when creating a new block, and don't re-use identifiers. If the block hasn't changed, keep the ID as-is. ID must be unique across the project and greather than zero (>0).
-        type:
-          $ref: '#/components/schemas/LearnBlockType'
-        name:
-          type: string
-          description: Block name, will be used in menus. If a block has a baseBlockId, this field is ignored and the base block's name is used instead.
-          example: NN Classifier
-        dsp:
-          type: array
-          description: DSP dependencies, identified by DSP block ID
-          items:
-            type: integer
-            example: 27
-        title:
-          type: string
-          description: Block title, used in the impulse UI
-          example: Classification (Keras)
-        description:
-          type: string
-          description: A short description of the block version, displayed in the block versioning UI
-          example: Reduced learning rate and more layers
-        createdBy:
-          type: string
-          description: The system component that created the block version (createImpulse | clone | tuner). Cannot be set via API.
-          example: createImpulse
-        createdAt:
-          type: string
-          format: date-time
-          description: The datetime that the block version was created. Cannot be set via API.
     ModelResult:
       type: object
       required:
@@ -1027,117 +1085,121 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ClassifySampleResponseClassification'
-    BoundingBox:
-      type: object
-      description: This has the _absolute values_ for x/y/w/h (so 0..x (where x is the w/h of the image))
-      required:
-      - label
-      - x
-      - y
-      - width
-      - height
-      properties:
-        label:
-          type: string
-        x:
-          type: integer
-        y:
-          type: integer
-        width:
-          type: integer
-        height:
-          type: integer
-    BoundingBoxWithScore:
-      type: object
-      description: This has the _ratio_ for x/y/w/h (so 0..1)
-      required:
-      - label
-      - x
-      - y
-      - width
-      - height
-      - score
-      properties:
-        label:
-          type: string
-        x:
-          type: number
-        y:
-          type: number
-        width:
-          type: number
-        height:
-          type: number
-        score:
-          type: number
-    ClassifySampleResponse:
+    GetSampleResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - $ref: '#/components/schemas/RawSampleData'
+    TestPretrainedModelResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
-        required:
-        - classifications
-        - sample
-        - windowSizeMs
-        - windowIncreaseMs
-        - alreadyInDatabase
         properties:
-          classifications:
+          result:
+            type: object
+            description: Classification value per label. For a neural network this will be the confidence, for anomalies the anomaly score.
+            additionalProperties:
+              type: number
+          boundingBoxes:
             type: array
             items:
-              $ref: '#/components/schemas/ClassifySampleResponseClassification'
-          sample:
-            $ref: '#/components/schemas/RawSampleData'
-          windowSizeMs:
-            type: integer
-            description: Size of the sliding window (as set by the impulse) in milliseconds.
-            example: 2996
-          windowIncreaseMs:
-            type: integer
-            description: Number of milliseconds that the sliding window increased with (as set by the impulse)
-            example: 10
-          alreadyInDatabase:
-            type: boolean
-            description: Whether this sample is already in the training database
-          warning:
-            type: string
-    RawSamplePayload:
+              $ref: '#/components/schemas/BoundingBoxWithScore'
+    MetricsAllVariantsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          metrics:
+            type: array
+            items:
+              $ref: '#/components/schemas/MetricsForModelVariant'
+    ClassifySampleResponseClassificationDetails:
       type: object
-      description: Sensor readings and metadata
-      required:
-      - device_type
-      - sensors
-      - values
       properties:
-        device_name:
-          type: string
-          description: Unique identifier for this device. **Only** set this when the device has a globally unique identifier (e.g. MAC address).
-          example: ac:87:a3:0a:2d:1b
-        device_type:
-          type: string
-          description: Device type, for example the exact model of the device. Should be the same for all similar devices.
-          example: DISCO-L475VG-IOT01A
-        sensors:
+        boxes:
           type: array
-          description: Array with sensor axes
-          items:
-            $ref: '#/components/schemas/Sensor'
-        values:
-          type: array
-          description: 'Array of sensor values. One array item per interval, and as many items in this array as there are sensor axes. This type is returned if there are multiple axes.
-
-            '
+          description: Bounding boxes predicted by localization model
           items:
             type: array
             items:
               type: number
-        cropStart:
+        labels:
+          type: array
+          description: Labels predicted by localization model
+          items:
+            type: number
+        scores:
+          type: array
+          description: Scores predicted by localization model
+          items:
+            type: number
+        mAP:
+          type: number
+          description: For object detection, the COCO mAP computed for the predictions on this image
+        f1:
+          type: number
+          description: For FOMO, the F1 score computed for the predictions on this image
+    LearnBlockType_2:
+      type: string
+      description: The type of learning block (anomaly, keras, keras-transfer-image, keras-transfer-kws, keras-object-detection, keras-regression, keras-freeform). Each behaves differently.
+      enum:
+      - anomaly
+      - anomaly-gmm
+      - keras
+      - keras-transfer-image
+      - keras-transfer-kws
+      - keras-object-detection
+      - keras-regression
+      - keras-akida
+      - keras-akida-transfer-image
+      - keras-akida-object-detection
+      - keras-visual-anomaly
+      - keras-freeform
+      - keras-anomaly
+      - vlm
+    SampleLabelMapLabels:
+      description: 'Structured sample labels in the form of a key-value map.
+
+        This property is optional and only defined for samples with key-value labels.
+
+        '
+      discriminator:
+        propertyName: type
+        mapping:
+          key-values: '#/components/schemas/SampleKeyValueLabels'
+      oneOf:
+      - $ref: '#/components/schemas/SampleKeyValueLabels'
+    Sensor_2:
+      type: object
+      required:
+      - index
+      - name
+      - units
+      properties:
+        index:
           type: integer
-          description: New start index of the cropped sample
-          example: 0
-        cropEnd:
+          description: Index of the sensor (globally, so you can refer back to it in e.g. getSampleAsAudio)
+        name:
+          type: string
+          description: Name of the axis
+          example: accX
+        units:
+          type: string
+          description: Type of data on this axis. Needs to comply to SenML units (see https://www.iana.org/assignments/senml/senml.xhtml).
+    RawSampleData_2:
+      type: object
+      required:
+      - sample
+      - payload
+      - totalPayloadLength
+      properties:
+        sample:
+          $ref: '#/components/schemas/Sample_2'
+        payload:
+          description: If multiple payloads are present (one per datastream) this returns the first datastream.
+          $ref: '#/components/schemas/RawSamplePayload_2'
+        totalPayloadLength:
           type: integer
-          description: New end index of the cropped sample
-          example: 128
+          description: Total number of payload values
     StructuredLabel_2:
       type: object
       description: 'A structured label contains a label, and the range for which this label is valid. `endIndex` is inclusive. E.g. `{ startIndex: 10, endIndex: 13, label: ''running'' }` means that the values at index 10, 11, 12, 13 are labeled ''running''. To get time codes you can multiple by the sample''s `intervalMs` property.'
@@ -1157,23 +1219,108 @@ components:
           description: The label for this section.
         labelMap:
           $ref: '#/components/schemas/SampleLabelMapLabels'
-    Sensor_2:
+    ProjectLabelingMethod:
+      type: string
+      enum:
+      - single_label
+      - object_detection
+      - label_map
+    RawSamplePayload_2:
       type: object
+      description: Sensor readings and metadata
       required:
-      - index
-      - name
-      - units
+      - device_type
+      - sensors
+      - values
+      - intervalMs
+      - frequencyHz
       properties:
-        index:
+        device_name:
+          type: string
+          description: Unique identifier for this device. **Only** set this when the device has a globally unique identifier (e.g. MAC address).
+          example: ac:87:a3:0a:2d:1b
+        device_type:
+          type: string
+          description: Device type, for example the exact model of the device. Should be the same for all similar devices.
+          example: DISCO-L475VG-IOT01A
+        sensors:
+          type: array
+          description: Array with sensor axes
+          items:
+            $ref: '#/components/schemas/Sensor_2'
+        values:
+          type: array
+          description: 'Array of sensor values. One array item per interval, and as many items in this array as there are sensor axes. This type is returned if there are multiple axes.
+
+            '
+          items:
+            type: array
+            items:
+              type: number
+        cropStart:
           type: integer
-          description: Index of the sensor (globally, so you can refer back to it in e.g. getSampleAsAudio)
-        name:
+          description: New start index of the cropped sample
+          example: 0
+        cropEnd:
+          type: integer
+          description: New end index of the cropped sample
+          example: 128
+        intervalMs:
+          type: number
+          description: Interval between two windows (1000 / frequency). If the data was resampled, then this lists the resampled interval for this payload.
+          example: 16
+        frequencyHz:
+          type: number
+          description: Frequency of the sample. If the data was resampled, then this lists the resampled frequency for this payload.
+          example: 62.5
+    BlockThreshold:
+      type: object
+      description: Configurable threshold for this block (e.g. minimum score before tagging as an anomaly, or the min. score to save bounding boxes)
+      required:
+      - key
+      - description
+      - helpText
+      - value
+      properties:
+        key:
           type: string
-          description: Name of the axis
-          example: accX
-        units:
+          description: Identifier to reference the threshold. You'll need to refer to the threshold by this key when you set the threshold).
+          example: min_score
+        description:
           type: string
-          description: Type of data on this axis. Needs to comply to SenML units (see https://www.iana.org/assignments/senml/senml.xhtml).
+          description: User-friendly description of the threshold.
+          example: Score threshold
+        helpText:
+          type: string
+          description: Additional help text (shown in the UI under a "?" icon)
+          example: Threshold score for bounding boxes. If the score for a bounding box is below this the box will be discarded.
+        suggestedValue:
+          type: number
+          description: If the threshold has a suggested value, e.g. a max. absolute error for regression projects; or the min. anomaly score for visual anomaly detection, then this is the numeric value of that threshold.
+        suggestedValueText:
+          type: string
+          description: If the threshold has a suggested value, e.g. a max. absolute error for regression projects; or the min. anomaly score for visual anomaly detection, then this is the stringified value of that threshold.
+        value:
+          description: Current value of the threshold
+          example: 0.5
+          oneOf:
+          - type: number
+          - type: string
+        dropdownOptions:
+          description: Optional list of options, will be shown in a dropdown.
+          type: array
+          items:
+            type: object
+            required:
+            - description
+            - value
+            properties:
+              description:
+                type: string
+                description: Full description of the value
+              value:
+                type: string
+                description: Value, maps back to "BlockThreshold#value"
     Sample_2:
       type: object
       required:
@@ -1375,6 +1522,93 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SampleDatastream'
+    GetSampleDspResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - $ref: '#/components/schemas/RawSampleData_2'
+    RawSampleDataStreamPayloads:
+      type: object
+      required:
+      - datastreamPayloads
+      properties:
+        datastreamPayloads:
+          type: array
+          items:
+            type: object
+            required:
+            - index
+            - payload
+            - totalPayloadLength
+            properties:
+              index:
+                type: integer
+                description: Index of the datastream in the sample (datastreams that are not in the impulse are filtered out here, so you can still find them back).
+              payload:
+                description: Payload for the current datastream.
+                $ref: '#/components/schemas/RawSamplePayload_2'
+              totalPayloadLength:
+                type: integer
+                description: Total number of payload values
+    LastUpdatedByUser:
+      type: object
+      description: The user who last updated a sample.
+      required:
+      - type
+      - id
+      properties:
+        type:
+          type: string
+          enum:
+          - user
+        id:
+          type: integer
+          description: The ID of the user that last updated the sample.
+    SampleDatastream:
+      type: object
+      required:
+      - index
+      - chartType
+      - intervalMs
+      - frequencyHz
+      - sensors
+      - valuesCount
+      - totalLengthMs
+      properties:
+        index:
+          type: integer
+        chartType:
+          type: string
+          enum:
+          - chart
+          - image
+          - video
+          - table
+        intervalMs:
+          description: Interval between two windows (1000 / frequency).
+          type: number
+        frequencyHz:
+          description: Frequency of the datastream
+          type: number
+        sensors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Sensor_2'
+        valuesCount:
+          type: integer
+          description: Number of readings in this datastream.
+        imageDimensions:
+          type: object
+          required:
+          - width
+          - height
+          properties:
+            width:
+              type: integer
+            height:
+              type: integer
+        totalLengthMs:
+          type: number
+          description: Total length (in ms.) of the datastream
     ClassifySampleResponse_2:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -1405,16 +1639,14 @@ components:
             description: Whether this sample is already in the training database
           warning:
             type: string
-    ClassifyJobResponse_2:
+    ClassifyJobResponsePage_2:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
         - result
         - predictions
-        - accuracy
-        - additionalMetricsByLearnBlock
-        - availableVariants
+        - totalCount
         properties:
           result:
             type: array
@@ -1424,97 +1656,9 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/ModelPrediction_2'
-          accuracy:
-            type: object
-            required:
-            - totalSummary
-            - summaryPerClass
-            - confusionMatrixValues
-            - rows
-            - allLabels
-            properties:
-              totalSummary:
-                type: object
-                required:
-                - good
-                - bad
-                properties:
-                  good:
-                    type: integer
-                  bad:
-                    type: integer
-              summaryPerClass:
-                type: object
-                additionalProperties:
-                  type: object
-                  required:
-                  - good
-                  - bad
-                  properties:
-                    good:
-                      type: integer
-                    bad:
-                      type: integer
-              confusionMatrixValues:
-                type: object
-                additionalProperties:
-                  type: object
-                  additionalProperties:
-                    type: number
-              allLabels:
-                type: array
-                items:
-                  type: string
-              accuracyScore:
-                type: number
-              balancedAccuracyScore:
-                type: number
-              anomalyAccuracyScore:
-                type: number
-              noAnomalyAccuracyScore:
-                type: number
-              mseScore:
-                type: number
-          additionalMetricsByLearnBlock:
-            type: array
-            items:
-              type: object
-              required:
-              - learnBlockId
-              - learnBlockName
-              - additionalMetrics
-              properties:
-                learnBlockId:
-                  type: integer
-                learnBlockName:
-                  type: string
-                additionalMetrics:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/AdditionalMetric'
-          availableVariants:
-            type: array
-            description: List of all model variants for which classification results exist
-            items:
-              $ref: '#/components/schemas/KerasModelVariantEnum'
-          noResultsBecauseThresholdsChanged:
-            type: string
-            description: 'If set to true, there are currently no results because thresholds were changed (e.g. on live classification);
-
-              and what action you can run to get new results the quickest.
-
-              If the value is "can_regenerate_model_summary" you can run ''regenerateModelTestingSummary''.
-
-              If the value is "should_rerun_full_job", you need to run ''startClassifyJob'' or ''startEvaluateJob''.
-
-              '
-            enum:
-            - can_regenerate_model_summary
-            - should_rerun_full_job
-    GetSampleDspResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - $ref: '#/components/schemas/RawSampleData_2'
+          totalCount:
+            type: integer
+            description: Total sample count
     ClassifySampleResponseMultipleVariants_2:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -1633,168 +1777,6 @@ components:
         resultCount:
           type: integer
           description: Number of classification result windows for this block. For structured outputs this can be greater than the length of "result".
-    BlockThreshold:
-      type: object
-      description: Configurable threshold for this block (e.g. minimum score before tagging as an anomaly, or the min. score to save bounding boxes)
-      required:
-      - key
-      - description
-      - helpText
-      - value
-      properties:
-        key:
-          type: string
-          description: Identifier to reference the threshold. You'll need to refer to the threshold by this key when you set the threshold).
-          example: min_score
-        description:
-          type: string
-          description: User-friendly description of the threshold.
-          example: Score threshold
-        helpText:
-          type: string
-          description: Additional help text (shown in the UI under a "?" icon)
-          example: Threshold score for bounding boxes. If the score for a bounding box is below this the box will be discarded.
-        suggestedValue:
-          type: number
-          description: If the threshold has a suggested value, e.g. a max. absolute error for regression projects; or the min. anomaly score for visual anomaly detection, then this is the numeric value of that threshold.
-        suggestedValueText:
-          type: string
-          description: If the threshold has a suggested value, e.g. a max. absolute error for regression projects; or the min. anomaly score for visual anomaly detection, then this is the stringified value of that threshold.
-        value:
-          description: Current value of the threshold
-          example: 0.5
-          oneOf:
-          - type: number
-          - type: string
-        dropdownOptions:
-          description: Optional list of options, will be shown in a dropdown.
-          type: array
-          items:
-            type: object
-            required:
-            - description
-            - value
-            properties:
-              description:
-                type: string
-                description: Full description of the value
-              value:
-                type: string
-                description: Value, maps back to "BlockThreshold#value"
-    ObjectDetectionLastLayer_2:
-      type: string
-      enum:
-      - mobilenet-ssd
-      - fomo
-      - yolov2-akida
-      - yolov5
-      - yolov5v5-drpai
-      - yolox
-      - yolov7
-      - yolo-pro
-      - tao-retinanet
-      - tao-ssd
-      - tao-yolov3
-      - tao-yolov4
-      - yolov11
-      - yolov11-abs
-      - paddleocr-detector
-      - qc-face-det-lite
-      - qc-yolox
-    ClassifyJobResponsePage_2:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - result
-        - predictions
-        - totalCount
-        properties:
-          result:
-            type: array
-            items:
-              $ref: '#/components/schemas/ModelResult'
-          predictions:
-            type: array
-            items:
-              $ref: '#/components/schemas/ModelPrediction_2'
-          totalCount:
-            type: integer
-            description: Total sample count
-    RawSampleData_2:
-      type: object
-      required:
-      - sample
-      - payload
-      - totalPayloadLength
-      properties:
-        sample:
-          $ref: '#/components/schemas/Sample_2'
-        payload:
-          description: If multiple payloads are present (one per datastream) this returns the first datastream.
-          $ref: '#/components/schemas/RawSamplePayload_2'
-        totalPayloadLength:
-          type: integer
-          description: Total number of payload values
-    ExperimentalImpulseSpecificGpuTrainingProcessor:
-      type: string
-      description: 'EXPERIMENTAL: Training processor for the impulse-specific-gpu rollout. This field is currently gated by a project experiment and may change in future API versions.
-
-        '
-      enum:
-      - cpu
-      - gpu
-    RawSampleDataWithDataStreamPayloads:
-      allOf:
-      - $ref: '#/components/schemas/RawSampleData_2'
-      - $ref: '#/components/schemas/RawSampleDataStreamPayloads'
-    TestPretrainedModelResponse_2:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        properties:
-          result:
-            type: object
-            description: Classification value per label. For a neural network this will be the confidence, for anomalies the anomaly score.
-            additionalProperties:
-              type: number
-          boundingBoxes:
-            type: array
-            items:
-              $ref: '#/components/schemas/BoundingBoxWithScore'
-          freeformResult:
-            type: object
-            required:
-            - outputTensors
-            properties:
-              outputTensors:
-                type: array
-                items:
-                  type: object
-                  required:
-                  - shape
-                  - dataType
-                  - data
-                  properties:
-                    shape:
-                      type: array
-                      items:
-                        type: integer
-                    dataType:
-                      type: string
-                      enum:
-                      - int8
-                      - uint8
-                      - float32
-                    data:
-                      type: array
-                      items:
-                        type: number
-          anomalyResult:
-            type: array
-            description: Anomaly scores and computed metrics for visual anomaly detection, one item per window.
-            items:
-              $ref: '#/components/schemas/AnomalyResult'
     ModelPrediction_2:
       type: object
       required:
@@ -1860,82 +1842,13 @@ components:
           - $ref: '#/components/schemas/LastUpdatedByUser'
           - $ref: '#/components/schemas/LastUpdatedByProjectApiKey'
           - $ref: '#/components/schemas/LastUpdatedByOAuthClient'
-    RawSamplePayload_2:
+    RawSampleDataWithDataStreamPayloads:
+      allOf:
+      - $ref: '#/components/schemas/RawSampleData_2'
+      - $ref: '#/components/schemas/RawSampleDataStreamPayloads'
+    LastUpdatedByProjectApiKey:
       type: object
-      description: Sensor readings and metadata
-      required:
-      - device_type
-      - sensors
-      - values
-      - intervalMs
-      - frequencyHz
-      properties:
-        device_name:
-          type: string
-          description: Unique identifier for this device. **Only** set this when the device has a globally unique identifier (e.g. MAC address).
-          example: ac:87:a3:0a:2d:1b
-        device_type:
-          type: string
-          description: Device type, for example the exact model of the device. Should be the same for all similar devices.
-          example: DISCO-L475VG-IOT01A
-        sensors:
-          type: array
-          description: Array with sensor axes
-          items:
-            $ref: '#/components/schemas/Sensor_2'
-        values:
-          type: array
-          description: 'Array of sensor values. One array item per interval, and as many items in this array as there are sensor axes. This type is returned if there are multiple axes.
-
-            '
-          items:
-            type: array
-            items:
-              type: number
-        cropStart:
-          type: integer
-          description: New start index of the cropped sample
-          example: 0
-        cropEnd:
-          type: integer
-          description: New end index of the cropped sample
-          example: 128
-        intervalMs:
-          type: number
-          description: Interval between two windows (1000 / frequency). If the data was resampled, then this lists the resampled interval for this payload.
-          example: 16
-        frequencyHz:
-          type: number
-          description: Frequency of the sample. If the data was resampled, then this lists the resampled frequency for this payload.
-          example: 62.5
-    RawDataCategory:
-      type: string
-      enum:
-      - training
-      - testing
-      - validation
-      - post-processing
-    LearnBlockType_2:
-      type: string
-      description: The type of learning block (anomaly, keras, keras-transfer-image, keras-transfer-kws, keras-object-detection, keras-regression, keras-freeform). Each behaves differently.
-      enum:
-      - anomaly
-      - anomaly-gmm
-      - keras
-      - keras-transfer-image
-      - keras-transfer-kws
-      - keras-object-detection
-      - keras-regression
-      - keras-akida
-      - keras-akida-transfer-image
-      - keras-akida-object-detection
-      - keras-visual-anomaly
-      - keras-freeform
-      - keras-anomaly
-      - vlm
-    LastUpdatedByUser:
-      type: object
-      description: The user who last updated a sample.
+      description: The project API key that last updated a sample.
       required:
       - type
       - id
@@ -1943,36 +1856,10 @@ components:
         type:
           type: string
           enum:
-          - user
+          - projectApiKey
         id:
           type: integer
-          description: The ID of the user that last updated the sample.
-    SampleKeyValueLabels:
-      type: object
-      required:
-      - type
-      - labels
-      properties:
-        type:
-          type: string
-          enum:
-          - key-values
-        labels:
-          type: object
-          additionalProperties:
-            type: string
-    SampleLabelMapLabels:
-      description: 'Structured sample labels in the form of a key-value map.
-
-        This property is optional and only defined for samples with key-value labels.
-
-        '
-      discriminator:
-        propertyName: type
-        mapping:
-          key-values: '#/components/schemas/SampleKeyValueLabels'
-      oneOf:
-      - $ref: '#/components/schemas/SampleKeyValueLabels'
+          description: The ID of the project API key that last updated the sample.
     ImpulseLearnBlock_2:
       type: object
       required:
@@ -2012,89 +1899,208 @@ components:
           description: The datetime that the block version was created. Cannot be set via API.
         trainingProcessor:
           $ref: '#/components/schemas/ExperimentalImpulseSpecificGpuTrainingProcessor'
-    RawSampleDataStreamPayloads:
+    ExperimentalImpulseSpecificGpuTrainingProcessor:
+      type: string
+      description: 'EXPERIMENTAL: Training processor for the impulse-specific-gpu rollout. This field is currently gated by a project experiment and may change in future API versions.
+
+        '
+      enum:
+      - cpu
+      - gpu
+    SampleKeyValueLabels:
       type: object
-      required:
-      - datastreamPayloads
-      properties:
-        datastreamPayloads:
-          type: array
-          items:
-            type: object
-            required:
-            - index
-            - payload
-            - totalPayloadLength
-            properties:
-              index:
-                type: integer
-                description: Index of the datastream in the sample (datastreams that are not in the impulse are filtered out here, so you can still find them back).
-              payload:
-                description: Payload for the current datastream.
-                $ref: '#/components/schemas/RawSamplePayload_2'
-              totalPayloadLength:
-                type: integer
-                description: Total number of payload values
-    SampleDatastream:
-      type: object
-      required:
-      - index
-      - chartType
-      - intervalMs
-      - frequencyHz
-      - sensors
-      - valuesCount
-      - totalLengthMs
-      properties:
-        index:
-          type: integer
-        chartType:
-          type: string
-          enum:
-          - chart
-          - image
-          - video
-          - table
-        intervalMs:
-          description: Interval between two windows (1000 / frequency).
-          type: number
-        frequencyHz:
-          description: Frequency of the datastream
-          type: number
-        sensors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Sensor_2'
-        valuesCount:
-          type: integer
-          description: Number of readings in this datastream.
-        imageDimensions:
-          type: object
-          required:
-          - width
-          - height
-          properties:
-            width:
-              type: integer
-            height:
-              type: integer
-        totalLengthMs:
-          type: number
-          description: Total length (in ms.) of the datastream
-    LastUpdatedByProjectApiKey:
-      type: object
-      description: The project API key that last updated a sample.
       required:
       - type
-      - id
+      - labels
       properties:
         type:
           type: string
           enum:
-          - projectApiKey
-        id:
-          type: integer
-          description: The ID of the project API key that last updated the sample.
+          - key-values
+        labels:
+          type: object
+          additionalProperties:
+            type: string
+    ObjectDetectionLastLayer_2:
+      type: string
+      enum:
+      - mobilenet-ssd
+      - fomo
+      - yolov2-akida
+      - yolov5
+      - yolov5v5-drpai
+      - yolox
+      - yolov7
+      - yolo-pro
+      - tao-retinanet
+      - tao-ssd
+      - tao-yolov3
+      - tao-yolov4
+      - yolov11
+      - yolov11-abs
+      - paddleocr-detector
+      - qc-face-det-lite
+      - qc-yolox
+    ClassifyJobResponse_2:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - result
+        - predictions
+        - accuracy
+        - additionalMetricsByLearnBlock
+        - availableVariants
+        properties:
+          result:
+            type: array
+            items:
+              $ref: '#/components/schemas/ModelResult'
+          predictions:
+            type: array
+            items:
+              $ref: '#/components/schemas/ModelPrediction_2'
+          accuracy:
+            type: object
+            required:
+            - totalSummary
+            - summaryPerClass
+            - confusionMatrixValues
+            - rows
+            - allLabels
+            properties:
+              totalSummary:
+                type: object
+                required:
+                - good
+                - bad
+                properties:
+                  good:
+                    type: integer
+                  bad:
+                    type: integer
+              summaryPerClass:
+                type: object
+                additionalProperties:
+                  type: object
+                  required:
+                  - good
+                  - bad
+                  properties:
+                    good:
+                      type: integer
+                    bad:
+                      type: integer
+              confusionMatrixValues:
+                type: object
+                additionalProperties:
+                  type: object
+                  additionalProperties:
+                    type: number
+              allLabels:
+                type: array
+                items:
+                  type: string
+              accuracyScore:
+                type: number
+              balancedAccuracyScore:
+                type: number
+              anomalyAccuracyScore:
+                type: number
+              noAnomalyAccuracyScore:
+                type: number
+              mseScore:
+                type: number
+          additionalMetricsByLearnBlock:
+            type: array
+            items:
+              type: object
+              required:
+              - learnBlockId
+              - learnBlockName
+              - additionalMetrics
+              properties:
+                learnBlockId:
+                  type: integer
+                learnBlockName:
+                  type: string
+                additionalMetrics:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/AdditionalMetric'
+          availableVariants:
+            type: array
+            description: List of all model variants for which classification results exist
+            items:
+              $ref: '#/components/schemas/KerasModelVariantEnum'
+          noResultsBecauseThresholdsChanged:
+            type: string
+            description: 'If set to true, there are currently no results because thresholds were changed (e.g. on live classification);
+
+              and what action you can run to get new results the quickest.
+
+              If the value is "can_regenerate_model_summary" you can run ''regenerateModelTestingSummary''.
+
+              If the value is "should_rerun_full_job", you need to run ''startClassifyJob'' or ''startEvaluateJob''.
+
+              '
+            enum:
+            - can_regenerate_model_summary
+            - should_rerun_full_job
+    RawDataCategory:
+      type: string
+      enum:
+      - training
+      - testing
+      - validation
+      - post-processing
+    TestPretrainedModelResponse_2:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          result:
+            type: object
+            description: Classification value per label. For a neural network this will be the confidence, for anomalies the anomaly score.
+            additionalProperties:
+              type: number
+          boundingBoxes:
+            type: array
+            items:
+              $ref: '#/components/schemas/BoundingBoxWithScore'
+          freeformResult:
+            type: object
+            required:
+            - outputTensors
+            properties:
+              outputTensors:
+                type: array
+                items:
+                  type: object
+                  required:
+                  - shape
+                  - dataType
+                  - data
+                  properties:
+                    shape:
+                      type: array
+                      items:
+                        type: integer
+                    dataType:
+                      type: string
+                      enum:
+                      - int8
+                      - uint8
+                      - float32
+                    data:
+                      type: array
+                      items:
+                        type: number
+          anomalyResult:
+            type: array
+            description: Anomaly scores and computed metrics for visual anomaly detection, one item per window.
+            items:
+              $ref: '#/components/schemas/AnomalyResult'
     LastUpdatedByOAuthClient:
       type: object
       description: The OAuth client that last updated a sample, and the user it is acting on behalf of.
@@ -2112,13 +2118,21 @@ components:
         userId:
           type: integer
           description: The user ID the OAuth client is acting on behalf of.
-    ProjectLabelingMethod:
-      type: string
-      enum:
-      - single_label
-      - object_detection
-      - label_map
   parameters:
+    OptionalImpulseIdParameter:
+      name: impulseId
+      in: query
+      required: false
+      description: Impulse ID. If this is unset then the default impulse is used.
+      schema:
+        type: integer
+    ProjectIdParameter:
+      name: projectId
+      in: path
+      required: true
+      description: Project ID
+      schema:
+        type: integer
     FeatureExplorerOnlyParameter:
       name: featureExplorerOnly
       in: query
@@ -2126,13 +2140,20 @@ components:
       description: Whether to get only the classification results relevant to the feature explorer.
       schema:
         type: boolean
-    IncludeDebugInfoParameter:
-      name: includeDebugInfo
+    ModelVariantParameter:
+      name: variant
       in: query
       required: false
-      description: Whether to return the debug information from FOMO classification.
+      description: Keras model variant
       schema:
-        type: boolean
+        $ref: '#/components/schemas/KerasModelVariantEnum'
+    SampleIdParameter:
+      name: sampleId
+      in: path
+      required: true
+      description: Sample ID
+      schema:
+        type: integer
     OffsetResultsParameter:
       name: offset
       in: query
@@ -2147,13 +2168,21 @@ components:
       description: Block ID
       schema:
         type: integer
-    OptionalImpulseIdParameter:
-      name: impulseId
+    ModelVariantsListParameter:
+      name: variants
+      in: query
+      required: true
+      description: List of keras model variants, given as a JSON string
+      schema:
+        type: string
+        example: '["int8", "float32"]'
+    IncludeDebugInfoParameter:
+      name: includeDebugInfo
       in: query
       required: false
-      description: Impulse ID. If this is unset then the default impulse is used.
+      description: Whether to return the debug information from FOMO classification.
       schema:
-        type: integer
+        type: boolean
     SampleWindowIndexParameter:
       name: windowIndex
       in: path
@@ -2168,120 +2197,13 @@ components:
       description: Maximum number of results
       schema:
         type: integer
-    ModelVariantParameter:
-      name: variant
+    FiltersMinIdParameter:
+      name: minId
       in: query
       required: false
-      description: Keras model variant
-      schema:
-        $ref: '#/components/schemas/KerasModelVariantEnum'
-    ProjectIdParameter:
-      name: projectId
-      in: path
-      required: true
-      description: Project ID
+      description: Include only samples with an ID >= this value
       schema:
         type: integer
-    ModelVariantsListParameter:
-      name: variants
-      in: query
-      required: true
-      description: List of keras model variants, given as a JSON string
-      schema:
-        type: string
-        example: '["int8", "float32"]'
-    SampleIdParameter:
-      name: sampleId
-      in: path
-      required: true
-      description: Sample ID
-      schema:
-        type: integer
-    FiltersMinDateParameter:
-      name: minDate
-      in: query
-      required: false
-      description: Only include samples that where added after the date given
-      schema:
-        type: string
-        format: date-time
-        example: '2023-01-01T00:00:00.000Z'
-    FiltersMetadataParameter:
-      name: metadata
-      in: query
-      required: false
-      description: "Filter samples by metadata key-value pairs, provided as a JSON string.\nEach item in the filter list is an object with the following properties:\n    - \"key\": Metadata key to filter on.\n    - \"op\": Operator (\"eq\" for positive match, \"neq\" for negative match).\n    - \"values\": (optional) Array of values to match/exclude. If omitted or empty, matches/excludes all values for the key.\nIn addition to filter objects, the following option objects can be specified:\n    - { \"no_metadata\": boolean } - If true, include samples without any metadata\n    - { \"filters_combinator\": (\"and\" | \"or\") } - Specifies the combinator and matching mode:\n        - \"and\": All filter items must match (logical AND).\n        - \"or\": Any filter item may match (logical OR); samples with metadata keys not present in the filters are included.\n"
-      schema:
-        example: "Example 1: returns samples where metadata key \"foo\" is 'bar' or 'baz' AND\nmetadata key \"k\" is \"v\".\n[\n    { \"no_metadata\": true },\n    { \"filters_combinator\": \"and\" },\n    { \"key\": \"foo\", \"op\": \"eq\", \"values\": [\"bar\", \"baz\"] },\n    { \"key\": \"k\", \"op\": \"eq\", \"values\": [\"v\"] }\n]\n\nExample 2: returns samples where metadata key \"foo\" is not 'bar'. Samples\nwithout any metadata are filtered out.\n[\n    { \"no_metadata\": false },\n    { \"filters_combinator\": \"or\" },\n    { \"key\": \"foo\", \"op\": \"neq\", \"values\": [\"bar\"] }\n]\n"
-        type: string
-    FiltersMaxFrequencyParameter:
-      name: maxFrequency
-      in: query
-      required: false
-      description: Only include samples with lower frequency than given frequency, in hertz
-      schema:
-        type: number
-    FiltersMinLengthParameter:
-      name: minLength
-      in: query
-      required: false
-      description: Only include samples longer than the given length, in milliseconds
-      schema:
-        type: integer
-    FiltersMinLabelParameter:
-      name: minLabel
-      in: query
-      required: false
-      description: Only include samples with a label >= this value
-      schema:
-        type: number
-    DatastreamIndexParameter:
-      name: datastreamIndex
-      in: query
-      required: false
-      description: Index of the datastream, if omitted this will resolve to 0.
-      schema:
-        type: integer
-    FiltersMinFrequencyParameter:
-      name: minFrequency
-      in: query
-      required: false
-      description: Only include samples with higher frequency than given frequency, in hertz
-      schema:
-        type: number
-    FiltersMaxLabelParameter:
-      name: maxLabel
-      in: query
-      required: false
-      description: Only include samples with a label < this value
-      schema:
-        type: number
-    SearchQueryParameter:
-      name: search
-      in: query
-      required: false
-      description: Search query
-      schema:
-        example: <id> <name>
-        type: string
-    FiltersMaxLengthParameter:
-      name: maxLength
-      in: query
-      required: false
-      description: Only include samples shorter than the given length, in milliseconds
-      schema:
-        type: integer
-    FiltersSignatureParameter:
-      name: signatureValidity
-      in: query
-      required: false
-      description: Include samples with either valid or invalid signatures
-      schema:
-        type: string
-        enum:
-        - both
-        - valid
-        - invalid
     FiltersLabelsParameter:
       name: labels
       in: query
@@ -2290,20 +2212,23 @@ components:
       schema:
         example: '["idle", "snake"]'
         type: string
-    FiltersMinIdParameter:
-      name: minId
+    FiltersMaxLabelParameter:
+      name: maxLabel
       in: query
       required: false
-      description: Include only samples with an ID >= this value
+      description: Only include samples with a label < this value
       schema:
-        type: integer
-    FiltersMaxIdParameter:
-      name: maxId
+        type: number
+    FiltersDataTypeParameter:
+      name: dataType
       in: query
       required: false
-      description: Include only samples with an ID < this value
+      description: Include only samples with a particular data type
       schema:
-        type: integer
+        type: string
+        enum:
+        - audio
+        - image
     TruncateStructuredLabelsParameter:
       name: truncateStructuredLabels
       in: query
@@ -2320,16 +2245,13 @@ components:
         type: string
         format: date-time
         example: '2024-12-31T00:00:00.000Z'
-    FiltersDataTypeParameter:
-      name: dataType
+    DatastreamIndexParameter:
+      name: datastreamIndex
       in: query
       required: false
-      description: Include only samples with a particular data type
+      description: Index of the datastream, if omitted this will resolve to 0.
       schema:
-        type: string
-        enum:
-        - audio
-        - image
+        type: integer
     FiltersFilenameParameter:
       name: filename
       in: query
@@ -2337,6 +2259,84 @@ components:
       description: Only include samples whose filename includes the given filename
       schema:
         type: string
+    FiltersSignatureParameter:
+      name: signatureValidity
+      in: query
+      required: false
+      description: Include samples with either valid or invalid signatures
+      schema:
+        type: string
+        enum:
+        - both
+        - valid
+        - invalid
+    FiltersMinLabelParameter:
+      name: minLabel
+      in: query
+      required: false
+      description: Only include samples with a label >= this value
+      schema:
+        type: number
+    FiltersMinDateParameter:
+      name: minDate
+      in: query
+      required: false
+      description: Only include samples that where added after the date given
+      schema:
+        type: string
+        format: date-time
+        example: '2023-01-01T00:00:00.000Z'
+    FiltersMinLengthParameter:
+      name: minLength
+      in: query
+      required: false
+      description: Only include samples longer than the given length, in milliseconds
+      schema:
+        type: integer
+    FiltersMaxIdParameter:
+      name: maxId
+      in: query
+      required: false
+      description: Include only samples with an ID < this value
+      schema:
+        type: integer
+    FiltersMinFrequencyParameter:
+      name: minFrequency
+      in: query
+      required: false
+      description: Only include samples with higher frequency than given frequency, in hertz
+      schema:
+        type: number
+    FiltersMaxFrequencyParameter:
+      name: maxFrequency
+      in: query
+      required: false
+      description: Only include samples with lower frequency than given frequency, in hertz
+      schema:
+        type: number
+    SearchQueryParameter:
+      name: search
+      in: query
+      required: false
+      description: Search query
+      schema:
+        example: <id> <name>
+        type: string
+    FiltersMetadataParameter:
+      name: metadata
+      in: query
+      required: false
+      description: "Filter samples by metadata key-value pairs, provided as a JSON string.\nEach item in the filter list is an object with the following properties:\n    - \"key\": Metadata key to filter on.\n    - \"op\": Operator (\"eq\" for positive match, \"neq\" for negative match).\n    - \"values\": (optional) Array of values to match/exclude. If omitted or empty, matches/excludes all values for the key.\nIn addition to filter objects, the following option objects can be specified:\n    - { \"no_metadata\": boolean } - If true, include samples without any metadata\n    - { \"filters_combinator\": (\"and\" | \"or\") } - Specifies the combinator and matching mode:\n        - \"and\": All filter items must match (logical AND).\n        - \"or\": Any filter item may match (logical OR); samples with metadata keys not present in the filters are included.\n"
+      schema:
+        example: "Example 1: returns samples where metadata key \"foo\" is 'bar' or 'baz' AND\nmetadata key \"k\" is \"v\".\n[\n    { \"no_metadata\": true },\n    { \"filters_combinator\": \"and\" },\n    { \"key\": \"foo\", \"op\": \"eq\", \"values\": [\"bar\", \"baz\"] },\n    { \"key\": \"k\", \"op\": \"eq\", \"values\": [\"v\"] }\n]\n\nExample 2: returns samples where metadata key \"foo\" is not 'bar'. Samples\nwithout any metadata are filtered out.\n[\n    { \"no_metadata\": false },\n    { \"filters_combinator\": \"or\" },\n    { \"key\": \"foo\", \"op\": \"neq\", \"values\": [\"bar\"] }\n]\n"
+        type: string
+    FiltersMaxLengthParameter:
+      name: maxLength
+      in: query
+      required: false
+      description: Only include samples shorter than the given length, in milliseconds
+      schema:
+        type: integer
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey
