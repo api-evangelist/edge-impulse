@@ -112,6 +112,83 @@ paths:
                 - $ref: '#/components/schemas/StartJobResponse'
 components:
   schemas:
+    ObjectDetectionPostProcessingResult:
+      type: object
+      required:
+      - frames
+      properties:
+        frames:
+          type: array
+          items:
+            type: object
+            required:
+            - frameIndex
+            - objects
+            properties:
+              frameIndex:
+                type: integer
+              objects:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ObjectDetectionPostProcessingObject'
+    PostProcessingConfigRequest:
+      type: object
+      required:
+      - enabled
+      - parameters
+      properties:
+        enabled:
+          type: boolean
+        parameters:
+          type: object
+          additionalProperties:
+            type: string
+    ObjectTrackingPostProcessingObject:
+      type: object
+      required:
+      - label
+      - id
+      - x
+      - y
+      - width
+      - height
+      properties:
+        label:
+          type: string
+        id:
+          type: integer
+        x:
+          type: number
+        y:
+          type: number
+        width:
+          type: number
+        height:
+          type: number
+    GetPostProcessingFeaturesForSampleResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - results
+        properties:
+          results:
+            type: object
+            properties:
+              objectTracking:
+                $ref: '#/components/schemas/ObjectTrackingPostProcessingResult'
+              objectDetection:
+                $ref: '#/components/schemas/ObjectDetectionPostProcessingResult'
+    PostProcessingFeaturesForSampleRequest:
+      type: object
+      required:
+      - config
+      - variant
+      properties:
+        config:
+          $ref: '#/components/schemas/PostProcessingConfigRequest'
+        variant:
+          $ref: '#/components/schemas/KerasModelVariantEnum'
     DSPGroupItem:
       type: object
       required:
@@ -229,21 +306,15 @@ components:
         maxVal:
           type: number
           description: Maximum value for parameters of type 'int' or 'float'.
-    StartJobResponse:
+    PostProcessingConfigResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: integer
-            description: Job identifier. Status updates will include this identifier.
-            example: 12873488112
-    ObjectDetectionPostProcessingResult:
+      - $ref: '#/components/schemas/PostProcessingConfig'
+    ObjectTrackingPostProcessingResult:
       type: object
       required:
       - frames
+      - parameters
       properties:
         frames:
           type: array
@@ -258,27 +329,40 @@ components:
               objects:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ObjectDetectionPostProcessingObject'
+                  $ref: '#/components/schemas/ObjectTrackingPostProcessingObject'
+        parameters:
+          type: object
+          additionalProperties:
+            type: string
     KerasModelVariantEnum:
       type: string
       enum:
       - int8
       - float32
       - akida
-    ObjectTrackingPostProcessingObject:
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    ObjectDetectionPostProcessingObject:
       type: object
       required:
       - label
-      - id
       - x
       - y
       - width
       - height
+      - score
       properties:
         label:
           type: string
-        id:
-          type: integer
         x:
           type: number
         y:
@@ -287,7 +371,9 @@ components:
           type: number
         height:
           type: number
-    PostProcessingConfigRequest:
+        score:
+          type: number
+    PostProcessingConfig:
       type: object
       required:
       - enabled
@@ -296,9 +382,20 @@ components:
         enabled:
           type: boolean
         parameters:
-          type: object
-          additionalProperties:
-            type: string
+          type: array
+          items:
+            $ref: '#/components/schemas/DSPGroupItem'
+    StartJobResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: Job identifier. Status updates will include this identifier.
+            example: 12873488112
     GetPostProcessingResultsForSampleResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -329,104 +426,14 @@ components:
                 type: integer
               config:
                 $ref: '#/components/schemas/PostProcessingConfigRequest'
-    PostProcessingFeaturesForSampleRequest:
-      type: object
-      required:
-      - config
-      - variant
-      properties:
-        config:
-          $ref: '#/components/schemas/PostProcessingConfigRequest'
-        variant:
-          $ref: '#/components/schemas/KerasModelVariantEnum'
-    PostProcessingConfigResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - $ref: '#/components/schemas/PostProcessingConfig'
-    ObjectDetectionPostProcessingObject:
-      type: object
-      required:
-      - label
-      - x
-      - y
-      - width
-      - height
-      - score
-      properties:
-        label:
-          type: string
-        x:
-          type: number
-        y:
-          type: number
-        width:
-          type: number
-        height:
-          type: number
-        score:
-          type: number
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
-    PostProcessingConfig:
-      type: object
-      required:
-      - enabled
-      - parameters
-      properties:
-        enabled:
-          type: boolean
-        parameters:
-          type: array
-          items:
-            $ref: '#/components/schemas/DSPGroupItem'
-    ObjectTrackingPostProcessingResult:
-      type: object
-      required:
-      - frames
-      - parameters
-      properties:
-        frames:
-          type: array
-          items:
-            type: object
-            required:
-            - frameIndex
-            - objects
-            properties:
-              frameIndex:
-                type: integer
-              objects:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ObjectTrackingPostProcessingObject'
-        parameters:
-          type: object
-          additionalProperties:
-            type: string
-    GetPostProcessingFeaturesForSampleResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - results
-        properties:
-          results:
-            type: object
-            properties:
-              objectTracking:
-                $ref: '#/components/schemas/ObjectTrackingPostProcessingResult'
-              objectDetection:
-                $ref: '#/components/schemas/ObjectDetectionPostProcessingResult'
   parameters:
+    PostProcessingIdParameter:
+      name: postProcessingId
+      in: path
+      required: true
+      description: Post-processing Block ID, use the impulse functions to retrieve the ID
+      schema:
+        type: integer
     ProjectIdParameter:
       name: projectId
       in: path
@@ -439,13 +446,6 @@ components:
       in: path
       required: true
       description: Sample ID
-      schema:
-        type: integer
-    PostProcessingIdParameter:
-      name: postProcessingId
-      in: path
-      required: true
-      description: Post-processing Block ID, use the impulse functions to retrieve the ID
       schema:
         type: integer
   securitySchemes:

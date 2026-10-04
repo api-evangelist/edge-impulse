@@ -2223,338 +2223,18 @@ paths:
     - url: https://studio.edgeimpulse.com/v1
 components:
   schemas:
-    UpdateOrganizationRequest:
-      type: object
-      description: Only fields set in this object will be updated.
-      properties:
-        logo:
-          type: string
-          description: New logo URL, or set to `null` to remove the logo.
-        headerImg:
-          type: string
-          description: New leader image URL, or set to `null` to remove the leader.
-        showHeaderImgMask:
-          type: boolean
-        name:
-          type: string
-          description: New organization name.
-        experiments:
-          type: array
-          items:
-            type: string
-        readme:
-          type: string
-          description: Readme for the organization (in Markdown)
-        jobLimitM:
-          type: integer
-          description: New job limit in seconds.
-    DeploymentOptionsOrder:
-      type: array
-      description: Optional attribute allowing a whitelabel to customize the order of deployment options in the deployment view, given as an in-order list of deployment options.
-      items:
-        type: string
-        description: Deployment option name
-        example: org-1
-    UploadImageRequest:
+    EnterpriseLimitsIncreaseRequest:
       type: object
       required:
-      - image
+      - limits
       properties:
-        image:
-          type: string
-          format: binary
-    DevelopmentBoardRequestUpdate:
-      type: object
-      properties:
-        name:
-          type: string
-        image:
-          type: string
-        docsUrl:
-          type: string
-    LatencyDevice:
-      type: object
-      required:
-      - mcu
-      - name
-      - selected
-      - int8Latency
-      - int8ConvLatency
-      - float32Latency
-      - float32ConvLatency
-      - helpText
-      properties:
-        mcu:
-          type: string
-        name:
-          type: string
-        selected:
-          type: boolean
-        int8Latency:
-          type: number
-        int8ConvLatency:
-          type: number
-        float32Latency:
-          type: number
-        float32ConvLatency:
-          type: number
-        helpText:
-          type: string
-    CreateOrganizationRequest:
-      type: object
-      required:
-      - organizationName
-      properties:
-        organizationName:
-          type: string
-          example: EdgeImpulse Inc.
-          description: The name of the organization.
-    EntitlementLimits:
-      type: object
-      properties:
-        totalStorage:
-          type: number
-          description: Storage entitlement, in bytes
-        computeTimePerYear:
-          type: number
-          description: Total compute time entitlement (CPU + GPU), in seconds
-        gpuComputeTimePerYear:
-          type: number
-          description: GPU compute time entitlement, in seconds
-        numberOfProjects:
-          type: integer
-          description: Number of projects allowed for this organization
-        numberOfUsers:
-          type: integer
-          description: Number of users allowed for this organization
-    SetMemberDatasetsRequest:
-      type: object
-      required:
-      - datasets
-      properties:
-        datasets:
+        limits:
           type: array
           items:
-            type: string
-    UserExperiment:
-      type: object
-      required:
-      - type
-      - title
-      - enabled
-      - showToUser
-      properties:
-        type:
+            $ref: '#/components/schemas/EnterpriseLimit'
+        reason:
           type: string
-        title:
-          type: string
-        help:
-          type: string
-        enabled:
-          type: boolean
-        showToUser:
-          type: boolean
-    Job:
-      type: object
-      required:
-      - id
-      - key
-      - created
-      - category
-      - jobNotificationUids
-      properties:
-        id:
-          type: integer
-          description: Job id, use this to refer back to the job. The web socket API also uses this ID.
-        category:
-          type: string
-        key:
-          type: string
-          description: 'External job identifier, this can be used to categorize jobs, and recover job status. E.g. set this to ''keras-192'' for a Keras learning block with ID 192. When a user refreshes the page you can check whether a job is active for this ID and re-attach.
-
-            '
-        created:
-          type: string
-          format: date-time
-          description: When the job was created.
-        started:
-          type: string
-          format: date-time
-          description: When the job was started.
-        finished:
-          type: string
-          format: date-time
-          description: When the job was finished.
-        finishedSuccessful:
-          type: boolean
-          description: Whether the job finished successfully.
-        jobNotificationUids:
-          type: array
-          description: The IDs of users who should be notified when a job is finished.
-          items:
-            type: integer
-        additionalInfo:
-          type: string
-          description: Additional metadata associated with this job.
-        computeTime:
-          type: number
-          description: Job duration time in seconds from start to finished, measured by k8s job watcher.
-        createdByUser:
-          type: object
-          required:
-          - id
-          - name
-          - username
-          properties:
-            id:
-              type: integer
-            name:
-              type: string
-            username:
-              type: string
-            photo:
-              type: string
-        categoryCount:
-          type: integer
-          description: Some job categories keep a counter on the job number, e.g. in synthetic data, so we know what the 1st, 2nd etc. job was in the UI.
-    ModelEngineShortEnum:
-      type: string
-      enum:
-      - tflite-eon
-      - tflite-eon-ram-optimized
-      - tflite
-    AddMemberRequest:
-      type: object
-      required:
-      - usernameOrEmail
-      - role
-      - datasets
-      properties:
-        usernameOrEmail:
-          type: string
-          description: Username or e-mail address
-        role:
-          $ref: '#/components/schemas/OrganizationMemberRole'
-        datasets:
-          description: Only used for 'guest' users. Limits the datasets the user has access to.
-          type: array
-          items:
-            type: string
-    Whitelabel:
-      type: object
-      required:
-      - id
-      - name
-      - domain
-      - themeId
-      - identityProviders
-      - allowPasswordAuth
-      - deploymentTargets
-      - allDeploymentTargets
-      - allowSignup
-      - allowFreeProjects
-      - supportedProjectTypes
-      - allowNewProjectUi
-      - learningBlocks
-      - allLearningBlocks
-      - developmentBoards
-      - allDevelopmentBoards
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        domain:
-          type: string
-        ownerOrganizationId:
-          type: integer
-        themeId:
-          type: integer
-        theme:
-          $ref: '#/components/schemas/Theme'
-        identityProviders:
-          type: array
-          items:
-            type: string
-        allowPasswordAuth:
-          type: boolean
-        deploymentTargets:
-          description: List of deployment targets enabled for this white label
-          type: array
-          items:
-            type: string
-        allDeploymentTargets:
-          description: List of all supported deployment targets
-          type: array
-          items:
-            type: string
-        customDeploymentBlocks:
-          description: List of custom deployment blocks available to this white label
-          type: array
-          items:
-            type: object
-            required:
-            - name
-            - id
-            properties:
-              name:
-                type: string
-                description: The name of the custom deployment block
-              id:
-                type: number
-                description: The custom deployment block ID
-        deploymentOptionsOrder:
-          $ref: '#/components/schemas/DeploymentOptionsOrder'
-        allowSignup:
-          type: boolean
-        allowFreeProjects:
-          type: boolean
-        exposePublicProjects:
-          type: boolean
-        defaultDeploymentTarget:
-          type:
-          - string
-          - 'null'
-          description: The name of the default deployment target for this white label
-          example: C++ Library
-        supportedProjectTypes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProjectType'
-        allowNewProjectUi:
-          type: boolean
-          description: Whether the new project UI should be enabled for this white label or not.
-        learningBlocks:
-          description: List of learning blocks enabled for this white label
-          type: array
-          items:
-            type: string
-        allLearningBlocks:
-          description: List of all supported learning blocks
-          type: array
-          items:
-            type: object
-            required:
-            - title
-            - type
-            properties:
-              title:
-                type: string
-                description: The name of the learning block
-              type:
-                type: string
-                description: The learning block type
-        developmentBoards:
-          type: array
-          items:
-            $ref: '#/components/schemas/DevelopmentBoardResponse'
-        allDevelopmentBoards:
-          type: array
-          items:
-            $ref: '#/components/schemas/DevelopmentBoardResponse'
-        organizationsLimit:
-          type: integer
-          description: The maximum number of organizations that can be created under this white label.
+          description: Additional notes for the request. This is optional.
     DailyMetricsRecord:
       type: object
       required:
@@ -2713,656 +2393,6 @@ components:
 
             '
           example: 500000000
-    AdminGetOrganizationComputeTimeUsageResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - $ref: '#/components/schemas/OrganizationComputeTimeUsage'
-    Permission:
-      type: string
-      enum:
-      - admin:infra:disallowedEmailDomains:write
-      - admin:infra:featureFlags:read
-      - admin:infra:featureFlags:write
-      - admin:infra:config:read
-      - admin:infra:config:write
-      - admin:infra:migrations:read
-      - admin:infra:migrations:write
-      - admin:metrics:read
-      - admin:metrics:write
-      - admin:organizations:read
-      - admin:organizations:write
-      - admin:organizations:members:write
-      - admin:projects:members:write
-      - admin:projects:read
-      - admin:projects:write
-      - admin:trials:read
-      - admin:trials:write
-      - admin:users:permissions:write
-      - admin:users:read
-      - admin:users:write
-      - admin:jobs:read
-      - admin:emails:verification:code:read
-      - projects:limits:write
-      - projects:training:keras:write
-      - thirdpartyauth:read
-      - thirdpartyauth:write
-      - users:emails:read
-      - whitelabels:read
-      - whitelabels:write
-    OrganizationInfoResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - organization
-        - datasets
-        - defaultComputeLimits
-        - experiments
-        - cliLists
-        - performance
-        properties:
-          organization:
-            $ref: '#/components/schemas/Organization'
-          datasets:
-            type: array
-            items:
-              $ref: '#/components/schemas/OrganizationDataset'
-          defaultComputeLimits:
-            type: object
-            required:
-            - requestsCpu
-            - requestsMemory
-            - limitsCpu
-            - limitsMemory
-            properties:
-              requestsCpu:
-                type: number
-              requestsMemory:
-                type: number
-              limitsCpu:
-                type: number
-              limitsMemory:
-                type: number
-          entitlementLimits:
-            $ref: '#/components/schemas/EntitlementLimits'
-          experiments:
-            type: array
-            description: Experiments that the organization has access to. Enabling experiments can only be done through a JWT token.
-            items:
-              type: object
-              required:
-              - type
-              - title
-              - enabled
-              - showToUser
-              properties:
-                type:
-                  type: string
-                title:
-                  type: string
-                help:
-                  type: string
-                enabled:
-                  type: boolean
-                showToUser:
-                  type: boolean
-          readme:
-            type: object
-            description: Present if a readme is set for this project
-            required:
-            - markdown
-            - html
-            properties:
-              markdown:
-                type: string
-              html:
-                type: string
-          whitelabelId:
-            type: integer
-          cliLists:
-            type: object
-            required:
-            - objectDetectionLastLayerOptions
-            - imageInputScalingOptions
-            properties:
-              objectDetectionLastLayerOptions:
-                type: array
-                items:
-                  type: object
-                  required:
-                  - label
-                  - value
-                  properties:
-                    label:
-                      type: string
-                    value:
-                      $ref: '#/components/schemas/ObjectDetectionLastLayer'
-              imageInputScalingOptions:
-                type: array
-                items:
-                  type: object
-                  required:
-                  - label
-                  - value
-                  properties:
-                    label:
-                      type: string
-                    value:
-                      $ref: '#/components/schemas/ImageInputScaling'
-          performance:
-            type: object
-            required:
-            - jobLimitM
-            properties:
-              jobLimitM:
-                type: integer
-                description: Compute time limit per job in minutes (for non-transformation jobs).
-    AdminAddUserRequest:
-      type: object
-      properties:
-        usernameOrEmail:
-          type: string
-          example: janjongboom
-          description: Username or email of the user to be added to the project or organization. If no user is provided, the user ID attached to the JWT will be used.
-    RemoveMemberRequest:
-      type: object
-      required:
-      - id
-      properties:
-        id:
-          type: integer
-    EnterpriseLimitsIncreaseRequest:
-      type: object
-      required:
-      - limits
-      properties:
-        limits:
-          type: array
-          items:
-            $ref: '#/components/schemas/EnterpriseLimit'
-        reason:
-          type: string
-          description: Additional notes for the request. This is optional.
-    AdminApiProject:
-      type: object
-      required:
-      - id
-      - name
-      - owner
-      properties:
-        id:
-          type: integer
-          example: 1
-        name:
-          type: string
-          example: Water hammer detection
-        description:
-          type: string
-        created:
-          type: string
-          format: date-time
-          example: '2019-07-21T17:32:28Z'
-        owner:
-          type: string
-          description: User or organization that owns the project
-        ownerUserId:
-          type: integer
-        ownerOrganizationId:
-          type: integer
-        lastAccessed:
-          type: string
-          format: date-time
-          example: '2019-07-21T17:32:28Z'
-        whitelabelId:
-          type:
-          - integer
-          - 'null'
-          description: Unique identifier of the white label this project belongs to, if any.
-        tier:
-          $ref: '#/components/schemas/ProjectTierEnum'
-        category:
-          $ref: '#/components/schemas/ProjectType'
-    AdminAddProjectUserRequest:
-      allOf:
-      - $ref: '#/components/schemas/AdminAddUserRequest'
-    AddApiKeyRequest:
-      type: object
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Description of the key
-        apiKey:
-          type: string
-          description: 'Optional: API key. This needs to start with `ei_` and will need to be at least 32 characters long. If this field is not passed in, a new API key is generated for you.'
-    AdminUpdateOrganizationDataExportRequest:
-      type: object
-      properties:
-        description:
-          type: string
-          description: Description of the data export
-        expirationDate:
-          type: string
-          format: date-time
-          description: Date when the export will expire. Default is 30 days. Maximum expiration date is 60 days from the creation date.
-    User:
-      type: object
-      required:
-      - id
-      - username
-      - name
-      - email
-      - created
-      - staffInfo
-      - pending
-      - activated
-      - mfaConfigured
-      properties:
-        id:
-          type: integer
-          example: 1
-        username:
-          type: string
-          example: janjongboom
-        name:
-          type: string
-          example: Jan Jongboom
-        email:
-          type: string
-          example: quijote@edgeimpulse.com
-        photo:
-          type: string
-          example: https://usercdn.edgeimpulse.com/photos/1.jpg
-        created:
-          type: string
-          format: date-time
-          example: '2019-08-31T17:32:28Z'
-        lastSeen:
-          type: string
-          format: date-time
-          example: '2019-08-31T17:32:28Z'
-        staffInfo:
-          $ref: '#/components/schemas/StaffInfo'
-        pending:
-          type: boolean
-        lastTosAcceptanceDate:
-          type: string
-          format: date-time
-          example: '2019-08-31T17:32:28Z'
-        jobTitle:
-          type: string
-          example: Software Engineer
-        permissions:
-          description: List of permissions the user has
-          type: array
-          items:
-            $ref: '#/components/schemas/Permission'
-        companyName:
-          type: string
-          example: Edge Impulse Inc.
-        activated:
-          type: boolean
-          description: Whether the user has activated their account or not.
-        mfaConfigured:
-          type: boolean
-          description: Whether the user has configured multi-factor authentication
-        stripeCustomerId:
-          type: string
-          description: Stripe customer ID, if any.
-        hasPendingPayments:
-          type: boolean
-          description: Whether the user has pending payments.
-        tier:
-          $ref: '#/components/schemas/UserTierEnum'
-    ListOrganizationsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - organizations
-        properties:
-          organizations:
-            type: array
-            description: Array with organizations
-            items:
-              $ref: '#/components/schemas/Organization'
-    MemorySpec:
-      type: object
-      description: Describes performance characteristics of a particular memory type
-      properties:
-        fastBytes:
-          $ref: '#/components/schemas/ResourceRange'
-        slowBytes:
-          $ref: '#/components/schemas/ResourceRange'
-    Device:
-      type: object
-      required:
-      - id
-      - deviceId
-      - created
-      - lastSeen
-      - name
-      - deviceType
-      - sensors
-      - remote_mgmt_connected
-      - supportsSnapshotStreaming
-      - remoteMgmtMode
-      properties:
-        id:
-          type: integer
-          example: 1
-        deviceId:
-          type: string
-          description: Unique identifier (such as MAC address) for a device
-          example: 38:f9:d3:d7:62:03
-        created:
-          type: string
-          format: date-time
-          example: '2019-07-21T17:32:28Z'
-        lastSeen:
-          type: string
-          format: date-time
-          example: '2019-08-31T17:32:28Z'
-          description: Last message that was received from the device (ignoring keep-alive)
-        name:
-          type: string
-          example: m6d.1 desk sensor
-        deviceType:
-          type: string
-          example: DISCO-L475VG
-        sensors:
-          type: array
-          items:
-            type: object
-            required:
-            - name
-            - maxSampleLengthS
-            - frequencies
-            properties:
-              name:
-                type: string
-                example: Built-in accelerometer
-              maxSampleLengthS:
-                type: integer
-                description: Maximum supported sample length in seconds
-              frequencies:
-                type: array
-                description: Supported frequencies for this sensor in Hz.
-                example:
-                - 62.5
-                - 100
-                items:
-                  type: number
-        remote_mgmt_connected:
-          type: boolean
-          description: Whether the device is connected to the remote management interface. This property is deprecated, use `remoteMgmtMode` instead.
-        remote_mgmt_host:
-          type: string
-          description: The remote management host that the device is connected to
-        supportsSnapshotStreaming:
-          type: boolean
-        remoteMgmtMode:
-          description: Replaces `remote_mgmt_connected`. Shows whether the device is connected to the remote management interface, and in which mode.
-          type: string
-          enum:
-          - disconnected
-          - ingestion
-          - inference
-        inferenceInfo:
-          type: object
-          description: If `remoteMgmtMode` is set to `inference` this object shows information about the model that's ran on device.
-          required:
-          - projectId
-          - projectOwner
-          - projectName
-          - deployedVersion
-          properties:
-            projectId:
-              type: integer
-            projectOwner:
-              type: string
-            projectName:
-              type: string
-            deployedVersion:
-              type: integer
-            modelType:
-              type: string
-              enum:
-              - classification
-              - objectDetection
-              - constrainedObjectDetection
-    KerasModelVariantEnum:
-      type: string
-      enum:
-      - int8
-      - float32
-      - akida
-    UserTierEnum:
-      type: string
-      description: The user account tier.
-      enum:
-      - free
-      - community-plus
-      - professional
-      - enterprise
-    AdminCreateOrganizationDataExportRequest:
-      type: object
-      required:
-      - description
-      properties:
-        description:
-          type: string
-          description: Description of the data export
-        expirationDate:
-          type: string
-          format: date-time
-          description: Date when the export will expire. Default is 30 days. Maximum expiration date is 60 days from the creation date.
-    UpdateProjectRequest:
-      type: object
-      description: Only fields set in this object will be updated.
-      properties:
-        logo:
-          type: string
-          description: New logo URL, or set to `null` to remove the logo.
-        name:
-          type: string
-          description: New project name.
-        description:
-          type: string
-        projectVisibility:
-          $ref: '#/components/schemas/ProjectVisibility'
-        publicProjectListed:
-          type: boolean
-          description: 'If the project allows public access, whether to list it the public projects overview response. If not listed, the project is still accessible via direct link. If the project does not allow public access, this field has no effect.
-
-            '
-        lastDeployEonCompiler:
-          type: boolean
-          description: Call this when clicking the Eon compiler setting
-        lastDeployModelEngine:
-          type: string
-          $ref: '#/components/schemas/ModelEngineShortEnum'
-          description: Model engine for last deploy
-        latencyDevice:
-          type: string
-          description: MCU used for calculating latency
-        experiments:
-          type: array
-          items:
-            type: string
-        showCreateFirstImpulse:
-          type: boolean
-          description: Whether to show the 'Create your first impulse' section on the dashboard
-        labelingMethod:
-          type: string
-          description: What labeling flow to use
-          enum:
-          - single_label
-          - object_detection
-        selectedProjectTypeInWizard:
-          type: string
-          description: Which option was selected in the project type wizard
-          enum:
-          - accelerometer
-          - audio
-          - image_classification
-          - object_detection
-          - something_else
-        gettingStartedStep:
-          type: integer
-          description: The next step in the getting started wizard, or set to -1 to clear the getting started wizard
-        useGpu:
-          type: boolean
-          description: Whether to use GPU for training
-        computeTimeLimitM:
-          type: integer
-          description: Job limit in minutes
-        dspFileSizeMb:
-          type: integer
-          description: DSP file size in MB
-        enterprisePerformance:
-          type: boolean
-        trainJobRamMb:
-          type: integer
-          description: Amount of RAM allocated to training jobs
-        metadata:
-          type: object
-          description: New metadata about the project
-        readme:
-          type: string
-          description: Readme for the project (in Markdown)
-        lastAcquisitionLabel:
-          type: string
-        trainJobNotificationUids:
-          type: array
-          description: The IDs of users who should be notified when a Keras or retrain job is finished.
-          items:
-            type: integer
-        dspJobNotificationUids:
-          type: array
-          description: The IDs of users who should be notified when a DSP job is finished.
-          items:
-            type: integer
-        modelTestingJobNotificationUids:
-          type: array
-          description: The IDs of users who should be notified when a model testing job is finished.
-          items:
-            type: integer
-        exportJobNotificationUids:
-          type: array
-          description: The IDs of users who should be notified when an export job is finished.
-          items:
-            type: integer
-        csvImportConfig:
-          type: object
-          description: Config file specifying how to process CSV files. (set to null to clear the config)
-        inPretrainedModelFlow:
-          type: boolean
-        dspPageSize:
-          description: Set to '0' to disable DSP paging
-          type: integer
-        indPauseProcessingSamples:
-          description: Used in tests, to ensure samples that need to be processed async are not picked up until the flag is set to FALSE again.
-          type: boolean
-        showSensorDataInAcquisitionGraph:
-          description: Whether to show the actual sensor data in acquisition charts (only applies when you have structured labels)
-          type: boolean
-        lastDeploymentTarget:
-          description: Which deployment target was last selected (used to populate this deployment target again the next time you visit the deployment page). Should match the _format_ property of the response from listDeploymentTargetsForProject.
-          type: string
-        dataAcquisitionPageSize:
-          type: integer
-          description: Default page size on data acquisition
-        dataAcquisitionViewType:
-          type: string
-          description: Default view type on data acquisition
-          enum:
-          - list
-          - grid
-        dataAcquisitionGridColumnCount:
-          type: integer
-          description: Number of grid columns in non-detailed view on data acquisition
-        dataAcquisitionGridColumnCountDetailed:
-          type: integer
-          description: Number of grid columns in detailed view on data acquisition
-        showExactSampleLength:
-          type: boolean
-          description: If enabled, does not round sample length to hours/minutes/seconds, but always displays sample length in milliseconds. E.g. instead of 1m 32s, this'll say 92,142ms.
-        inlineEditBoundingBoxes:
-          type: boolean
-          description: If enabled, allows editing bounding box labels directly from the acquisition UI.
-        defaultProfilingVariant:
-          $ref: '#/components/schemas/KerasModelVariantEnum'
-          description: Last shown variant on the model testing and live classification pages. Used to keep the same view after refreshing.
-        enabledModelProfilingVariants:
-          type: array
-          description: Set of model variants enabled by default on the model testing and live classification pages.
-          items:
-            $ref: '#/components/schemas/KerasModelVariantEnum'
-        impulseListCoreMetricsHiddenColumns:
-          type: array
-          description: Which core metrics should be hidden in the impulse list. See 'GetAllDetailedImpulsesResponse' for a list of all metrics.
-          items:
-            type: string
-        impulseListAdditionalMetricsShownColumns:
-          type: array
-          description: Which additional metrics should be shown in the impulse list. See 'GetAllDetailedImpulsesResponse' for a list of all metrics.
-          items:
-            type: string
-        impulseListExtraColumns:
-          type: array
-          description: Which extra columns should be shown in the impulse list.
-          items:
-            type: string
-        aiActionsGridColumnCount:
-          type: integer
-          description: Number of grid columns in AI Actions
-    AdminGetUserMetricsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - metrics
-        properties:
-          metrics:
-            type: object
-    ListOrganizationApiKeysResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - apiKeys
-        properties:
-          apiKeys:
-            type: array
-            description: List of API keys.
-            items:
-              type: object
-              required:
-              - id
-              - name
-              - apiKey
-              - created
-              - role
-              - isTransformationJobKey
-              properties:
-                id:
-                  type: integer
-                apiKey:
-                  type: string
-                name:
-                  type: string
-                created:
-                  type: string
-                  format: date-time
-                role:
-                  type: string
-                  enum:
-                  - admin
-                  - member
-                isTransformationJobKey:
-                  type: boolean
     OrganizationDataset:
       type: object
       required:
@@ -3404,109 +2434,39 @@ components:
         bucketPath:
           type: string
           description: Location of the dataset within the bucket
-    AdminOrganizationInfoResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - $ref: '#/components/schemas/OrganizationComputeTimeUsage'
-      - type: object
-        properties:
-          billable:
-            type: boolean
-          entitlementLimits:
-            $ref: '#/components/schemas/EntitlementLimits'
-          computeTimeCurrentContractSince:
-            type: string
-            format: date-time
-            description: The date from which the compute time for the running contract is calculated.
-          totalStorage:
-            type: number
-            description: Total storage used by the organization.
-          dailyMetrics:
-            type:
-            - array
-            - 'null'
-            description: Metrics for the last 365 days
-            items:
-              $ref: '#/components/schemas/DailyMetricsRecord'
-    AdminListProjectsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - $ref: '#/components/schemas/AdminListProjects'
-    ProjectType:
-      type: string
-      enum:
-      - kws
-      - audio
-      - object-detection
-      - image
-      - accelerometer
-      - other
-    EntityCreatedResponse:
+    UserExperiment:
+      type: object
+      required:
+      - type
+      - title
+      - enabled
+      - showToUser
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        help:
+          type: string
+        enabled:
+          type: boolean
+        showToUser:
+          type: boolean
+    ListJobsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - id
+        - jobs
+        - totalJobCount
         properties:
-          id:
+          jobs:
+            type: array
+            description: Active jobs
+            items:
+              $ref: '#/components/schemas/Job'
+          totalJobCount:
             type: integer
-            description: Unique identifier of the created entity.
-    AdminUpdateUserRequest:
-      type: object
-      description: Only fields set in this object will be updated.
-      properties:
-        email:
-          type: string
-          description: New email. This will also update the forum's email address but the user may need to logout/login back
-          example: quijote@lamancha.es
-        name:
-          type: string
-          description: New user full name
-          example: Don Quijote de la Mancha
-        activated:
-          type: boolean
-          description: Whether the user is active or not. Can only go from inactive to active.
-          example: true
-        suspended:
-          type: boolean
-          description: Whether the user is suspended or not.
-          example: false
-        jobTitle:
-          type: string
-          description: New user job title
-          example: Knight
-        experiments:
-          type: array
-          items:
-            type: string
-          description: List of user experiments
-    ProjectVisibility:
-      type: string
-      enum:
-      - public
-      - private
-      description: The visibility of the project, either public or private. Public projects can be viewed by anyone on the internet and edited by collaborators. Private projects can only be viewed and edited by collaborators.
-    DevelopmentBoardRequest:
-      type: object
-      required:
-      - name
-      - image
-      - docsUrl
-      properties:
-        name:
-          type: string
-        image:
-          type: string
-        docsUrl:
-          type: string
-    AdminAddProjectApiKeyRequest:
-      allOf:
-      - $ref: '#/components/schemas/AddApiKeyRequest'
-      - type: object
-        properties:
-          ttl:
-            type: integer
-            description: Time to live in seconds. If not set, the key will expire in 1 minute.
     ProjectInfoResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -3814,1163 +2774,6 @@ components:
           defaultImpulseId:
             type: integer
             description: Default selected impulse (by ID).
-    ImageInputScaling:
-      description: Normalization that is applied to images. If this is not set then 0..1 is used. "0..1" gives you non-normalized pixels between 0 and 1. "-1..1" gives you non-normalized pixels between -1 and 1. "0..255" gives you non-normalized pixels between 0 and 255. "-128..127" gives you non-normalized pixels between -128 and 127. "torch" first scales pixels between 0 and 1, then applies normalization using the ImageNet dataset (same as `torchvision.transforms.Normalize()`). "bgr-subtract-imagenet-mean" scales to 0..255, reorders pixels to BGR, and subtracts the ImageNet mean from each channel.
-      type: string
-      enum:
-      - 0..1
-      - -1..1
-      - -128..127
-      - 0..255
-      - torch
-      - bgr-subtract-imagenet-mean
-    EnterpriseLimit:
-      type: string
-      enum:
-      - users
-      - projects
-      - compute
-      - storage
-    OrganizationMetricsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - metrics
-        properties:
-          metrics:
-            type: object
-            required:
-            - totalJobsComputeTime
-            - jobsComputeTimeCurrentYear
-            - jobsComputeTimeCurrentYearSince
-            - cpuComputeTimeCurrentContract
-            - gpuComputeTimeCurrentContract
-            - totalStorage
-            - projectCount
-            - userCount
-            properties:
-              totalJobsComputeTime:
-                type: number
-                description: Total compute time of all organizational jobs since the creation of the organization (including organizational project jobs). Compute time is the amount of computation time spent in jobs, in minutes used by an organization over a 12 month period, calculated as CPU + GPU minutes.
-              jobsComputeTimeCurrentYear:
-                type: number
-                description: Total compute time of all organizational jobs in the current contract (including organizational project jobs). Compute time is the amount of computation time spent in jobs, in minutes used by an organization over a 12 month period, calculated as CPU + GPU minutes.
-              jobsComputeTimeCurrentYearSince:
-                type: string
-                format: date-time
-                description: The date from which the compute time for the running contract is calculated.
-              cpuComputeTimeCurrentContract:
-                type: number
-                description: CPU compute time of all jobs in the organization in the current contract (including organizational project jobs).
-              gpuComputeTimeCurrentContract:
-                type: number
-                description: GPU compute time of all jobs in the organization in the current contract (including organizational project jobs).
-              totalStorage:
-                type: number
-                description: Total storage used by the organization.
-              projectCount:
-                type: integer
-                description: Total number of projects owned by the organization.
-              userCount:
-                type: integer
-                description: Total number of users in the organization.
-    ProjectCollaborator:
-      allOf:
-      - $ref: '#/components/schemas/User'
-      - type: object
-        required:
-        - isOwner
-        properties:
-          isOwner:
-            type: boolean
-    AddApiKeyResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        - apiKey
-        properties:
-          id:
-            type: integer
-            description: ID of the new API key
-          apiKey:
-            type: string
-            description: New API Key (starts with "ei_...") - this'll be shared only once.
-    EnterpriseTrial:
-      type: object
-      required:
-      - id
-      - userId
-      - created
-      - organizationId
-      - expirationDate
-      - expiredDate
-      - deletedDate
-      - upgradedDate
-      properties:
-        id:
-          type: integer
-          description: Unique identifier of the trial.
-        userId:
-          type: integer
-          description: ID of the user who created the trial.
-        organizationId:
-          type: integer
-          description: ID of the organization created for the trial.
-        created:
-          type: string
-          format: date-time
-          description: Date when the trial was created. Trials start immediately on creation.
-        expirationDate:
-          $ref: '#/components/schemas/TrialExpirationDate'
-        notes:
-          $ref: '#/components/schemas/TrialNotes'
-        expiredDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Date when the trial actually expired. This is set when the trial is expired by the system.
-        deletedDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Date when the trial was deleted. This is set when the trial is fully  deleted by the system.
-        upgradedDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Date when the trial was upgraded to a full enterprise account.
-    UpdateWhitelabelDeploymentOptionsOrderRequest:
-      type: object
-      properties:
-        order:
-          $ref: '#/components/schemas/DeploymentOptionsOrder'
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
-    CreateOrganizationResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        - apiKey
-        properties:
-          id:
-            type: integer
-            description: Organization ID for the new organization
-          apiKey:
-            type: string
-            description: API key for the new organization (this is shown only once)
-    ListProjects:
-      type: object
-      required:
-      - projects
-      properties:
-        projects:
-          type: array
-          description: Array with projects
-          items:
-            $ref: '#/components/schemas/Project'
-    UserOrganization:
-      type: object
-      required:
-      - id
-      - name
-      - isDeveloperProfile
-      - whitelabelId
-      - isAdmin
-      - created
-      - trialId
-      - trialExpiredDate
-      - trialUpgradedDate
-      - entitlementLimits
-      - userCount
-      - adminCount
-      - privateProjectCount
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        logo:
-          type: string
-        isDeveloperProfile:
-          type: boolean
-        whitelabelId:
-          type:
-          - integer
-          - 'null'
-          description: Unique identifier of the white label this project belongs to, if any.
-        isAdmin:
-          type: boolean
-          description: Whether the user is admin of this organization or not.
-        created:
-          type: string
-          format: date-time
-          description: When the organization was created.
-          example: '2019-08-31T17:32:28Z'
-        trialId:
-          type:
-          - number
-          - 'null'
-          description: Unique identifier of the trial this organization belongs to, if any.
-          example: 1
-        trialExpiredDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Date when the trial expired, if any. A expired trial has a grace period of 30 days before it's associated organization is deleted.
-          example: '2019-08-31T17:32:28Z'
-        trialUpgradedDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Date when the trial was upgraded to a full enterprise account, if any.
-          example: '2019-08-31T17:32:28Z'
-        entitlementLimits:
-          $ref: '#/components/schemas/EntitlementLimits'
-        userCount:
-          type: integer
-          description: The total number of users that are a member of this organization.
-        adminCount:
-          type: integer
-          description: The number of admin users for this organization.
-        privateProjectCount:
-          type: integer
-          description: The number of private projects for this organization.
-        lastAccessed:
-          type: string
-          format: date-time
-          description: Last time this user accessed this organization.
-    ProjectDataSummary:
-      type: object
-      required:
-      - totalLengthMs
-      - labels
-      - dataCount
-      properties:
-        totalLengthMs:
-          type: number
-          description: Total length (in ms.) of all data in the training set
-          example: '726336'
-        labels:
-          type: array
-          description: Labels in the training set
-          items:
-            type: string
-        dataCount:
-          type: integer
-          example: Number of files in the training set
-    OrganizationUser:
-      allOf:
-      - $ref: '#/components/schemas/User'
-      - type: object
-        required:
-        - added
-        - role
-        - projectCount
-        - datasets
-        properties:
-          added:
-            type: string
-            format: date-time
-            example: '2019-08-31T17:32:28Z'
-          role:
-            $ref: '#/components/schemas/OrganizationMemberRole'
-          projectCount:
-            type: integer
-          datasets:
-            type: array
-            items:
-              type: string
-          lastAccessToOrganization:
-            type: string
-            format: date-time
-            description: Date when the user last accessed the organization data.
-          lastOrganizationProjectAccessed:
-            type: integer
-            description: ID of the last project accessed by the user in the organization.
-    ListJobsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - jobs
-        - totalJobCount
-        properties:
-          jobs:
-            type: array
-            description: Active jobs
-            items:
-              $ref: '#/components/schemas/Job'
-          totalJobCount:
-            type: integer
-    CreateProjectResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        - apiKey
-        properties:
-          id:
-            type: integer
-            description: Project ID for the new project
-          apiKey:
-            type: string
-            description: API key for the new project
-    DevelopmentBoardResponse:
-      type: object
-      required:
-      - id
-      - name
-      - image
-      - docsUrl
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        image:
-          type: string
-        docsUrl:
-          type: string
-    ProjectTierEnum:
-      type: string
-      description: The project tier. This is "enterprise" for all organization projects, or the user tier for all user projects.
-      enum:
-      - free
-      - community-plus
-      - professional
-      - enterprise
-    ApplicationBudget:
-      type: object
-      description: Specifies limits for your specific application, as available RAM and ROM for the model's operation and the maximum allowed latency.
-      properties:
-        latencyPerInferenceMs:
-          $ref: '#/components/schemas/ResourceRange'
-        energyPerInferenceJoules:
-          $ref: '#/components/schemas/ResourceRange'
-        memoryOverhead:
-          $ref: '#/components/schemas/TargetMemory'
-    Theme:
-      type: object
-      required:
-      - id
-      - name
-      - favicon
-      - logos
-      - colors
-      properties:
-        id:
-          type: integer
-        ownerUserId:
-          type: integer
-        ownerOrganizationId:
-          type: integer
-        name:
-          type: string
-        favicon:
-          type: object
-          properties:
-            favicon32:
-              type: string
-            favicon57:
-              type: string
-            favicon76:
-              type: string
-            favicon96:
-              type: string
-            favicon120:
-              type: string
-            favicon128:
-              type: string
-            favicon144:
-              type: string
-            favicon152:
-              type: string
-            favicon180:
-              type: string
-            favicon228:
-              type: string
-        logos:
-          type: object
-          properties:
-            primary:
-              type: string
-            primaryPng:
-              type: string
-            primaryWhite:
-              type: string
-            loginLogo:
-              type: string
-            loginLogoWhite:
-              type: string
-            mark:
-              type: string
-            markWhite:
-              type: string
-            deviceLogo:
-              type: string
-        colors:
-          type: object
-          properties:
-            primaryColor:
-              type: string
-            primaryColorRgb:
-              type: array
-              items:
-                type: number
-            primaryColorGradientEnd:
-              type: string
-    WhitelabelAdminCreateOrganizationRequest:
-      type: object
-      required:
-      - organizationName
-      properties:
-        organizationName:
-          type: string
-          example: EdgeImpulse Inc.
-          description: The name of the organization.
-        adminId:
-          type: integer
-          example: 1
-          description: Unique identifier of the administrator of the new organization.
-        adminEmail:
-          type: string
-          example: jan@edgeimpulse.com
-          description: Email of the administrator of the new organization.
-    AdminGetMetricsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - metrics
-        properties:
-          metrics:
-            type: object
-    AdminGetOrganizationsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - organizations
-        - total
-        properties:
-          total:
-            type: integer
-          organizations:
-            type: array
-            description: Array with organizations
-            items:
-              type: object
-              required:
-              - id
-              - name
-              - created
-              - privateProjectCount
-              properties:
-                id:
-                  type: integer
-                  example: 1
-                name:
-                  type: string
-                  example: Edge Impulse Inc.
-                logo:
-                  type: string
-                created:
-                  type: string
-                  format: date-time
-                  example: '2019-08-31T17:32:28Z'
-                readme:
-                  type: string
-                experiments:
-                  type: array
-                  items:
-                    type: string
-                domain:
-                  type: string
-                whitelabelId:
-                  type: integer
-                billable:
-                  type: boolean
-                privateProjectCount:
-                  type: integer
-                entitlementLimits:
-                  $ref: '#/components/schemas/EntitlementLimits'
-    OrganizationComputeTimeUsage:
-      type: object
-      properties:
-        cpuComputeTime:
-          type: number
-          description: CPU compute time in seconds of all jobs in the organization (including organizational project jobs).
-        gpuComputeTime:
-          type: number
-          description: GPU compute time in seconds of all jobs in the organization (including organizational project jobs).
-        totalComputeTime:
-          type: number
-          description: Total compute time is the amount of computation time spent in jobs, in minutes used by an organization over the given period, calculated as CPU + GPU minutes.
-    TargetProcessor:
-      type: object
-      properties:
-        part:
-          type: string
-          description: The exact part number, if available
-        format:
-          type: string
-          description: Processor type, serving as a broad descriptor for the intended use-case
-          example: low-end MCU
-        architecture:
-          type: string
-          description: Processor family, informing about the processor's instruction set and core design
-          example: Cortex-M
-        specificArchitecture:
-          type: string
-          description: Processor architecture, informing about the specific processor, if known
-          example: Cortex-M0+
-        accelerator:
-          type: string
-          description: Target accelerator, if any
-          example: Arm Cortex-U55
-        fpu:
-          type: boolean
-          description: Does the target processor have a floating point unit
-        clockRateMhz:
-          description: Clock rate of the processor
-          $ref: '#/components/schemas/ResourceRange'
-        memory:
-          $ref: '#/components/schemas/TargetMemory'
-    UpdateWhitelabelDeploymentTargetsRequest:
-      type: object
-      properties:
-        targets:
-          type: array
-          description: The names of the deployment targets that are enabled for this whitelabel.
-          items:
-            type: string
-    UpdateThemeColorsRequest:
-      type: object
-      description: Only fields set in this object will be updated.
-      properties:
-        primaryColor:
-          type: string
-          description: Primary color in hex format
-        primaryColorGradientEnd:
-          type: string
-          description: Primary color gradient end in hex format
-    UpdateWhitelabelDefaultDeploymentTargetRequest:
-      type: object
-      required:
-      - defaultDeploymentTarget
-      properties:
-        defaultDeploymentTarget:
-          type:
-          - string
-          - 'null'
-          description: Name of the default deployment target
-          example: C++ library
-    OrganizationMemberRole:
-      type: string
-      enum:
-      - admin
-      - member
-      - guest
-    AdminListProjects:
-      type: object
-      required:
-      - projects
-      - total
-      properties:
-        total:
-          type: integer
-        projects:
-          type: array
-          description: Array with projects
-          items:
-            $ref: '#/components/schemas/AdminApiProject'
-    AdminApiUser:
-      allOf:
-      - $ref: '#/components/schemas/User'
-      - type: object
-        required:
-        - email
-        - activated
-        - organizations
-        - projects
-        - experiments
-        - tier
-        - suspended
-        - trials
-        properties:
-          email:
-            type: string
-          activated:
-            type: boolean
-          organizations:
-            type: array
-            description: Organizations that the user is a member of. Only filled when requesting information about yourself.
-            items:
-              $ref: '#/components/schemas/UserOrganization'
-          projects:
-            type: array
-            items:
-              $ref: '#/components/schemas/Project'
-          experiments:
-            type: array
-            description: Experiments the user has access to. Enabling experiments can only be done through a JWT token.
-            items:
-              $ref: '#/components/schemas/UserExperiment'
-          evaluation:
-            type: boolean
-            description: Whether this is an ephemeral evaluation account.
-          ambassador:
-            type: boolean
-            description: Whether this user is an ambassador.
-          tier:
-            $ref: '#/components/schemas/UserTierEnum'
-          lastSeen:
-            type: string
-            format: date-time
-          suspended:
-            type: boolean
-            description: Whether the user is suspended.
-          trials:
-            type: array
-            description: Current or past enterprise trials.
-            items:
-              $ref: '#/components/schemas/EnterpriseTrial'
-          dailyMetrics:
-            type:
-            - array
-            - 'null'
-            description: Metrics for the last 365 days
-            items:
-              $ref: '#/components/schemas/DailyMetricsRecord'
-    UploadReadmeImageResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - url
-        properties:
-          url:
-            type: string
-    Organization:
-      type: object
-      required:
-      - id
-      - name
-      - users
-      - isDeveloperProfile
-      - whitelabelId
-      - trialId
-      - trialExpiredDate
-      - trialUpgradedDate
-      - created
-      - showHeaderImgMask
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-          description: EdgeImpulse Inc.
-        logo:
-          type: string
-          example: https://usercdn.edgeimpulse.com/logos/1.jpg
-        headerImg:
-          type: string
-          example: https://usercdn.edgeimpulse.com/leaders/1.jpg
-        showHeaderImgMask:
-          type: boolean
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationUser'
-        isDeveloperProfile:
-          type: boolean
-        whitelabelId:
-          type:
-          - integer
-          - 'null'
-          description: Unique identifier of the white label this organization belongs to, if any.
-        projects:
-          type: array
-          items:
-            $ref: '#/components/schemas/Project'
-        trialId:
-          type:
-          - integer
-          - 'null'
-          description: Unique identifier of the trial this organization belongs to, if any.
-        trialExpiredDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Date when the trial expired, if any. A expired trial has a grace period of 30 days before it's associated organization is deleted.
-        trialUpgradedDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Date when the trial was upgraded to a full enterprise account, if any.
-        created:
-          type: string
-          format: date-time
-          description: Date when the organization was created.
-        contractStartDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Date when the current contract started, if any.
-        deletedDate:
-          type: string
-          format: date-time
-          description: The date in which the organization was deleted. If the organization is not deleted, this field is not set.
-    OrganizationDatasetBucket:
-      type: object
-      required:
-      - id
-      - bucket
-      - path
-      - fullBucketPathDescription
-      - dataItemNamingLevelsDeep
-      properties:
-        id:
-          description: Bucket ID
-          type: integer
-        bucket:
-          type: string
-        path:
-          description: Path in the bucket
-          type: string
-        fullBucketPathDescription:
-          description: Full bucket path, incl. protocol (e.g. s3://bucket/path) - to be used in the UI
-          type: string
-        dataItemNamingLevelsDeep:
-          description: Number of levels deep for data items, e.g. if you have folder "test/abc", with value 1 "test" will be a data item, with value 2 "test/abc" will be a data item. Only used for "clinical" type.
-          type: integer
-    AdminGetReportResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - report
-        properties:
-          report:
-            $ref: '#/components/schemas/Report'
-    AdminAddOrganizationUserRequest:
-      allOf:
-      - $ref: '#/components/schemas/AdminAddUserRequest'
-      - type: object
-        required:
-        - role
-        - datasets
-        properties:
-          role:
-            $ref: '#/components/schemas/OrganizationMemberRole'
-          datasets:
-            description: Only used for 'guest' users. Limits the datasets the user has access to.
-            type: array
-            items:
-              type: string
-    TargetMemory:
-      type: object
-      description: RAM and ROM specifications of target
-      properties:
-        ram:
-          $ref: '#/components/schemas/MemorySpec'
-        rom:
-          $ref: '#/components/schemas/MemorySpec'
-    OrganizationDatasetTypeEnum:
-      type: string
-      enum:
-      - clinical
-      - files
-    AdminAddOrganizationApiKeyRequest:
-      allOf:
-      - $ref: '#/components/schemas/AddOrganizationApiKeyRequest'
-      - type: object
-        properties:
-          ttl:
-            type: integer
-            description: Time to live in seconds. If not set, the key will expire in 1 minute.
-    AdminUpdateOrganizationRequest:
-      type: object
-      description: Only fields set in this object will be updated.
-      properties:
-        logo:
-          type: string
-          description: New logo URL, or set to `null` to remove the logo.
-        headerImg:
-          type: string
-          description: New leader image URL, or set to `null` to remove the leader.
-        name:
-          type: string
-          description: New organization name.
-        experiments:
-          type: array
-          items:
-            type: string
-        readme:
-          type: string
-          description: Readme for the organization (in Markdown)
-        billable:
-          type: boolean
-        entitlementLimits:
-          $ref: '#/components/schemas/EntitlementLimits'
-        contractStartDate:
-          type: string
-          format: date-time
-          description: The date in which the organization contract started. Compute time will be calculated from this date.
-        domain:
-          type: string
-          description: The domain of the organization. The organization domain is used to add new users to an organization. For example, new @edgeimpulse.com would be added to the Edge Impulse organization if this organization has edgeimpulse.com as the domain.
-          example: edgeimpulse.com
-    GetWhitelabelResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        properties:
-          whitelabel:
-            $ref: '#/components/schemas/Whitelabel'
-    DevelopmentKeys:
-      type: object
-      properties:
-        apiKey:
-          type: string
-          description: API Key
-        hmacKey:
-          type: string
-          description: HMAC Key
-    TargetConstraintsDevice:
-      type: object
-      properties:
-        processors:
-          type: array
-          description: Target processors
-          items:
-            $ref: '#/components/schemas/TargetProcessor'
-        board:
-          type: string
-          description: The exact dev board part number, if available
-        name:
-          type: string
-          description: Display name in Studio
-        latencyDevice:
-          type: string
-          description: MCU identifier, if available
-          example: cortex-m4f-80mhz
-    OrganizationDataExport:
-      type: object
-      required:
-      - id
-      - created
-      - expirationDate
-      - jobId
-      - jobFinished
-      - jobFinishedSuccessful
-      properties:
-        id:
-          type: integer
-        created:
-          type: string
-          format: date-time
-        createdByUser:
-          type: object
-          required:
-          - id
-          - name
-          - username
-          properties:
-            id:
-              type: integer
-            name:
-              type: string
-            username:
-              type: string
-            photo:
-              type: string
-        jobId:
-          type: integer
-        jobFinished:
-          type: boolean
-        jobFinishedSuccessful:
-          type: boolean
-        description:
-          type: string
-          description: Description of the data export
-        expirationDate:
-          type: string
-          format: date-time
-          description: Date when the export will expire. Default is 30 days. Maximum expiration date is 60 days from the creation date.
-        downloadUrl:
-          type: string
-    UploadAssetRequest:
-      type: object
-      properties:
-        image:
-          type: string
-          format: binary
-    AdminCreateProjectRequest:
-      type: object
-      required:
-      - projectName
-      properties:
-        projectName:
-          type: string
-          example: My project
-          description: The name of the project.
-        projectVisibility:
-          $ref: '#/components/schemas/ProjectVisibility'
-        ownerId:
-          type: integer
-          example: 1
-          description: Unique identifier of the owner of the new project. Either this parameter or ownerEmail must be set.
-        ownerEmail:
-          type: string
-          example: groucho@marxbros.com
-          description: Email of the owner of the new project. Either this parameter or ownerId must be set.
-    SetMemberRoleRequest:
-      type: object
-      required:
-      - role
-      properties:
-        role:
-          $ref: '#/components/schemas/OrganizationMemberRole'
-    StartJobResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: integer
-            description: Job identifier. Status updates will include this identifier.
-            example: 12873488112
-    ListProjectsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - $ref: '#/components/schemas/ListProjects'
-    GetOrganizationDataExportResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - export
-        properties:
-          export:
-            $ref: '#/components/schemas/OrganizationDataExport'
-    AdminGetUsersResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - users
-        - total
-        properties:
-          total:
-            type: integer
-          users:
-            type: array
-            items:
-              type: object
-              required:
-              - id
-              - username
-              - email
-              - name
-              - created
-              properties:
-                id:
-                  type: integer
-                  example: 1
-                username:
-                  type: string
-                  example: janjongboom
-                email:
-                  type: string
-                  example: jan@edgeimpulse.com
-                name:
-                  type: string
-                  example: Jan Jongboom
-                photo:
-                  type: string
-                  example: https://usercdn.edgeimpulse.com/photos/1.jpg
-                created:
-                  type: string
-                  format: date-time
-                  example: '2019-08-31T17:32:28Z'
-                lastSeen:
-                  type: string
-                  format: date-time
-                  example: '2019-08-31T17:32:28Z'
-                activated:
-                  type: boolean
-                from_evaluation:
-                  type: boolean
-                tier:
-                  $ref: '#/components/schemas/UserTierEnum'
-    TrialNotes:
-      type: string
-      description: Notes about the trial. Free form text. This field is ignored if the trial is requested by a non-admin user.
-      example: This is a trial for the company's new project.
-    UpdateWhitelabelRequest:
-      type: object
-      description: Only fields set in this object will be updated.
-      properties:
-        supportedProjectTypes:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProjectType'
-    TargetConstraints:
-      type: object
-      required:
-      - targetDevices
-      - applicationBudgets
-      properties:
-        selectedTargetBasedOn:
-          type: string
-          description: A type explaining how the target was chosen. If updating this manually, use the 'user-configured' type
-          enum:
-          - user-configured
-          - default
-          - default-accepted
-          - recent-project
-          - connected-device
-        targetDevices:
-          type: array
-          description: The potential targets for the project, where each entry captures hardware attributes that allow target guidance throughout the Studio workflow. The first target in the list is considered as the selected target for the project.
-          items:
-            $ref: '#/components/schemas/TargetConstraintsDevice'
-        applicationBudgets:
-          type: array
-          description: A list of application budgets to be configured based on target device. An application budget enables guidance on performance and resource usage. The first application budget in the list is considered as the selected budget for the project.
-          items:
-            $ref: '#/components/schemas/ApplicationBudget'
-    Report:
-      type: object
-      required:
-      - id
-      - created
-      - jobId
-      - jobFinished
-      - jobFinishedSuccessful
-      - reportStartDate
-      - reportEndDate
-      properties:
-        id:
-          type: integer
-        created:
-          type: string
-          format: date-time
-        createdByUser:
-          type: object
-          required:
-          - id
-          - name
-          - username
-          properties:
-            id:
-              type: integer
-            name:
-              type: string
-            username:
-              type: string
-            photo:
-              type: string
-        jobId:
-          type: integer
-        jobFinished:
-          type: boolean
-        jobFinishedSuccessful:
-          type: boolean
-        downloadLink:
-          type: string
-        reportStartDate:
-          type: string
-          format: date-time
-        reportEndDate:
-          type: string
-          format: date-time
-    GetOrganizationDataExportsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - exports
-        - totalCount
-        properties:
-          exports:
-            type: array
-            description: List of organization data exports.
-            items:
-              $ref: '#/components/schemas/OrganizationDataExport'
-          totalCount:
-            type: integer
-    UploadAssetResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        properties:
-          url:
-            type: string
-    AdminGetUserResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - user
-        properties:
-          user:
-            $ref: '#/components/schemas/AdminApiUser'
-    StaffInfo:
-      type: object
-      required:
-      - isStaff
-      - hasSudoRights
-      properties:
-        isStaff:
-          type: boolean
-        hasSudoRights:
-          type: boolean
-        companyName:
-          type: string
-    InviteOrganizationMemberRequest:
-      type: object
-      required:
-      - email
-      - role
-      - datasets
-      properties:
-        email:
-          type: string
-          description: E-mail address
-        role:
-          $ref: '#/components/schemas/OrganizationMemberRole'
-        datasets:
-          description: Only used for 'guest' users. Limits the datasets the user has access to.
-          type: array
-          items:
-            type: string
     Project:
       type: object
       required:
@@ -5093,6 +2896,1261 @@ components:
           description: 'If the project allows public access, whether to list it the public projects overview response. If not listed, the project is still accessible via direct link. If the project does not allow public access, this field has no effect.
 
             '
+    GetOrganizationDataExportResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - export
+        properties:
+          export:
+            $ref: '#/components/schemas/OrganizationDataExport'
+    ListOrganizationsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - organizations
+        properties:
+          organizations:
+            type: array
+            description: Array with organizations
+            items:
+              $ref: '#/components/schemas/Organization'
+    RemoveMemberRequest:
+      type: object
+      required:
+      - id
+      properties:
+        id:
+          type: integer
+    CreateOrganizationRequest:
+      type: object
+      required:
+      - organizationName
+      properties:
+        organizationName:
+          type: string
+          example: EdgeImpulse Inc.
+          description: The name of the organization.
+    Theme:
+      type: object
+      required:
+      - id
+      - name
+      - favicon
+      - logos
+      - colors
+      properties:
+        id:
+          type: integer
+        ownerUserId:
+          type: integer
+        ownerOrganizationId:
+          type: integer
+        name:
+          type: string
+        favicon:
+          type: object
+          properties:
+            favicon32:
+              type: string
+            favicon57:
+              type: string
+            favicon76:
+              type: string
+            favicon96:
+              type: string
+            favicon120:
+              type: string
+            favicon128:
+              type: string
+            favicon144:
+              type: string
+            favicon152:
+              type: string
+            favicon180:
+              type: string
+            favicon228:
+              type: string
+        logos:
+          type: object
+          properties:
+            primary:
+              type: string
+            primaryPng:
+              type: string
+            primaryWhite:
+              type: string
+            loginLogo:
+              type: string
+            loginLogoWhite:
+              type: string
+            mark:
+              type: string
+            markWhite:
+              type: string
+            deviceLogo:
+              type: string
+        colors:
+          type: object
+          properties:
+            primaryColor:
+              type: string
+            primaryColorRgb:
+              type: array
+              items:
+                type: number
+            primaryColorGradientEnd:
+              type: string
+    ListProjects:
+      type: object
+      required:
+      - projects
+      properties:
+        projects:
+          type: array
+          description: Array with projects
+          items:
+            $ref: '#/components/schemas/Project'
+    UpdateWhitelabelDefaultDeploymentTargetRequest:
+      type: object
+      required:
+      - defaultDeploymentTarget
+      properties:
+        defaultDeploymentTarget:
+          type:
+          - string
+          - 'null'
+          description: Name of the default deployment target
+          example: C++ library
+    AdminUpdateOrganizationDataExportRequest:
+      type: object
+      properties:
+        description:
+          type: string
+          description: Description of the data export
+        expirationDate:
+          type: string
+          format: date-time
+          description: Date when the export will expire. Default is 30 days. Maximum expiration date is 60 days from the creation date.
+    GetWhitelabelResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          whitelabel:
+            $ref: '#/components/schemas/Whitelabel'
+    TargetProcessor:
+      type: object
+      properties:
+        part:
+          type: string
+          description: The exact part number, if available
+        format:
+          type: string
+          description: Processor type, serving as a broad descriptor for the intended use-case
+          example: low-end MCU
+        architecture:
+          type: string
+          description: Processor family, informing about the processor's instruction set and core design
+          example: Cortex-M
+        specificArchitecture:
+          type: string
+          description: Processor architecture, informing about the specific processor, if known
+          example: Cortex-M0+
+        accelerator:
+          type: string
+          description: Target accelerator, if any
+          example: Arm Cortex-U55
+        fpu:
+          type: boolean
+          description: Does the target processor have a floating point unit
+        clockRateMhz:
+          description: Clock rate of the processor
+          $ref: '#/components/schemas/ResourceRange'
+        memory:
+          $ref: '#/components/schemas/TargetMemory'
+    OrganizationUser:
+      allOf:
+      - $ref: '#/components/schemas/User'
+      - type: object
+        required:
+        - added
+        - role
+        - projectCount
+        - datasets
+        properties:
+          added:
+            type: string
+            format: date-time
+            example: '2019-08-31T17:32:28Z'
+          role:
+            $ref: '#/components/schemas/OrganizationMemberRole'
+          projectCount:
+            type: integer
+          datasets:
+            type: array
+            items:
+              type: string
+          lastAccessToOrganization:
+            type: string
+            format: date-time
+            description: Date when the user last accessed the organization data.
+          lastOrganizationProjectAccessed:
+            type: integer
+            description: ID of the last project accessed by the user in the organization.
+    UpdateWhitelabelDeploymentTargetsRequest:
+      type: object
+      properties:
+        targets:
+          type: array
+          description: The names of the deployment targets that are enabled for this whitelabel.
+          items:
+            type: string
+    ProjectDataSummary:
+      type: object
+      required:
+      - totalLengthMs
+      - labels
+      - dataCount
+      properties:
+        totalLengthMs:
+          type: number
+          description: Total length (in ms.) of all data in the training set
+          example: '726336'
+        labels:
+          type: array
+          description: Labels in the training set
+          items:
+            type: string
+        dataCount:
+          type: integer
+          example: Number of files in the training set
+    AdminGetUsersResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - users
+        - total
+        properties:
+          total:
+            type: integer
+          users:
+            type: array
+            items:
+              type: object
+              required:
+              - id
+              - username
+              - email
+              - name
+              - created
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                username:
+                  type: string
+                  example: janjongboom
+                email:
+                  type: string
+                  example: jan@edgeimpulse.com
+                name:
+                  type: string
+                  example: Jan Jongboom
+                photo:
+                  type: string
+                  example: https://usercdn.edgeimpulse.com/photos/1.jpg
+                created:
+                  type: string
+                  format: date-time
+                  example: '2019-08-31T17:32:28Z'
+                lastSeen:
+                  type: string
+                  format: date-time
+                  example: '2019-08-31T17:32:28Z'
+                activated:
+                  type: boolean
+                from_evaluation:
+                  type: boolean
+                tier:
+                  $ref: '#/components/schemas/UserTierEnum'
+    Device:
+      type: object
+      required:
+      - id
+      - deviceId
+      - created
+      - lastSeen
+      - name
+      - deviceType
+      - sensors
+      - remote_mgmt_connected
+      - supportsSnapshotStreaming
+      - remoteMgmtMode
+      properties:
+        id:
+          type: integer
+          example: 1
+        deviceId:
+          type: string
+          description: Unique identifier (such as MAC address) for a device
+          example: 38:f9:d3:d7:62:03
+        created:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        lastSeen:
+          type: string
+          format: date-time
+          example: '2019-08-31T17:32:28Z'
+          description: Last message that was received from the device (ignoring keep-alive)
+        name:
+          type: string
+          example: m6d.1 desk sensor
+        deviceType:
+          type: string
+          example: DISCO-L475VG
+        sensors:
+          type: array
+          items:
+            type: object
+            required:
+            - name
+            - maxSampleLengthS
+            - frequencies
+            properties:
+              name:
+                type: string
+                example: Built-in accelerometer
+              maxSampleLengthS:
+                type: integer
+                description: Maximum supported sample length in seconds
+              frequencies:
+                type: array
+                description: Supported frequencies for this sensor in Hz.
+                example:
+                - 62.5
+                - 100
+                items:
+                  type: number
+        remote_mgmt_connected:
+          type: boolean
+          description: Whether the device is connected to the remote management interface. This property is deprecated, use `remoteMgmtMode` instead.
+        remote_mgmt_host:
+          type: string
+          description: The remote management host that the device is connected to
+        supportsSnapshotStreaming:
+          type: boolean
+        remoteMgmtMode:
+          description: Replaces `remote_mgmt_connected`. Shows whether the device is connected to the remote management interface, and in which mode.
+          type: string
+          enum:
+          - disconnected
+          - ingestion
+          - inference
+        inferenceInfo:
+          type: object
+          description: If `remoteMgmtMode` is set to `inference` this object shows information about the model that's ran on device.
+          required:
+          - projectId
+          - projectOwner
+          - projectName
+          - deployedVersion
+          properties:
+            projectId:
+              type: integer
+            projectOwner:
+              type: string
+            projectName:
+              type: string
+            deployedVersion:
+              type: integer
+            modelType:
+              type: string
+              enum:
+              - classification
+              - objectDetection
+              - constrainedObjectDetection
+    OrganizationDatasetBucket:
+      type: object
+      required:
+      - id
+      - bucket
+      - path
+      - fullBucketPathDescription
+      - dataItemNamingLevelsDeep
+      properties:
+        id:
+          description: Bucket ID
+          type: integer
+        bucket:
+          type: string
+        path:
+          description: Path in the bucket
+          type: string
+        fullBucketPathDescription:
+          description: Full bucket path, incl. protocol (e.g. s3://bucket/path) - to be used in the UI
+          type: string
+        dataItemNamingLevelsDeep:
+          description: Number of levels deep for data items, e.g. if you have folder "test/abc", with value 1 "test" will be a data item, with value 2 "test/abc" will be a data item. Only used for "clinical" type.
+          type: integer
+    AdminGetReportResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - report
+        properties:
+          report:
+            $ref: '#/components/schemas/Report'
+    AdminUpdateOrganizationRequest:
+      type: object
+      description: Only fields set in this object will be updated.
+      properties:
+        logo:
+          type: string
+          description: New logo URL, or set to `null` to remove the logo.
+        headerImg:
+          type: string
+          description: New leader image URL, or set to `null` to remove the leader.
+        name:
+          type: string
+          description: New organization name.
+        experiments:
+          type: array
+          items:
+            type: string
+        readme:
+          type: string
+          description: Readme for the organization (in Markdown)
+        billable:
+          type: boolean
+        entitlementLimits:
+          $ref: '#/components/schemas/EntitlementLimits'
+        contractStartDate:
+          type: string
+          format: date-time
+          description: The date in which the organization contract started. Compute time will be calculated from this date.
+        domain:
+          type: string
+          description: The domain of the organization. The organization domain is used to add new users to an organization. For example, new @edgeimpulse.com would be added to the Edge Impulse organization if this organization has edgeimpulse.com as the domain.
+          example: edgeimpulse.com
+    KerasModelVariantEnum:
+      type: string
+      enum:
+      - int8
+      - float32
+      - akida
+    OrganizationInfoResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - organization
+        - datasets
+        - defaultComputeLimits
+        - experiments
+        - cliLists
+        - performance
+        properties:
+          organization:
+            $ref: '#/components/schemas/Organization'
+          datasets:
+            type: array
+            items:
+              $ref: '#/components/schemas/OrganizationDataset'
+          defaultComputeLimits:
+            type: object
+            required:
+            - requestsCpu
+            - requestsMemory
+            - limitsCpu
+            - limitsMemory
+            properties:
+              requestsCpu:
+                type: number
+              requestsMemory:
+                type: number
+              limitsCpu:
+                type: number
+              limitsMemory:
+                type: number
+          entitlementLimits:
+            $ref: '#/components/schemas/EntitlementLimits'
+          experiments:
+            type: array
+            description: Experiments that the organization has access to. Enabling experiments can only be done through a JWT token.
+            items:
+              type: object
+              required:
+              - type
+              - title
+              - enabled
+              - showToUser
+              properties:
+                type:
+                  type: string
+                title:
+                  type: string
+                help:
+                  type: string
+                enabled:
+                  type: boolean
+                showToUser:
+                  type: boolean
+          readme:
+            type: object
+            description: Present if a readme is set for this project
+            required:
+            - markdown
+            - html
+            properties:
+              markdown:
+                type: string
+              html:
+                type: string
+          whitelabelId:
+            type: integer
+          cliLists:
+            type: object
+            required:
+            - objectDetectionLastLayerOptions
+            - imageInputScalingOptions
+            properties:
+              objectDetectionLastLayerOptions:
+                type: array
+                items:
+                  type: object
+                  required:
+                  - label
+                  - value
+                  properties:
+                    label:
+                      type: string
+                    value:
+                      $ref: '#/components/schemas/ObjectDetectionLastLayer'
+              imageInputScalingOptions:
+                type: array
+                items:
+                  type: object
+                  required:
+                  - label
+                  - value
+                  properties:
+                    label:
+                      type: string
+                    value:
+                      $ref: '#/components/schemas/ImageInputScaling'
+          performance:
+            type: object
+            required:
+            - jobLimitM
+            properties:
+              jobLimitM:
+                type: integer
+                description: Compute time limit per job in minutes (for non-transformation jobs).
+    TargetMemory:
+      type: object
+      description: RAM and ROM specifications of target
+      properties:
+        ram:
+          $ref: '#/components/schemas/MemorySpec'
+        rom:
+          $ref: '#/components/schemas/MemorySpec'
+    UploadAssetRequest:
+      type: object
+      properties:
+        image:
+          type: string
+          format: binary
+    EnterpriseLimit:
+      type: string
+      enum:
+      - users
+      - projects
+      - compute
+      - storage
+    AdminListProjects:
+      type: object
+      required:
+      - projects
+      - total
+      properties:
+        total:
+          type: integer
+        projects:
+          type: array
+          description: Array with projects
+          items:
+            $ref: '#/components/schemas/AdminApiProject'
+    DeploymentOptionsOrder:
+      type: array
+      description: Optional attribute allowing a whitelabel to customize the order of deployment options in the deployment view, given as an in-order list of deployment options.
+      items:
+        type: string
+        description: Deployment option name
+        example: org-1
+    UpdateProjectRequest:
+      type: object
+      description: Only fields set in this object will be updated.
+      properties:
+        logo:
+          type: string
+          description: New logo URL, or set to `null` to remove the logo.
+        name:
+          type: string
+          description: New project name.
+        description:
+          type: string
+        projectVisibility:
+          $ref: '#/components/schemas/ProjectVisibility'
+        publicProjectListed:
+          type: boolean
+          description: 'If the project allows public access, whether to list it the public projects overview response. If not listed, the project is still accessible via direct link. If the project does not allow public access, this field has no effect.
+
+            '
+        lastDeployEonCompiler:
+          type: boolean
+          description: Call this when clicking the Eon compiler setting
+        lastDeployModelEngine:
+          type: string
+          $ref: '#/components/schemas/ModelEngineShortEnum'
+          description: Model engine for last deploy
+        latencyDevice:
+          type: string
+          description: MCU used for calculating latency
+        experiments:
+          type: array
+          items:
+            type: string
+        showCreateFirstImpulse:
+          type: boolean
+          description: Whether to show the 'Create your first impulse' section on the dashboard
+        labelingMethod:
+          type: string
+          description: What labeling flow to use
+          enum:
+          - single_label
+          - object_detection
+        selectedProjectTypeInWizard:
+          type: string
+          description: Which option was selected in the project type wizard
+          enum:
+          - accelerometer
+          - audio
+          - image_classification
+          - object_detection
+          - something_else
+        gettingStartedStep:
+          type: integer
+          description: The next step in the getting started wizard, or set to -1 to clear the getting started wizard
+        useGpu:
+          type: boolean
+          description: Whether to use GPU for training
+        computeTimeLimitM:
+          type: integer
+          description: Job limit in minutes
+        dspFileSizeMb:
+          type: integer
+          description: DSP file size in MB
+        enterprisePerformance:
+          type: boolean
+        trainJobRamMb:
+          type: integer
+          description: Amount of RAM allocated to training jobs
+        metadata:
+          type: object
+          description: New metadata about the project
+        readme:
+          type: string
+          description: Readme for the project (in Markdown)
+        lastAcquisitionLabel:
+          type: string
+        trainJobNotificationUids:
+          type: array
+          description: The IDs of users who should be notified when a Keras or retrain job is finished.
+          items:
+            type: integer
+        dspJobNotificationUids:
+          type: array
+          description: The IDs of users who should be notified when a DSP job is finished.
+          items:
+            type: integer
+        modelTestingJobNotificationUids:
+          type: array
+          description: The IDs of users who should be notified when a model testing job is finished.
+          items:
+            type: integer
+        exportJobNotificationUids:
+          type: array
+          description: The IDs of users who should be notified when an export job is finished.
+          items:
+            type: integer
+        csvImportConfig:
+          type: object
+          description: Config file specifying how to process CSV files. (set to null to clear the config)
+        inPretrainedModelFlow:
+          type: boolean
+        dspPageSize:
+          description: Set to '0' to disable DSP paging
+          type: integer
+        indPauseProcessingSamples:
+          description: Used in tests, to ensure samples that need to be processed async are not picked up until the flag is set to FALSE again.
+          type: boolean
+        showSensorDataInAcquisitionGraph:
+          description: Whether to show the actual sensor data in acquisition charts (only applies when you have structured labels)
+          type: boolean
+        lastDeploymentTarget:
+          description: Which deployment target was last selected (used to populate this deployment target again the next time you visit the deployment page). Should match the _format_ property of the response from listDeploymentTargetsForProject.
+          type: string
+        dataAcquisitionPageSize:
+          type: integer
+          description: Default page size on data acquisition
+        dataAcquisitionViewType:
+          type: string
+          description: Default view type on data acquisition
+          enum:
+          - list
+          - grid
+        dataAcquisitionGridColumnCount:
+          type: integer
+          description: Number of grid columns in non-detailed view on data acquisition
+        dataAcquisitionGridColumnCountDetailed:
+          type: integer
+          description: Number of grid columns in detailed view on data acquisition
+        showExactSampleLength:
+          type: boolean
+          description: If enabled, does not round sample length to hours/minutes/seconds, but always displays sample length in milliseconds. E.g. instead of 1m 32s, this'll say 92,142ms.
+        inlineEditBoundingBoxes:
+          type: boolean
+          description: If enabled, allows editing bounding box labels directly from the acquisition UI.
+        defaultProfilingVariant:
+          $ref: '#/components/schemas/KerasModelVariantEnum'
+          description: Last shown variant on the model testing and live classification pages. Used to keep the same view after refreshing.
+        enabledModelProfilingVariants:
+          type: array
+          description: Set of model variants enabled by default on the model testing and live classification pages.
+          items:
+            $ref: '#/components/schemas/KerasModelVariantEnum'
+        impulseListCoreMetricsHiddenColumns:
+          type: array
+          description: Which core metrics should be hidden in the impulse list. See 'GetAllDetailedImpulsesResponse' for a list of all metrics.
+          items:
+            type: string
+        impulseListAdditionalMetricsShownColumns:
+          type: array
+          description: Which additional metrics should be shown in the impulse list. See 'GetAllDetailedImpulsesResponse' for a list of all metrics.
+          items:
+            type: string
+        impulseListExtraColumns:
+          type: array
+          description: Which extra columns should be shown in the impulse list.
+          items:
+            type: string
+        aiActionsGridColumnCount:
+          type: integer
+          description: Number of grid columns in AI Actions
+    DevelopmentBoardRequestUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        image:
+          type: string
+        docsUrl:
+          type: string
+    ListProjectsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - $ref: '#/components/schemas/ListProjects'
+    AdminGetReportsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - reports
+        - totalCount
+        properties:
+          reports:
+            type: array
+            description: List of organization usage reports.
+            items:
+              $ref: '#/components/schemas/Report'
+          totalCount:
+            type: integer
+    DevelopmentKeys:
+      type: object
+      properties:
+        apiKey:
+          type: string
+          description: API Key
+        hmacKey:
+          type: string
+          description: HMAC Key
+    InviteOrganizationMemberRequest:
+      type: object
+      required:
+      - email
+      - role
+      - datasets
+      properties:
+        email:
+          type: string
+          description: E-mail address
+        role:
+          $ref: '#/components/schemas/OrganizationMemberRole'
+        datasets:
+          description: Only used for 'guest' users. Limits the datasets the user has access to.
+          type: array
+          items:
+            type: string
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    AdminAddOrganizationUserRequest:
+      allOf:
+      - $ref: '#/components/schemas/AdminAddUserRequest'
+      - type: object
+        required:
+        - role
+        - datasets
+        properties:
+          role:
+            $ref: '#/components/schemas/OrganizationMemberRole'
+          datasets:
+            description: Only used for 'guest' users. Limits the datasets the user has access to.
+            type: array
+            items:
+              type: string
+    DevelopmentBoardResponse:
+      type: object
+      required:
+      - id
+      - name
+      - image
+      - docsUrl
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        image:
+          type: string
+        docsUrl:
+          type: string
+    UpdateWhitelabelDeploymentOptionsOrderRequest:
+      type: object
+      properties:
+        order:
+          $ref: '#/components/schemas/DeploymentOptionsOrder'
+    ListOrganizationApiKeysResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - apiKeys
+        properties:
+          apiKeys:
+            type: array
+            description: List of API keys.
+            items:
+              type: object
+              required:
+              - id
+              - name
+              - apiKey
+              - created
+              - role
+              - isTransformationJobKey
+              properties:
+                id:
+                  type: integer
+                apiKey:
+                  type: string
+                name:
+                  type: string
+                created:
+                  type: string
+                  format: date-time
+                role:
+                  type: string
+                  enum:
+                  - admin
+                  - member
+                isTransformationJobKey:
+                  type: boolean
+    WhitelabelAdminCreateOrganizationRequest:
+      type: object
+      required:
+      - organizationName
+      properties:
+        organizationName:
+          type: string
+          example: EdgeImpulse Inc.
+          description: The name of the organization.
+        adminId:
+          type: integer
+          example: 1
+          description: Unique identifier of the administrator of the new organization.
+        adminEmail:
+          type: string
+          example: jan@edgeimpulse.com
+          description: Email of the administrator of the new organization.
+    TargetConstraintsDevice:
+      type: object
+      properties:
+        processors:
+          type: array
+          description: Target processors
+          items:
+            $ref: '#/components/schemas/TargetProcessor'
+        board:
+          type: string
+          description: The exact dev board part number, if available
+        name:
+          type: string
+          description: Display name in Studio
+        latencyDevice:
+          type: string
+          description: MCU identifier, if available
+          example: cortex-m4f-80mhz
+    Permission:
+      type: string
+      enum:
+      - admin:infra:disallowedEmailDomains:write
+      - admin:infra:featureFlags:read
+      - admin:infra:featureFlags:write
+      - admin:infra:config:read
+      - admin:infra:config:write
+      - admin:infra:migrations:read
+      - admin:infra:migrations:write
+      - admin:metrics:read
+      - admin:metrics:write
+      - admin:organizations:read
+      - admin:organizations:write
+      - admin:organizations:members:write
+      - admin:projects:members:write
+      - admin:projects:read
+      - admin:projects:write
+      - admin:trials:read
+      - admin:trials:write
+      - admin:users:permissions:write
+      - admin:users:read
+      - admin:users:write
+      - admin:jobs:read
+      - admin:emails:verification:code:read
+      - projects:limits:write
+      - projects:training:keras:write
+      - thirdpartyauth:read
+      - thirdpartyauth:write
+      - users:emails:read
+      - whitelabels:read
+      - whitelabels:write
+    AdminGetOrganizationsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - organizations
+        - total
+        properties:
+          total:
+            type: integer
+          organizations:
+            type: array
+            description: Array with organizations
+            items:
+              type: object
+              required:
+              - id
+              - name
+              - created
+              - privateProjectCount
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                name:
+                  type: string
+                  example: Edge Impulse Inc.
+                logo:
+                  type: string
+                created:
+                  type: string
+                  format: date-time
+                  example: '2019-08-31T17:32:28Z'
+                readme:
+                  type: string
+                experiments:
+                  type: array
+                  items:
+                    type: string
+                domain:
+                  type: string
+                whitelabelId:
+                  type: integer
+                billable:
+                  type: boolean
+                privateProjectCount:
+                  type: integer
+                entitlementLimits:
+                  $ref: '#/components/schemas/EntitlementLimits'
+    UpdateThemeColorsRequest:
+      type: object
+      description: Only fields set in this object will be updated.
+      properties:
+        primaryColor:
+          type: string
+          description: Primary color in hex format
+        primaryColorGradientEnd:
+          type: string
+          description: Primary color gradient end in hex format
+    UserTierEnum:
+      type: string
+      description: The user account tier.
+      enum:
+      - free
+      - community-plus
+      - professional
+      - enterprise
+    User:
+      type: object
+      required:
+      - id
+      - username
+      - name
+      - email
+      - created
+      - staffInfo
+      - pending
+      - activated
+      - mfaConfigured
+      properties:
+        id:
+          type: integer
+          example: 1
+        username:
+          type: string
+          example: janjongboom
+        name:
+          type: string
+          example: Jan Jongboom
+        email:
+          type: string
+          example: quijote@edgeimpulse.com
+        photo:
+          type: string
+          example: https://usercdn.edgeimpulse.com/photos/1.jpg
+        created:
+          type: string
+          format: date-time
+          example: '2019-08-31T17:32:28Z'
+        lastSeen:
+          type: string
+          format: date-time
+          example: '2019-08-31T17:32:28Z'
+        staffInfo:
+          $ref: '#/components/schemas/StaffInfo'
+        pending:
+          type: boolean
+        lastTosAcceptanceDate:
+          type: string
+          format: date-time
+          example: '2019-08-31T17:32:28Z'
+        jobTitle:
+          type: string
+          example: Software Engineer
+        permissions:
+          description: List of permissions the user has
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+        companyName:
+          type: string
+          example: Edge Impulse Inc.
+        activated:
+          type: boolean
+          description: Whether the user has activated their account or not.
+        mfaConfigured:
+          type: boolean
+          description: Whether the user has configured multi-factor authentication
+        stripeCustomerId:
+          type: string
+          description: Stripe customer ID, if any.
+        hasPendingPayments:
+          type: boolean
+          description: Whether the user has pending payments.
+        tier:
+          $ref: '#/components/schemas/UserTierEnum'
+    ProjectTierEnum:
+      type: string
+      description: The project tier. This is "enterprise" for all organization projects, or the user tier for all user projects.
+      enum:
+      - free
+      - community-plus
+      - professional
+      - enterprise
+    ModelEngineShortEnum:
+      type: string
+      enum:
+      - tflite-eon
+      - tflite-eon-ram-optimized
+      - tflite
+    OrganizationDatasetTypeEnum:
+      type: string
+      enum:
+      - clinical
+      - files
+    Report:
+      type: object
+      required:
+      - id
+      - created
+      - jobId
+      - jobFinished
+      - jobFinishedSuccessful
+      - reportStartDate
+      - reportEndDate
+      properties:
+        id:
+          type: integer
+        created:
+          type: string
+          format: date-time
+        createdByUser:
+          type: object
+          required:
+          - id
+          - name
+          - username
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            username:
+              type: string
+            photo:
+              type: string
+        jobId:
+          type: integer
+        jobFinished:
+          type: boolean
+        jobFinishedSuccessful:
+          type: boolean
+        downloadLink:
+          type: string
+        reportStartDate:
+          type: string
+          format: date-time
+        reportEndDate:
+          type: string
+          format: date-time
+    AdminAddOrganizationApiKeyRequest:
+      allOf:
+      - $ref: '#/components/schemas/AddOrganizationApiKeyRequest'
+      - type: object
+        properties:
+          ttl:
+            type: integer
+            description: Time to live in seconds. If not set, the key will expire in 1 minute.
+    UpdateWhitelabelRequest:
+      type: object
+      description: Only fields set in this object will be updated.
+      properties:
+        supportedProjectTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectType'
+    CreateOrganizationResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        - apiKey
+        properties:
+          id:
+            type: integer
+            description: Organization ID for the new organization
+          apiKey:
+            type: string
+            description: API key for the new organization (this is shown only once)
+    StaffInfo:
+      type: object
+      required:
+      - isStaff
+      - hasSudoRights
+      properties:
+        isStaff:
+          type: boolean
+        hasSudoRights:
+          type: boolean
+        companyName:
+          type: string
+    ApplicationBudget:
+      type: object
+      description: Specifies limits for your specific application, as available RAM and ROM for the model's operation and the maximum allowed latency.
+      properties:
+        latencyPerInferenceMs:
+          $ref: '#/components/schemas/ResourceRange'
+        energyPerInferenceJoules:
+          $ref: '#/components/schemas/ResourceRange'
+        memoryOverhead:
+          $ref: '#/components/schemas/TargetMemory'
+    ResourceRange:
+      type: object
+      description: Describes range of expected availability for an arbitrary resource
+      properties:
+        minimum:
+          type: number
+        maximum:
+          type: number
+    UpdateWhitelabelLearningBlocksRequest:
+      type: object
+      properties:
+        learningBlocks:
+          type: array
+          description: The types of the learning blocks that are enabled for this whitelabel.
+          items:
+            type: string
+    AdminGetMetricsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - metrics
+        properties:
+          metrics:
+            type: object
+    SetMemberDatasetsRequest:
+      type: object
+      required:
+      - datasets
+      properties:
+        datasets:
+          type: array
+          items:
+            type: string
+    AdminAddProjectApiKeyRequest:
+      allOf:
+      - $ref: '#/components/schemas/AddApiKeyRequest'
+      - type: object
+        properties:
+          ttl:
+            type: integer
+            description: Time to live in seconds. If not set, the key will expire in 1 minute.
     EnterpriseUpgradeOrTrialExtensionRequest:
       type: object
       properties:
@@ -5111,76 +4169,55 @@ components:
         trialId:
           type: number
           description: The user's trial ID. This is optional.
-    TrialExpirationDate:
-      type: string
-      format: date-time
-      description: Expiration date of the trial. The trial will be set as expired after this date. There will be a grace period of 30 days after a trial expires before fully deleting the trial organization. This field is ignored if the trial is requested by a non-admin user, defaulting to 14 days trial.
-      example: '2020-01-01T00:00:00Z'
-    ObjectDetectionLastLayer:
-      type: string
-      enum:
-      - mobilenet-ssd
-      - fomo
-      - yolov2-akida
-      - yolov5
-      - yolov5v5-drpai
-      - yolox
-      - yolov7
-      - tao-retinanet
-      - tao-ssd
-      - tao-yolov3
-      - tao-yolov4
-    UpdateWhitelabelLearningBlocksRequest:
+    SetMemberRoleRequest:
       type: object
+      required:
+      - role
       properties:
-        learningBlocks:
-          type: array
-          description: The types of the learning blocks that are enabled for this whitelabel.
-          items:
-            type: string
-    AdminGetReportsResponse:
+        role:
+          $ref: '#/components/schemas/OrganizationMemberRole'
+    StartJobResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - reports
-        - totalCount
+        - id
         properties:
-          reports:
-            type: array
-            description: List of organization usage reports.
-            items:
-              $ref: '#/components/schemas/Report'
-          totalCount:
+          id:
             type: integer
-    AddOrganizationApiKeyRequest:
+            description: Job identifier. Status updates will include this identifier.
+            example: 12873488112
+    AdminAddProjectUserRequest:
       allOf:
-      - $ref: '#/components/schemas/AddApiKeyRequest'
-      - type: object
-        required:
-        - role
-        properties:
-          role:
-            type: string
-            enum:
-            - admin
-            - member
-    ResourceRange:
+      - $ref: '#/components/schemas/AdminAddUserRequest'
+    ProjectType:
+      type: string
+      enum:
+      - kws
+      - audio
+      - object-detection
+      - image
+      - accelerometer
+      - other
+    OrganizationComputeTimeUsage:
       type: object
-      description: Describes range of expected availability for an arbitrary resource
       properties:
-        minimum:
+        cpuComputeTime:
           type: number
-        maximum:
+          description: CPU compute time in seconds of all jobs in the organization (including organizational project jobs).
+        gpuComputeTime:
           type: number
-    Job_2:
+          description: GPU compute time in seconds of all jobs in the organization (including organizational project jobs).
+        totalComputeTime:
+          type: number
+          description: Total compute time is the amount of computation time spent in jobs, in minutes used by an organization over the given period, calculated as CPU + GPU minutes.
+    Job:
       type: object
       required:
       - id
       - key
       - created
       - category
-      - categoryKey
       - jobNotificationUids
       properties:
         id:
@@ -5188,10 +4225,6 @@ components:
           description: Job id, use this to refer back to the job. The web socket API also uses this ID.
         category:
           type: string
-          description: User-friendly category (e.g. "Training model")
-        categoryKey:
-          type: string
-          description: Machine-readable category (e.g. "learn-train-studio-wrapper")
         key:
           type: string
           description: 'External job identifier, this can be used to categorize jobs, and recover job status. E.g. set this to ''keras-192'' for a Keras learning block with ID 192. When a user refreshes the page you can check whether a job is active for this ID and re-attach.
@@ -5224,15 +4257,748 @@ components:
           type: number
           description: Job duration time in seconds from start to finished, measured by k8s job watcher.
         createdByUser:
-          description: The user who started this job.
-          $ref: '#/components/schemas/CreatedUpdatedByUser'
+          type: object
+          required:
+          - id
+          - name
+          - username
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            username:
+              type: string
+            photo:
+              type: string
         categoryCount:
           type: integer
           description: Some job categories keep a counter on the job number, e.g. in synthetic data, so we know what the 1st, 2nd etc. job was in the UI.
-        metadata:
+    UpdateOrganizationRequest:
+      type: object
+      description: Only fields set in this object will be updated.
+      properties:
+        logo:
+          type: string
+          description: New logo URL, or set to `null` to remove the logo.
+        headerImg:
+          type: string
+          description: New leader image URL, or set to `null` to remove the leader.
+        showHeaderImgMask:
+          type: boolean
+        name:
+          type: string
+          description: New organization name.
+        experiments:
+          type: array
+          items:
+            type: string
+        readme:
+          type: string
+          description: Readme for the organization (in Markdown)
+        jobLimitM:
+          type: integer
+          description: New job limit in seconds.
+    AddApiKeyRequest:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Description of the key
+        apiKey:
+          type: string
+          description: 'Optional: API key. This needs to start with `ei_` and will need to be at least 32 characters long. If this field is not passed in, a new API key is generated for you.'
+    TrialExpirationDate:
+      type: string
+      format: date-time
+      description: Expiration date of the trial. The trial will be set as expired after this date. There will be a grace period of 30 days after a trial expires before fully deleting the trial organization. This field is ignored if the trial is requested by a non-admin user, defaulting to 14 days trial.
+      example: '2020-01-01T00:00:00Z'
+    GetOrganizationDataExportsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - exports
+        - totalCount
+        properties:
+          exports:
+            type: array
+            description: List of organization data exports.
+            items:
+              $ref: '#/components/schemas/OrganizationDataExport'
+          totalCount:
+            type: integer
+    AddApiKeyResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        - apiKey
+        properties:
+          id:
+            type: integer
+            description: ID of the new API key
+          apiKey:
+            type: string
+            description: New API Key (starts with "ei_...") - this'll be shared only once.
+    AdminOrganizationInfoResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - $ref: '#/components/schemas/OrganizationComputeTimeUsage'
+      - type: object
+        properties:
+          billable:
+            type: boolean
+          entitlementLimits:
+            $ref: '#/components/schemas/EntitlementLimits'
+          computeTimeCurrentContractSince:
+            type: string
+            format: date-time
+            description: The date from which the compute time for the running contract is calculated.
+          totalStorage:
+            type: number
+            description: Total storage used by the organization.
+          dailyMetrics:
+            type:
+            - array
+            - 'null'
+            description: Metrics for the last 365 days
+            items:
+              $ref: '#/components/schemas/DailyMetricsRecord'
+    OrganizationMetricsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - metrics
+        properties:
+          metrics:
+            type: object
+            required:
+            - totalJobsComputeTime
+            - jobsComputeTimeCurrentYear
+            - jobsComputeTimeCurrentYearSince
+            - cpuComputeTimeCurrentContract
+            - gpuComputeTimeCurrentContract
+            - totalStorage
+            - projectCount
+            - userCount
+            properties:
+              totalJobsComputeTime:
+                type: number
+                description: Total compute time of all organizational jobs since the creation of the organization (including organizational project jobs). Compute time is the amount of computation time spent in jobs, in minutes used by an organization over a 12 month period, calculated as CPU + GPU minutes.
+              jobsComputeTimeCurrentYear:
+                type: number
+                description: Total compute time of all organizational jobs in the current contract (including organizational project jobs). Compute time is the amount of computation time spent in jobs, in minutes used by an organization over a 12 month period, calculated as CPU + GPU minutes.
+              jobsComputeTimeCurrentYearSince:
+                type: string
+                format: date-time
+                description: The date from which the compute time for the running contract is calculated.
+              cpuComputeTimeCurrentContract:
+                type: number
+                description: CPU compute time of all jobs in the organization in the current contract (including organizational project jobs).
+              gpuComputeTimeCurrentContract:
+                type: number
+                description: GPU compute time of all jobs in the organization in the current contract (including organizational project jobs).
+              totalStorage:
+                type: number
+                description: Total storage used by the organization.
+              projectCount:
+                type: integer
+                description: Total number of projects owned by the organization.
+              userCount:
+                type: integer
+                description: Total number of users in the organization.
+    DevelopmentBoardRequest:
+      type: object
+      required:
+      - name
+      - image
+      - docsUrl
+      properties:
+        name:
+          type: string
+        image:
+          type: string
+        docsUrl:
+          type: string
+    AdminAddUserRequest:
+      type: object
+      properties:
+        usernameOrEmail:
+          type: string
+          example: janjongboom
+          description: Username or email of the user to be added to the project or organization. If no user is provided, the user ID attached to the JWT will be used.
+    OrganizationMemberRole:
+      type: string
+      enum:
+      - admin
+      - member
+      - guest
+    LatencyDevice:
+      type: object
+      required:
+      - mcu
+      - name
+      - selected
+      - int8Latency
+      - int8ConvLatency
+      - float32Latency
+      - float32ConvLatency
+      - helpText
+      properties:
+        mcu:
+          type: string
+        name:
+          type: string
+        selected:
+          type: boolean
+        int8Latency:
+          type: number
+        int8ConvLatency:
+          type: number
+        float32Latency:
+          type: number
+        float32ConvLatency:
+          type: number
+        helpText:
+          type: string
+    CreateProjectResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        - apiKey
+        properties:
+          id:
+            type: integer
+            description: Project ID for the new project
+          apiKey:
+            type: string
+            description: API key for the new project
+    AdminUpdateUserRequest:
+      type: object
+      description: Only fields set in this object will be updated.
+      properties:
+        email:
+          type: string
+          description: New email. This will also update the forum's email address but the user may need to logout/login back
+          example: quijote@lamancha.es
+        name:
+          type: string
+          description: New user full name
+          example: Don Quijote de la Mancha
+        activated:
+          type: boolean
+          description: Whether the user is active or not. Can only go from inactive to active.
+          example: true
+        suspended:
+          type: boolean
+          description: Whether the user is suspended or not.
+          example: false
+        jobTitle:
+          type: string
+          description: New user job title
+          example: Knight
+        experiments:
+          type: array
+          items:
+            type: string
+          description: List of user experiments
+    AdminGetUserResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - user
+        properties:
+          user:
+            $ref: '#/components/schemas/AdminApiUser'
+    Organization:
+      type: object
+      required:
+      - id
+      - name
+      - users
+      - isDeveloperProfile
+      - whitelabelId
+      - trialId
+      - trialExpiredDate
+      - trialUpgradedDate
+      - created
+      - showHeaderImgMask
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          description: EdgeImpulse Inc.
+        logo:
+          type: string
+          example: https://usercdn.edgeimpulse.com/logos/1.jpg
+        headerImg:
+          type: string
+          example: https://usercdn.edgeimpulse.com/leaders/1.jpg
+        showHeaderImgMask:
+          type: boolean
+        users:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationUser'
+        isDeveloperProfile:
+          type: boolean
+        whitelabelId:
+          type:
+          - integer
+          - 'null'
+          description: Unique identifier of the white label this organization belongs to, if any.
+        projects:
+          type: array
+          items:
+            $ref: '#/components/schemas/Project'
+        trialId:
+          type:
+          - integer
+          - 'null'
+          description: Unique identifier of the trial this organization belongs to, if any.
+        trialExpiredDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date when the trial expired, if any. A expired trial has a grace period of 30 days before it's associated organization is deleted.
+        trialUpgradedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date when the trial was upgraded to a full enterprise account, if any.
+        created:
+          type: string
+          format: date-time
+          description: Date when the organization was created.
+        contractStartDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date when the current contract started, if any.
+        deletedDate:
+          type: string
+          format: date-time
+          description: The date in which the organization was deleted. If the organization is not deleted, this field is not set.
+    AddOrganizationApiKeyRequest:
+      allOf:
+      - $ref: '#/components/schemas/AddApiKeyRequest'
+      - type: object
+        required:
+        - role
+        properties:
+          role:
+            type: string
+            enum:
+            - admin
+            - member
+    TargetConstraints:
+      type: object
+      required:
+      - targetDevices
+      - applicationBudgets
+      properties:
+        selectedTargetBasedOn:
+          type: string
+          description: A type explaining how the target was chosen. If updating this manually, use the 'user-configured' type
+          enum:
+          - user-configured
+          - default
+          - default-accepted
+          - recent-project
+          - connected-device
+        targetDevices:
+          type: array
+          description: The potential targets for the project, where each entry captures hardware attributes that allow target guidance throughout the Studio workflow. The first target in the list is considered as the selected target for the project.
+          items:
+            $ref: '#/components/schemas/TargetConstraintsDevice'
+        applicationBudgets:
+          type: array
+          description: A list of application budgets to be configured based on target device. An application budget enables guidance on performance and resource usage. The first application budget in the list is considered as the selected budget for the project.
+          items:
+            $ref: '#/components/schemas/ApplicationBudget'
+    AdminApiProject:
+      type: object
+      required:
+      - id
+      - name
+      - owner
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Water hammer detection
+        description:
+          type: string
+        created:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        owner:
+          type: string
+          description: User or organization that owns the project
+        ownerUserId:
+          type: integer
+        ownerOrganizationId:
+          type: integer
+        lastAccessed:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        whitelabelId:
+          type:
+          - integer
+          - 'null'
+          description: Unique identifier of the white label this project belongs to, if any.
+        tier:
+          $ref: '#/components/schemas/ProjectTierEnum'
+        category:
+          $ref: '#/components/schemas/ProjectType'
+    EntitlementLimits:
+      type: object
+      properties:
+        totalStorage:
+          type: number
+          description: Storage entitlement, in bytes
+        computeTimePerYear:
+          type: number
+          description: Total compute time entitlement (CPU + GPU), in seconds
+        gpuComputeTimePerYear:
+          type: number
+          description: GPU compute time entitlement, in seconds
+        numberOfProjects:
+          type: integer
+          description: Number of projects allowed for this organization
+        numberOfUsers:
+          type: integer
+          description: Number of users allowed for this organization
+    AdminCreateProjectRequest:
+      type: object
+      required:
+      - projectName
+      properties:
+        projectName:
+          type: string
+          example: My project
+          description: The name of the project.
+        projectVisibility:
+          $ref: '#/components/schemas/ProjectVisibility'
+        ownerId:
+          type: integer
+          example: 1
+          description: Unique identifier of the owner of the new project. Either this parameter or ownerEmail must be set.
+        ownerEmail:
+          type: string
+          example: groucho@marxbros.com
+          description: Email of the owner of the new project. Either this parameter or ownerId must be set.
+    OrganizationDataExport:
+      type: object
+      required:
+      - id
+      - created
+      - expirationDate
+      - jobId
+      - jobFinished
+      - jobFinishedSuccessful
+      properties:
+        id:
+          type: integer
+        created:
+          type: string
+          format: date-time
+        createdByUser:
           type: object
-          description: Structured job metadata
-    Whitelabel_2:
+          required:
+          - id
+          - name
+          - username
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            username:
+              type: string
+            photo:
+              type: string
+        jobId:
+          type: integer
+        jobFinished:
+          type: boolean
+        jobFinishedSuccessful:
+          type: boolean
+        description:
+          type: string
+          description: Description of the data export
+        expirationDate:
+          type: string
+          format: date-time
+          description: Date when the export will expire. Default is 30 days. Maximum expiration date is 60 days from the creation date.
+        downloadUrl:
+          type: string
+    MemorySpec:
+      type: object
+      description: Describes performance characteristics of a particular memory type
+      properties:
+        fastBytes:
+          $ref: '#/components/schemas/ResourceRange'
+        slowBytes:
+          $ref: '#/components/schemas/ResourceRange'
+    AdminApiUser:
+      allOf:
+      - $ref: '#/components/schemas/User'
+      - type: object
+        required:
+        - email
+        - activated
+        - organizations
+        - projects
+        - experiments
+        - tier
+        - suspended
+        - trials
+        properties:
+          email:
+            type: string
+          activated:
+            type: boolean
+          organizations:
+            type: array
+            description: Organizations that the user is a member of. Only filled when requesting information about yourself.
+            items:
+              $ref: '#/components/schemas/UserOrganization'
+          projects:
+            type: array
+            items:
+              $ref: '#/components/schemas/Project'
+          experiments:
+            type: array
+            description: Experiments the user has access to. Enabling experiments can only be done through a JWT token.
+            items:
+              $ref: '#/components/schemas/UserExperiment'
+          evaluation:
+            type: boolean
+            description: Whether this is an ephemeral evaluation account.
+          ambassador:
+            type: boolean
+            description: Whether this user is an ambassador.
+          tier:
+            $ref: '#/components/schemas/UserTierEnum'
+          lastSeen:
+            type: string
+            format: date-time
+          suspended:
+            type: boolean
+            description: Whether the user is suspended.
+          trials:
+            type: array
+            description: Current or past enterprise trials.
+            items:
+              $ref: '#/components/schemas/EnterpriseTrial'
+          dailyMetrics:
+            type:
+            - array
+            - 'null'
+            description: Metrics for the last 365 days
+            items:
+              $ref: '#/components/schemas/DailyMetricsRecord'
+    EntityCreatedResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: Unique identifier of the created entity.
+    AdminCreateOrganizationDataExportRequest:
+      type: object
+      required:
+      - description
+      properties:
+        description:
+          type: string
+          description: Description of the data export
+        expirationDate:
+          type: string
+          format: date-time
+          description: Date when the export will expire. Default is 30 days. Maximum expiration date is 60 days from the creation date.
+    UserOrganization:
+      type: object
+      required:
+      - id
+      - name
+      - isDeveloperProfile
+      - whitelabelId
+      - isAdmin
+      - created
+      - trialId
+      - trialExpiredDate
+      - trialUpgradedDate
+      - entitlementLimits
+      - userCount
+      - adminCount
+      - privateProjectCount
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        logo:
+          type: string
+        isDeveloperProfile:
+          type: boolean
+        whitelabelId:
+          type:
+          - integer
+          - 'null'
+          description: Unique identifier of the white label this project belongs to, if any.
+        isAdmin:
+          type: boolean
+          description: Whether the user is admin of this organization or not.
+        created:
+          type: string
+          format: date-time
+          description: When the organization was created.
+          example: '2019-08-31T17:32:28Z'
+        trialId:
+          type:
+          - number
+          - 'null'
+          description: Unique identifier of the trial this organization belongs to, if any.
+          example: 1
+        trialExpiredDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date when the trial expired, if any. A expired trial has a grace period of 30 days before it's associated organization is deleted.
+          example: '2019-08-31T17:32:28Z'
+        trialUpgradedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date when the trial was upgraded to a full enterprise account, if any.
+          example: '2019-08-31T17:32:28Z'
+        entitlementLimits:
+          $ref: '#/components/schemas/EntitlementLimits'
+        userCount:
+          type: integer
+          description: The total number of users that are a member of this organization.
+        adminCount:
+          type: integer
+          description: The number of admin users for this organization.
+        privateProjectCount:
+          type: integer
+          description: The number of private projects for this organization.
+        lastAccessed:
+          type: string
+          format: date-time
+          description: Last time this user accessed this organization.
+    AdminGetUserMetricsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - metrics
+        properties:
+          metrics:
+            type: object
+    AdminListProjectsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - $ref: '#/components/schemas/AdminListProjects'
+    TrialNotes:
+      type: string
+      description: Notes about the trial. Free form text. This field is ignored if the trial is requested by a non-admin user.
+      example: This is a trial for the company's new project.
+    EnterpriseTrial:
+      type: object
+      required:
+      - id
+      - userId
+      - created
+      - organizationId
+      - expirationDate
+      - expiredDate
+      - deletedDate
+      - upgradedDate
+      properties:
+        id:
+          type: integer
+          description: Unique identifier of the trial.
+        userId:
+          type: integer
+          description: ID of the user who created the trial.
+        organizationId:
+          type: integer
+          description: ID of the organization created for the trial.
+        created:
+          type: string
+          format: date-time
+          description: Date when the trial was created. Trials start immediately on creation.
+        expirationDate:
+          $ref: '#/components/schemas/TrialExpirationDate'
+        notes:
+          $ref: '#/components/schemas/TrialNotes'
+        expiredDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date when the trial actually expired. This is set when the trial is expired by the system.
+        deletedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date when the trial was deleted. This is set when the trial is fully  deleted by the system.
+        upgradedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date when the trial was upgraded to a full enterprise account.
+    UploadImageRequest:
+      type: object
+      required:
+      - image
+      properties:
+        image:
+          type: string
+          format: binary
+    UploadAssetResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          url:
+            type: string
+    UploadReadmeImageResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - url
+        properties:
+          url:
+            type: string
+    Whitelabel:
       type: object
       required:
       - id
@@ -5347,72 +5113,86 @@ components:
         organizationsLimit:
           type: integer
           description: The maximum number of organizations that can be created under this white label.
-        disablePublicEntities:
-          type: boolean
-          description: Whether public entities (like projects, user profiles, etc.) are disabled for this whitelabel instance.
-        requireCollaboratorsInWhitelabel:
-          type: boolean
-          description: Whether adding collaborators to projects requires collaborators to already be members of this whitelabel instance.
-        disableMarketingFeatures:
-          type: boolean
-          description: Whether marketing features (marketing cookies, HubSpot tracking, etc.) are disabled for this whitelabel instance.
-        disableForumAccess:
-          type: boolean
-          description: Whether forum access is disabled for this whitelabel instance.
-        customLimits:
-          type: object
-          description: Custom limits for this whitelabel instance.
-    Permission_2:
+    ImageInputScaling:
+      description: Normalization that is applied to images. If this is not set then 0..1 is used. "0..1" gives you non-normalized pixels between 0 and 1. "-1..1" gives you non-normalized pixels between -1 and 1. "0..255" gives you non-normalized pixels between 0 and 255. "-128..127" gives you non-normalized pixels between -128 and 127. "torch" first scales pixels between 0 and 1, then applies normalization using the ImageNet dataset (same as `torchvision.transforms.Normalize()`). "bgr-subtract-imagenet-mean" scales to 0..255, reorders pixels to BGR, and subtracts the ImageNet mean from each channel.
       type: string
       enum:
-      - admin:infra:datasetVersioning:queue:write
-      - admin:infra:disallowedEmailDomains:read
-      - admin:infra:disallowedEmailDomains:write
-      - admin:infra:featureFlags:read
-      - admin:infra:featureFlags:write
-      - admin:infra:config:read
-      - admin:infra:config:write
-      - admin:infra:migrations:read
-      - admin:infra:migrations:write
-      - admin:metrics:read
-      - admin:metrics:write
-      - admin:oauth:read
-      - admin:oauth:write
-      - admin:organizations:read
-      - admin:organizations:write
-      - admin:organizations:members:write
-      - admin:projects:members:write
-      - admin:projects:read
-      - admin:projects:write
-      - admin:trashbin:write
-      - admin:trials:read
-      - admin:trials:write
-      - admin:users:permissions:write
-      - admin:users:read
-      - admin:users:signupApprovals:read
-      - admin:users:signupApprovals:write
-      - admin:users:write
-      - admin:jobs:read
-      - admin:emails:verification:code:read
-      - admin:sso:read
-      - admin:sso:domainIdps:write
-      - admin:vlm:model:read
-      - admin:vlm:model:write
-      - projects:limits:write
-      - projects:training:keras:write
-      - projects:data:versioning:write
-      - users:emails:read
-      - whitelabels:read
-      - whitelabels:write
-      - test:data:write
-      - test:users:read
-      - test:users:write
-    AdminApiProject_2:
+      - 0..1
+      - -1..1
+      - -128..127
+      - 0..255
+      - torch
+      - bgr-subtract-imagenet-mean
+    ProjectVisibility:
+      type: string
+      enum:
+      - public
+      - private
+      description: The visibility of the project, either public or private. Public projects can be viewed by anyone on the internet and edited by collaborators. Private projects can only be viewed and edited by collaborators.
+    ObjectDetectionLastLayer:
+      type: string
+      enum:
+      - mobilenet-ssd
+      - fomo
+      - yolov2-akida
+      - yolov5
+      - yolov5v5-drpai
+      - yolox
+      - yolov7
+      - tao-retinanet
+      - tao-ssd
+      - tao-yolov3
+      - tao-yolov4
+    AdminGetOrganizationComputeTimeUsageResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - $ref: '#/components/schemas/OrganizationComputeTimeUsage'
+    ProjectCollaborator:
+      allOf:
+      - $ref: '#/components/schemas/User'
+      - type: object
+        required:
+        - isOwner
+        properties:
+          isOwner:
+            type: boolean
+    AddMemberRequest:
+      type: object
+      required:
+      - usernameOrEmail
+      - role
+      - datasets
+      properties:
+        usernameOrEmail:
+          type: string
+          description: Username or e-mail address
+        role:
+          $ref: '#/components/schemas/OrganizationMemberRole'
+        datasets:
+          description: Only used for 'guest' users. Limits the datasets the user has access to.
+          type: array
+          items:
+            type: string
+    Project_2:
       type: object
       required:
       - id
       - name
+      - description
+      - created
       - owner
+      - collaborators
+      - labelingMethod
+      - metadata
+      - isEnterpriseProject
+      - whitelabelId
+      - tier
+      - hasPublicVersion
+      - isPublic
+      - allowsLivePublicAccess
+      - ownerIsDeveloperProfile
+      - indPauseProcessingSamples
+      - publicProjectListed
       properties:
         id:
           type: integer
@@ -5429,111 +5209,253 @@ components:
         owner:
           type: string
           description: User or organization that owns the project
-        ownerUserId:
-          type: integer
-        ownerOrganizationId:
-          type: integer
         lastAccessed:
           type: string
           format: date-time
           example: '2019-07-21T17:32:28Z'
+        lastModified:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        lastModificationDetails:
+          type: string
+          description: Details about the last modification
+          example: Data sample added
+        logo:
+          type: string
+          description: Custom logo for this project (not available for all projects)
+        ownerUserId:
+          type: integer
+        ownerOrganizationId:
+          type: integer
+        ownerAvatar:
+          type: string
+          description: URL of the project owner avatar, if any.
+        ownerIsDeveloperProfile:
+          type: boolean
+        developerProfileUserId:
+          type: integer
+          description: User ID of the developer profile, if any.
+        collaborators:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectCollaborator'
+        labelingMethod:
+          $ref: '#/components/schemas/ProjectLabelingMethod'
+        metadata:
+          type: object
+          description: Metadata about the project
+        dataExplorerScreenshot:
+          type: string
+        isEnterpriseProject:
+          type: boolean
+          description: Whether this is an enterprise project
         whitelabelId:
           type:
           - integer
           - 'null'
           description: Unique identifier of the white label this project belongs to, if any.
+        whitelabelName:
+          type: string
+          description: Name of the white label this project belongs to, if any.
+        tags:
+          type: array
+          items:
+            type: string
+          description: List of project tags
+          example:
+          - FOMO
+          - beers
+        category:
+          type: string
+          description: Project category
+          enum:
+          - Accelerometer
+          - Audio
+          - Images
+          - Keyword spotting
+          - Object detection
+          - Other
+        license:
+          $ref: '#/components/schemas/PublicProjectLicense'
+          description: Public project license, if any.
         tier:
           $ref: '#/components/schemas/ProjectTierEnum'
-        category:
-          $ref: '#/components/schemas/ProjectType'
+        hasPublicVersion:
+          type: boolean
+          description: Whether this project has been published or not.
+        isPublic:
+          type: boolean
+          description: 'Whether this is a public version of a project. A version is a snapshot of a project at a certain point in time, which can be used to periodically save the state of a project. Versions can be private (just for internal use and reference) or public, available to everyone. A public version can be cloned by anyone, restoring the state of the project at the time into a new, separate project.
+
+            '
+        allowsLivePublicAccess:
+          type: boolean
+          description: 'Whether this project allows live, public access. Unlike a public version, a live public project is not fixed in time, and always includes the latest project changes. Similar to public versions, a live public project can be cloned by anyone, creating a new, separate project.
+
+            '
+        indPauseProcessingSamples:
+          type: boolean
+        publicProjectListed:
+          type: boolean
+          description: 'If the project allows public access, whether to list it the public projects overview response. If not listed, the project is still accessible via direct link. If the project does not allow public access, this field has no effect.
+
+            '
         deletedDate:
           type: string
           format: date-time
-    CreatedUpdatedByUser:
+        fullDeletionDate:
+          type: string
+          format: date-time
+        scheduledFullDeletionDate:
+          type: string
+          format: date-time
+    OrganizationApiKey:
       type: object
       required:
       - id
       - name
-      - username
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        username:
-          type: string
-        photo:
-          type: string
-    User_2:
-      type: object
-      required:
-      - id
-      - username
-      - name
-      - email
+      - apiKey
       - created
-      - staffInfo
-      - pending
-      - activated
-      - mfaConfigured
+      - role
+      - isTransformationJobKey
       properties:
         id:
           type: integer
-          example: 1
-        username:
+        apiKey:
           type: string
-          example: janjongboom
         name:
           type: string
-          example: Jan Jongboom
-        email:
-          type: string
-          example: quijote@edgeimpulse.com
-        photo:
-          type: string
-          example: https://usercdn.edgeimpulse.com/photos/1.jpg
         created:
           type: string
           format: date-time
-          example: '2019-08-31T17:32:28Z'
-        lastSeen:
+        role:
+          type: string
+          enum:
+          - admin
+          - member
+        isTransformationJobKey:
+          type: boolean
+        createdByUser:
+          $ref: '#/components/schemas/CreatedUpdatedByUser'
+        lastUsed:
+          description: When this API key was last used.
+          type: object
+          required:
+          - date
+          properties:
+            date:
+              type: string
+              format: date-time
+            country:
+              type: string
+              example: United States
+              description: If available, the country from which the API key was last used.
+            ipAddress:
+              type: string
+              description: If available, the IP address from which the API key was last used.
+        expires:
+          description: If the key has a ttl set, when the key will expire
           type: string
           format: date-time
-          example: '2019-08-31T17:32:28Z'
-        staffInfo:
-          $ref: '#/components/schemas/StaffInfo'
-        pending:
-          type: boolean
-        jobTitle:
-          type: string
-          example: Software Engineer
-        permissions:
-          description: List of permissions the user has
+    CreateMultiProjectDeploymentRequest:
+      type: object
+      required:
+      - engine
+      - impulses
+      properties:
+        impulses:
           type: array
           items:
-            $ref: '#/components/schemas/Permission_2'
-        companyName:
-          type: string
-          example: Edge Impulse Inc.
-        activated:
-          type: boolean
-          description: Whether the user has activated their account or not.
-        mfaConfigured:
-          type: boolean
-          description: Whether the user has configured multi-factor authentication
-        stripeCustomerId:
-          type: string
-          description: Stripe customer ID, if any.
-        hasPendingPayments:
-          type: boolean
-          description: Whether the user has pending payments.
-        tier:
-          $ref: '#/components/schemas/UserTierEnum'
-        idps:
-          type: array
-          description: List of identity providers (e.g. Google, GitHub) that the user has used to sign in with
-          items:
-            type: string
+            type: object
+            required:
+            - projectId
+            - impulseId
+            - variant
+            properties:
+              projectId:
+                type: integer
+              impulseId:
+                type: integer
+              variant:
+                $ref: '#/components/schemas/KerasModelVariantEnum'
+        engine:
+          $ref: '#/components/schemas/ModelEngineShortEnum'
+    AdminProjectInfoResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - project
+        properties:
+          project:
+            $ref: '#/components/schemas/Project_2'
+    AdminGetUsersResponse_2:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - users
+        - total
+        properties:
+          total:
+            type: integer
+          users:
+            type: array
+            items:
+              type: object
+              required:
+              - id
+              - username
+              - email
+              - name
+              - created
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                username:
+                  type: string
+                  example: janjongboom
+                email:
+                  type: string
+                  example: jan@edgeimpulse.com
+                name:
+                  type: string
+                  example: Jan Jongboom
+                photo:
+                  type: string
+                  example: https://usercdn.edgeimpulse.com/photos/1.jpg
+                created:
+                  type: string
+                  format: date-time
+                  example: '2019-08-31T17:32:28Z'
+                lastSeen:
+                  type: string
+                  format: date-time
+                  example: '2019-08-31T17:32:28Z'
+                activated:
+                  type: boolean
+                from_evaluation:
+                  type: boolean
+                tier:
+                  $ref: '#/components/schemas/UserTierEnum'
+                deletedDate:
+                  type: string
+                  format: date-time
+                  example: '2024-01-01T00:00:00Z'
+    TutorialType:
+      type: string
+      description: The type of in-product guided tutorial to show in the getting started wizard
+      enum:
+      - kws
+      - cv
+    PublicProjectLicense:
+      type: string
+      enum:
+      - Apache-2.0
+      - BSD-3-Clause
+      - BSD-3-Clause-Clear
     UpdateProjectRequest_2:
       type: object
       description: Only fields set in this object will be updated.
@@ -5732,6 +5654,249 @@ components:
             description: List of API keys.
             items:
               $ref: '#/components/schemas/OrganizationApiKey'
+    Permission_2:
+      type: string
+      enum:
+      - admin:infra:datasetVersioning:queue:write
+      - admin:infra:disallowedEmailDomains:read
+      - admin:infra:disallowedEmailDomains:write
+      - admin:infra:featureFlags:read
+      - admin:infra:featureFlags:write
+      - admin:infra:config:read
+      - admin:infra:config:write
+      - admin:infra:migrations:read
+      - admin:infra:migrations:write
+      - admin:metrics:read
+      - admin:metrics:write
+      - admin:oauth:read
+      - admin:oauth:write
+      - admin:organizations:read
+      - admin:organizations:write
+      - admin:organizations:members:write
+      - admin:projects:members:write
+      - admin:projects:read
+      - admin:projects:write
+      - admin:trashbin:write
+      - admin:trials:read
+      - admin:trials:write
+      - admin:users:permissions:write
+      - admin:users:read
+      - admin:users:signupApprovals:read
+      - admin:users:signupApprovals:write
+      - admin:users:write
+      - admin:jobs:read
+      - admin:emails:verification:code:read
+      - admin:sso:read
+      - admin:sso:domainIdps:write
+      - admin:vlm:model:read
+      - admin:vlm:model:write
+      - projects:limits:write
+      - projects:training:keras:write
+      - projects:data:versioning:write
+      - users:emails:read
+      - whitelabels:read
+      - whitelabels:write
+      - test:data:write
+      - test:users:read
+      - test:users:write
+    User_2:
+      type: object
+      required:
+      - id
+      - username
+      - name
+      - email
+      - created
+      - staffInfo
+      - pending
+      - activated
+      - mfaConfigured
+      properties:
+        id:
+          type: integer
+          example: 1
+        username:
+          type: string
+          example: janjongboom
+        name:
+          type: string
+          example: Jan Jongboom
+        email:
+          type: string
+          example: quijote@edgeimpulse.com
+        photo:
+          type: string
+          example: https://usercdn.edgeimpulse.com/photos/1.jpg
+        created:
+          type: string
+          format: date-time
+          example: '2019-08-31T17:32:28Z'
+        lastSeen:
+          type: string
+          format: date-time
+          example: '2019-08-31T17:32:28Z'
+        staffInfo:
+          $ref: '#/components/schemas/StaffInfo'
+        pending:
+          type: boolean
+        jobTitle:
+          type: string
+          example: Software Engineer
+        permissions:
+          description: List of permissions the user has
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission_2'
+        companyName:
+          type: string
+          example: Edge Impulse Inc.
+        activated:
+          type: boolean
+          description: Whether the user has activated their account or not.
+        mfaConfigured:
+          type: boolean
+          description: Whether the user has configured multi-factor authentication
+        stripeCustomerId:
+          type: string
+          description: Stripe customer ID, if any.
+        hasPendingPayments:
+          type: boolean
+          description: Whether the user has pending payments.
+        tier:
+          $ref: '#/components/schemas/UserTierEnum'
+        idps:
+          type: array
+          description: List of identity providers (e.g. Google, GitHub) that the user has used to sign in with
+          items:
+            type: string
+    Report_2:
+      type: object
+      required:
+      - id
+      - created
+      - jobId
+      - jobFinished
+      - jobFinishedSuccessful
+      - reportStartDate
+      - reportEndDate
+      properties:
+        id:
+          type: integer
+        created:
+          type: string
+          format: date-time
+        createdByUser:
+          $ref: '#/components/schemas/CreatedUpdatedByUser'
+        jobId:
+          type: integer
+        jobFinished:
+          type: boolean
+        jobFinishedSuccessful:
+          type: boolean
+        downloadLink:
+          type: string
+        reportStartDate:
+          type: string
+          format: date-time
+        reportEndDate:
+          type: string
+          format: date-time
+    CreatedUpdatedByUser:
+      type: object
+      required:
+      - id
+      - name
+      - username
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        username:
+          type: string
+        photo:
+          type: string
+    AnomalyLabelsConfig:
+      type: object
+      required:
+      - anomalyLabels
+      - noAnomalyLabels
+      properties:
+        anomalyLabels:
+          type: array
+          description: Labels to treat as anomalous during classification or model testing in Studio, defaults to ['anomaly']
+          items:
+            type: string
+        noAnomalyLabels:
+          type: array
+          description: Labels to treat as non-anomalous during classification or model testing in Studio, defaults to ['no anomaly']
+          items:
+            type: string
+    ProjectLabelingMethod:
+      type: string
+      enum:
+      - single_label
+      - object_detection
+      - label_map
+    Job_2:
+      type: object
+      required:
+      - id
+      - key
+      - created
+      - category
+      - categoryKey
+      - jobNotificationUids
+      properties:
+        id:
+          type: integer
+          description: Job id, use this to refer back to the job. The web socket API also uses this ID.
+        category:
+          type: string
+          description: User-friendly category (e.g. "Training model")
+        categoryKey:
+          type: string
+          description: Machine-readable category (e.g. "learn-train-studio-wrapper")
+        key:
+          type: string
+          description: 'External job identifier, this can be used to categorize jobs, and recover job status. E.g. set this to ''keras-192'' for a Keras learning block with ID 192. When a user refreshes the page you can check whether a job is active for this ID and re-attach.
+
+            '
+        created:
+          type: string
+          format: date-time
+          description: When the job was created.
+        started:
+          type: string
+          format: date-time
+          description: When the job was started.
+        finished:
+          type: string
+          format: date-time
+          description: When the job was finished.
+        finishedSuccessful:
+          type: boolean
+          description: Whether the job finished successfully.
+        jobNotificationUids:
+          type: array
+          description: The IDs of users who should be notified when a job is finished.
+          items:
+            type: integer
+        additionalInfo:
+          type: string
+          description: Additional metadata associated with this job.
+        computeTime:
+          type: number
+          description: Job duration time in seconds from start to finished, measured by k8s job watcher.
+        createdByUser:
+          description: The user who started this job.
+          $ref: '#/components/schemas/CreatedUpdatedByUser'
+        categoryCount:
+          type: integer
+          description: Some job categories keep a counter on the job number, e.g. in synthetic data, so we know what the 1st, 2nd etc. job was in the UI.
+        metadata:
+          type: object
+          description: Structured job metadata
     AdminUpdateUserRequest_2:
       type: object
       description: Only fields set in this object will be updated.
@@ -5765,45 +5930,193 @@ components:
           items:
             type: string
           description: List of user experiments
-    CreateMultiProjectDeploymentRequest:
+    Organization_2:
       type: object
       required:
-      - engine
-      - impulses
+      - id
+      - name
+      - users
+      - isDeveloperProfile
+      - whitelabelId
+      - trialId
+      - trialExpiredDate
+      - trialUpgradedDate
+      - created
+      - showHeaderImgMask
       properties:
-        impulses:
+        id:
+          type: integer
+        name:
+          type: string
+          description: EdgeImpulse Inc.
+        logo:
+          type: string
+          example: https://usercdn.edgeimpulse.com/logos/1.jpg
+        headerImg:
+          type: string
+          example: https://usercdn.edgeimpulse.com/leaders/1.jpg
+        showHeaderImgMask:
+          type: boolean
+        users:
           type: array
           items:
-            type: object
-            required:
-            - projectId
-            - impulseId
-            - variant
-            properties:
-              projectId:
-                type: integer
-              impulseId:
-                type: integer
-              variant:
-                $ref: '#/components/schemas/KerasModelVariantEnum'
-        engine:
-          $ref: '#/components/schemas/ModelEngineShortEnum'
-    AnomalyLabelsConfig:
+            $ref: '#/components/schemas/OrganizationUser'
+        isDeveloperProfile:
+          type: boolean
+        whitelabelId:
+          type:
+          - integer
+          - 'null'
+          description: Unique identifier of the white label this organization belongs to, if any.
+        whitelabelName:
+          type: string
+          description: Name of the white label this organization belongs to, if any.
+        projects:
+          type: array
+          items:
+            $ref: '#/components/schemas/Project_2'
+        trialId:
+          type:
+          - integer
+          - 'null'
+          description: Unique identifier of the trial this organization belongs to, if any.
+        trialExpiredDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date when the trial expired, if any. A expired trial has a grace period of 30 days before it's associated organization is deleted.
+        trialUpgradedDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date when the trial was upgraded to a full enterprise account, if any.
+        created:
+          type: string
+          format: date-time
+          description: Date when the organization was created.
+        contractStartDate:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          description: Date when the current contract started, if any.
+        deletedDate:
+          type: string
+          format: date-time
+          description: The date in which the organization was deleted. If the organization is not deleted, this field is not set.
+    AddOrganizationApiKeyRequest_2:
+      allOf:
+      - $ref: '#/components/schemas/AddApiKeyRequest'
+      - type: object
+        required:
+        - role
+        properties:
+          role:
+            type: string
+            enum:
+            - admin
+            - member
+          ttl:
+            type: integer
+            description: 'Optional: time to live in seconds.'
+    AdminApiProject_2:
       type: object
       required:
-      - anomalyLabels
-      - noAnomalyLabels
+      - id
+      - name
+      - owner
       properties:
-        anomalyLabels:
-          type: array
-          description: Labels to treat as anomalous during classification or model testing in Studio, defaults to ['anomaly']
-          items:
-            type: string
-        noAnomalyLabels:
-          type: array
-          description: Labels to treat as non-anomalous during classification or model testing in Studio, defaults to ['no anomaly']
-          items:
-            type: string
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Water hammer detection
+        description:
+          type: string
+        created:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        owner:
+          type: string
+          description: User or organization that owns the project
+        ownerUserId:
+          type: integer
+        ownerOrganizationId:
+          type: integer
+        lastAccessed:
+          type: string
+          format: date-time
+          example: '2019-07-21T17:32:28Z'
+        whitelabelId:
+          type:
+          - integer
+          - 'null'
+          description: Unique identifier of the white label this project belongs to, if any.
+        tier:
+          $ref: '#/components/schemas/ProjectTierEnum'
+        category:
+          $ref: '#/components/schemas/ProjectType'
+        deletedDate:
+          type: string
+          format: date-time
+    AdminCreateProjectRequest_2:
+      type: object
+      required:
+      - projectName
+      properties:
+        projectName:
+          type: string
+          example: My project
+          description: The name of the project.
+        projectVisibility:
+          $ref: '#/components/schemas/ProjectVisibility'
+        ownerId:
+          type: integer
+          example: 1
+          description: Unique identifier of the owner of the new project. Either this parameter or ownerEmail must be set.
+        ownerEmail:
+          type: string
+          example: groucho@marxbros.com
+          description: Email of the owner of the new project. Either this parameter or ownerId must be set.
+        createApiKey:
+          description: Whether to create an API key. If set to FALSE, the "apiKey" property on the response will be empty. If this field is not set, it will default to TRUE.
+          type: boolean
+    OrganizationDataExport_2:
+      type: object
+      required:
+      - id
+      - created
+      - expirationDate
+      - jobId
+      - jobFinished
+      - jobFinishedSuccessful
+      properties:
+        id:
+          type: integer
+        created:
+          type: string
+          format: date-time
+        createdByUser:
+          $ref: '#/components/schemas/CreatedUpdatedByUser'
+        jobId:
+          type: integer
+        jobFinished:
+          type: boolean
+        jobFinishedSuccessful:
+          type: boolean
+        description:
+          type: string
+          description: Description of the data export
+        expirationDate:
+          type: string
+          format: date-time
+          description: Date when the export will expire. Default is 30 days. Maximum expiration date is 60 days from the creation date.
+        downloadUrl:
+          type: string
     UserOrganization_2:
       type: object
       required:
@@ -5889,434 +6202,136 @@ components:
               type: string
             link:
               type: string
-    OrganizationApiKey:
+    Whitelabel_2:
       type: object
       required:
       - id
       - name
-      - apiKey
-      - created
-      - role
-      - isTransformationJobKey
-      properties:
-        id:
-          type: integer
-        apiKey:
-          type: string
-        name:
-          type: string
-        created:
-          type: string
-          format: date-time
-        role:
-          type: string
-          enum:
-          - admin
-          - member
-        isTransformationJobKey:
-          type: boolean
-        createdByUser:
-          $ref: '#/components/schemas/CreatedUpdatedByUser'
-        lastUsed:
-          description: When this API key was last used.
-          type: object
-          required:
-          - date
-          properties:
-            date:
-              type: string
-              format: date-time
-            country:
-              type: string
-              example: United States
-              description: If available, the country from which the API key was last used.
-            ipAddress:
-              type: string
-              description: If available, the IP address from which the API key was last used.
-        expires:
-          description: If the key has a ttl set, when the key will expire
-          type: string
-          format: date-time
-    TutorialType:
-      type: string
-      description: The type of in-product guided tutorial to show in the getting started wizard
-      enum:
-      - kws
-      - cv
-    ProjectLabelingMethod:
-      type: string
-      enum:
-      - single_label
-      - object_detection
-      - label_map
-    AdminProjectInfoResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - project
-        properties:
-          project:
-            $ref: '#/components/schemas/Project_2'
-    Organization_2:
-      type: object
-      required:
-      - id
-      - name
-      - users
-      - isDeveloperProfile
-      - whitelabelId
-      - trialId
-      - trialExpiredDate
-      - trialUpgradedDate
-      - created
-      - showHeaderImgMask
+      - domain
+      - themeId
+      - identityProviders
+      - allowPasswordAuth
+      - deploymentTargets
+      - allDeploymentTargets
+      - allowSignup
+      - allowFreeProjects
+      - supportedProjectTypes
+      - allowNewProjectUi
+      - learningBlocks
+      - allLearningBlocks
+      - developmentBoards
+      - allDevelopmentBoards
       properties:
         id:
           type: integer
         name:
           type: string
-          description: EdgeImpulse Inc.
-        logo:
+        domain:
           type: string
-          example: https://usercdn.edgeimpulse.com/logos/1.jpg
-        headerImg:
-          type: string
-          example: https://usercdn.edgeimpulse.com/leaders/1.jpg
-        showHeaderImgMask:
-          type: boolean
-        users:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationUser'
-        isDeveloperProfile:
-          type: boolean
-        whitelabelId:
-          type:
-          - integer
-          - 'null'
-          description: Unique identifier of the white label this organization belongs to, if any.
-        whitelabelName:
-          type: string
-          description: Name of the white label this organization belongs to, if any.
-        projects:
-          type: array
-          items:
-            $ref: '#/components/schemas/Project_2'
-        trialId:
-          type:
-          - integer
-          - 'null'
-          description: Unique identifier of the trial this organization belongs to, if any.
-        trialExpiredDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Date when the trial expired, if any. A expired trial has a grace period of 30 days before it's associated organization is deleted.
-        trialUpgradedDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Date when the trial was upgraded to a full enterprise account, if any.
-        created:
-          type: string
-          format: date-time
-          description: Date when the organization was created.
-        contractStartDate:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          description: Date when the current contract started, if any.
-        deletedDate:
-          type: string
-          format: date-time
-          description: The date in which the organization was deleted. If the organization is not deleted, this field is not set.
-    OrganizationDataExport_2:
-      type: object
-      required:
-      - id
-      - created
-      - expirationDate
-      - jobId
-      - jobFinished
-      - jobFinishedSuccessful
-      properties:
-        id:
-          type: integer
-        created:
-          type: string
-          format: date-time
-        createdByUser:
-          $ref: '#/components/schemas/CreatedUpdatedByUser'
-        jobId:
-          type: integer
-        jobFinished:
-          type: boolean
-        jobFinishedSuccessful:
-          type: boolean
-        description:
-          type: string
-          description: Description of the data export
-        expirationDate:
-          type: string
-          format: date-time
-          description: Date when the export will expire. Default is 30 days. Maximum expiration date is 60 days from the creation date.
-        downloadUrl:
-          type: string
-    AdminCreateProjectRequest_2:
-      type: object
-      required:
-      - projectName
-      properties:
-        projectName:
-          type: string
-          example: My project
-          description: The name of the project.
-        projectVisibility:
-          $ref: '#/components/schemas/ProjectVisibility'
-        ownerId:
-          type: integer
-          example: 1
-          description: Unique identifier of the owner of the new project. Either this parameter or ownerEmail must be set.
-        ownerEmail:
-          type: string
-          example: groucho@marxbros.com
-          description: Email of the owner of the new project. Either this parameter or ownerId must be set.
-        createApiKey:
-          description: Whether to create an API key. If set to FALSE, the "apiKey" property on the response will be empty. If this field is not set, it will default to TRUE.
-          type: boolean
-    AdminGetUsersResponse_2:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - users
-        - total
-        properties:
-          total:
-            type: integer
-          users:
-            type: array
-            items:
-              type: object
-              required:
-              - id
-              - username
-              - email
-              - name
-              - created
-              properties:
-                id:
-                  type: integer
-                  example: 1
-                username:
-                  type: string
-                  example: janjongboom
-                email:
-                  type: string
-                  example: jan@edgeimpulse.com
-                name:
-                  type: string
-                  example: Jan Jongboom
-                photo:
-                  type: string
-                  example: https://usercdn.edgeimpulse.com/photos/1.jpg
-                created:
-                  type: string
-                  format: date-time
-                  example: '2019-08-31T17:32:28Z'
-                lastSeen:
-                  type: string
-                  format: date-time
-                  example: '2019-08-31T17:32:28Z'
-                activated:
-                  type: boolean
-                from_evaluation:
-                  type: boolean
-                tier:
-                  $ref: '#/components/schemas/UserTierEnum'
-                deletedDate:
-                  type: string
-                  format: date-time
-                  example: '2024-01-01T00:00:00Z'
-    Report_2:
-      type: object
-      required:
-      - id
-      - created
-      - jobId
-      - jobFinished
-      - jobFinishedSuccessful
-      - reportStartDate
-      - reportEndDate
-      properties:
-        id:
-          type: integer
-        created:
-          type: string
-          format: date-time
-        createdByUser:
-          $ref: '#/components/schemas/CreatedUpdatedByUser'
-        jobId:
-          type: integer
-        jobFinished:
-          type: boolean
-        jobFinishedSuccessful:
-          type: boolean
-        downloadLink:
-          type: string
-        reportStartDate:
-          type: string
-          format: date-time
-        reportEndDate:
-          type: string
-          format: date-time
-    Project_2:
-      type: object
-      required:
-      - id
-      - name
-      - description
-      - created
-      - owner
-      - collaborators
-      - labelingMethod
-      - metadata
-      - isEnterpriseProject
-      - whitelabelId
-      - tier
-      - hasPublicVersion
-      - isPublic
-      - allowsLivePublicAccess
-      - ownerIsDeveloperProfile
-      - indPauseProcessingSamples
-      - publicProjectListed
-      properties:
-        id:
-          type: integer
-          example: 1
-        name:
-          type: string
-          example: Water hammer detection
-        description:
-          type: string
-        created:
-          type: string
-          format: date-time
-          example: '2019-07-21T17:32:28Z'
-        owner:
-          type: string
-          description: User or organization that owns the project
-        lastAccessed:
-          type: string
-          format: date-time
-          example: '2019-07-21T17:32:28Z'
-        lastModified:
-          type: string
-          format: date-time
-          example: '2019-07-21T17:32:28Z'
-        lastModificationDetails:
-          type: string
-          description: Details about the last modification
-          example: Data sample added
-        logo:
-          type: string
-          description: Custom logo for this project (not available for all projects)
-        ownerUserId:
-          type: integer
         ownerOrganizationId:
           type: integer
-        ownerAvatar:
-          type: string
-          description: URL of the project owner avatar, if any.
-        ownerIsDeveloperProfile:
-          type: boolean
-        developerProfileUserId:
+        themeId:
           type: integer
-          description: User ID of the developer profile, if any.
-        collaborators:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProjectCollaborator'
-        labelingMethod:
-          $ref: '#/components/schemas/ProjectLabelingMethod'
-        metadata:
-          type: object
-          description: Metadata about the project
-        dataExplorerScreenshot:
-          type: string
-        isEnterpriseProject:
-          type: boolean
-          description: Whether this is an enterprise project
-        whitelabelId:
-          type:
-          - integer
-          - 'null'
-          description: Unique identifier of the white label this project belongs to, if any.
-        whitelabelName:
-          type: string
-          description: Name of the white label this project belongs to, if any.
-        tags:
+        theme:
+          $ref: '#/components/schemas/Theme'
+        identityProviders:
           type: array
           items:
             type: string
-          description: List of project tags
-          example:
-          - FOMO
-          - beers
-        category:
-          type: string
-          description: Project category
-          enum:
-          - Accelerometer
-          - Audio
-          - Images
-          - Keyword spotting
-          - Object detection
-          - Other
-        license:
-          $ref: '#/components/schemas/PublicProjectLicense'
-          description: Public project license, if any.
-        tier:
-          $ref: '#/components/schemas/ProjectTierEnum'
-        hasPublicVersion:
+        allowPasswordAuth:
           type: boolean
-          description: Whether this project has been published or not.
-        isPublic:
+        deploymentTargets:
+          description: List of deployment targets enabled for this white label
+          type: array
+          items:
+            type: string
+        allDeploymentTargets:
+          description: List of all supported deployment targets
+          type: array
+          items:
+            type: string
+        customDeploymentBlocks:
+          description: List of custom deployment blocks available to this white label
+          type: array
+          items:
+            type: object
+            required:
+            - name
+            - id
+            properties:
+              name:
+                type: string
+                description: The name of the custom deployment block
+              id:
+                type: number
+                description: The custom deployment block ID
+        deploymentOptionsOrder:
+          $ref: '#/components/schemas/DeploymentOptionsOrder'
+        allowSignup:
           type: boolean
-          description: 'Whether this is a public version of a project. A version is a snapshot of a project at a certain point in time, which can be used to periodically save the state of a project. Versions can be private (just for internal use and reference) or public, available to everyone. A public version can be cloned by anyone, restoring the state of the project at the time into a new, separate project.
-
-            '
-        allowsLivePublicAccess:
+        allowFreeProjects:
           type: boolean
-          description: 'Whether this project allows live, public access. Unlike a public version, a live public project is not fixed in time, and always includes the latest project changes. Similar to public versions, a live public project can be cloned by anyone, creating a new, separate project.
-
-            '
-        indPauseProcessingSamples:
+        exposePublicProjects:
           type: boolean
-        publicProjectListed:
+        defaultDeploymentTarget:
+          type:
+          - string
+          - 'null'
+          description: The name of the default deployment target for this white label
+          example: C++ Library
+        supportedProjectTypes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProjectType'
+        allowNewProjectUi:
           type: boolean
-          description: 'If the project allows public access, whether to list it the public projects overview response. If not listed, the project is still accessible via direct link. If the project does not allow public access, this field has no effect.
-
-            '
-        deletedDate:
-          type: string
-          format: date-time
-        fullDeletionDate:
-          type: string
-          format: date-time
-        scheduledFullDeletionDate:
-          type: string
-          format: date-time
-    PublicProjectLicense:
-      type: string
-      enum:
-      - Apache-2.0
-      - BSD-3-Clause
-      - BSD-3-Clause-Clear
+          description: Whether the new project UI should be enabled for this white label or not.
+        learningBlocks:
+          description: List of learning blocks enabled for this white label
+          type: array
+          items:
+            type: string
+        allLearningBlocks:
+          description: List of all supported learning blocks
+          type: array
+          items:
+            type: object
+            required:
+            - title
+            - type
+            properties:
+              title:
+                type: string
+                description: The name of the learning block
+              type:
+                type: string
+                description: The learning block type
+        developmentBoards:
+          type: array
+          items:
+            $ref: '#/components/schemas/DevelopmentBoardResponse'
+        allDevelopmentBoards:
+          type: array
+          items:
+            $ref: '#/components/schemas/DevelopmentBoardResponse'
+        organizationsLimit:
+          type: integer
+          description: The maximum number of organizations that can be created under this white label.
+        disablePublicEntities:
+          type: boolean
+          description: Whether public entities (like projects, user profiles, etc.) are disabled for this whitelabel instance.
+        requireCollaboratorsInWhitelabel:
+          type: boolean
+          description: Whether adding collaborators to projects requires collaborators to already be members of this whitelabel instance.
+        disableMarketingFeatures:
+          type: boolean
+          description: Whether marketing features (marketing cookies, HubSpot tracking, etc.) are disabled for this whitelabel instance.
+        disableForumAccess:
+          type: boolean
+          description: Whether forum access is disabled for this whitelabel instance.
+        customLimits:
+          type: object
+          description: Custom limits for this whitelabel instance.
     ObjectDetectionLastLayer_2:
       type: string
       enum:
@@ -6337,57 +6352,21 @@ components:
       - paddleocr-detector
       - qc-face-det-lite
       - qc-yolox
-    AddOrganizationApiKeyRequest_2:
-      allOf:
-      - $ref: '#/components/schemas/AddApiKeyRequest'
-      - type: object
-        required:
-        - role
-        properties:
-          role:
-            type: string
-            enum:
-            - admin
-            - member
-          ttl:
-            type: integer
-            description: 'Optional: time to live in seconds.'
   parameters:
-    ApiKeyIdParameter:
-      name: apiKeyId
+    MemberIdParameter:
+      name: memberId
       in: path
       required: true
-      description: API key ID
+      description: Member ID
       schema:
         type: integer
-    ProjectIdParameter:
-      name: projectId
-      in: path
-      required: true
-      description: Project ID
-      schema:
-        type: integer
-    DevelopmentBoardIdParameter:
-      name: developmentBoardId
-      in: path
-      required: true
-      description: Development board ID.
-      schema:
-        type: integer
-    ExportIdParameter:
-      name: exportId
-      in: path
-      required: true
-      description: Export ID
-      schema:
-        type: integer
-    OffsetResultsParameter:
-      name: offset
+    FiltersIncludeDeletedParameter:
+      name: includeDeleted
       in: query
       required: false
-      description: Offset in results, can be used in conjunction with LimitResultsParameter to implement paging.
+      description: Whether to include deleted entities (users, projects, orgs)
       schema:
-        type: integer
+        type: boolean
     SortQueryParameter:
       name: sort
       in: query
@@ -6397,13 +6376,6 @@ components:
         type: string
         description: Comma separated list of fields to sort query by. Prefix with a minus (-) sign to indicate descending order. Default order is ascending
         example: id,-name
-    ExcludeEdgeImpulseUsersParameter:
-      name: excludeEdgeImpulseUsers
-      in: query
-      required: false
-      description: Whether to exclude Edge Impulse users when counting enterprise entitlements usage
-      schema:
-        type: boolean
     RequiredEndDateParameter:
       name: endDate
       in: query
@@ -6417,6 +6389,79 @@ components:
       in: path
       required: true
       description: Organization ID
+      schema:
+        type: integer
+    UserIdParameter:
+      name: userId
+      in: path
+      required: true
+      description: User ID
+      schema:
+        type: integer
+    SearchQueryParameter:
+      name: search
+      in: query
+      required: false
+      description: Search query
+      schema:
+        example: <id> <name>
+        type: string
+    FiltersActiveParameter:
+      name: active
+      in: query
+      required: false
+      description: Whether to search for entities (users, orgs) active in the last X days
+      schema:
+        type: integer
+    DevelopmentBoardIdParameter:
+      name: developmentBoardId
+      in: path
+      required: true
+      description: Development board ID.
+      schema:
+        type: integer
+    ApiKeyIdParameter:
+      name: apiKeyId
+      in: path
+      required: true
+      description: API key ID
+      schema:
+        type: integer
+    OffsetResultsParameter:
+      name: offset
+      in: query
+      required: false
+      description: Offset in results, can be used in conjunction with LimitResultsParameter to implement paging.
+      schema:
+        type: integer
+    FieldsParameter:
+      name: fields
+      in: query
+      required: false
+      description: Comma separated list of fields to fetch in a query
+      schema:
+        type: string
+        example: id,name
+    RequiredStartDateParameter:
+      name: startDate
+      in: query
+      required: true
+      description: Start date
+      schema:
+        type: string
+        format: date-time
+    FiltersTierParameter:
+      name: tier
+      in: query
+      required: false
+      description: Whether to search for free, community plus, professional, or enterprise entities (users, projects)
+      schema:
+        $ref: '#/components/schemas/UserTierEnum'
+    ProjectIdParameter:
+      name: projectId
+      in: path
+      required: true
+      description: Project ID
       schema:
         type: integer
     LimitResultsParameter:
@@ -6433,21 +6478,6 @@ components:
       description: Organization ID within the context of a white label
       schema:
         type: integer
-    FiltersActiveParameter:
-      name: active
-      in: query
-      required: false
-      description: Whether to search for entities (users, orgs) active in the last X days
-      schema:
-        type: integer
-    RequiredStartDateParameter:
-      name: startDate
-      in: query
-      required: true
-      description: Start date
-      schema:
-        type: string
-        format: date-time
     ProjectVisibilityParameter:
       name: projectVisibility
       in: query
@@ -6455,18 +6485,11 @@ components:
       description: What project visibility type to include when counting enterprise entitlements usage
       schema:
         $ref: '#/components/schemas/ProjectVisibility'
-    FiltersIncludeDeletedParameter:
-      name: includeDeleted
-      in: query
-      required: false
-      description: Whether to include deleted entities (users, projects, orgs)
-      schema:
-        type: boolean
-    UserIdParameter:
-      name: userId
+    ExportIdParameter:
+      name: exportId
       in: path
       required: true
-      description: User ID
+      description: Export ID
       schema:
         type: integer
     FiltersQueryParameter:
@@ -6481,13 +6504,13 @@ components:
 
           '
         example: billable:true
-    MemberIdParameter:
-      name: memberId
-      in: path
-      required: true
-      description: Member ID
+    ExcludeEdgeImpulseUsersParameter:
+      name: excludeEdgeImpulseUsers
+      in: query
+      required: false
+      description: Whether to exclude Edge Impulse users when counting enterprise entitlements usage
       schema:
-        type: integer
+        type: boolean
     ReportIdParameter:
       name: reportId
       in: path
@@ -6495,29 +6518,6 @@ components:
       description: Report ID
       schema:
         type: integer
-    FieldsParameter:
-      name: fields
-      in: query
-      required: false
-      description: Comma separated list of fields to fetch in a query
-      schema:
-        type: string
-        example: id,name
-    SearchQueryParameter:
-      name: search
-      in: query
-      required: false
-      description: Search query
-      schema:
-        example: <id> <name>
-        type: string
-    FiltersTierParameter:
-      name: tier
-      in: query
-      required: false
-      description: Whether to search for free, community plus, professional, or enterprise entities (users, projects)
-      schema:
-        $ref: '#/components/schemas/UserTierEnum'
     JobIdParameter:
       name: jobId
       in: path

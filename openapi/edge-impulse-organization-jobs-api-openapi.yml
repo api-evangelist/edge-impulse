@@ -224,7 +224,128 @@ paths:
     servers:
     - url: https://studio.edgeimpulse.com/v1
 components:
+  parameters:
+    ExcludePipelineTransformationJobsParameter:
+      name: excludePipelineTransformJobs
+      in: query
+      required: false
+      description: Whether to exclude pipeline / transformation jobs
+      schema:
+        type: boolean
+    LimitResultsParameter:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of results
+      schema:
+        type: integer
+    LogLevelParameter:
+      name: logLevel
+      in: query
+      required: false
+      description: Log level (error, warn, info, debug)
+      schema:
+        type: string
+        enum:
+        - error
+        - warn
+        - info
+        - debug
+    OptionalEndDateParameter:
+      name: endDate
+      in: query
+      required: false
+      description: End date
+      schema:
+        type: string
+        format: date-time
+    OptionalJobsKeyParameter:
+      name: key
+      in: query
+      required: false
+      description: Job key to filter on
+      schema:
+        type: string
+    ForceCancelParameter:
+      name: forceCancel
+      in: query
+      required: false
+      description: If set to 'true', we won't wait for the job cluster to cancel the job, and will mark the job as finished.
+      schema:
+        type: string
+    OnlyRootJobsParameter:
+      name: rootOnly
+      in: query
+      required: false
+      description: Whether to exclude jobs with a parent ID (so jobs started as part of another job)
+      schema:
+        type: boolean
+    OffsetResultsParameter:
+      name: offset
+      in: query
+      required: false
+      description: Offset in results, can be used in conjunction with LimitResultsParameter to implement paging.
+      schema:
+        type: integer
+    OptionalStartDateParameter:
+      name: startDate
+      in: query
+      required: false
+      description: Start date
+      schema:
+        type: string
+        format: date-time
+    OptionalJobsCategoryParameter:
+      name: category
+      in: query
+      required: false
+      description: Job category to filter on
+      schema:
+        type: string
+    OrganizationIdParameter:
+      name: organizationId
+      in: path
+      required: true
+      description: Organization ID
+      schema:
+        type: integer
+    JobIdParameter:
+      name: jobId
+      in: path
+      required: true
+      description: Job ID
+      schema:
+        type: integer
+    OptionalJobsFinishedParameter:
+      name: finished
+      in: query
+      required: false
+      description: Job finish status to filter on
+      schema:
+        type: string
+        enum:
+        - successful
+        - failed
+        - all
   schemas:
+    SocketTokenResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - token
+        properties:
+          token:
+            type: object
+            required:
+            - socketToken
+            - expires
+            properties:
+              socketToken:
+                type: string
+              expires:
+                type: string
+                format: date-time
     LogStdoutResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -319,6 +440,26 @@ components:
         categoryCount:
           type: integer
           description: Some job categories keep a counter on the job number, e.g. in synthetic data, so we know what the 1st, 2nd etc. job was in the UI.
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    GetJobResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - job
+        properties:
+          job:
+            $ref: '#/components/schemas/Job'
     ListJobsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -334,44 +475,54 @@ components:
               $ref: '#/components/schemas/Job'
           totalJobCount:
             type: integer
-    SocketTokenResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - token
-        properties:
-          token:
-            type: object
-            required:
-            - socketToken
-            - expires
-            properties:
-              socketToken:
-                type: string
-              expires:
-                type: string
-                format: date-time
-    GetJobResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - job
-        properties:
-          job:
-            $ref: '#/components/schemas/Job'
-    GenericApiResponse:
+    JobLogItem:
       type: object
       required:
-      - success
+      - created
+      - data
       properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
+        created:
           type: string
-          description: Optional error description (set if 'success' was false)
+          format: date-time
+        data:
+          type: string
+        logLevel:
+          type: string
+          enum:
+          - error
+          - warn
+          - info
+          - debug
+    LogStdoutResponse_2:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - stdout
+        - totalCount
+        properties:
+          stdout:
+            type: array
+            items:
+              $ref: '#/components/schemas/JobLogItem'
+          totalCount:
+            type: integer
+            description: Total number of logs (only the last 1000 lines are returned)
+    CreatedUpdatedByUser:
+      type: object
+      required:
+      - id
+      - name
+      - username
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        username:
+          type: string
+        photo:
+          type: string
     Job_2:
       type: object
       required:
@@ -431,157 +582,6 @@ components:
         metadata:
           type: object
           description: Structured job metadata
-    JobLogItem:
-      type: object
-      required:
-      - created
-      - data
-      properties:
-        created:
-          type: string
-          format: date-time
-        data:
-          type: string
-        logLevel:
-          type: string
-          enum:
-          - error
-          - warn
-          - info
-          - debug
-    LogStdoutResponse_2:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - stdout
-        - totalCount
-        properties:
-          stdout:
-            type: array
-            items:
-              $ref: '#/components/schemas/JobLogItem'
-          totalCount:
-            type: integer
-            description: Total number of logs (only the last 1000 lines are returned)
-    CreatedUpdatedByUser:
-      type: object
-      required:
-      - id
-      - name
-      - username
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        username:
-          type: string
-        photo:
-          type: string
-  parameters:
-    OnlyRootJobsParameter:
-      name: rootOnly
-      in: query
-      required: false
-      description: Whether to exclude jobs with a parent ID (so jobs started as part of another job)
-      schema:
-        type: boolean
-    OptionalStartDateParameter:
-      name: startDate
-      in: query
-      required: false
-      description: Start date
-      schema:
-        type: string
-        format: date-time
-    ForceCancelParameter:
-      name: forceCancel
-      in: query
-      required: false
-      description: If set to 'true', we won't wait for the job cluster to cancel the job, and will mark the job as finished.
-      schema:
-        type: string
-    OffsetResultsParameter:
-      name: offset
-      in: query
-      required: false
-      description: Offset in results, can be used in conjunction with LimitResultsParameter to implement paging.
-      schema:
-        type: integer
-    OptionalJobsCategoryParameter:
-      name: category
-      in: query
-      required: false
-      description: Job category to filter on
-      schema:
-        type: string
-    LimitResultsParameter:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of results
-      schema:
-        type: integer
-    OptionalJobsKeyParameter:
-      name: key
-      in: query
-      required: false
-      description: Job key to filter on
-      schema:
-        type: string
-    OrganizationIdParameter:
-      name: organizationId
-      in: path
-      required: true
-      description: Organization ID
-      schema:
-        type: integer
-    ExcludePipelineTransformationJobsParameter:
-      name: excludePipelineTransformJobs
-      in: query
-      required: false
-      description: Whether to exclude pipeline / transformation jobs
-      schema:
-        type: boolean
-    JobIdParameter:
-      name: jobId
-      in: path
-      required: true
-      description: Job ID
-      schema:
-        type: integer
-    LogLevelParameter:
-      name: logLevel
-      in: query
-      required: false
-      description: Log level (error, warn, info, debug)
-      schema:
-        type: string
-        enum:
-        - error
-        - warn
-        - info
-        - debug
-    OptionalEndDateParameter:
-      name: endDate
-      in: query
-      required: false
-      description: End date
-      schema:
-        type: string
-        format: date-time
-    OptionalJobsFinishedParameter:
-      name: finished
-      in: query
-      required: false
-      description: Job finish status to filter on
-      schema:
-        type: string
-        enum:
-        - successful
-        - failed
-        - all
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey

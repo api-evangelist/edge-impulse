@@ -163,21 +163,6 @@ paths:
                 $ref: '#/components/schemas/CreateUserThirdPartyResponse'
 components:
   schemas:
-    CreateThirdPartyAuthResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        - secretKey
-        - apiKey
-        properties:
-          id:
-            type: integer
-          secretKey:
-            type: string
-          apiKey:
-            type: string
     CreateUserThirdPartyResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -193,23 +178,56 @@ components:
             - userAlreadyExists
           jwtToken:
             type: string
-    GetThirdPartyAuthResponse:
+    CreateThirdPartyAuthResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - auth
+        - id
+        - secretKey
+        - apiKey
         properties:
-          auth:
-            $ref: '#/components/schemas/ThirdPartyAuth'
-    AuthorizeThirdPartyRequest:
+          id:
+            type: integer
+          secretKey:
+            type: string
+          apiKey:
+            type: string
+    UpdateThirdPartyAuthRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        logo:
+          type: string
+        domains:
+          type: array
+          items:
+            type: string
+    GetAllThirdPartyAuthResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - auths
+        properties:
+          auths:
+            type: array
+            items:
+              $ref: '#/components/schemas/ThirdPartyAuth'
+    GenericApiResponse:
       type: object
       required:
-      - nextUrl
+      - success
       properties:
-        nextUrl:
-          description: The URL to redirect to after authorization is completed.
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
           type: string
+          description: Optional error description (set if 'success' was false)
     CreateUserThirdPartyRequest:
       type: object
       required:
@@ -236,28 +254,6 @@ components:
         privacyPolicy:
           type: boolean
           description: Whether the user accepted the privacy policy
-    CreateThirdPartyAuthRequest:
-      type: object
-      required:
-      - name
-      - description
-      - logo
-      - domains
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        logo:
-          type: string
-        domains:
-          type: array
-          items:
-            type: string
-        secretKey:
-          type: string
-        apiKey:
-          type: string
     ThirdPartyAuth:
       type: object
       required:
@@ -283,30 +279,21 @@ components:
         created:
           type: string
           format: date-time
-    GenericApiResponse:
+    AuthorizeThirdPartyRequest:
       type: object
       required:
-      - success
+      - nextUrl
       properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
+        nextUrl:
+          description: The URL to redirect to after authorization is completed.
           type: string
-          description: Optional error description (set if 'success' was false)
-    GetAllThirdPartyAuthResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - auths
-        properties:
-          auths:
-            type: array
-            items:
-              $ref: '#/components/schemas/ThirdPartyAuth'
-    UpdateThirdPartyAuthRequest:
+    CreateThirdPartyAuthRequest:
       type: object
+      required:
+      - name
+      - description
+      - logo
+      - domains
       properties:
         name:
           type: string
@@ -318,6 +305,19 @@ components:
           type: array
           items:
             type: string
+        secretKey:
+          type: string
+        apiKey:
+          type: string
+    GetThirdPartyAuthResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - auth
+        properties:
+          auth:
+            $ref: '#/components/schemas/ThirdPartyAuth'
   parameters:
     ProjectIdParameter:
       name: projectId

@@ -722,185 +722,6 @@ paths:
     - url: https://studio.edgeimpulse.com/v1
 components:
   schemas:
-    TransformationBlockAdditionalMountPoint:
-      type: object
-      required:
-      - type
-      - mountPoint
-      properties:
-        type:
-          type: string
-          enum:
-          - bucket
-          - portal
-        bucketId:
-          type: integer
-        portalId:
-          type: integer
-        mountPoint:
-          type: string
-    EntityCreatedResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: integer
-            description: Unique identifier of the created entity.
-    OrganizationDspBlock:
-      type: object
-      required:
-      - id
-      - name
-      - dockerContainer
-      - dockerContainerManagedByEdgeImpulse
-      - created
-      - description
-      - port
-      - isConnected
-      - sourceCodeAvailable
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        dockerContainer:
-          type: string
-        dockerContainerManagedByEdgeImpulse:
-          type: boolean
-        created:
-          type: string
-          format: date-time
-        createdByUser:
-          $ref: '#/components/schemas/CreatedUpdatedByUser'
-        lastUpdated:
-          type: string
-          format: date-time
-        lastUpdatedByUser:
-          $ref: '#/components/schemas/CreatedUpdatedByUser'
-        userId:
-          type: integer
-        userName:
-          type: string
-        description:
-          type: string
-        requestsCpu:
-          type: number
-        requestsMemory:
-          type: integer
-        limitsCpu:
-          type: number
-        limitsMemory:
-          type: integer
-        port:
-          type: integer
-        isConnected:
-          type: boolean
-        error:
-          type: string
-        sourceCodeAvailable:
-          type: boolean
-    OrganizationTransferLearningBlockCustomVariant:
-      type: object
-      required:
-      - key
-      - name
-      - inferencingEntrypoint
-      properties:
-        key:
-          type: string
-          description: Unique identifier or key for this custom variant
-        name:
-          type: string
-          description: Custom variant display name
-        inferencingEntrypoint:
-          type: string
-          description: The entrypoint command to run custom inferencing for this model variant, via the learn block container
-        profilingEntrypoint:
-          type: string
-          description: The entrypoint command to run custom profiling for this model variant, via the learn block container
-        modelFiles:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationTransferLearningBlockModelFile'
-    UpdateOrganizationDeployBlockRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        dockerContainer:
-          type: string
-        description:
-          type: string
-        cliArguments:
-          type: string
-        requestsCpu:
-          type: number
-        requestsMemory:
-          type: integer
-        limitsCpu:
-          type: number
-        limitsMemory:
-          type: integer
-        photo:
-          type: string
-          format: binary
-        integrateUrl:
-          type: string
-        privileged:
-          type: boolean
-        mountLearnBlock:
-          type: boolean
-        supportsEonCompiler:
-          type: boolean
-        showOptimizations:
-          type: boolean
-        category:
-          type: string
-          enum:
-          - library
-          - firmware
-    TransformationJobOperatesOnEnum:
-      type: string
-      enum:
-      - file
-      - directory
-      - standalone
-    GetPublicOrganizationTransformationBlockResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - transformationBlock
-        properties:
-          transformationBlock:
-            $ref: '#/components/schemas/PublicOrganizationTransformationBlock'
-    OrganizationTransferLearningBlockModelFile:
-      type: object
-      required:
-      - id
-      - name
-      - type
-      - description
-      properties:
-        id:
-          type: string
-          description: Output artifact unique file ID, in kebab case
-        name:
-          type: string
-          description: Output artifact file name
-        type:
-          type: string
-          description: Output artifact file type
-          enum:
-          - binary
-          - json
-          - text
-        description:
-          type: string
-          description: Output artifact file description
     AddOrganizationDeployBlockRequest:
       type: object
       required:
@@ -943,27 +764,21 @@ components:
           enum:
           - library
           - firmware
-    ListOrganizationDeployBlocksResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - deployBlocks
-        properties:
-          deployBlocks:
-            type: array
-            items:
-              $ref: '#/components/schemas/OrganizationDeployBlock'
-    ImageInputScaling:
-      description: Normalization that is applied to images. If this is not set then 0..1 is used. "0..1" gives you non-normalized pixels between 0 and 1. "-1..1" gives you non-normalized pixels between -1 and 1. "0..255" gives you non-normalized pixels between 0 and 255. "-128..127" gives you non-normalized pixels between -128 and 127. "torch" first scales pixels between 0 and 1, then applies normalization using the ImageNet dataset (same as `torchvision.transforms.Normalize()`). "bgr-subtract-imagenet-mean" scales to 0..255, reorders pixels to BGR, and subtracts the ImageNet mean from each channel.
-      type: string
-      enum:
-      - 0..1
-      - -1..1
-      - -128..127
-      - 0..255
-      - torch
-      - bgr-subtract-imagenet-mean
+    CreatedUpdatedByUser:
+      type: object
+      required:
+      - id
+      - name
+      - username
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        username:
+          type: string
+        photo:
+          type: string
     OrganizationDeployBlock:
       type: object
       required:
@@ -1036,17 +851,231 @@ components:
           - firmware
         sourceCodeAvailable:
           type: boolean
-    ListOrganizationDspBlocksResponse:
+    PublicOrganizationTransformationBlock:
+      type: object
+      required:
+      - id
+      - ownerOrganizationId
+      - ownerOrganizationName
+      - name
+      - created
+      - description
+      - operatesOn
+      - allowExtraCliArguments
+      - showInDataSources
+      - showInCreateTransformationJob
+      - showInSyntheticData
+      - showInAIActions
+      properties:
+        id:
+          type: integer
+        ownerOrganizationId:
+          type: integer
+        ownerOrganizationName:
+          type: string
+        name:
+          type: string
+        created:
+          type: string
+          format: date-time
+        lastUpdated:
+          type: string
+          format: date-time
+        description:
+          type: string
+        operatesOn:
+          $ref: '#/components/schemas/TransformationJobOperatesOnEnum'
+        allowExtraCliArguments:
+          type: boolean
+        parameters:
+          description: List of parameters, spec'ed according to https://docs.edgeimpulse.com/docs/tips-and-tricks/adding-parameters-to-custom-blocks
+          type: array
+          items:
+            type: object
+        parametersUI:
+          description: List of parameters to be rendered in the UI
+          type: array
+          items:
+            $ref: '#/components/schemas/DSPGroupItem'
+        repositoryUrl:
+          type: string
+          description: URL to the source code of this custom learn block.
+        showInDataSources:
+          type: boolean
+          description: Whether to show this block in 'Data sources'. Only applies for standalone blocks.
+        showInCreateTransformationJob:
+          type: boolean
+          description: Whether to show this block in 'Create transformation job'. Only applies for standalone blocks.
+        showInSyntheticData:
+          type: boolean
+          description: Whether to show this block in 'Synthetic data'. Only applies for standalone blocks.
+        showInAIActions:
+          type: boolean
+          description: Whether to show this block in 'AI Labeling'. Only applies for standalone blocks.
+        aiActionsOperatesOn:
+          type: array
+          description: For AI labeling blocks, this lists the data types that the block supports. If this field is empty then there's no information about supported data types.
+          items:
+            $ref: '#/components/schemas/AIActionsOperatesOn'
+    ExportBlockResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - dspBlocks
+        - id
+        - exportUrl
         properties:
-          dspBlocks:
+          id:
+            type: integer
+            description: Job identifier. Status updates will include this identifier.
+            example: 12873488112
+          exportUrl:
+            type: string
+    OrganizationTransferLearningBlock:
+      type: object
+      required:
+      - id
+      - name
+      - dockerContainer
+      - dockerContainerManagedByEdgeImpulse
+      - created
+      - description
+      - operatesOn
+      - implementationVersion
+      - isPublic
+      - isPublicForDevices
+      - isPublicEnterpriseOnly
+      - parameters
+      - indRequiresGpu
+      - sourceCodeAvailable
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        dockerContainer:
+          type: string
+        dockerContainerManagedByEdgeImpulse:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        createdByUser:
+          $ref: '#/components/schemas/CreatedUpdatedByUser'
+        lastUpdated:
+          type: string
+          format: date-time
+        lastUpdatedByUser:
+          $ref: '#/components/schemas/CreatedUpdatedByUser'
+        description:
+          type: string
+        userId:
+          type: integer
+        userName:
+          type: string
+        operatesOn:
+          $ref: '#/components/schemas/OrganizationTransferLearningOperatesOn'
+        objectDetectionLastLayer:
+          $ref: '#/components/schemas/ObjectDetectionLastLayer'
+        implementationVersion:
+          type: integer
+        isPublic:
+          type: boolean
+          description: Whether this block is publicly available to Edge Impulse users (if false, then only for members of the owning organization)
+        isPublicForDevices:
+          description: If `isPublic` is true, the list of devices (from latencyDevices) for which this model can be shown.
+          type: array
+          items:
+            type: string
+        publicProjectTierAvailability:
+          $ref: '#/components/schemas/PublicProjectTierAvailability'
+        isPublicEnterpriseOnly:
+          type: boolean
+          description: Whether this block is publicly available to only enterprise users
+        enterpriseOnly:
+          type: boolean
+          description: Whether this block is available to only enterprise users
+        repositoryUrl:
+          type: string
+          description: URL to the source code of this custom learn block.
+        parameters:
+          description: List of parameters, spec'ed according to https://docs.edgeimpulse.com/docs/tips-and-tricks/adding-parameters-to-custom-blocks
+          type: array
+          items:
+            type: object
+        imageInputScaling:
+          $ref: '#/components/schemas/ImageInputScaling'
+        indRequiresGpu:
+          description: If set, requires this block to be scheduled on GPU.
+          type: boolean
+        sourceCodeAvailable:
+          type: boolean
+        displayCategory:
+          $ref: '#/components/schemas/BlockDisplayCategory'
+        customModelVariants:
+          description: List of custom model variants produced when this block is trained. This is experimental and may change in the future.
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationTransferLearningBlockCustomVariant'
+    UpdateOrganizationDeployBlockRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        dockerContainer:
+          type: string
+        description:
+          type: string
+        cliArguments:
+          type: string
+        requestsCpu:
+          type: number
+        requestsMemory:
+          type: integer
+        limitsCpu:
+          type: number
+        limitsMemory:
+          type: integer
+        photo:
+          type: string
+          format: binary
+        integrateUrl:
+          type: string
+        privileged:
+          type: boolean
+        mountLearnBlock:
+          type: boolean
+        supportsEonCompiler:
+          type: boolean
+        showOptimizations:
+          type: boolean
+        category:
+          type: string
+          enum:
+          - library
+          - firmware
+    ListOrganizationTransferLearningBlocksResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - transferLearningBlocks
+        properties:
+          transferLearningBlocks:
             type: array
             items:
-              $ref: '#/components/schemas/OrganizationDspBlock'
+              $ref: '#/components/schemas/OrganizationTransferLearningBlock'
+    ListPublicOrganizationTransformationBlocksResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - transformationBlocks
+        properties:
+          transformationBlocks:
+            type: array
+            items:
+              $ref: '#/components/schemas/PublicOrganizationTransformationBlock'
     ListOrganizationSecretsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -1084,6 +1113,99 @@ components:
         properties:
           deployBlock:
             $ref: '#/components/schemas/OrganizationDeployBlock'
+    GetPublicOrganizationTransformationBlockResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - transformationBlock
+        properties:
+          transformationBlock:
+            $ref: '#/components/schemas/PublicOrganizationTransformationBlock'
+    AddOrganizationDspBlockRequest:
+      type: object
+      required:
+      - name
+      - dockerContainer
+      - description
+      - port
+      properties:
+        name:
+          type: string
+        dockerContainer:
+          type: string
+        description:
+          type: string
+        requestsCpu:
+          type: number
+        requestsMemory:
+          type: integer
+        limitsCpu:
+          type: number
+        limitsMemory:
+          type: integer
+        port:
+          type: integer
+    AIActionsOperatesOn:
+      type: string
+      enum:
+      - images_object_detection
+      - images_single_label
+      - audio
+      - other
+    OrganizationDspBlock:
+      type: object
+      required:
+      - id
+      - name
+      - dockerContainer
+      - dockerContainerManagedByEdgeImpulse
+      - created
+      - description
+      - port
+      - isConnected
+      - sourceCodeAvailable
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        dockerContainer:
+          type: string
+        dockerContainerManagedByEdgeImpulse:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        createdByUser:
+          $ref: '#/components/schemas/CreatedUpdatedByUser'
+        lastUpdated:
+          type: string
+          format: date-time
+        lastUpdatedByUser:
+          $ref: '#/components/schemas/CreatedUpdatedByUser'
+        userId:
+          type: integer
+        userName:
+          type: string
+        description:
+          type: string
+        requestsCpu:
+          type: number
+        requestsMemory:
+          type: integer
+        limitsCpu:
+          type: number
+        limitsMemory:
+          type: integer
+        port:
+          type: integer
+        isConnected:
+          type: boolean
+        error:
+          type: string
+        sourceCodeAvailable:
+          type: boolean
     GetOrganizationTransformationBlockResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -1093,25 +1215,72 @@ components:
         properties:
           transformationBlock:
             $ref: '#/components/schemas/OrganizationTransformationBlock'
-    GenericApiResponse:
+    UpdateOrganizationTransformationBlockRequest:
       type: object
-      required:
-      - success
       properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
+        name:
           type: string
-          description: Optional error description (set if 'success' was false)
-    AddOrganizationTransferLearningBlockRequest:
+        dockerContainer:
+          type: string
+        indMetadata:
+          description: Whether to pass the `--metadata` parameter to the container.
+          type: boolean
+        description:
+          type: string
+        cliArguments:
+          type: string
+        requestsCpu:
+          type: number
+        requestsMemory:
+          type: integer
+        limitsCpu:
+          type: number
+        limitsMemory:
+          type: integer
+        additionalMountPoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransformationBlockAdditionalMountPoint'
+        operatesOn:
+          $ref: '#/components/schemas/TransformationJobOperatesOnEnum'
+        allowExtraCliArguments:
+          type: boolean
+        parameters:
+          description: List of parameters, spec'ed according to https://docs.edgeimpulse.com/docs/tips-and-tricks/adding-parameters-to-custom-blocks
+          type: array
+          items:
+            type: object
+        maxRunningTimeStr:
+          type: string
+          description: 15m for 15 minutes, 2h for 2 hours, 1d for 1 day. If not set, the default is 8 hours.
+        isPublic:
+          type: boolean
+        repositoryUrl:
+          type: string
+          description: URL to the source code of this custom learn block.
+        showInDataSources:
+          type: boolean
+          description: Whether to show this block in 'Data sources'. Only applies for standalone blocks.
+        showInCreateTransformationJob:
+          type: boolean
+          description: Whether to show this block in 'Create transformation job'. Only applies for standalone blocks.
+        showInSyntheticData:
+          type: boolean
+          description: Whether to show this block in 'Synthetic data'. Only applies for standalone blocks.
+        showInAIActions:
+          type: boolean
+          description: Whether to show this block in 'AI Labeling'. Only applies for standalone blocks.
+        environmentVariables:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvironmentVariable'
+        aiActionsOperatesOn:
+          type: array
+          description: For AI labeling blocks, this lists the data types that the block supports. If this field is empty then there's no information about supported data types.
+          items:
+            $ref: '#/components/schemas/AIActionsOperatesOn'
+    UpdateOrganizationDspBlockRequest:
       type: object
-      required:
-      - name
-      - dockerContainer
-      - description
-      - operatesOn
-      - implementationVersion
       properties:
         name:
           type: string
@@ -1119,42 +1288,27 @@ components:
           type: string
         description:
           type: string
-        operatesOn:
-          $ref: '#/components/schemas/OrganizationTransferLearningOperatesOn'
-        objectDetectionLastLayer:
-          $ref: '#/components/schemas/ObjectDetectionLastLayer'
-        implementationVersion:
+        requestsCpu:
+          type: number
+        requestsMemory:
           type: integer
-        isPublic:
-          type: boolean
-          description: Whether this block is publicly available to Edge Impulse users (if false, then only for members of the owning organization)
-        isPublicForDevices:
-          description: If `isPublic` is true, the list of devices (from latencyDevices) for which this model can be shown.
-          type: array
-          items:
-            type: string
-        publicProjectTierAvailability:
-          $ref: '#/components/schemas/PublicProjectTierAvailability'
-        repositoryUrl:
-          type: string
-          description: URL to the source code of this custom learn block.
-        parameters:
-          description: List of parameters, spec'ed according to https://docs.edgeimpulse.com/docs/tips-and-tricks/adding-parameters-to-custom-blocks
-          type: array
-          items:
-            type: object
-        imageInputScaling:
-          $ref: '#/components/schemas/ImageInputScaling'
-        indRequiresGpu:
-          description: If set, requires this block to be scheduled on GPU.
-          type: boolean
-        customModelVariants:
-          description: List of custom model variants produced when this block is trained. This is experimental and may change in the future.
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationTransferLearningBlockCustomVariant'
-        displayCategory:
-          $ref: '#/components/schemas/BlockDisplayCategory'
+        limitsCpu:
+          type: number
+        limitsMemory:
+          type: integer
+        port:
+          type: integer
+    ListOrganizationDspBlocksResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - dspBlocks
+        properties:
+          dspBlocks:
+            type: array
+            items:
+              $ref: '#/components/schemas/OrganizationDspBlock'
     DSPGroupItem:
       type: object
       required:
@@ -1233,6 +1387,185 @@ components:
         placeholder:
           type: string
           description: Sets the placeholder text on the input element (for types "string", "int", "float" and "secret")
+    ListOrganizationTransformationBlocksResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - transformationBlocks
+        properties:
+          transformationBlocks:
+            type: array
+            items:
+              $ref: '#/components/schemas/OrganizationTransformationBlock'
+    AddOrganizationSecretRequest:
+      type: object
+      required:
+      - name
+      - description
+      - secret
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        secret:
+          type: string
+    GetOrganizationDspBlockResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - dspBlock
+        properties:
+          dspBlock:
+            $ref: '#/components/schemas/OrganizationDspBlock'
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    ListOrganizationDeployBlocksResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - deployBlocks
+        properties:
+          deployBlocks:
+            type: array
+            items:
+              $ref: '#/components/schemas/OrganizationDeployBlock'
+    AddOrganizationTransformationBlockRequest:
+      type: object
+      required:
+      - name
+      - dockerContainer
+      - indMetadata
+      - description
+      - cliArguments
+      - additionalMountPoints
+      - operatesOn
+      properties:
+        name:
+          type: string
+        dockerContainer:
+          type: string
+        indMetadata:
+          description: Whether to pass the `--metadata` parameter to the container.
+          type: boolean
+        description:
+          type: string
+        cliArguments:
+          type: string
+        requestsCpu:
+          type: number
+        requestsMemory:
+          type: integer
+        limitsCpu:
+          type: number
+        limitsMemory:
+          type: integer
+        additionalMountPoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransformationBlockAdditionalMountPoint'
+        operatesOn:
+          type: string
+          enum:
+          - file
+          - directory
+          - dataitem
+          - standalone
+        allowExtraCliArguments:
+          type: boolean
+        parameters:
+          description: List of parameters, spec'ed according to https://docs.edgeimpulse.com/docs/tips-and-tricks/adding-parameters-to-custom-blocks
+          type: array
+          items:
+            type: object
+        maxRunningTimeStr:
+          type: string
+          description: 15m for 15 minutes, 2h for 2 hours, 1d for 1 day. If not set, the default is 8 hours.
+        isPublic:
+          type: boolean
+        repositoryUrl:
+          description: URL to the source code of this custom learn block.
+          type: string
+        showInDataSources:
+          type: boolean
+          description: Whether to show this block in 'Data sources'. Only applies for standalone blocks. (defaults to 'true' when not provided)
+        showInCreateTransformationJob:
+          type: boolean
+          description: Whether to show this block in 'Create transformation job'. Only applies for standalone blocks.
+        showInSyntheticData:
+          type: boolean
+          description: Whether to show this block in 'Synthetic data'. Only applies for standalone blocks.
+        showInAIActions:
+          type: boolean
+          description: Whether to show this block in 'AI Labeling'. Only applies for standalone blocks.
+        environmentVariables:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvironmentVariable'
+        aiActionsOperatesOn:
+          type: array
+          description: For AI labeling blocks, this lists the data types that the block supports. If this field is empty then there's no information about supported data types.
+          items:
+            $ref: '#/components/schemas/AIActionsOperatesOn'
+    EntityCreatedResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: Unique identifier of the created entity.
+    PublicProjectTierAvailability:
+      description: For public blocks, this indicates the project tiers for which this block is available.
+      type: string
+      enum:
+      - enterprise-only
+      - pro-or-enterprise
+      - all-projects
+    OrganizationTransferLearningBlockModelFile:
+      type: object
+      required:
+      - id
+      - name
+      - type
+      - description
+      properties:
+        id:
+          type: string
+          description: Output artifact unique file ID, in kebab case
+        name:
+          type: string
+          description: Output artifact file name
+        type:
+          type: string
+          description: Output artifact file type
+          enum:
+          - binary
+          - json
+          - text
+        description:
+          type: string
+          description: Output artifact file description
+    TransformationJobOperatesOnEnum:
+      type: string
+      enum:
+      - file
+      - directory
+      - standalone
     EnvironmentVariable:
       type: object
       required:
@@ -1244,6 +1577,95 @@ components:
         value:
           description: If value is left undefined, only the key is passed in as an environmental variable.
           type: string
+    AddOrganizationTransferLearningBlockRequest:
+      type: object
+      required:
+      - name
+      - dockerContainer
+      - description
+      - operatesOn
+      - implementationVersion
+      properties:
+        name:
+          type: string
+        dockerContainer:
+          type: string
+        description:
+          type: string
+        operatesOn:
+          $ref: '#/components/schemas/OrganizationTransferLearningOperatesOn'
+        objectDetectionLastLayer:
+          $ref: '#/components/schemas/ObjectDetectionLastLayer'
+        implementationVersion:
+          type: integer
+        isPublic:
+          type: boolean
+          description: Whether this block is publicly available to Edge Impulse users (if false, then only for members of the owning organization)
+        isPublicForDevices:
+          description: If `isPublic` is true, the list of devices (from latencyDevices) for which this model can be shown.
+          type: array
+          items:
+            type: string
+        publicProjectTierAvailability:
+          $ref: '#/components/schemas/PublicProjectTierAvailability'
+        repositoryUrl:
+          type: string
+          description: URL to the source code of this custom learn block.
+        parameters:
+          description: List of parameters, spec'ed according to https://docs.edgeimpulse.com/docs/tips-and-tricks/adding-parameters-to-custom-blocks
+          type: array
+          items:
+            type: object
+        imageInputScaling:
+          $ref: '#/components/schemas/ImageInputScaling'
+        indRequiresGpu:
+          description: If set, requires this block to be scheduled on GPU.
+          type: boolean
+        customModelVariants:
+          description: List of custom model variants produced when this block is trained. This is experimental and may change in the future.
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationTransferLearningBlockCustomVariant'
+        displayCategory:
+          $ref: '#/components/schemas/BlockDisplayCategory'
+    GetOrganizationTransferLearningBlockResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - transferLearningBlock
+        properties:
+          transferLearningBlock:
+            $ref: '#/components/schemas/OrganizationTransferLearningBlock'
+    OrganizationTransferLearningBlockCustomVariant:
+      type: object
+      required:
+      - key
+      - name
+      - inferencingEntrypoint
+      properties:
+        key:
+          type: string
+          description: Unique identifier or key for this custom variant
+        name:
+          type: string
+          description: Custom variant display name
+        inferencingEntrypoint:
+          type: string
+          description: The entrypoint command to run custom inferencing for this model variant, via the learn block container
+        profilingEntrypoint:
+          type: string
+          description: The entrypoint command to run custom profiling for this model variant, via the learn block container
+        modelFiles:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationTransferLearningBlockModelFile'
+    BlockDisplayCategory:
+      description: Category to display this block in the UI.
+      type: string
+      enum:
+      - classical
+      - tao
     OrganizationTransformationBlock:
       type: object
       required:
@@ -1354,137 +1776,40 @@ components:
           description: For AI labeling blocks, this lists the data types that the block supports. If this field is empty then there's no information about supported data types.
           items:
             $ref: '#/components/schemas/AIActionsOperatesOn'
-    PublicProjectTierAvailability:
-      description: For public blocks, this indicates the project tiers for which this block is available.
+    ImageInputScaling:
+      description: Normalization that is applied to images. If this is not set then 0..1 is used. "0..1" gives you non-normalized pixels between 0 and 1. "-1..1" gives you non-normalized pixels between -1 and 1. "0..255" gives you non-normalized pixels between 0 and 255. "-128..127" gives you non-normalized pixels between -128 and 127. "torch" first scales pixels between 0 and 1, then applies normalization using the ImageNet dataset (same as `torchvision.transforms.Normalize()`). "bgr-subtract-imagenet-mean" scales to 0..255, reorders pixels to BGR, and subtracts the ImageNet mean from each channel.
       type: string
       enum:
-      - enterprise-only
-      - pro-or-enterprise
-      - all-projects
-    CreatedUpdatedByUser:
+      - 0..1
+      - -1..1
+      - -128..127
+      - 0..255
+      - torch
+      - bgr-subtract-imagenet-mean
+    OrganizationTransferLearningOperatesOn:
+      type: string
+      enum:
+      - object_detection
+      - audio
+      - image
+      - regression
+      - other
+    TransformationBlockAdditionalMountPoint:
       type: object
       required:
-      - id
-      - name
-      - username
+      - type
+      - mountPoint
       properties:
-        id:
-          type: integer
-        name:
-          type: string
-        username:
-          type: string
-        photo:
-          type: string
-    AddOrganizationTransformationBlockRequest:
-      type: object
-      required:
-      - name
-      - dockerContainer
-      - indMetadata
-      - description
-      - cliArguments
-      - additionalMountPoints
-      - operatesOn
-      properties:
-        name:
-          type: string
-        dockerContainer:
-          type: string
-        indMetadata:
-          description: Whether to pass the `--metadata` parameter to the container.
-          type: boolean
-        description:
-          type: string
-        cliArguments:
-          type: string
-        requestsCpu:
-          type: number
-        requestsMemory:
-          type: integer
-        limitsCpu:
-          type: number
-        limitsMemory:
-          type: integer
-        additionalMountPoints:
-          type: array
-          items:
-            $ref: '#/components/schemas/TransformationBlockAdditionalMountPoint'
-        operatesOn:
+        type:
           type: string
           enum:
-          - file
-          - directory
-          - dataitem
-          - standalone
-        allowExtraCliArguments:
-          type: boolean
-        parameters:
-          description: List of parameters, spec'ed according to https://docs.edgeimpulse.com/docs/tips-and-tricks/adding-parameters-to-custom-blocks
-          type: array
-          items:
-            type: object
-        maxRunningTimeStr:
-          type: string
-          description: 15m for 15 minutes, 2h for 2 hours, 1d for 1 day. If not set, the default is 8 hours.
-        isPublic:
-          type: boolean
-        repositoryUrl:
-          description: URL to the source code of this custom learn block.
-          type: string
-        showInDataSources:
-          type: boolean
-          description: Whether to show this block in 'Data sources'. Only applies for standalone blocks. (defaults to 'true' when not provided)
-        showInCreateTransformationJob:
-          type: boolean
-          description: Whether to show this block in 'Create transformation job'. Only applies for standalone blocks.
-        showInSyntheticData:
-          type: boolean
-          description: Whether to show this block in 'Synthetic data'. Only applies for standalone blocks.
-        showInAIActions:
-          type: boolean
-          description: Whether to show this block in 'AI Labeling'. Only applies for standalone blocks.
-        environmentVariables:
-          type: array
-          items:
-            $ref: '#/components/schemas/EnvironmentVariable'
-        aiActionsOperatesOn:
-          type: array
-          description: For AI labeling blocks, this lists the data types that the block supports. If this field is empty then there's no information about supported data types.
-          items:
-            $ref: '#/components/schemas/AIActionsOperatesOn'
-    ListPublicOrganizationTransformationBlocksResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - transformationBlocks
-        properties:
-          transformationBlocks:
-            type: array
-            items:
-              $ref: '#/components/schemas/PublicOrganizationTransformationBlock'
-    GetOrganizationTransferLearningBlockResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - transferLearningBlock
-        properties:
-          transferLearningBlock:
-            $ref: '#/components/schemas/OrganizationTransferLearningBlock'
-    AddOrganizationSecretRequest:
-      type: object
-      required:
-      - name
-      - description
-      - secret
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        secret:
+          - bucket
+          - portal
+        bucketId:
+          type: integer
+        portalId:
+          type: integer
+        mountPoint:
           type: string
     ObjectDetectionLastLayer:
       type: string
@@ -1500,107 +1825,6 @@ components:
       - tao-ssd
       - tao-yolov3
       - tao-yolov4
-    OrganizationTransferLearningBlock:
-      type: object
-      required:
-      - id
-      - name
-      - dockerContainer
-      - dockerContainerManagedByEdgeImpulse
-      - created
-      - description
-      - operatesOn
-      - implementationVersion
-      - isPublic
-      - isPublicForDevices
-      - isPublicEnterpriseOnly
-      - parameters
-      - indRequiresGpu
-      - sourceCodeAvailable
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        dockerContainer:
-          type: string
-        dockerContainerManagedByEdgeImpulse:
-          type: boolean
-        created:
-          type: string
-          format: date-time
-        createdByUser:
-          $ref: '#/components/schemas/CreatedUpdatedByUser'
-        lastUpdated:
-          type: string
-          format: date-time
-        lastUpdatedByUser:
-          $ref: '#/components/schemas/CreatedUpdatedByUser'
-        description:
-          type: string
-        userId:
-          type: integer
-        userName:
-          type: string
-        operatesOn:
-          $ref: '#/components/schemas/OrganizationTransferLearningOperatesOn'
-        objectDetectionLastLayer:
-          $ref: '#/components/schemas/ObjectDetectionLastLayer'
-        implementationVersion:
-          type: integer
-        isPublic:
-          type: boolean
-          description: Whether this block is publicly available to Edge Impulse users (if false, then only for members of the owning organization)
-        isPublicForDevices:
-          description: If `isPublic` is true, the list of devices (from latencyDevices) for which this model can be shown.
-          type: array
-          items:
-            type: string
-        publicProjectTierAvailability:
-          $ref: '#/components/schemas/PublicProjectTierAvailability'
-        isPublicEnterpriseOnly:
-          type: boolean
-          description: Whether this block is publicly available to only enterprise users
-        enterpriseOnly:
-          type: boolean
-          description: Whether this block is available to only enterprise users
-        repositoryUrl:
-          type: string
-          description: URL to the source code of this custom learn block.
-        parameters:
-          description: List of parameters, spec'ed according to https://docs.edgeimpulse.com/docs/tips-and-tricks/adding-parameters-to-custom-blocks
-          type: array
-          items:
-            type: object
-        imageInputScaling:
-          $ref: '#/components/schemas/ImageInputScaling'
-        indRequiresGpu:
-          description: If set, requires this block to be scheduled on GPU.
-          type: boolean
-        sourceCodeAvailable:
-          type: boolean
-        displayCategory:
-          $ref: '#/components/schemas/BlockDisplayCategory'
-        customModelVariants:
-          description: List of custom model variants produced when this block is trained. This is experimental and may change in the future.
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationTransferLearningBlockCustomVariant'
-    GetOrganizationDspBlockResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - dspBlock
-        properties:
-          dspBlock:
-            $ref: '#/components/schemas/OrganizationDspBlock'
-    BlockDisplayCategory:
-      description: Category to display this block in the UI.
-      type: string
-      enum:
-      - classical
-      - tao
     UpdateOrganizationTransferLearningBlockRequest:
       type: object
       properties:
@@ -1646,332 +1870,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OrganizationTransferLearningBlockCustomVariant'
-    ListOrganizationTransferLearningBlocksResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - transferLearningBlocks
-        properties:
-          transferLearningBlocks:
-            type: array
-            items:
-              $ref: '#/components/schemas/OrganizationTransferLearningBlock'
-    UpdateOrganizationTransformationBlockRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        dockerContainer:
-          type: string
-        indMetadata:
-          description: Whether to pass the `--metadata` parameter to the container.
-          type: boolean
-        description:
-          type: string
-        cliArguments:
-          type: string
-        requestsCpu:
-          type: number
-        requestsMemory:
-          type: integer
-        limitsCpu:
-          type: number
-        limitsMemory:
-          type: integer
-        additionalMountPoints:
-          type: array
-          items:
-            $ref: '#/components/schemas/TransformationBlockAdditionalMountPoint'
-        operatesOn:
-          $ref: '#/components/schemas/TransformationJobOperatesOnEnum'
-        allowExtraCliArguments:
-          type: boolean
-        parameters:
-          description: List of parameters, spec'ed according to https://docs.edgeimpulse.com/docs/tips-and-tricks/adding-parameters-to-custom-blocks
-          type: array
-          items:
-            type: object
-        maxRunningTimeStr:
-          type: string
-          description: 15m for 15 minutes, 2h for 2 hours, 1d for 1 day. If not set, the default is 8 hours.
-        isPublic:
-          type: boolean
-        repositoryUrl:
-          type: string
-          description: URL to the source code of this custom learn block.
-        showInDataSources:
-          type: boolean
-          description: Whether to show this block in 'Data sources'. Only applies for standalone blocks.
-        showInCreateTransformationJob:
-          type: boolean
-          description: Whether to show this block in 'Create transformation job'. Only applies for standalone blocks.
-        showInSyntheticData:
-          type: boolean
-          description: Whether to show this block in 'Synthetic data'. Only applies for standalone blocks.
-        showInAIActions:
-          type: boolean
-          description: Whether to show this block in 'AI Labeling'. Only applies for standalone blocks.
-        environmentVariables:
-          type: array
-          items:
-            $ref: '#/components/schemas/EnvironmentVariable'
-        aiActionsOperatesOn:
-          type: array
-          description: For AI labeling blocks, this lists the data types that the block supports. If this field is empty then there's no information about supported data types.
-          items:
-            $ref: '#/components/schemas/AIActionsOperatesOn'
-    AddOrganizationDspBlockRequest:
-      type: object
-      required:
-      - name
-      - dockerContainer
-      - description
-      - port
-      properties:
-        name:
-          type: string
-        dockerContainer:
-          type: string
-        description:
-          type: string
-        requestsCpu:
-          type: number
-        requestsMemory:
-          type: integer
-        limitsCpu:
-          type: number
-        limitsMemory:
-          type: integer
-        port:
-          type: integer
-    UpdateOrganizationDspBlockRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        dockerContainer:
-          type: string
-        description:
-          type: string
-        requestsCpu:
-          type: number
-        requestsMemory:
-          type: integer
-        limitsCpu:
-          type: number
-        limitsMemory:
-          type: integer
-        port:
-          type: integer
-    AIActionsOperatesOn:
-      type: string
-      enum:
-      - images_object_detection
-      - images_single_label
-      - audio
-      - other
-    OrganizationTransferLearningOperatesOn:
-      type: string
-      enum:
-      - object_detection
-      - audio
-      - image
-      - regression
-      - other
-    ListOrganizationTransformationBlocksResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - transformationBlocks
-        properties:
-          transformationBlocks:
-            type: array
-            items:
-              $ref: '#/components/schemas/OrganizationTransformationBlock'
-    ExportBlockResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        - exportUrl
-        properties:
-          id:
-            type: integer
-            description: Job identifier. Status updates will include this identifier.
-            example: 12873488112
-          exportUrl:
-            type: string
-    PublicOrganizationTransformationBlock:
-      type: object
-      required:
-      - id
-      - ownerOrganizationId
-      - ownerOrganizationName
-      - name
-      - created
-      - description
-      - operatesOn
-      - allowExtraCliArguments
-      - showInDataSources
-      - showInCreateTransformationJob
-      - showInSyntheticData
-      - showInAIActions
-      properties:
-        id:
-          type: integer
-        ownerOrganizationId:
-          type: integer
-        ownerOrganizationName:
-          type: string
-        name:
-          type: string
-        created:
-          type: string
-          format: date-time
-        lastUpdated:
-          type: string
-          format: date-time
-        description:
-          type: string
-        operatesOn:
-          $ref: '#/components/schemas/TransformationJobOperatesOnEnum'
-        allowExtraCliArguments:
-          type: boolean
-        parameters:
-          description: List of parameters, spec'ed according to https://docs.edgeimpulse.com/docs/tips-and-tricks/adding-parameters-to-custom-blocks
-          type: array
-          items:
-            type: object
-        parametersUI:
-          description: List of parameters to be rendered in the UI
-          type: array
-          items:
-            $ref: '#/components/schemas/DSPGroupItem'
-        repositoryUrl:
-          type: string
-          description: URL to the source code of this custom learn block.
-        showInDataSources:
-          type: boolean
-          description: Whether to show this block in 'Data sources'. Only applies for standalone blocks.
-        showInCreateTransformationJob:
-          type: boolean
-          description: Whether to show this block in 'Create transformation job'. Only applies for standalone blocks.
-        showInSyntheticData:
-          type: boolean
-          description: Whether to show this block in 'Synthetic data'. Only applies for standalone blocks.
-        showInAIActions:
-          type: boolean
-          description: Whether to show this block in 'AI Labeling'. Only applies for standalone blocks.
-        aiActionsOperatesOn:
-          type: array
-          description: For AI labeling blocks, this lists the data types that the block supports. If this field is empty then there's no information about supported data types.
-          items:
-            $ref: '#/components/schemas/AIActionsOperatesOn'
-    OrganizationDspBlock_2:
-      type: object
-      required:
-      - id
-      - name
-      - dockerContainer
-      - dockerContainerManagedByEdgeImpulse
-      - created
-      - description
-      - port
-      - isConnected
-      - sourceCodeAvailable
-      - sourceCodeDownloadStaffOnly
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        dockerContainer:
-          type: string
-        dockerContainerManagedByEdgeImpulse:
-          type: boolean
-        created:
-          type: string
-          format: date-time
-        createdByUser:
-          $ref: '#/components/schemas/CreatedUpdatedByUser'
-        lastUpdated:
-          type: string
-          format: date-time
-        lastUpdatedByUser:
-          $ref: '#/components/schemas/CreatedUpdatedByUser'
-        userId:
-          type: integer
-        userName:
-          type: string
-        description:
-          type: string
-        requestsCpu:
-          type: number
-        requestsMemory:
-          type: integer
-        limitsCpu:
-          type: number
-        limitsMemory:
-          type: integer
-        port:
-          type: integer
-        isConnected:
-          type: boolean
-        error:
-          type: string
-        sourceCodeAvailable:
-          type: boolean
-        sourceCodeDownloadStaffOnly:
-          type: boolean
-          description: Whether the source code is only available for staff users.
-    UpdateOrganizationDeployBlockRequest_2:
-      type: object
-      properties:
-        name:
-          type: string
-        dockerContainer:
-          type: string
-        description:
-          type: string
-        cliArguments:
-          type: string
-        requestsCpu:
-          type: number
-        requestsMemory:
-          type: integer
-        limitsCpu:
-          type: number
-        limitsMemory:
-          type: integer
-        photo:
-          type: string
-          format: binary
-        integrateUrl:
-          type: string
-        privileged:
-          type: boolean
-        mountLearnBlock:
-          type: boolean
-        supportsEonCompiler:
-          type: boolean
-        showOptimizations:
-          type: boolean
-        category:
-          type: string
-          enum:
-          - library
-          - firmware
-        sourceCodeDownloadStaffOnly:
-          type: boolean
-          description: Whether the source code is only available for staff users.
-        parameters:
-          description: List of parameters, spec'ed according to https://docs.edgeimpulse.com/docs/tips-and-tricks/adding-parameters-to-custom-blocks
-          type: array
-          items:
-            type: object
     AddOrganizationDeployBlockRequest_2:
       type: object
       required:
@@ -2108,20 +2006,49 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DSPGroupItem_2'
-    AddOrganizationTransferLearningBlockRequest_2:
+    OrganizationTransferLearningBlock_2:
       type: object
       required:
+      - id
       - name
       - dockerContainer
+      - dockerContainerManagedByEdgeImpulse
+      - created
       - description
       - operatesOn
       - implementationVersion
+      - isPublic
+      - isPublicForDevices
+      - isPublicEnterpriseOnly
+      - parameters
+      - indRequiresGpu
+      - sourceCodeAvailable
+      - sourceCodeDownloadStaffOnly
+      - indBlockNoLongerAvailable
       properties:
+        id:
+          type: integer
         name:
           type: string
         dockerContainer:
           type: string
+        dockerContainerManagedByEdgeImpulse:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        createdByUser:
+          $ref: '#/components/schemas/CreatedUpdatedByUser'
+        lastUpdated:
+          type: string
+          format: date-time
+        lastUpdatedByUser:
+          $ref: '#/components/schemas/CreatedUpdatedByUser'
         description:
+          type: string
+        userId:
+          type: integer
+        userName:
           type: string
         operatesOn:
           $ref: '#/components/schemas/OrganizationTransferLearningOperatesOn_2'
@@ -2139,6 +2066,12 @@ components:
             type: string
         publicProjectTierAvailability:
           $ref: '#/components/schemas/PublicProjectTierAvailability_2'
+        isPublicEnterpriseOnly:
+          type: boolean
+          description: Whether this block is publicly available to only enterprise users
+        enterpriseOnly:
+          type: boolean
+          description: Whether this block is available to only enterprise users
         repositoryUrl:
           type: string
           description: URL to the source code of this custom learn block.
@@ -2155,19 +2088,241 @@ components:
         indRequiresGpu:
           description: If set, requires this block to be scheduled on GPU.
           type: boolean
+        sourceCodeAvailable:
+          type: boolean
+        sourceCodeDownloadStaffOnly:
+          type: boolean
+          description: Whether the source code is only available for staff users.
+        displayCategory:
+          $ref: '#/components/schemas/BlockDisplayCategory_2'
         customModelVariants:
           description: List of custom model variants produced when this block is trained. This is experimental and may change in the future.
           type: array
           items:
             $ref: '#/components/schemas/OrganizationTransferLearningBlockCustomVariant'
-        displayCategory:
-          $ref: '#/components/schemas/BlockDisplayCategory_2'
         indBlockNoLongerAvailable:
           type: boolean
-          description: If set, then this block is no longer available for training; and blockNoLongerAvailableReason should be set.
+          description: If set, then this block is no longer available for training; and blockNoLongerAvailableReason will be set.
         blockNoLongerAvailableReason:
           type: string
-          description: In Markdown format. Should be set if `indBlockNoLongerAvailable` is true, contains migration information for existing users of this block.
+          description: In Markdown format. Set if `indBlockNoLongerAvailable` is true, contains migration information for existing users of this block.
+    UpdateOrganizationDeployBlockRequest_2:
+      type: object
+      properties:
+        name:
+          type: string
+        dockerContainer:
+          type: string
+        description:
+          type: string
+        cliArguments:
+          type: string
+        requestsCpu:
+          type: number
+        requestsMemory:
+          type: integer
+        limitsCpu:
+          type: number
+        limitsMemory:
+          type: integer
+        photo:
+          type: string
+          format: binary
+        integrateUrl:
+          type: string
+        privileged:
+          type: boolean
+        mountLearnBlock:
+          type: boolean
+        supportsEonCompiler:
+          type: boolean
+        showOptimizations:
+          type: boolean
+        category:
+          type: string
+          enum:
+          - library
+          - firmware
+        sourceCodeDownloadStaffOnly:
+          type: boolean
+          description: Whether the source code is only available for staff users.
+        parameters:
+          description: List of parameters, spec'ed according to https://docs.edgeimpulse.com/docs/tips-and-tricks/adding-parameters-to-custom-blocks
+          type: array
+          items:
+            type: object
+    AddOrganizationDspBlockRequest_2:
+      type: object
+      required:
+      - name
+      - dockerContainer
+      - description
+      - port
+      properties:
+        name:
+          type: string
+        dockerContainer:
+          type: string
+        description:
+          type: string
+        requestsCpu:
+          type: number
+        requestsMemory:
+          type: integer
+        limitsCpu:
+          type: number
+        limitsMemory:
+          type: integer
+        port:
+          type: integer
+        sourceCodeDownloadStaffOnly:
+          type: boolean
+          description: Whether the source code is only available for staff users.
+    OrganizationDspBlock_2:
+      type: object
+      required:
+      - id
+      - name
+      - dockerContainer
+      - dockerContainerManagedByEdgeImpulse
+      - created
+      - description
+      - port
+      - isConnected
+      - sourceCodeAvailable
+      - sourceCodeDownloadStaffOnly
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        dockerContainer:
+          type: string
+        dockerContainerManagedByEdgeImpulse:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        createdByUser:
+          $ref: '#/components/schemas/CreatedUpdatedByUser'
+        lastUpdated:
+          type: string
+          format: date-time
+        lastUpdatedByUser:
+          $ref: '#/components/schemas/CreatedUpdatedByUser'
+        userId:
+          type: integer
+        userName:
+          type: string
+        description:
+          type: string
+        requestsCpu:
+          type: number
+        requestsMemory:
+          type: integer
+        limitsCpu:
+          type: number
+        limitsMemory:
+          type: integer
+        port:
+          type: integer
+        isConnected:
+          type: boolean
+        error:
+          type: string
+        sourceCodeAvailable:
+          type: boolean
+        sourceCodeDownloadStaffOnly:
+          type: boolean
+          description: Whether the source code is only available for staff users.
+    UpdateOrganizationTransformationBlockRequest_2:
+      type: object
+      properties:
+        name:
+          type: string
+        dockerContainer:
+          type: string
+        indMetadata:
+          description: Whether to pass the `--metadata` parameter to the container.
+          type: boolean
+        description:
+          type: string
+        cliArguments:
+          type: string
+        requestsCpu:
+          type: number
+        requestsMemory:
+          type: integer
+        limitsCpu:
+          type: number
+        limitsMemory:
+          type: integer
+        additionalMountPoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransformationBlockAdditionalMountPoint'
+        operatesOn:
+          $ref: '#/components/schemas/TransformationJobOperatesOnEnum'
+        allowExtraCliArguments:
+          type: boolean
+        parameters:
+          description: List of parameters, spec'ed according to https://docs.edgeimpulse.com/docs/tips-and-tricks/adding-parameters-to-custom-blocks
+          type: array
+          items:
+            type: object
+        maxRunningTimeStr:
+          type: string
+          description: 15m for 15 minutes, 2h for 2 hours, 1d for 1 day. If not set, the default is 8 hours.
+        isPublic:
+          type: boolean
+        publicProjectTierAvailability:
+          $ref: '#/components/schemas/PublicProjectTierAvailability_2'
+        repositoryUrl:
+          type: string
+          description: URL to the source code of this custom learn block.
+        showInDataSources:
+          type: boolean
+          description: Whether to show this block in 'Data sources'. Only applies for standalone blocks.
+        showInCreateTransformationJob:
+          type: boolean
+          description: Whether to show this block in 'Create transformation job'. Only applies for standalone blocks.
+        showInSyntheticData:
+          type: boolean
+          description: Whether to show this block in 'Synthetic data'. Only applies for standalone blocks.
+        showInAIActions:
+          type: boolean
+          description: Whether to show this block in 'AI Labeling'. Only applies for standalone blocks.
+        environmentVariables:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvironmentVariable'
+        aiActionsOperatesOn:
+          type: array
+          description: For AI labeling blocks, this lists the data types that the block supports. If this field is empty then there's no information about supported data types.
+          items:
+            $ref: '#/components/schemas/AIActionsOperatesOn'
+        sourceCodeDownloadStaffOnly:
+          type: boolean
+          description: Whether the source code is only available for staff users.
+    UpdateOrganizationDspBlockRequest_2:
+      type: object
+      properties:
+        name:
+          type: string
+        dockerContainer:
+          type: string
+        description:
+          type: string
+        requestsCpu:
+          type: number
+        requestsMemory:
+          type: integer
+        limitsCpu:
+          type: number
+        limitsMemory:
+          type: integer
+        port:
+          type: integer
         sourceCodeDownloadStaffOnly:
           type: boolean
           description: Whether the source code is only available for staff users.
@@ -2288,6 +2443,165 @@ components:
         maxVal:
           type: number
           description: Maximum value for parameters of type 'int' or 'float'.
+    AddOrganizationTransformationBlockRequest_2:
+      type: object
+      required:
+      - name
+      - dockerContainer
+      - indMetadata
+      - description
+      - cliArguments
+      - additionalMountPoints
+      - operatesOn
+      properties:
+        name:
+          type: string
+        dockerContainer:
+          type: string
+        indMetadata:
+          description: Whether to pass the `--metadata` parameter to the container.
+          type: boolean
+        description:
+          type: string
+        cliArguments:
+          type: string
+        requestsCpu:
+          type: number
+        requestsMemory:
+          type: integer
+        limitsCpu:
+          type: number
+        limitsMemory:
+          type: integer
+        additionalMountPoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/TransformationBlockAdditionalMountPoint'
+        operatesOn:
+          type: string
+          enum:
+          - file
+          - directory
+          - dataitem
+          - standalone
+        allowExtraCliArguments:
+          type: boolean
+        parameters:
+          description: List of parameters, spec'ed according to https://docs.edgeimpulse.com/docs/tips-and-tricks/adding-parameters-to-custom-blocks
+          type: array
+          items:
+            type: object
+        maxRunningTimeStr:
+          type: string
+          description: 15m for 15 minutes, 2h for 2 hours, 1d for 1 day. If not set, the default is 8 hours.
+        isPublic:
+          type: boolean
+        publicProjectTierAvailability:
+          $ref: '#/components/schemas/PublicProjectTierAvailability_2'
+        repositoryUrl:
+          description: URL to the source code of this custom learn block.
+          type: string
+        showInDataSources:
+          type: boolean
+          description: Whether to show this block in 'Data sources'. Only applies for standalone blocks. (defaults to 'true' when not provided)
+        showInCreateTransformationJob:
+          type: boolean
+          description: Whether to show this block in 'Create transformation job'. Only applies for standalone blocks.
+        showInSyntheticData:
+          type: boolean
+          description: Whether to show this block in 'Synthetic data'. Only applies for standalone blocks.
+        showInAIActions:
+          type: boolean
+          description: Whether to show this block in 'AI Labeling'. Only applies for standalone blocks.
+        environmentVariables:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnvironmentVariable'
+        aiActionsOperatesOn:
+          type: array
+          description: For AI labeling blocks, this lists the data types that the block supports. If this field is empty then there's no information about supported data types.
+          items:
+            $ref: '#/components/schemas/AIActionsOperatesOn'
+        sourceCodeDownloadStaffOnly:
+          type: boolean
+          description: Whether the source code is only available for staff users.
+    PublicProjectTierAvailability_2:
+      description: For public blocks, this indicates the project tiers for which this block is available.
+      type: string
+      enum:
+      - enterprise-only
+      - all-projects
+      - all-projects-including-whitelabels
+    AddOrganizationTransferLearningBlockRequest_2:
+      type: object
+      required:
+      - name
+      - dockerContainer
+      - description
+      - operatesOn
+      - implementationVersion
+      properties:
+        name:
+          type: string
+        dockerContainer:
+          type: string
+        description:
+          type: string
+        operatesOn:
+          $ref: '#/components/schemas/OrganizationTransferLearningOperatesOn_2'
+        objectDetectionLastLayer:
+          $ref: '#/components/schemas/ObjectDetectionLastLayer_2'
+        implementationVersion:
+          type: integer
+        isPublic:
+          type: boolean
+          description: Whether this block is publicly available to Edge Impulse users (if false, then only for members of the owning organization)
+        isPublicForDevices:
+          description: If `isPublic` is true, the list of devices (from latencyDevices) for which this model can be shown.
+          type: array
+          items:
+            type: string
+        publicProjectTierAvailability:
+          $ref: '#/components/schemas/PublicProjectTierAvailability_2'
+        repositoryUrl:
+          type: string
+          description: URL to the source code of this custom learn block.
+        customBlockRef:
+          type: string
+          description: Unique stable string key used to create and find this custom block.
+        parameters:
+          description: List of parameters, spec'ed according to https://docs.edgeimpulse.com/docs/tips-and-tricks/adding-parameters-to-custom-blocks
+          type: array
+          items:
+            type: object
+        imageInputScaling:
+          $ref: '#/components/schemas/ImageInputScaling'
+        indRequiresGpu:
+          description: If set, requires this block to be scheduled on GPU.
+          type: boolean
+        customModelVariants:
+          description: List of custom model variants produced when this block is trained. This is experimental and may change in the future.
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationTransferLearningBlockCustomVariant'
+        displayCategory:
+          $ref: '#/components/schemas/BlockDisplayCategory_2'
+        indBlockNoLongerAvailable:
+          type: boolean
+          description: If set, then this block is no longer available for training; and blockNoLongerAvailableReason should be set.
+        blockNoLongerAvailableReason:
+          type: string
+          description: In Markdown format. Should be set if `indBlockNoLongerAvailable` is true, contains migration information for existing users of this block.
+        sourceCodeDownloadStaffOnly:
+          type: boolean
+          description: Whether the source code is only available for staff users.
+    BlockDisplayCategory_2:
+      description: Category to display this block in the UI.
+      type: string
+      enum:
+      - classical
+      - tao
+      - developer-preview
     OrganizationTransformationBlock_2:
       type: object
       required:
@@ -2405,95 +2719,19 @@ components:
           description: For AI labeling blocks, this lists the data types that the block supports. If this field is empty then there's no information about supported data types.
           items:
             $ref: '#/components/schemas/AIActionsOperatesOn'
-    PublicProjectTierAvailability_2:
-      description: For public blocks, this indicates the project tiers for which this block is available.
+    OrganizationTransferLearningOperatesOn_2:
       type: string
       enum:
-      - enterprise-only
-      - all-projects
-      - all-projects-including-whitelabels
-    AddOrganizationTransformationBlockRequest_2:
-      type: object
-      required:
-      - name
-      - dockerContainer
-      - indMetadata
-      - description
-      - cliArguments
-      - additionalMountPoints
-      - operatesOn
-      properties:
-        name:
-          type: string
-        dockerContainer:
-          type: string
-        indMetadata:
-          description: Whether to pass the `--metadata` parameter to the container.
-          type: boolean
-        description:
-          type: string
-        cliArguments:
-          type: string
-        requestsCpu:
-          type: number
-        requestsMemory:
-          type: integer
-        limitsCpu:
-          type: number
-        limitsMemory:
-          type: integer
-        additionalMountPoints:
-          type: array
-          items:
-            $ref: '#/components/schemas/TransformationBlockAdditionalMountPoint'
-        operatesOn:
-          type: string
-          enum:
-          - file
-          - directory
-          - dataitem
-          - standalone
-        allowExtraCliArguments:
-          type: boolean
-        parameters:
-          description: List of parameters, spec'ed according to https://docs.edgeimpulse.com/docs/tips-and-tricks/adding-parameters-to-custom-blocks
-          type: array
-          items:
-            type: object
-        maxRunningTimeStr:
-          type: string
-          description: 15m for 15 minutes, 2h for 2 hours, 1d for 1 day. If not set, the default is 8 hours.
-        isPublic:
-          type: boolean
-        publicProjectTierAvailability:
-          $ref: '#/components/schemas/PublicProjectTierAvailability_2'
-        repositoryUrl:
-          description: URL to the source code of this custom learn block.
-          type: string
-        showInDataSources:
-          type: boolean
-          description: Whether to show this block in 'Data sources'. Only applies for standalone blocks. (defaults to 'true' when not provided)
-        showInCreateTransformationJob:
-          type: boolean
-          description: Whether to show this block in 'Create transformation job'. Only applies for standalone blocks.
-        showInSyntheticData:
-          type: boolean
-          description: Whether to show this block in 'Synthetic data'. Only applies for standalone blocks.
-        showInAIActions:
-          type: boolean
-          description: Whether to show this block in 'AI Labeling'. Only applies for standalone blocks.
-        environmentVariables:
-          type: array
-          items:
-            $ref: '#/components/schemas/EnvironmentVariable'
-        aiActionsOperatesOn:
-          type: array
-          description: For AI labeling blocks, this lists the data types that the block supports. If this field is empty then there's no information about supported data types.
-          items:
-            $ref: '#/components/schemas/AIActionsOperatesOn'
-        sourceCodeDownloadStaffOnly:
-          type: boolean
-          description: Whether the source code is only available for staff users.
+      - object_detection
+      - audio
+      - image
+      - regression
+      - anomaly_detection
+      - visual_anomaly_detection
+      - other
+      - image_akida
+      - object_detection_akida
+      - classification_akida
     ObjectDetectionLastLayer_2:
       type: string
       enum:
@@ -2514,113 +2752,6 @@ components:
       - paddleocr-detector
       - qc-face-det-lite
       - qc-yolox
-    OrganizationTransferLearningBlock_2:
-      type: object
-      required:
-      - id
-      - name
-      - dockerContainer
-      - dockerContainerManagedByEdgeImpulse
-      - created
-      - description
-      - operatesOn
-      - implementationVersion
-      - isPublic
-      - isPublicForDevices
-      - isPublicEnterpriseOnly
-      - parameters
-      - indRequiresGpu
-      - sourceCodeAvailable
-      - sourceCodeDownloadStaffOnly
-      - indBlockNoLongerAvailable
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        dockerContainer:
-          type: string
-        dockerContainerManagedByEdgeImpulse:
-          type: boolean
-        created:
-          type: string
-          format: date-time
-        createdByUser:
-          $ref: '#/components/schemas/CreatedUpdatedByUser'
-        lastUpdated:
-          type: string
-          format: date-time
-        lastUpdatedByUser:
-          $ref: '#/components/schemas/CreatedUpdatedByUser'
-        description:
-          type: string
-        userId:
-          type: integer
-        userName:
-          type: string
-        operatesOn:
-          $ref: '#/components/schemas/OrganizationTransferLearningOperatesOn_2'
-        objectDetectionLastLayer:
-          $ref: '#/components/schemas/ObjectDetectionLastLayer_2'
-        implementationVersion:
-          type: integer
-        isPublic:
-          type: boolean
-          description: Whether this block is publicly available to Edge Impulse users (if false, then only for members of the owning organization)
-        isPublicForDevices:
-          description: If `isPublic` is true, the list of devices (from latencyDevices) for which this model can be shown.
-          type: array
-          items:
-            type: string
-        publicProjectTierAvailability:
-          $ref: '#/components/schemas/PublicProjectTierAvailability_2'
-        isPublicEnterpriseOnly:
-          type: boolean
-          description: Whether this block is publicly available to only enterprise users
-        enterpriseOnly:
-          type: boolean
-          description: Whether this block is available to only enterprise users
-        repositoryUrl:
-          type: string
-          description: URL to the source code of this custom learn block.
-        customBlockRef:
-          type: string
-          description: Unique stable string key used to create and find this custom block.
-        parameters:
-          description: List of parameters, spec'ed according to https://docs.edgeimpulse.com/docs/tips-and-tricks/adding-parameters-to-custom-blocks
-          type: array
-          items:
-            type: object
-        imageInputScaling:
-          $ref: '#/components/schemas/ImageInputScaling'
-        indRequiresGpu:
-          description: If set, requires this block to be scheduled on GPU.
-          type: boolean
-        sourceCodeAvailable:
-          type: boolean
-        sourceCodeDownloadStaffOnly:
-          type: boolean
-          description: Whether the source code is only available for staff users.
-        displayCategory:
-          $ref: '#/components/schemas/BlockDisplayCategory_2'
-        customModelVariants:
-          description: List of custom model variants produced when this block is trained. This is experimental and may change in the future.
-          type: array
-          items:
-            $ref: '#/components/schemas/OrganizationTransferLearningBlockCustomVariant'
-        indBlockNoLongerAvailable:
-          type: boolean
-          description: If set, then this block is no longer available for training; and blockNoLongerAvailableReason will be set.
-        blockNoLongerAvailableReason:
-          type: string
-          description: In Markdown format. Set if `indBlockNoLongerAvailable` is true, contains migration information for existing users of this block.
-    BlockDisplayCategory_2:
-      description: Category to display this block in the UI.
-      type: string
-      enum:
-      - classical
-      - tao
-      - developer-preview
     UpdateOrganizationTransferLearningBlockRequest_2:
       type: object
       properties:
@@ -2675,143 +2806,33 @@ components:
         sourceCodeDownloadStaffOnly:
           type: boolean
           description: Whether the source code is only available for staff users.
-    UpdateOrganizationTransformationBlockRequest_2:
-      type: object
-      properties:
-        name:
-          type: string
-        dockerContainer:
-          type: string
-        indMetadata:
-          description: Whether to pass the `--metadata` parameter to the container.
-          type: boolean
-        description:
-          type: string
-        cliArguments:
-          type: string
-        requestsCpu:
-          type: number
-        requestsMemory:
-          type: integer
-        limitsCpu:
-          type: number
-        limitsMemory:
-          type: integer
-        additionalMountPoints:
-          type: array
-          items:
-            $ref: '#/components/schemas/TransformationBlockAdditionalMountPoint'
-        operatesOn:
-          $ref: '#/components/schemas/TransformationJobOperatesOnEnum'
-        allowExtraCliArguments:
-          type: boolean
-        parameters:
-          description: List of parameters, spec'ed according to https://docs.edgeimpulse.com/docs/tips-and-tricks/adding-parameters-to-custom-blocks
-          type: array
-          items:
-            type: object
-        maxRunningTimeStr:
-          type: string
-          description: 15m for 15 minutes, 2h for 2 hours, 1d for 1 day. If not set, the default is 8 hours.
-        isPublic:
-          type: boolean
-        publicProjectTierAvailability:
-          $ref: '#/components/schemas/PublicProjectTierAvailability_2'
-        repositoryUrl:
-          type: string
-          description: URL to the source code of this custom learn block.
-        showInDataSources:
-          type: boolean
-          description: Whether to show this block in 'Data sources'. Only applies for standalone blocks.
-        showInCreateTransformationJob:
-          type: boolean
-          description: Whether to show this block in 'Create transformation job'. Only applies for standalone blocks.
-        showInSyntheticData:
-          type: boolean
-          description: Whether to show this block in 'Synthetic data'. Only applies for standalone blocks.
-        showInAIActions:
-          type: boolean
-          description: Whether to show this block in 'AI Labeling'. Only applies for standalone blocks.
-        environmentVariables:
-          type: array
-          items:
-            $ref: '#/components/schemas/EnvironmentVariable'
-        aiActionsOperatesOn:
-          type: array
-          description: For AI labeling blocks, this lists the data types that the block supports. If this field is empty then there's no information about supported data types.
-          items:
-            $ref: '#/components/schemas/AIActionsOperatesOn'
-        sourceCodeDownloadStaffOnly:
-          type: boolean
-          description: Whether the source code is only available for staff users.
-    AddOrganizationDspBlockRequest_2:
-      type: object
-      required:
-      - name
-      - dockerContainer
-      - description
-      - port
-      properties:
-        name:
-          type: string
-        dockerContainer:
-          type: string
-        description:
-          type: string
-        requestsCpu:
-          type: number
-        requestsMemory:
-          type: integer
-        limitsCpu:
-          type: number
-        limitsMemory:
-          type: integer
-        port:
-          type: integer
-        sourceCodeDownloadStaffOnly:
-          type: boolean
-          description: Whether the source code is only available for staff users.
-    UpdateOrganizationDspBlockRequest_2:
-      type: object
-      properties:
-        name:
-          type: string
-        dockerContainer:
-          type: string
-        description:
-          type: string
-        requestsCpu:
-          type: number
-        requestsMemory:
-          type: integer
-        limitsCpu:
-          type: number
-        limitsMemory:
-          type: integer
-        port:
-          type: integer
-        sourceCodeDownloadStaffOnly:
-          type: boolean
-          description: Whether the source code is only available for staff users.
-    OrganizationTransferLearningOperatesOn_2:
-      type: string
-      enum:
-      - object_detection
-      - audio
-      - image
-      - regression
-      - anomaly_detection
-      - visual_anomaly_detection
-      - other
-      - image_akida
-      - object_detection_akida
-      - classification_akida
   parameters:
     SecretIdParameter:
       name: secretId
       in: path
       required: true
       description: Secret ID
+      schema:
+        type: integer
+    TransformationIdParameter:
+      name: transformationId
+      in: path
+      required: true
+      description: Transformation block ID.
+      schema:
+        type: integer
+    DspIdParameter:
+      name: dspId
+      in: path
+      required: true
+      description: DSP Block ID, use the impulse functions to retrieve the ID
+      schema:
+        type: integer
+    TransferLearningIdParameter:
+      name: transferLearningId
+      in: path
+      required: true
+      description: Transfer learning ID
       schema:
         type: integer
     DeployIdParameter:
@@ -2826,27 +2847,6 @@ components:
       in: path
       required: true
       description: Organization ID
-      schema:
-        type: integer
-    TransformationIdParameter:
-      name: transformationId
-      in: path
-      required: true
-      description: Transformation block ID.
-      schema:
-        type: integer
-    TransferLearningIdParameter:
-      name: transferLearningId
-      in: path
-      required: true
-      description: Transfer learning ID
-      schema:
-        type: integer
-    DspIdParameter:
-      name: dspId
-      in: path
-      required: true
-      description: DSP Block ID, use the impulse functions to retrieve the ID
       schema:
         type: integer
   securitySchemes:

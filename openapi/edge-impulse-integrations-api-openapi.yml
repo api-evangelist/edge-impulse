@@ -93,6 +93,17 @@ components:
         additionalInfo:
           description: Any relevant additional information, e.g. the reason the session has stopped or any error messages.
           type: string
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
     StartTensorBoardSessionRequest:
       type: object
       required:
@@ -123,17 +134,6 @@ components:
             type: string
             description: Unique integration resource identifier. Pass this to getIntegrationSessionStatus to check the status of the integration session.
             example: learn-3-2-1
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey

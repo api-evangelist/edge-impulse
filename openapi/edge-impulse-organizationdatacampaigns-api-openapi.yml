@@ -305,19 +305,17 @@ paths:
     - url: https://studio.edgeimpulse.com/v1
 components:
   schemas:
-    DataCampaign:
+    AddOrganizationDataCampaignRequest:
       type: object
       required:
-      - id
       - dataCampaignDashboardId
-      - created
       - name
       - description
       - coordinatorUids
-      - pipelineIds
       - queries
       - links
       - datasets
+      - pipelineIds
       - projectIds
       properties:
         id:
@@ -358,6 +356,37 @@ components:
           type: array
           items:
             type: integer
+    DataCampaignLink:
+      type: object
+      required:
+      - icon
+      - name
+      - link
+      properties:
+        icon:
+          type: string
+        name:
+          type: string
+        link:
+          type: string
+    UpdateOrganizationDataCampaignDashboardRequest:
+      type: object
+      properties:
+        name:
+          type: string
+        emailRecipientUids:
+          description: List of user IDs to notify for this dashboard (sent daily)
+          type: array
+          items:
+            type: integer
+        whenToEmail:
+          type: string
+          enum:
+          - always
+          - on_changes
+          - never
+        showNoOfDays:
+          type: integer
     UpdateOrganizationDataCampaignRequest:
       type: object
       properties:
@@ -394,202 +423,6 @@ components:
           type: array
           items:
             type: integer
-    UploadImageRequest:
-      type: object
-      required:
-      - image
-      properties:
-        image:
-          type: string
-          format: binary
-    DataCampaignLink:
-      type: object
-      required:
-      - icon
-      - name
-      - link
-      properties:
-        icon:
-          type: string
-        name:
-          type: string
-        link:
-          type: string
-    DataCampaignQuery:
-      type: object
-      required:
-      - name
-      - dataset
-      - query
-      properties:
-        name:
-          type: string
-        dataset:
-          type: string
-        query:
-          type: string
-    OrganizationDataCampaignDiffResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - date
-        - queries
-        properties:
-          date:
-            type: string
-            format: date-time
-          queries:
-            type: array
-            items:
-              type: object
-              required:
-              - title
-              - dataset
-              - query
-              - newItems
-              - deletedItems
-              properties:
-                title:
-                  type: string
-                dataset:
-                  type: string
-                query:
-                  type: string
-                newItems:
-                  type: array
-                  items:
-                    type: string
-                deletedItems:
-                  type: array
-                  items:
-                    type: string
-    DataCampaignDashboard:
-      type: object
-      required:
-      - id
-      - created
-      - name
-      - emailRecipientUids
-      - whenToEmail
-      - showNoOfDays
-      properties:
-        id:
-          type: integer
-        created:
-          type: string
-          format: date-time
-        name:
-          type: string
-        emailRecipientUids:
-          description: List of user IDs to notify for this dashboard (sent daily)
-          type: array
-          items:
-            type: integer
-        latestScreenshot:
-          type: string
-        whenToEmail:
-          type: string
-          enum:
-          - always
-          - on_changes
-          - never
-        showNoOfDays:
-          type: integer
-    UpdateOrganizationDataCampaignDashboardRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        emailRecipientUids:
-          description: List of user IDs to notify for this dashboard (sent daily)
-          type: array
-          items:
-            type: integer
-        whenToEmail:
-          type: string
-          enum:
-          - always
-          - on_changes
-          - never
-        showNoOfDays:
-          type: integer
-    OrganizationDataCampaignDiffRequest:
-      type: object
-      required:
-      - queries
-      properties:
-        queries:
-          type: array
-          items:
-            type: object
-            required:
-            - dataset
-            - query
-            - graphValueId
-            properties:
-              dataset:
-                type: string
-              query:
-                type: string
-              graphValueId:
-                type: integer
-                description: Which point in the graph was clicked (from "graphs.values")
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
-    GetOrganizationDataCampaignsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - campaigns
-        properties:
-          campaigns:
-            type: array
-            items:
-              type: object
-              required:
-              - campaign
-              - graphs
-              properties:
-                campaign:
-                  $ref: '#/components/schemas/DataCampaign'
-                graphs:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/DataCampaignGraph'
-    AddOrganizationDataCampaignDashboardRequest:
-      type: object
-      required:
-      - name
-      - emailRecipientUids
-      - whenToEmail
-      - showNoOfDays
-      properties:
-        name:
-          type: string
-        emailRecipientUids:
-          description: List of user IDs to notify for this dashboard (sent daily)
-          type: array
-          items:
-            type: integer
-        whenToEmail:
-          type: string
-          enum:
-          - always
-          - on_changes
-          - never
-        showNoOfDays:
-          type: integer
     GetOrganizationDataCampaignResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -604,6 +437,19 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/DataCampaignGraph'
+    DataCampaignQuery:
+      type: object
+      required:
+      - name
+      - dataset
+      - query
+      properties:
+        name:
+          type: string
+        dataset:
+          type: string
+        query:
+          type: string
     GetOrganizationDataCampaignDashboardResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -672,17 +518,81 @@ components:
         nextUpdate:
           type: string
           format: date-time
-    AddOrganizationDataCampaignRequest:
+    AddOrganizationDataCampaignResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - dataCampaignId
+        properties:
+          dataCampaignId:
+            type: integer
+    GenericApiResponse:
       type: object
       required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    GetOrganizationDataCampaignsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - campaigns
+        properties:
+          campaigns:
+            type: array
+            items:
+              type: object
+              required:
+              - campaign
+              - graphs
+              properties:
+                campaign:
+                  $ref: '#/components/schemas/DataCampaign'
+                graphs:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/DataCampaignGraph'
+    OrganizationDataCampaignDiffRequest:
+      type: object
+      required:
+      - queries
+      properties:
+        queries:
+          type: array
+          items:
+            type: object
+            required:
+            - dataset
+            - query
+            - graphValueId
+            properties:
+              dataset:
+                type: string
+              query:
+                type: string
+              graphValueId:
+                type: integer
+                description: Which point in the graph was clicked (from "graphs.values")
+    DataCampaign:
+      type: object
+      required:
+      - id
       - dataCampaignDashboardId
+      - created
       - name
       - description
       - coordinatorUids
+      - pipelineIds
       - queries
       - links
       - datasets
-      - pipelineIds
       - projectIds
       properties:
         id:
@@ -723,6 +633,105 @@ components:
           type: array
           items:
             type: integer
+    OrganizationDataCampaignDiffResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - date
+        - queries
+        properties:
+          date:
+            type: string
+            format: date-time
+          queries:
+            type: array
+            items:
+              type: object
+              required:
+              - title
+              - dataset
+              - query
+              - newItems
+              - deletedItems
+              properties:
+                title:
+                  type: string
+                dataset:
+                  type: string
+                query:
+                  type: string
+                newItems:
+                  type: array
+                  items:
+                    type: string
+                deletedItems:
+                  type: array
+                  items:
+                    type: string
+    UploadImageRequest:
+      type: object
+      required:
+      - image
+      properties:
+        image:
+          type: string
+          format: binary
+    DataCampaignDashboard:
+      type: object
+      required:
+      - id
+      - created
+      - name
+      - emailRecipientUids
+      - whenToEmail
+      - showNoOfDays
+      properties:
+        id:
+          type: integer
+        created:
+          type: string
+          format: date-time
+        name:
+          type: string
+        emailRecipientUids:
+          description: List of user IDs to notify for this dashboard (sent daily)
+          type: array
+          items:
+            type: integer
+        latestScreenshot:
+          type: string
+        whenToEmail:
+          type: string
+          enum:
+          - always
+          - on_changes
+          - never
+        showNoOfDays:
+          type: integer
+    AddOrganizationDataCampaignDashboardRequest:
+      type: object
+      required:
+      - name
+      - emailRecipientUids
+      - whenToEmail
+      - showNoOfDays
+      properties:
+        name:
+          type: string
+        emailRecipientUids:
+          description: List of user IDs to notify for this dashboard (sent daily)
+          type: array
+          items:
+            type: integer
+        whenToEmail:
+          type: string
+          enum:
+          - always
+          - on_changes
+          - never
+        showNoOfDays:
+          type: integer
     GetOrganizationDataCampaignDashboardsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -743,16 +752,13 @@ components:
         properties:
           dataCampaignDashboardId:
             type: integer
-    AddOrganizationDataCampaignResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - dataCampaignId
-        properties:
-          dataCampaignId:
-            type: integer
   parameters:
+    OrganizationDataCampaignDashboardIdPathParameter:
+      name: campaignDashboardId
+      in: path
+      required: true
+      schema:
+        type: integer
     OrganizationDataCampaignIdPathParameter:
       name: campaignId
       in: path
@@ -764,12 +770,6 @@ components:
       in: path
       required: true
       description: Organization ID
-      schema:
-        type: integer
-    OrganizationDataCampaignDashboardIdPathParameter:
-      name: campaignDashboardId
-      in: path
-      required: true
       schema:
         type: integer
   securitySchemes:
