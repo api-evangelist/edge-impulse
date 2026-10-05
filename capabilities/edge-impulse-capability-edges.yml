@@ -11,7 +11,7 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 7
+edge_count: 8
 edges:
 - tag: Learn
   spec_file: edge-impulse-learn-api-openapi.yml
@@ -88,3 +88,12 @@ edges:
   reason: Builds and downloads a trained model artefact for a chosen hardware deployment target — model
     packaging/deployment stage of the ML lifecycle. Could also read as software release engineering, hence
     moderated confidence; the artefact deployed is an ML model, so AI Management is the better fit.
+- tag: PostProcessing
+  spec_file: edge-impulse-postprocessing-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.7
+  evidence: Set post-processing block config; Classify sample with post-processing; ObjectDetectionPostProcessingResult
+  reason: Configures post-processing blocks of an ML inference pipeline and runs classification on samples
+    — part of the ML model lifecycle on an edge AI MLOps platform.
