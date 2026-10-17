@@ -285,88 +285,23 @@ paths:
     - url: https://studio.edgeimpulse.com/v1
 components:
   schemas:
-    GetPostProcessingResultsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - variableNames
-        - objectiveNames
-        - variables
-        - objectives
-        properties:
-          variableNames:
-            type: array
-            description: The names of the variables being tuned, in column order.
-            items:
-              type: string
-          objectiveNames:
-            type: array
-            description: The names of the objectives being minimized, in column order.
-            items:
-              type: string
-          variables:
-            type: array
-            description: The variable values representing the pareto front of optimal solutions.
-            items:
-              type: array
-              items:
-                type: number
-          objectives:
-            type: array
-            description: The objective values that correspond with the variables.
-            items:
-              type: array
-              items:
-                type: number
-    PerformanceCalibrationDetection:
-      type: object
-      required:
-      - time
-      - label
-      properties:
-        time:
-          type: integer
-          description: The time of the detection in milliseconds
-        label:
-          type: string
-          description: The label that was detected
-    PerformanceCalibrationUploadLabeledAudioResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - uploadKey
-        properties:
-          uploadKey:
-            type: string
-    PerformanceCalibrationFalsePositive:
+    PerformanceCalibrationParameters:
       type: object
       required:
       - type
-      - detectionTime
+      - version
       properties:
         type:
           type: string
+          description: The post-processing algorithm type.
           enum:
-          - incorrect
-          - duplicate
-          - spurious
-          description: The type of false positive. Incorrect is when a detection matches the wrong ground truth. Duplicate is when the same ground truth was detected more than once. The first correct detection is considered a true positive but subsequent detections are considered false positives. Spurious is when the detection was not associated with any ground truth.
-        detectionTime:
+          - standard
+        version:
           type: integer
-          description: The time of the detection in milliseconds
-        groundTruthLabel:
-          type: string
-          description: The label of any associated ground truth
-        groundTruthStart:
-          type: number
-          description: The start time of any associated ground truth
-        sampleIds:
-          type: array
-          description: All of the sample IDs in the affected region
-          items:
-            type: integer
+          description: The version number of the post-processing algorithm.
+          example: 1
+        parametersStandard:
+          $ref: '#/components/schemas/PerformanceCalibrationParametersStandard'
     PerformanceCalibrationParametersStandard:
       type: object
       required:
@@ -386,56 +321,15 @@ components:
           type: number
           description: The amount of time new matches will be ignored after a positive result.
           example: 500
-    PerformanceCalibrationRawDetection:
-      type: object
-      required:
-      - start
-      - end
-      - result
-      properties:
-        start:
-          type: integer
-          description: The start time of the detected window in milliseconds
-        end:
-          type: integer
-          description: The end time of the detected window in milliseconds
-        result:
-          type: array
-          items:
-            type: number
-    GetPerformanceCalibrationStatusResponse:
+    PerformanceCalibrationUploadLabeledAudioResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - available
+        - uploadKey
         properties:
-          available:
-            type: boolean
-          unsupportedProjectError:
+          uploadKey:
             type: string
-            description: If the current project is unsupported by performance calibration, this field explains the reason why. Otherwise, it is undefined.
-          options:
-            $ref: '#/components/schemas/StartPerformanceCalibrationRequest'
-    StartPerformanceCalibrationRequest:
-      type: object
-      required:
-      - backgroundNoiseLabel
-      properties:
-        backgroundNoiseLabel:
-          type: string
-          description: The label used to signify background noise in the impulse
-        otherNoiseLabels:
-          type: array
-          items:
-            type: string
-          description: Any other labels that should be considered equivalent to background noise
-        uploadKey:
-          type: string
-          description: The key of an uploaded sample. If not present, a synthetic sample will be created.
-        sampleLengthMinutes:
-          type: number
-          description: The length of sample to create (required for synthetic samples)
     GetPerformanceCalibrationParameterSetsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -447,13 +341,6 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/PerformanceCalibrationParameterSet'
-    PerformanceCalibrationSaveParameterSetRequest:
-      type: object
-      required:
-      - params
-      properties:
-        params:
-          $ref: '#/components/schemas/PerformanceCalibrationParameters'
     PerformanceCalibrationGroundTruth:
       type: object
       required:
@@ -505,6 +392,27 @@ components:
               idx:
                 type: integer
                 description: For debugging. The index of the sample in the original Y array.
+    GetPerformanceCalibrationStatusResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - available
+        properties:
+          available:
+            type: boolean
+          unsupportedProjectError:
+            type: string
+            description: If the current project is unsupported by performance calibration, this field explains the reason why. Otherwise, it is undefined.
+          options:
+            $ref: '#/components/schemas/StartPerformanceCalibrationRequest'
+    PerformanceCalibrationSaveParameterSetRequest:
+      type: object
+      required:
+      - params
+      properties:
+        params:
+          $ref: '#/components/schemas/PerformanceCalibrationParameters'
     GenericApiResponse:
       type: object
       required:
@@ -516,23 +424,56 @@ components:
         error:
           type: string
           description: Optional error description (set if 'success' was false)
-    PerformanceCalibrationParameters:
+    StartPerformanceCalibrationRequest:
       type: object
       required:
-      - type
-      - version
+      - backgroundNoiseLabel
       properties:
-        type:
+        backgroundNoiseLabel:
           type: string
-          description: The post-processing algorithm type.
-          enum:
-          - standard
-        version:
+          description: The label used to signify background noise in the impulse
+        otherNoiseLabels:
+          type: array
+          items:
+            type: string
+          description: Any other labels that should be considered equivalent to background noise
+        uploadKey:
+          type: string
+          description: The key of an uploaded sample. If not present, a synthetic sample will be created.
+        sampleLengthMinutes:
+          type: number
+          description: The length of sample to create (required for synthetic samples)
+    GetPerformanceCalibrationGroundTruthResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - samples
+        properties:
+          samples:
+            type: array
+            items:
+              $ref: '#/components/schemas/PerformanceCalibrationGroundTruth'
+    PerformanceCalibrationDetection:
+      type: object
+      required:
+      - time
+      - label
+      properties:
+        time:
           type: integer
-          description: The version number of the post-processing algorithm.
-          example: 1
-        parametersStandard:
-          $ref: '#/components/schemas/PerformanceCalibrationParametersStandard'
+          description: The time of the detection in milliseconds
+        label:
+          type: string
+          description: The label that was detected
+    PerformanceCalibrationUploadLabeledAudioRequest:
+      type: object
+      required:
+      - zip
+      properties:
+        zip:
+          type: string
+          format: binary
     GetPerformanceCalibrationParametersResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -540,6 +481,51 @@ components:
         properties:
           params:
             $ref: '#/components/schemas/PerformanceCalibrationParameters'
+    GetPerformanceCalibrationRawResultResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - detections
+        properties:
+          detections:
+            type: array
+            items:
+              $ref: '#/components/schemas/PerformanceCalibrationRawDetection'
+    GetPostProcessingResultsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - variableNames
+        - objectiveNames
+        - variables
+        - objectives
+        properties:
+          variableNames:
+            type: array
+            description: The names of the variables being tuned, in column order.
+            items:
+              type: string
+          objectiveNames:
+            type: array
+            description: The names of the objectives being minimized, in column order.
+            items:
+              type: string
+          variables:
+            type: array
+            description: The variable values representing the pareto front of optimal solutions.
+            items:
+              type: array
+              items:
+                type: number
+          objectives:
+            type: array
+            description: The objective values that correspond with the variables.
+            items:
+              type: array
+              items:
+                type: number
     PerformanceCalibrationParameterSet:
       type: object
       required:
@@ -619,49 +605,63 @@ components:
         windowSizeMs:
           type: number
           description: The size of the input block window in milliseconds.
-    GetPerformanceCalibrationGroundTruthResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - samples
-        properties:
-          samples:
-            type: array
-            items:
-              $ref: '#/components/schemas/PerformanceCalibrationGroundTruth'
-    PerformanceCalibrationUploadLabeledAudioRequest:
+    PerformanceCalibrationFalsePositive:
       type: object
       required:
-      - zip
+      - type
+      - detectionTime
       properties:
-        zip:
+        type:
           type: string
-          format: binary
-    GetPerformanceCalibrationRawResultResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - detections
-        properties:
-          detections:
-            type: array
-            items:
-              $ref: '#/components/schemas/PerformanceCalibrationRawDetection'
+          enum:
+          - incorrect
+          - duplicate
+          - spurious
+          description: The type of false positive. Incorrect is when a detection matches the wrong ground truth. Duplicate is when the same ground truth was detected more than once. The first correct detection is considered a true positive but subsequent detections are considered false positives. Spurious is when the detection was not associated with any ground truth.
+        detectionTime:
+          type: integer
+          description: The time of the detection in milliseconds
+        groundTruthLabel:
+          type: string
+          description: The label of any associated ground truth
+        groundTruthStart:
+          type: number
+          description: The start time of any associated ground truth
+        sampleIds:
+          type: array
+          description: All of the sample IDs in the affected region
+          items:
+            type: integer
+    PerformanceCalibrationRawDetection:
+      type: object
+      required:
+      - start
+      - end
+      - result
+      properties:
+        start:
+          type: integer
+          description: The start time of the detected window in milliseconds
+        end:
+          type: integer
+          description: The end time of the detected window in milliseconds
+        result:
+          type: array
+          items:
+            type: number
   parameters:
-    OptionalImpulseIdParameter:
-      name: impulseId
-      in: query
-      required: false
-      description: Impulse ID. If this is unset then the default impulse is used.
-      schema:
-        type: integer
     ProjectIdParameter:
       name: projectId
       in: path
       required: true
       description: Project ID
+      schema:
+        type: integer
+    OptionalImpulseIdParameter:
+      name: impulseId
+      in: query
+      required: false
+      description: Impulse ID. If this is unset then the default impulse is used.
       schema:
         type: integer
   securitySchemes:

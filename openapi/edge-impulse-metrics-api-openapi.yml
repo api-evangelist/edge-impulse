@@ -73,31 +73,6 @@ paths:
                 $ref: '#/components/schemas/GenericApiResponse'
 components:
   schemas:
-    LogWebsitePageviewRequest:
-      type: object
-      required:
-      - sessionId
-      - pageUrl
-      properties:
-        sessionId:
-          type: string
-        pageUrl:
-          type: string
-        pageReferrer:
-          type: string
-    LogAnalyticsEventRequest:
-      type: object
-      required:
-      - eventName
-      - eventProperties
-      properties:
-        sessionId:
-          type: string
-          description: Optional session ID for users who have not signed in yet. Helps match anonymous activity with user activity once they sign in.
-        eventName:
-          type: string
-        eventProperties:
-          type: object
     GetPublicMetricsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -124,6 +99,31 @@ components:
         error:
           type: string
           description: Optional error description (set if 'success' was false)
+    LogAnalyticsEventRequest:
+      type: object
+      required:
+      - eventName
+      - eventProperties
+      properties:
+        sessionId:
+          type: string
+          description: Optional session ID for users who have not signed in yet. Helps match anonymous activity with user activity once they sign in.
+        eventName:
+          type: string
+        eventProperties:
+          type: object
+    LogWebsitePageviewRequest:
+      type: object
+      required:
+      - sessionId
+      - pageUrl
+      properties:
+        sessionId:
+          type: string
+        pageUrl:
+          type: string
+        pageReferrer:
+          type: string
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey

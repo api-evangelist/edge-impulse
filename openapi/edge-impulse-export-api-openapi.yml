@@ -53,17 +53,6 @@ paths:
     - url: https://studio.edgeimpulse.com/v1
 components:
   schemas:
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
     ExportGetUrlResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -80,6 +69,17 @@ components:
           url:
             description: Set if hasExport is true
             type: string
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
   parameters:
     ProjectIdParameter:
       name: projectId

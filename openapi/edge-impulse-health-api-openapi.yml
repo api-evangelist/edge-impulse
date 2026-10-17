@@ -60,14 +60,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/GenericApiResponse'
 components:
-  parameters:
-    HealthCheckRequesterParameter:
-      name: requester
-      in: query
-      required: false
-      description: Health check requester
-      schema:
-        type: string
   schemas:
     GenericApiResponse:
       type: object
@@ -80,6 +72,14 @@ components:
         error:
           type: string
           description: Optional error description (set if 'success' was false)
+  parameters:
+    HealthCheckRequesterParameter:
+      name: requester
+      in: query
+      required: false
+      description: Health check requester
+      schema:
+        type: string
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey

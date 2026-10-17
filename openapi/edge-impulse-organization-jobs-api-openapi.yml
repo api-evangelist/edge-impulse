@@ -225,18 +225,47 @@ paths:
     - url: https://studio.edgeimpulse.com/v1
 components:
   parameters:
-    ExcludePipelineTransformationJobsParameter:
-      name: excludePipelineTransformJobs
+    OptionalStartDateParameter:
+      name: startDate
       in: query
       required: false
-      description: Whether to exclude pipeline / transformation jobs
+      description: Start date
       schema:
-        type: boolean
+        type: string
+        format: date-time
+    JobIdParameter:
+      name: jobId
+      in: path
+      required: true
+      description: Job ID
+      schema:
+        type: integer
+    OptionalJobsCategoryParameter:
+      name: category
+      in: query
+      required: false
+      description: Job category to filter on
+      schema:
+        type: string
     LimitResultsParameter:
       name: limit
       in: query
       required: false
       description: Maximum number of results
+      schema:
+        type: integer
+    OrganizationIdParameter:
+      name: organizationId
+      in: path
+      required: true
+      description: Organization ID
+      schema:
+        type: integer
+    OffsetResultsParameter:
+      name: offset
+      in: query
+      required: false
+      description: Offset in results, can be used in conjunction with LimitResultsParameter to implement paging.
       schema:
         type: integer
     LogLevelParameter:
@@ -266,6 +295,13 @@ components:
       description: Job key to filter on
       schema:
         type: string
+    ExcludePipelineTransformationJobsParameter:
+      name: excludePipelineTransformJobs
+      in: query
+      required: false
+      description: Whether to exclude pipeline / transformation jobs
+      schema:
+        type: boolean
     ForceCancelParameter:
       name: forceCancel
       in: query
@@ -280,42 +316,6 @@ components:
       description: Whether to exclude jobs with a parent ID (so jobs started as part of another job)
       schema:
         type: boolean
-    OffsetResultsParameter:
-      name: offset
-      in: query
-      required: false
-      description: Offset in results, can be used in conjunction with LimitResultsParameter to implement paging.
-      schema:
-        type: integer
-    OptionalStartDateParameter:
-      name: startDate
-      in: query
-      required: false
-      description: Start date
-      schema:
-        type: string
-        format: date-time
-    OptionalJobsCategoryParameter:
-      name: category
-      in: query
-      required: false
-      description: Job category to filter on
-      schema:
-        type: string
-    OrganizationIdParameter:
-      name: organizationId
-      in: path
-      required: true
-      description: Organization ID
-      schema:
-        type: integer
-    JobIdParameter:
-      name: jobId
-      in: path
-      required: true
-      description: Job ID
-      schema:
-        type: integer
     OptionalJobsFinishedParameter:
       name: finished
       in: query
@@ -328,55 +328,6 @@ components:
         - failed
         - all
   schemas:
-    SocketTokenResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - token
-        properties:
-          token:
-            type: object
-            required:
-            - socketToken
-            - expires
-            properties:
-              socketToken:
-                type: string
-              expires:
-                type: string
-                format: date-time
-    LogStdoutResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - stdout
-        - totalCount
-        properties:
-          stdout:
-            type: array
-            items:
-              type: object
-              required:
-              - created
-              - data
-              properties:
-                created:
-                  type: string
-                  format: date-time
-                data:
-                  type: string
-                logLevel:
-                  type: string
-                  enum:
-                  - error
-                  - warn
-                  - info
-                  - debug
-          totalCount:
-            type: integer
-            description: Total number of logs (only the last 1000 lines are returned)
     Job:
       type: object
       required:
@@ -440,6 +391,46 @@ components:
         categoryCount:
           type: integer
           description: Some job categories keep a counter on the job number, e.g. in synthetic data, so we know what the 1st, 2nd etc. job was in the UI.
+    LogStdoutResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - stdout
+        - totalCount
+        properties:
+          stdout:
+            type: array
+            items:
+              type: object
+              required:
+              - created
+              - data
+              properties:
+                created:
+                  type: string
+                  format: date-time
+                data:
+                  type: string
+                logLevel:
+                  type: string
+                  enum:
+                  - error
+                  - warn
+                  - info
+                  - debug
+          totalCount:
+            type: integer
+            description: Total number of logs (only the last 1000 lines are returned)
+    GetJobResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - job
+        properties:
+          job:
+            $ref: '#/components/schemas/Job'
     GenericApiResponse:
       type: object
       required:
@@ -451,15 +442,24 @@ components:
         error:
           type: string
           description: Optional error description (set if 'success' was false)
-    GetJobResponse:
+    SocketTokenResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - job
+        - token
         properties:
-          job:
-            $ref: '#/components/schemas/Job'
+          token:
+            type: object
+            required:
+            - socketToken
+            - expires
+            properties:
+              socketToken:
+                type: string
+              expires:
+                type: string
+                format: date-time
     ListJobsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -475,39 +475,6 @@ components:
               $ref: '#/components/schemas/Job'
           totalJobCount:
             type: integer
-    JobLogItem:
-      type: object
-      required:
-      - created
-      - data
-      properties:
-        created:
-          type: string
-          format: date-time
-        data:
-          type: string
-        logLevel:
-          type: string
-          enum:
-          - error
-          - warn
-          - info
-          - debug
-    LogStdoutResponse_2:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - stdout
-        - totalCount
-        properties:
-          stdout:
-            type: array
-            items:
-              $ref: '#/components/schemas/JobLogItem'
-          totalCount:
-            type: integer
-            description: Total number of logs (only the last 1000 lines are returned)
     CreatedUpdatedByUser:
       type: object
       required:
@@ -582,6 +549,39 @@ components:
         metadata:
           type: object
           description: Structured job metadata
+    JobLogItem:
+      type: object
+      required:
+      - created
+      - data
+      properties:
+        created:
+          type: string
+          format: date-time
+        data:
+          type: string
+        logLevel:
+          type: string
+          enum:
+          - error
+          - warn
+          - info
+          - debug
+    LogStdoutResponse_2:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - stdout
+        - totalCount
+        properties:
+          stdout:
+            type: array
+            items:
+              $ref: '#/components/schemas/JobLogItem'
+          totalCount:
+            type: integer
+            description: Total number of logs (only the last 1000 lines are returned)
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey

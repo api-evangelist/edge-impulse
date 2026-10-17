@@ -323,15 +323,24 @@ paths:
     - url: https://studio.edgeimpulse.com/v1
 components:
   schemas:
-    RenameDeviceRequest:
+    KeepDeviceDebugStreamAliveRequest:
       type: object
       required:
-      - name
+      - streamId
       properties:
-        name:
-          type: string
-          description: New name for this device
-          example: Jan's development board
+        streamId:
+          type: integer
+    ListDevicesResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - devices
+        properties:
+          devices:
+            type: array
+            items:
+              $ref: '#/components/schemas/Device'
     GetImpulseRecordsRequest:
       type: object
       properties:
@@ -348,12 +357,14 @@ components:
           type: array
           items:
             type: integer
-    StartSamplingResponse:
+    StartDeviceDebugStreamResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
+        required:
+        - streamId
         properties:
-          id:
+          streamId:
             type: integer
     CreateDeviceRequest:
       type: object
@@ -373,15 +384,6 @@ components:
         ifNotExists:
           type: boolean
           description: Whether to throw an error when this device already exists.
-    StartDeviceDebugStreamResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - streamId
-        properties:
-          streamId:
-            type: integer
     StartDeviceSnapshotDebugStreamRequest:
       type: object
       required:
@@ -392,76 +394,6 @@ components:
           enum:
           - high
           - low
-    StopDeviceDebugStreamRequest:
-      type: object
-      required:
-      - streamId
-      properties:
-        streamId:
-          type: integer
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
-    ListDevicesResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - devices
-        properties:
-          devices:
-            type: array
-            items:
-              $ref: '#/components/schemas/Device'
-    StartSamplingRequest:
-      type: object
-      required:
-      - label
-      - lengthMs
-      - category
-      - intervalMs
-      properties:
-        label:
-          type: string
-          description: Label to be used during sampling.
-        lengthMs:
-          type: integer
-          description: Requested length of the sample (in ms).
-        category:
-          type: string
-          description: Which acquisition category to sample data into.
-          enum:
-          - training
-          - testing
-          - anomaly
-        intervalMs:
-          type: number
-          description: Interval between samples (can be calculated like `1/hz * 1000`)
-        sensor:
-          type: string
-          description: The sensor to sample from.
-    GetDeviceResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        properties:
-          device:
-            $ref: '#/components/schemas/Device'
-    KeepDeviceDebugStreamAliveRequest:
-      type: object
-      required:
-      - streamId
-      properties:
-        streamId:
-          type: integer
     Device:
       type: object
       required:
@@ -559,13 +491,74 @@ components:
               - classification
               - objectDetection
               - constrainedObjectDetection
-    RawDataCategory:
-      type: string
-      enum:
-      - training
-      - testing
-      - validation
-      - post-processing
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    StartSamplingRequest:
+      type: object
+      required:
+      - label
+      - lengthMs
+      - category
+      - intervalMs
+      properties:
+        label:
+          type: string
+          description: Label to be used during sampling.
+        lengthMs:
+          type: integer
+          description: Requested length of the sample (in ms).
+        category:
+          type: string
+          description: Which acquisition category to sample data into.
+          enum:
+          - training
+          - testing
+          - anomaly
+        intervalMs:
+          type: number
+          description: Interval between samples (can be calculated like `1/hz * 1000`)
+        sensor:
+          type: string
+          description: The sensor to sample from.
+    StartSamplingResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          id:
+            type: integer
+    GetDeviceResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          device:
+            $ref: '#/components/schemas/Device'
+    RenameDeviceRequest:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: New name for this device
+          example: Jan's development board
+    StopDeviceDebugStreamRequest:
+      type: object
+      required:
+      - streamId
+      properties:
+        streamId:
+          type: integer
     StartSamplingRequest_2:
       type: object
       required:
@@ -598,14 +591,14 @@ components:
         targetSampleCount:
           type: number
           description: A hint to supported clients to show the desired number of samples to be collected
+    RawDataCategory:
+      type: string
+      enum:
+      - training
+      - testing
+      - validation
+      - post-processing
   parameters:
-    ProjectIdParameter:
-      name: projectId
-      in: path
-      required: true
-      description: Project ID
-      schema:
-        type: integer
     DeviceIdParameter:
       name: deviceId
       in: path
@@ -613,6 +606,13 @@ components:
       description: Device ID
       schema:
         type: string
+    ProjectIdParameter:
+      name: projectId
+      in: path
+      required: true
+      description: Project ID
+      schema:
+        type: integer
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey

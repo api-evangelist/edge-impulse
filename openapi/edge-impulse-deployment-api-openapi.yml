@@ -439,28 +439,17 @@ paths:
     - url: https://studio.edgeimpulse.com/v1
 components:
   schemas:
-    GetSyntiantPosteriorResponse:
+    EvaluateJobResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - hasPosteriorParameters
+        - result
         properties:
-          hasPosteriorParameters:
-            type: boolean
-          parameters:
-            type: object
-    GetDeploymentResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - hasDeployment
-        properties:
-          hasDeployment:
-            type: boolean
-          version:
-            type: integer
+          result:
+            type: array
+            items:
+              $ref: '#/components/schemas/ModelVariantStats'
     GetLastDeploymentBuildResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -495,30 +484,28 @@ components:
                 description: The time this build was created
           lastDeploymentTarget:
             $ref: '#/components/schemas/ProjectDeploymentTarget'
-    ProjectDeploymentTarget:
+    GetSyntiantPosteriorResponse:
       allOf:
-      - $ref: '#/components/schemas/DeploymentTarget'
+      - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - recommendedForProject
-        - disabledForProject
+        - hasPosteriorParameters
         properties:
-          recommendedForProject:
+          hasPosteriorParameters:
             type: boolean
-            description: Whether this deployment target is recommended for the project based on connected devices.
-          disabledForProject:
-            type: boolean
-            description: Whether this deployment target is disabled for the project based on various attributes of the project.
-          reasonTargetDisabled:
-            type: string
-            description: If the deployment target is disabled for the project, this gives the reason why.
-    KerasModelTypeEnum:
-      type: string
-      enum:
-      - int8
-      - float32
-      - akida
-      - requiresRetrain
+          parameters:
+            type: object
+    StartJobResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: Job identifier. Status updates will include this identifier.
+            example: 12873488112
     DeploymentTargetsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -530,13 +517,59 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/DeploymentTarget'
-    SetSyntiantPosteriorRequest:
+    GetDeploymentResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - hasDeployment
+        properties:
+          hasDeployment:
+            type: boolean
+          version:
+            type: integer
+    DeploymentTargetEngine:
+      type: string
+      enum:
+      - tflite
+      - tflite-eon
+      - tflite-eon-ram-optimized
+      - tensorrt
+      - tensaiflow
+      - drp-ai
+      - tidl
+      - akida
+      - syntiant
+      - memryx
+      - neox
+      - ethos-linux
+      - st-aton
+    GenericApiResponse:
       type: object
       required:
-      - parameters
+      - success
       properties:
-        parameters:
-          type: object
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    LearnBlockType:
+      type: string
+      description: The type of learning block (anomaly, keras, keras-transfer-image, keras-transfer-kws, keras-object-detection, keras-regression). Each behaves differently.
+      enum:
+      - anomaly
+      - anomaly-gmm
+      - keras
+      - keras-transfer-image
+      - keras-transfer-kws
+      - keras-object-detection
+      - keras-regression
+      - keras-akida
+      - keras-akida-transfer-image
+      - keras-akida-object-detection
+      - keras-visual-anomaly
     ModelVariantStats:
       type: object
       required:
@@ -585,108 +618,13 @@ components:
         accuracy:
           description: The model's accuracy as a percentage
           $ref: '#/components/schemas/EvaluateResultValue'
-    EvaluateJobResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - result
-        properties:
-          result:
-            type: array
-            items:
-              $ref: '#/components/schemas/ModelVariantStats'
-    FindSyntiantPosteriorRequest:
-      type: object
-      required:
-      - targetWords
-      - referenceSet
-      properties:
-        targetWords:
-          type: array
-          items:
-            type: string
-        referenceSet:
-          type: string
-          enum:
-          - 600_seconds
-          - full
-          - custom
-          - no_calibration
-        wavFile:
-          type: string
-          format: binary
-        metaCsvFile:
-          type: string
-          format: binary
-        deploymentTarget:
-          type: string
-          enum:
-          - syntiant-ndp101
-          - syntiant-ndp101-lib
-          - syntiant-ndp120-lib
-          - syntiant-ndp120-lib-tdk-v14
-          - syntiant-nicla-ndp120
-          - syntiant-avnet-rasyn
-          - syntiant-ndp120-lib-ndp-v1-15-0
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
-    StartJobResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: integer
-            description: Job identifier. Status updates will include this identifier.
-            example: 12873488112
-    EvaluateResultValue:
-      type: object
-      properties:
-        raw:
-          description: The value based on the model alone
-          type: number
-        withAnomaly:
-          description: The value including the result of anomaly detection
-          type: number
-    ProjectDeploymentTargetsResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - targets
-        properties:
-          targets:
-            type: array
-            items:
-              $ref: '#/components/schemas/ProjectDeploymentTarget'
-    DeploymentTargetEngine:
+    KerasModelTypeEnum:
       type: string
       enum:
-      - tflite
-      - tflite-eon
-      - tflite-eon-ram-optimized
-      - tensorrt
-      - tensaiflow
-      - drp-ai
-      - tidl
+      - int8
+      - float32
       - akida
-      - syntiant
-      - memryx
-      - neox
-      - ethos-linux
-      - st-aton
+      - requiresRetrain
     DeploymentTarget:
       type: object
       required:
@@ -782,39 +720,92 @@ components:
           type: string
         firmwareRepoUrl:
           type: string
-    LearnBlockType:
-      type: string
-      description: The type of learning block (anomaly, keras, keras-transfer-image, keras-transfer-kws, keras-object-detection, keras-regression). Each behaves differently.
-      enum:
-      - anomaly
-      - anomaly-gmm
-      - keras
-      - keras-transfer-image
-      - keras-transfer-kws
-      - keras-object-detection
-      - keras-regression
-      - keras-akida
-      - keras-akida-transfer-image
-      - keras-akida-object-detection
-      - keras-visual-anomaly
-    JobLogItem:
+    ProjectDeploymentTargetsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - targets
+        properties:
+          targets:
+            type: array
+            items:
+              $ref: '#/components/schemas/ProjectDeploymentTarget'
+    SetSyntiantPosteriorRequest:
       type: object
       required:
-      - created
-      - data
+      - parameters
       properties:
-        created:
-          type: string
-          format: date-time
-        data:
-          type: string
-        logLevel:
+        parameters:
+          type: object
+    EvaluateResultValue:
+      type: object
+      properties:
+        raw:
+          description: The value based on the model alone
+          type: number
+        withAnomaly:
+          description: The value including the result of anomaly detection
+          type: number
+    ProjectDeploymentTarget:
+      allOf:
+      - $ref: '#/components/schemas/DeploymentTarget'
+      - type: object
+        required:
+        - recommendedForProject
+        - disabledForProject
+        properties:
+          recommendedForProject:
+            type: boolean
+            description: Whether this deployment target is recommended for the project based on connected devices.
+          disabledForProject:
+            type: boolean
+            description: Whether this deployment target is disabled for the project based on various attributes of the project.
+          reasonTargetDisabled:
+            type: string
+            description: If the deployment target is disabled for the project, this gives the reason why.
+    FindSyntiantPosteriorRequest:
+      type: object
+      required:
+      - targetWords
+      - referenceSet
+      properties:
+        targetWords:
+          type: array
+          items:
+            type: string
+        referenceSet:
           type: string
           enum:
-          - error
-          - warn
-          - info
-          - debug
+          - 600_seconds
+          - full
+          - custom
+          - no_calibration
+        wavFile:
+          type: string
+          format: binary
+        metaCsvFile:
+          type: string
+          format: binary
+        deploymentTarget:
+          type: string
+          enum:
+          - syntiant-ndp101
+          - syntiant-ndp101-lib
+          - syntiant-ndp120-lib
+          - syntiant-ndp120-lib-tdk-v14
+          - syntiant-nicla-ndp120
+          - syntiant-avnet-rasyn
+          - syntiant-ndp120-lib-ndp-v1-15-0
+    GetDeploymentHistoryResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - deployment
+        properties:
+          deployment:
+            $ref: '#/components/schemas/DeploymentHistory'
     CreatedUpdatedByUser:
       type: object
       required:
@@ -830,12 +821,6 @@ components:
           type: string
         photo:
           type: string
-    KerasModelVariantEnum:
-      type: string
-      enum:
-      - int8
-      - float32
-      - akida
     DeploymentTargetVariant:
       type: object
       required:
@@ -848,66 +833,77 @@ components:
           type: boolean
         hint:
           type: string
-    BuildPublicDeploymentJobResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - deploymentVersion
-        properties:
-          jobId:
-            description: Set if a job was created (or was already running) for this deployment. Use this ID to poll to the job logs via 'GetPublicDeploymentStatusResponse'.
-            type: integer
-          deploymentVersion:
-            type: integer
-            description: Deployment version. Use `downloadHistoricDeployment` to download the deployment using this identifier (once the job is finished).
-    GetPublicDeploymentStatusResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - job
-        - logs
-        properties:
-          job:
-            type: object
-            required:
-            - created
-            properties:
-              created:
-                type: string
-                format: date-time
-                description: When the job was created.
-              started:
-                type: string
-                format: date-time
-                description: When the job was started.
-              finished:
-                type: string
-                format: date-time
-                description: When the job was finished.
-              finishedSuccessful:
-                type: boolean
-                description: Whether the job finished successfully. (Set to null if job is not finished)
-          logs:
-            type: array
-            description: Last 1000 log lines for this job.
-            items:
-              $ref: '#/components/schemas/JobLogItem'
-    ListDeploymentHistoryResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - deployments
-        - totalDeploymentCount
-        properties:
-          deployments:
-            type: array
-            items:
-              $ref: '#/components/schemas/DeploymentHistory'
-          totalDeploymentCount:
-            type: integer
+    DeploymentHistory:
+      type: object
+      required:
+      - created
+      - deploymentVersion
+      - deploymentFormat
+      - engine
+      - impulseId
+      - impulseName
+      - impulseIsDeleted
+      - impulseHasChangedSinceDeployment
+      - downloadUrl
+      - createdByBuildPublicDeploymentJob
+      properties:
+        created:
+          type: string
+          format: date-time
+          description: Date when the model was deployed
+        deploymentVersion:
+          type: integer
+        deploymentFormat:
+          type: string
+        deploymentTarget:
+          $ref: '#/components/schemas/ProjectDeploymentTarget'
+        engine:
+          $ref: '#/components/schemas/DeploymentTargetEngine_2'
+        modelType:
+          $ref: '#/components/schemas/KerasModelTypeEnum'
+        impulseId:
+          type: integer
+        impulseName:
+          type: string
+        impulseIsDeleted:
+          type: boolean
+        createdByUser:
+          description: The user who created this deployment (empty if created through API).
+          $ref: '#/components/schemas/CreatedUpdatedByUser'
+        impulseHasChangedSinceDeployment:
+          description: Set to true if the deployment no longer exactly matches the impulse it was created from (e.g. model was trained since the deployment was created, or some thresholds have changed)
+          type: boolean
+        downloadUrl:
+          type: string
+        createdByBuildPublicDeploymentJob:
+          description: If set, then this deployment was created by an anonymous user through buildPublicDeploymentJob.
+          type: boolean
+    KerasModelVariantEnum:
+      type: string
+      enum:
+      - int8
+      - float32
+      - akida
+    DeploymentTargetEngine_2:
+      type: string
+      enum:
+      - tflite
+      - tflite-eon
+      - tflite-eon-ram-optimized
+      - tensorrt
+      - tensaiflow
+      - drp-ai
+      - tidl
+      - akida
+      - syntiant
+      - memryx
+      - neox
+      - ethos-linux
+      - st-aton
+      - ceva-npn
+      - nordic-axon
+      - vlm-connector
+      - qaic
     DSPGroupItem:
       type: object
       required:
@@ -1025,71 +1021,42 @@ components:
         maxVal:
           type: number
           description: Maximum value for parameters of type 'int' or 'float'.
-    DeploymentHistory:
+    JobLogItem:
       type: object
       required:
       - created
-      - deploymentVersion
-      - deploymentFormat
-      - engine
-      - impulseId
-      - impulseName
-      - impulseIsDeleted
-      - impulseHasChangedSinceDeployment
-      - downloadUrl
-      - createdByBuildPublicDeploymentJob
+      - data
       properties:
         created:
           type: string
           format: date-time
-          description: Date when the model was deployed
-        deploymentVersion:
-          type: integer
-        deploymentFormat:
+        data:
           type: string
-        deploymentTarget:
-          $ref: '#/components/schemas/ProjectDeploymentTarget'
-        engine:
-          $ref: '#/components/schemas/DeploymentTargetEngine_2'
-        modelType:
-          $ref: '#/components/schemas/KerasModelTypeEnum'
-        impulseId:
-          type: integer
-        impulseName:
+        logLevel:
           type: string
-        impulseIsDeleted:
-          type: boolean
-        createdByUser:
-          description: The user who created this deployment (empty if created through API).
-          $ref: '#/components/schemas/CreatedUpdatedByUser'
-        impulseHasChangedSinceDeployment:
-          description: Set to true if the deployment no longer exactly matches the impulse it was created from (e.g. model was trained since the deployment was created, or some thresholds have changed)
-          type: boolean
-        downloadUrl:
-          type: string
-        createdByBuildPublicDeploymentJob:
-          description: If set, then this deployment was created by an anonymous user through buildPublicDeploymentJob.
-          type: boolean
-    DeploymentTargetEngine_2:
+          enum:
+          - error
+          - warn
+          - info
+          - debug
+    LearnBlockType_2:
       type: string
+      description: The type of learning block (anomaly, keras, keras-transfer-image, keras-transfer-kws, keras-object-detection, keras-regression, keras-freeform). Each behaves differently.
       enum:
-      - tflite
-      - tflite-eon
-      - tflite-eon-ram-optimized
-      - tensorrt
-      - tensaiflow
-      - drp-ai
-      - tidl
-      - akida
-      - syntiant
-      - memryx
-      - neox
-      - ethos-linux
-      - st-aton
-      - ceva-npn
-      - nordic-axon
-      - vlm-connector
-      - qaic
+      - anomaly
+      - anomaly-gmm
+      - keras
+      - keras-transfer-image
+      - keras-transfer-kws
+      - keras-object-detection
+      - keras-regression
+      - keras-akida
+      - keras-akida-transfer-image
+      - keras-akida-object-detection
+      - keras-visual-anomaly
+      - keras-freeform
+      - keras-anomaly
+      - vlm
     DeploymentTarget_2:
       type: object
       required:
@@ -1217,15 +1184,52 @@ components:
               type: string
             text:
               type: string
-    GetDeploymentHistoryResponse:
+    GetPublicDeploymentStatusResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - deployment
+        - job
+        - logs
         properties:
-          deployment:
-            $ref: '#/components/schemas/DeploymentHistory'
+          job:
+            type: object
+            required:
+            - created
+            properties:
+              created:
+                type: string
+                format: date-time
+                description: When the job was created.
+              started:
+                type: string
+                format: date-time
+                description: When the job was started.
+              finished:
+                type: string
+                format: date-time
+                description: When the job was finished.
+              finishedSuccessful:
+                type: boolean
+                description: Whether the job finished successfully. (Set to null if job is not finished)
+          logs:
+            type: array
+            description: Last 1000 log lines for this job.
+            items:
+              $ref: '#/components/schemas/JobLogItem'
+    BuildPublicDeploymentJobResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - deploymentVersion
+        properties:
+          jobId:
+            description: Set if a job was created (or was already running) for this deployment. Use this ID to poll to the job logs via 'GetPublicDeploymentStatusResponse'.
+            type: integer
+          deploymentVersion:
+            type: integer
+            description: Deployment version. Use `downloadHistoricDeployment` to download the deployment using this identifier (once the job is finished).
     BuildPublicDeploymentJobRequest:
       type: object
       required:
@@ -1236,53 +1240,21 @@ components:
           type: string
         modelType:
           $ref: '#/components/schemas/KerasModelVariantEnum'
-    LearnBlockType_2:
-      type: string
-      description: The type of learning block (anomaly, keras, keras-transfer-image, keras-transfer-kws, keras-object-detection, keras-regression, keras-freeform). Each behaves differently.
-      enum:
-      - anomaly
-      - anomaly-gmm
-      - keras
-      - keras-transfer-image
-      - keras-transfer-kws
-      - keras-object-detection
-      - keras-regression
-      - keras-akida
-      - keras-akida-transfer-image
-      - keras-akida-object-detection
-      - keras-visual-anomaly
-      - keras-freeform
-      - keras-anomaly
-      - vlm
+    ListDeploymentHistoryResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - deployments
+        - totalDeploymentCount
+        properties:
+          deployments:
+            type: array
+            items:
+              $ref: '#/components/schemas/DeploymentHistory'
+          totalDeploymentCount:
+            type: integer
   parameters:
-    ModelTypeParameter:
-      name: modelType
-      in: query
-      required: false
-      description: Optional model type of the build (if not, it uses the settings in the Keras block)
-      schema:
-        $ref: '#/components/schemas/KerasModelTypeEnum'
-    ModelEngineParameter:
-      name: engine
-      in: query
-      required: false
-      description: Optional engine for the build (if not, it uses the default engine for the deployment target)
-      schema:
-        $ref: '#/components/schemas/DeploymentTargetEngine'
-    OptionalImpulseIdParameter:
-      name: impulseId
-      in: query
-      required: false
-      description: Impulse ID. If this is unset then the default impulse is used.
-      schema:
-        type: integer
-    ProjectIdParameter:
-      name: projectId
-      in: path
-      required: true
-      description: Project ID
-      schema:
-        type: integer
     DeploymentTypeParameter:
       name: type
       in: query
@@ -1290,11 +1262,46 @@ components:
       description: The name of the built target. You can find this by listing all deployment targets through `listDeploymentTargetsForProject` (via `GET /v1/api/{projectId}/deployment/targets`) and see the `format` type.
       schema:
         type: string
+    ProjectIdParameter:
+      name: projectId
+      in: path
+      required: true
+      description: Project ID
+      schema:
+        type: integer
+    OptionalImpulseIdParameter:
+      name: impulseId
+      in: query
+      required: false
+      description: Impulse ID. If this is unset then the default impulse is used.
+      schema:
+        type: integer
+    ModelEngineParameter:
+      name: engine
+      in: query
+      required: false
+      description: Optional engine for the build (if not, it uses the default engine for the deployment target)
+      schema:
+        $ref: '#/components/schemas/DeploymentTargetEngine'
+    ModelTypeParameter:
+      name: modelType
+      in: query
+      required: false
+      description: Optional model type of the build (if not, it uses the settings in the Keras block)
+      schema:
+        $ref: '#/components/schemas/KerasModelTypeEnum'
     FilterByImpulseIdParameter:
       name: impulseId
       in: query
       required: false
       description: Impulse ID. If this is unset, data for all impulses is returned.
+      schema:
+        type: integer
+    DeploymentVersionParameter:
+      name: deploymentVersion
+      in: path
+      required: true
+      description: Deployment version ID
       schema:
         type: integer
     JobIdParameter:
@@ -1304,19 +1311,6 @@ components:
       description: Job ID
       schema:
         type: integer
-    FilterByDeploymentFormatParameter:
-      name: deploymentFormat
-      in: query
-      required: false
-      schema:
-        type: string
-    DeploymentVersionParameter:
-      name: deploymentVersion
-      in: path
-      required: true
-      description: Deployment version ID
-      schema:
-        type: integer
     OffsetResultsParameter:
       name: offset
       in: query
@@ -1324,6 +1318,12 @@ components:
       description: Offset in results, can be used in conjunction with LimitResultsParameter to implement paging.
       schema:
         type: integer
+    FilterByDeploymentFormatParameter:
+      name: deploymentFormat
+      in: query
+      required: false
+      schema:
+        type: string
     LimitResultsParameter:
       name: limit
       in: query

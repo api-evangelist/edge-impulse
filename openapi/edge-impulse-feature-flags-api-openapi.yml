@@ -35,6 +35,17 @@ components:
       - stripe-live-mode
       - azure-storage
       description: Known feature identifiers.
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
     GetFeatureFlagsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -56,17 +67,6 @@ components:
                 enabled:
                   type: boolean
                   description: Whether the feature is enabled.
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey

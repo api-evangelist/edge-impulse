@@ -1121,180 +1121,81 @@ paths:
     - url: https://studio.edgeimpulse.com/v1
 components:
   schemas:
-    OrganizationDatasetBucket:
+    ListPortalFilesInFolderRequest:
       type: object
       required:
-      - id
-      - bucket
-      - path
-      - fullBucketPathDescription
-      - dataItemNamingLevelsDeep
+      - prefix
       properties:
-        id:
-          description: Bucket ID
-          type: integer
+        prefix:
+          type: string
+          description: S3 prefix
+        continuationToken:
+          type: string
+          description: Only one S3 page (1000 items typically) is returned. Pass in the continuationToken on the next request to receive the next page.
+        onlyFetchFolders:
+          type: boolean
+          description: If set, then no files will be returned
+    UpdateOrganizationDatasetRequest:
+      type: object
+      properties:
+        dataset:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        category:
+          type: string
+        type:
+          $ref: '#/components/schemas/OrganizationDatasetTypeEnum'
         bucket:
+          type: object
+          required:
+          - id
+          - path
+          - dataItemNamingLevelsDeep
+          properties:
+            id:
+              description: Bucket ID
+              type: integer
+            path:
+              description: Path in the bucket
+              type: string
+            dataItemNamingLevelsDeep:
+              description: Number of levels deep for data items, e.g. if you have folder "test/abc", with value 1 "test" will be a data item, with value 2 "test/abc" will be a data item. Only used for "clinical" datasets.
+              type: integer
+    CreateSignedUploadLinkRequest:
+      type: object
+      required:
+      - fileName
+      - fileSize
+      - fileHash
+      properties:
+        fileName:
           type: string
-        path:
-          description: Path in the bucket
-          type: string
-        fullBucketPathDescription:
-          description: Full bucket path, incl. protocol (e.g. s3://bucket/path) - to be used in the UI
-          type: string
-        dataItemNamingLevelsDeep:
-          description: Number of levels deep for data items, e.g. if you have folder "test/abc", with value 1 "test" will be a data item, with value 2 "test/abc" will be a data item. Only used for "clinical" type.
+          description: file name
+        fileSize:
           type: integer
-    ListOrganizationBucketsResponse:
+          description: file size in bytes
+        fileHash:
+          type: string
+          description: hash to identify file changes
+    SetOrganizationDataDatasetRequest:
+      type: object
+      required:
+      - dataset
+      properties:
+        dataset:
+          type: string
+    GetOrganizationDatasetResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - buckets
+        - dataset
         properties:
-          buckets:
-            type: array
-            items:
-              $ref: '#/components/schemas/OrganizationBucket'
-    UpdateOrganizationDataItemRequest:
-      type: object
-      properties:
-        name:
-          type: string
-        dataset:
-          type: string
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-    OrganizationBulkMetadataRequest:
-      type: object
-      required:
-      - dataset
-      - csvFile
-      properties:
-        dataset:
-          type: string
-        csvFile:
-          type: string
-          format: binary
-    OrganizationDatasetTypeEnum:
-      type: string
-      enum:
-      - clinical
-      - files
-    ListOrganizationDataResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        properties:
-          filterParseError:
-            type: string
-          data:
-            type: array
-            items:
-              type: object
-              required:
-              - id
-              - name
-              - bucketId
-              - bucketName
-              - bucketPath
-              - fullBucketPath
-              - dataset
-              - totalFileCount
-              - totalFileSize
-              - created
-              - metadata
-              - metadataStringForCLI
-              properties:
-                id:
-                  type: integer
-                name:
-                  type: string
-                bucketId:
-                  type: integer
-                bucketName:
-                  type: string
-                bucketPath:
-                  type: string
-                fullBucketPath:
-                  type: string
-                dataset:
-                  type: string
-                totalFileCount:
-                  type: integer
-                totalFileSize:
-                  type: integer
-                created:
-                  type: string
-                  format: date-time
-                metadata:
-                  type: object
-                  additionalProperties:
-                    type: string
-                metadataStringForCLI:
-                  type: string
-                  description: String that's passed in to a transformation block in `--metadata` (the metadata + a `dataItemInfo` object)
-          totalFileCount:
-            type: integer
-          totalDataItemCount:
-            type: integer
-    OrganizationDataItem:
-      type: object
-      required:
-      - id
-      - name
-      - bucketId
-      - bucketName
-      - bucketPath
-      - dataset
-      - totalFileCount
-      - totalFileSize
-      - created
-      - metadata
-      - files
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        bucketId:
-          type: integer
-        bucketName:
-          type: string
-        bucketPath:
-          type: string
-        dataset:
-          type: string
-        totalFileCount:
-          type: integer
-        totalFileSize:
-          type: integer
-        created:
-          type: string
-          format: date-time
-        metadata:
-          type: object
-          additionalProperties:
-            type: string
-        files:
-          type: array
-          items:
-            type: object
-            required:
-            - name
-            - bucketPath
-            - size
-            properties:
-              name:
-                type: string
-              bucketPath:
-                type: string
-              size:
-                type: integer
-              lastModified:
-                type: string
-                format: date-time
+          dataset:
+            $ref: '#/components/schemas/OrganizationDataset'
     OrganizationDataset:
       type: object
       required:
@@ -1364,43 +1265,73 @@ components:
           items:
             type: string
             format: binary
-    ListPortalFilesInFolderResponse:
+    StartJobResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - files
+        - id
         properties:
-          files:
-            type: array
-            items:
-              $ref: '#/components/schemas/PortalFile'
-          continuationToken:
-            type: string
-    OrganizationAddDataFolderRequest:
+          id:
+            type: integer
+            description: Job identifier. Status updates will include this identifier.
+            example: 12873488112
+    GetOrganizationDataItemResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - data
+        properties:
+          data:
+            $ref: '#/components/schemas/OrganizationDataItem'
+    AddOrganizationBucketRequest:
       type: object
       required:
-      - dataset
-      - bucketId
-      - bucketPath
+      - accessKey
+      - secretKey
+      - endpoint
+      - bucket
+      - region
       properties:
+        accessKey:
+          type: string
+          description: Access key for the storage service (e.g., S3 access key, GCS access key)
+        secretKey:
+          type: string
+          description: Secret key for the storage service (e.g., S3 secret key, GCS secret key)
+        endpoint:
+          type: string
+          description: 'Endpoint URL for the storage service (e.g., S3 endpoint, custom endpoint for other services)
+
+            '
+        bucket:
+          type: string
+          description: Name of the storage bucket
+        region:
+          type: string
+          description: Region of the storage service (if applicable)
+        checkConnectivityPrefix:
+          type: string
+          description: 'Set this if you don''t have access to the root of this bucket.
+
+            Only used to verify connectivity to this bucket.
+
+            '
+        storageProvider:
+          $ref: '#/components/schemas/StorageProvider'
+          description: The type of storage provider. Defaults to 's3' if not specified.
+    UpdateOrganizationDataItemRequest:
+      type: object
+      properties:
+        name:
+          type: string
         dataset:
           type: string
-        bucketId:
-          type: integer
-        bucketPath:
-          type: string
-        metadataDataset:
-          type: string
-        type:
-          $ref: '#/components/schemas/OrganizationDatasetTypeEnum'
-    StorageProvider:
-      type: string
-      enum:
-      - s3
-      - google
-      - azure
-      - other
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
     VerifyOrganizationBucketResponse:
       description: "Response object for verifying an organization's bucket connectivity.\n\nWorkflow:\n1. The client initiates verification by sending a GET request to /api/organizations/{organizationId}/buckets/verify with bucket and credential details.\n2. The server responds with this VerifyOrganizationBucketResponse object.\n3. The client checks the connectionStatus:\n   - If \"connected\": Verification is complete. Other properties (files, hasInfoLabelsFile, signedUrl) are available.\n   - If \"connecting\": Verification is in progress. The client should continue polling. Other properties are not yet available.\n   - If \"error\": Verification failed. Check connectionError for details. Other properties are not available.\n4. If connectionStatus is \"connecting\", the client should periodically poll the endpoint until the status changes to \"connected\" or \"error\".\n"
       allOf:
@@ -1481,6 +1412,89 @@ components:
               where the endpoint must be reformatted. This field will be undefined for other storage providers.
 
               '
+    EntityCreatedResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: Unique identifier of the created entity.
+    PreviewDefaultFilesInFolderResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - files
+        properties:
+          files:
+            type: array
+            items:
+              $ref: '#/components/schemas/PortalFile'
+          isTruncated:
+            type: boolean
+            description: True if results are truncated.
+          truncationReason:
+            type: string
+            description: 'Explains why results are truncated; only present in the response if isTruncated is true. Results can be truncated if there are too many results (more than 500 matches), or if searching for more results is too expensive (for example, the dataset contains many items but very few match the given wildcard).
+
+              '
+            enum:
+            - too-many-results
+            - too-expensive-search
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
+    OrganizationAddDataFolderRequest:
+      type: object
+      required:
+      - dataset
+      - bucketId
+      - bucketPath
+      properties:
+        dataset:
+          type: string
+        bucketId:
+          type: integer
+        bucketPath:
+          type: string
+        metadataDataset:
+          type: string
+        type:
+          $ref: '#/components/schemas/OrganizationDatasetTypeEnum'
+    VerifyOrganizationExistingBucketRequest:
+      type: object
+      required:
+      - prefix
+      properties:
+        prefix:
+          type: string
+    GetOrganizationBucketResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - bucket
+        properties:
+          bucket:
+            $ref: '#/components/schemas/OrganizationBucket'
+    StorageProvider:
+      type: string
+      enum:
+      - s3
+      - google
+      - azure
+      - other
     PortalFile:
       type: object
       required:
@@ -1505,8 +1519,14 @@ components:
           enum:
           - folder
           - file
-    UpdateOrganizationDatasetRequest:
+    OrganizationAddDatasetRequest:
       type: object
+      required:
+      - dataset
+      - tags
+      - category
+      - type
+      - bucket
       properties:
         dataset:
           type: string
@@ -1532,30 +1552,74 @@ components:
               description: Path in the bucket
               type: string
             dataItemNamingLevelsDeep:
-              description: Number of levels deep for data items, e.g. if you have folder "test/abc", with value 1 "test" will be a data item, with value 2 "test/abc" will be a data item. Only used for "clinical" datasets.
+              description: Number of levels deep for data items, e.g. if you have folder "test/abc", with value 1 "test" will be a data item, with value 2 "test/abc" will be a data item. Only used for "clinical" type.
               type: integer
-    CreateSignedUploadLinkRequest:
+    CreateSignedUploadLinkResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        properties:
+          url:
+            type: string
+            description: S3 Upload Link
+          ETag:
+            type: string
+            description: S3 File Tag
+    GetOrganizationDataItemTransformJobsResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - transformationJobs
+        - totalTransformationJobCount
+        properties:
+          transformationJobs:
+            type: array
+            items:
+              type: object
+              required:
+              - id
+              - transformationJobId
+              - createProjectId
+              - created
+              - jobId
+              - transformationBlockName
+              properties:
+                id:
+                  type: integer
+                transformationJobId:
+                  type: integer
+                createProjectId:
+                  type: integer
+                created:
+                  type: string
+                  format: date-time
+                jobId:
+                  type: integer
+                jobStarted:
+                  type: string
+                  format: date-time
+                jobFinished:
+                  type: string
+                  format: date-time
+                jobFinishedSuccessful:
+                  type: boolean
+                transformationBlockName:
+                  type: string
+                pipelineName:
+                  type: string
+          totalTransformationJobCount:
+            type: integer
+    RenamePortalFileRequest:
       type: object
       required:
-      - fileName
-      - fileSize
-      - fileHash
+      - oldPath
+      - newPath
       properties:
-        fileName:
+        oldPath:
           type: string
-          description: file name
-        fileSize:
-          type: integer
-          description: file size in bytes
-        fileHash:
-          type: string
-          description: hash to identify file changes
-    DeletePortalFileRequest:
-      type: object
-      required:
-      - path
-      properties:
-        path:
+          description: S3 path (within the portal)
+        newPath:
           type: string
           description: S3 path (within the portal)
     OrganizationAddDataFileRequest:
@@ -1568,15 +1632,28 @@ components:
           items:
             type: string
             format: binary
-    GetOrganizationBucketResponse:
+    ListOrganizationFilesResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - bucket
+        - totalFileSize
+        - totalFileCount
+        - totalDataItemCount
+        - data
         properties:
-          bucket:
-            $ref: '#/components/schemas/OrganizationBucket'
+          filterParseError:
+            type: string
+          totalFileSize:
+            type: integer
+          totalFileCount:
+            type: integer
+          totalDataItemCount:
+            type: integer
+          data:
+            type: array
+            items:
+              $ref: '#/components/schemas/OrganizationDataItem'
     OrganizationBucket:
       type: object
       required:
@@ -1625,18 +1702,6 @@ components:
           type: string
           description: The name of the storage account for Azure Blob Storage
           example: my-storage-account
-    RenamePortalFileRequest:
-      type: object
-      required:
-      - oldPath
-      - newPath
-      properties:
-        oldPath:
-          type: string
-          description: S3 path (within the portal)
-        newPath:
-          type: string
-          description: S3 path (within the portal)
     DownloadPortalFileRequest:
       type: object
       required:
@@ -1645,27 +1710,7 @@ components:
         path:
           type: string
           description: S3 path (within the portal)
-    GetOrganizationDatasetResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - dataset
-        properties:
-          dataset:
-            $ref: '#/components/schemas/OrganizationDataset'
-    CreateSignedUploadLinkResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        properties:
-          url:
-            type: string
-            description: S3 Upload Link
-          ETag:
-            type: string
-            description: S3 File Tag
-    PreviewDefaultFilesInFolderResponse:
+    ListPortalFilesInFolderResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
@@ -1676,53 +1721,8 @@ components:
             type: array
             items:
               $ref: '#/components/schemas/PortalFile'
-          isTruncated:
-            type: boolean
-            description: True if results are truncated.
-          truncationReason:
+          continuationToken:
             type: string
-            description: 'Explains why results are truncated; only present in the response if isTruncated is true. Results can be truncated if there are too many results (more than 500 matches), or if searching for more results is too expensive (for example, the dataset contains many items but very few match the given wildcard).
-
-              '
-            enum:
-            - too-many-results
-            - too-expensive-search
-    SetOrganizationDataDatasetRequest:
-      type: object
-      required:
-      - dataset
-      properties:
-        dataset:
-          type: string
-    UpdateOrganizationBucketRequest:
-      type: object
-      properties:
-        accessKey:
-          type: string
-          description: S3 access key
-        secretKey:
-          type: string
-          description: S3 secret key
-        endpoint:
-          type: string
-          description: S3 endpoint
-        bucket:
-          type: string
-          description: S3 bucket
-        region:
-          type: string
-          description: S3 region
-        checkConnectivityPrefix:
-          type: string
-          description: 'Set this if you don''t have access to the root of this bucket.
-
-            Only used to verify connectivity to this bucket.
-
-            '
-        storageAccountName:
-          type: string
-          description: The name of the storage account for Azure Blob Storage
-          example: my-storage-account
     VerifyOrganizationBucketRequest:
       type: object
       required:
@@ -1792,51 +1792,153 @@ components:
             Set this if you don''t have access to the full bucket or want to limit the scope.
 
             '
-    GetOrganizationDataItemTransformJobsResponse:
+    OrganizationDatasetBucket:
+      type: object
+      required:
+      - id
+      - bucket
+      - path
+      - fullBucketPathDescription
+      - dataItemNamingLevelsDeep
+      properties:
+        id:
+          description: Bucket ID
+          type: integer
+        bucket:
+          type: string
+        path:
+          description: Path in the bucket
+          type: string
+        fullBucketPathDescription:
+          description: Full bucket path, incl. protocol (e.g. s3://bucket/path) - to be used in the UI
+          type: string
+        dataItemNamingLevelsDeep:
+          description: Number of levels deep for data items, e.g. if you have folder "test/abc", with value 1 "test" will be a data item, with value 2 "test/abc" will be a data item. Only used for "clinical" type.
+          type: integer
+    OrganizationDataItem:
+      type: object
+      required:
+      - id
+      - name
+      - bucketId
+      - bucketName
+      - bucketPath
+      - dataset
+      - totalFileCount
+      - totalFileSize
+      - created
+      - metadata
+      - files
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        bucketId:
+          type: integer
+        bucketName:
+          type: string
+        bucketPath:
+          type: string
+        dataset:
+          type: string
+        totalFileCount:
+          type: integer
+        totalFileSize:
+          type: integer
+        created:
+          type: string
+          format: date-time
+        metadata:
+          type: object
+          additionalProperties:
+            type: string
+        files:
+          type: array
+          items:
+            type: object
+            required:
+            - name
+            - bucketPath
+            - size
+            properties:
+              name:
+                type: string
+              bucketPath:
+                type: string
+              size:
+                type: integer
+              lastModified:
+                type: string
+                format: date-time
+    ListOrganizationDataResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
-        required:
-        - transformationJobs
-        - totalTransformationJobCount
         properties:
-          transformationJobs:
+          filterParseError:
+            type: string
+          data:
             type: array
             items:
               type: object
               required:
               - id
-              - transformationJobId
-              - createProjectId
+              - name
+              - bucketId
+              - bucketName
+              - bucketPath
+              - fullBucketPath
+              - dataset
+              - totalFileCount
+              - totalFileSize
               - created
-              - jobId
-              - transformationBlockName
+              - metadata
+              - metadataStringForCLI
               properties:
                 id:
                   type: integer
-                transformationJobId:
+                name:
+                  type: string
+                bucketId:
                   type: integer
-                createProjectId:
+                bucketName:
+                  type: string
+                bucketPath:
+                  type: string
+                fullBucketPath:
+                  type: string
+                dataset:
+                  type: string
+                totalFileCount:
+                  type: integer
+                totalFileSize:
                   type: integer
                 created:
                   type: string
                   format: date-time
-                jobId:
-                  type: integer
-                jobStarted:
+                metadata:
+                  type: object
+                  additionalProperties:
+                    type: string
+                metadataStringForCLI:
                   type: string
-                  format: date-time
-                jobFinished:
-                  type: string
-                  format: date-time
-                jobFinishedSuccessful:
-                  type: boolean
-                transformationBlockName:
-                  type: string
-                pipelineName:
-                  type: string
-          totalTransformationJobCount:
+                  description: String that's passed in to a transformation block in `--metadata` (the metadata + a `dataItemInfo` object)
+          totalFileCount:
             type: integer
+          totalDataItemCount:
+            type: integer
+    OrganizationBulkMetadataRequest:
+      type: object
+      required:
+      - dataset
+      - csvFile
+      properties:
+        dataset:
+          type: string
+        csvFile:
+          type: string
+          format: binary
     PreviewDefaultFilesInFolderRequest:
       type: object
       required:
@@ -1852,102 +1954,11 @@ components:
           enum:
           - files
           - folders
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
-    OrganizationAddDatasetRequest:
-      type: object
-      required:
-      - dataset
-      - tags
-      - category
-      - type
-      - bucket
-      properties:
-        dataset:
-          type: string
-        tags:
-          type: array
-          items:
-            type: string
-        category:
-          type: string
-        type:
-          $ref: '#/components/schemas/OrganizationDatasetTypeEnum'
-        bucket:
-          type: object
-          required:
-          - id
-          - path
-          - dataItemNamingLevelsDeep
-          properties:
-            id:
-              description: Bucket ID
-              type: integer
-            path:
-              description: Path in the bucket
-              type: string
-            dataItemNamingLevelsDeep:
-              description: Number of levels deep for data items, e.g. if you have folder "test/abc", with value 1 "test" will be a data item, with value 2 "test/abc" will be a data item. Only used for "clinical" type.
-              type: integer
-    EntityCreatedResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: integer
-            description: Unique identifier of the created entity.
-    ListOrganizationFilesResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - totalFileSize
-        - totalFileCount
-        - totalDataItemCount
-        - data
-        properties:
-          filterParseError:
-            type: string
-          totalFileSize:
-            type: integer
-          totalFileCount:
-            type: integer
-          totalDataItemCount:
-            type: integer
-          data:
-            type: array
-            items:
-              $ref: '#/components/schemas/OrganizationDataItem'
-    StartJobResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: integer
-            description: Job identifier. Status updates will include this identifier.
-            example: 12873488112
-    VerifyOrganizationExistingBucketRequest:
-      type: object
-      required:
-      - prefix
-      properties:
-        prefix:
-          type: string
+    OrganizationDatasetTypeEnum:
+      type: string
+      enum:
+      - clinical
+      - files
     DownloadPortalFileResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -1958,55 +1969,43 @@ components:
           url:
             type: string
             description: Signed URL to download the file
-    ListPortalFilesInFolderRequest:
-      type: object
-      required:
-      - prefix
-      properties:
-        prefix:
-          type: string
-          description: S3 prefix
-        continuationToken:
-          type: string
-          description: Only one S3 page (1000 items typically) is returned. Pass in the continuationToken on the next request to receive the next page.
-        onlyFetchFolders:
-          type: boolean
-          description: If set, then no files will be returned
-    GetOrganizationDataItemResponse:
+    ListOrganizationBucketsResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
       - type: object
         required:
-        - data
+        - buckets
         properties:
-          data:
-            $ref: '#/components/schemas/OrganizationDataItem'
-    AddOrganizationBucketRequest:
+          buckets:
+            type: array
+            items:
+              $ref: '#/components/schemas/OrganizationBucket'
+    DeletePortalFileRequest:
       type: object
       required:
-      - accessKey
-      - secretKey
-      - endpoint
-      - bucket
-      - region
+      - path
+      properties:
+        path:
+          type: string
+          description: S3 path (within the portal)
+    UpdateOrganizationBucketRequest:
+      type: object
       properties:
         accessKey:
           type: string
-          description: Access key for the storage service (e.g., S3 access key, GCS access key)
+          description: S3 access key
         secretKey:
           type: string
-          description: Secret key for the storage service (e.g., S3 secret key, GCS secret key)
+          description: S3 secret key
         endpoint:
           type: string
-          description: 'Endpoint URL for the storage service (e.g., S3 endpoint, custom endpoint for other services)
-
-            '
+          description: S3 endpoint
         bucket:
           type: string
-          description: Name of the storage bucket
+          description: S3 bucket
         region:
           type: string
-          description: Region of the storage service (if applicable)
+          description: S3 region
         checkConnectivityPrefix:
           type: string
           description: 'Set this if you don''t have access to the root of this bucket.
@@ -2014,17 +2013,10 @@ components:
             Only used to verify connectivity to this bucket.
 
             '
-        storageProvider:
-          $ref: '#/components/schemas/StorageProvider'
-          description: The type of storage provider. Defaults to 's3' if not specified.
-    StorageProvider_2:
-      type: string
-      enum:
-      - s3
-      - google
-      - azure
-      - other
-      - edgeimpulse
+        storageAccountName:
+          type: string
+          description: The name of the storage account for Azure Blob Storage
+          example: my-storage-account
     CreateOrganizationBucketResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -2039,6 +2031,14 @@ components:
           bucket:
             type: string
             description: Newly created bucket name
+    StorageProvider_2:
+      type: string
+      enum:
+      - s3
+      - google
+      - azure
+      - other
+      - edgeimpulse
     CreateOrganizationBucketRequest:
       type: object
       required:
@@ -2047,21 +2047,6 @@ components:
         name:
           type: string
   parameters:
-    OrganizationFileNameParameter:
-      name: fileName
-      in: query
-      required: true
-      description: File name
-      schema:
-        type: string
-    OrganizationDatasetRequiredParameter:
-      name: dataset
-      in: query
-      required: true
-      description: Selected dataset
-      example: activity data
-      schema:
-        type: string
     OrganizationDataIdParameter:
       name: dataId
       in: path
@@ -2069,40 +2054,12 @@ components:
       description: Data ID
       schema:
         type: integer
-    OrganizationDataFilterParameter:
-      name: filter
-      in: query
-      required: false
-      description: Data filter in SQL WHERE format, where you can reference 'dataset', 'bucket', 'name', 'total_file_count', 'total_file_size', 'created' and any metadata label through 'metadata->' (dots are replaced by underscore).
-      example: dataset = 'activity data' AND (label = 'running' OR metadata->user = 'Jan Jongboom')
-      schema:
-        type: string
-    OrganizationDatasetPathParameter:
+    OrganizationDatasetRequiredParameter:
       name: dataset
-      in: path
-      required: true
-      description: Dataset name
-      schema:
-        type: string
-    OrganizationPathInDatasetParameter:
-      name: path
       in: query
       required: true
-      description: Path, relative to dataset
-      schema:
-        type: string
-    BucketIdParameter:
-      name: bucketId
-      in: path
-      required: true
-      description: Bucket ID
-      schema:
-        type: integer
-    PortalPathParameter:
-      name: path
-      in: query
-      required: true
-      description: Path to file in portal
+      description: Selected dataset
+      example: activity data
       schema:
         type: string
     OrganizationDataIdsParameter:
@@ -2115,6 +2072,42 @@ components:
       - 7
       schema:
         type: string
+    OffsetResultsParameter:
+      name: offset
+      in: query
+      required: false
+      description: Offset in results, can be used in conjunction with LimitResultsParameter to implement paging.
+      schema:
+        type: integer
+    PortalPathParameter:
+      name: path
+      in: query
+      required: true
+      description: Path to file in portal
+      schema:
+        type: string
+    OrganizationDataFilterParameter:
+      name: filter
+      in: query
+      required: false
+      description: Data filter in SQL WHERE format, where you can reference 'dataset', 'bucket', 'name', 'total_file_count', 'total_file_size', 'created' and any metadata label through 'metadata->' (dots are replaced by underscore).
+      example: dataset = 'activity data' AND (label = 'running' OR metadata->user = 'Jan Jongboom')
+      schema:
+        type: string
+    OrganizationFileNameParameter:
+      name: fileName
+      in: query
+      required: true
+      description: File name
+      schema:
+        type: string
+    BucketIdParameter:
+      name: bucketId
+      in: path
+      required: true
+      description: Bucket ID
+      schema:
+        type: integer
     OrganizationDatasetParameter:
       name: dataset
       in: query
@@ -2123,13 +2116,6 @@ components:
       example: activity data
       schema:
         type: string
-    OffsetResultsParameter:
-      name: offset
-      in: query
-      required: false
-      description: Offset in results, can be used in conjunction with LimitResultsParameter to implement paging.
-      schema:
-        type: integer
     LimitResultsParameter:
       name: limit
       in: query
@@ -2144,6 +2130,20 @@ components:
       description: Organization ID
       schema:
         type: integer
+    OrganizationPathInDatasetParameter:
+      name: path
+      in: query
+      required: true
+      description: Path, relative to dataset
+      schema:
+        type: string
+    OrganizationDatasetPathParameter:
+      name: dataset
+      in: path
+      required: true
+      description: Dataset name
+      schema:
+        type: string
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey

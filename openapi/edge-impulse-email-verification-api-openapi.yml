@@ -102,6 +102,21 @@ paths:
     servers:
     - url: https://studio.edgeimpulse.com/v1
 components:
+  parameters:
+    EmailIdParameter:
+      name: emailId
+      in: path
+      required: true
+      description: Unique identifier for an email verification request
+      schema:
+        type: integer
+    EmailParameter:
+      name: email
+      in: path
+      required: true
+      description: Email address
+      schema:
+        type: string
   schemas:
     ValidateEmailResponse:
       allOf:
@@ -138,6 +153,52 @@ components:
             type: string
             example: edgeimpulse.com
             description: The second part of the email address (after the @ sign)
+    ActivateUserOrVerifyEmailRequest:
+      type: object
+      required:
+      - code
+      properties:
+        code:
+          type: string
+          description: Activation or verification code (sent via email)
+    EntityCreatedResponse:
+      allOf:
+      - $ref: '#/components/schemas/GenericApiResponse'
+      - type: object
+        required:
+        - id
+        properties:
+          id:
+            type: integer
+            description: Unique identifier of the created entity.
+    EmailValidationRequest:
+      type: object
+      required:
+      - email
+      properties:
+        email:
+          type: string
+          description: E-mail address to validate
+          example: jan@edgeimpulse.com
+    RequestEmailVerificationRequest:
+      type: object
+      required:
+      - redirectUrl
+      properties:
+        redirectUrl:
+          type: string
+          description: URL to redirect the user after email verification.
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
     GetEmailVerificationStatusResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -148,14 +209,6 @@ components:
           verified:
             type: boolean
             description: Whether the email address has been verified.
-    ActivateUserOrVerifyEmailRequest:
-      type: object
-      required:
-      - code
-      properties:
-        code:
-          type: string
-          description: Activation or verification code (sent via email)
     VerifyEmailResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -170,59 +223,6 @@ components:
           redirectUrl:
             type: string
             description: URL to redirect the user to after email verification.
-    EmailValidationRequest:
-      type: object
-      required:
-      - email
-      properties:
-        email:
-          type: string
-          description: E-mail address to validate
-          example: jan@edgeimpulse.com
-    EntityCreatedResponse:
-      allOf:
-      - $ref: '#/components/schemas/GenericApiResponse'
-      - type: object
-        required:
-        - id
-        properties:
-          id:
-            type: integer
-            description: Unique identifier of the created entity.
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
-    RequestEmailVerificationRequest:
-      type: object
-      required:
-      - redirectUrl
-      properties:
-        redirectUrl:
-          type: string
-          description: URL to redirect the user after email verification.
-  parameters:
-    EmailParameter:
-      name: email
-      in: path
-      required: true
-      description: Email address
-      schema:
-        type: string
-    EmailIdParameter:
-      name: emailId
-      in: path
-      required: true
-      description: Unique identifier for an email verification request
-      schema:
-        type: integer
   securitySchemes:
     ApiKeyAuthentication:
       type: apiKey

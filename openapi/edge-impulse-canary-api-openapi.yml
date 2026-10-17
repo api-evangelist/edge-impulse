@@ -33,17 +33,6 @@ paths:
                 $ref: '#/components/schemas/CanaryResponse'
 components:
   schemas:
-    GenericApiResponse:
-      type: object
-      required:
-      - success
-      properties:
-        success:
-          type: boolean
-          description: Whether the operation succeeded
-        error:
-          type: string
-          description: Optional error description (set if 'success' was false)
     CanaryResponse:
       allOf:
       - $ref: '#/components/schemas/GenericApiResponse'
@@ -55,6 +44,17 @@ components:
             type: boolean
             description: Whether the request should be routed to the canary or not.
             example: true
+    GenericApiResponse:
+      type: object
+      required:
+      - success
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation succeeded
+        error:
+          type: string
+          description: Optional error description (set if 'success' was false)
   parameters:
     RequestedUrlParameter:
       name: requestedUrl
