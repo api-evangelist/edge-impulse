@@ -1,0 +1,61 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-28'
+method: searched
+source: https://www.edgeimpulse.com/pricing
+sources:
+- https://www.edgeimpulse.com/pricing
+provenance:
+  tool: engine/economics/harvest_pricing.py
+  run: 20261028T120612
+  grounding: every price_text was found verbatim in the fetched page text
+audience: business-product
+pricing_basis: tiered-subscription
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-28'
+published: true
+note: 'Two-tier plan page: free Developer tier ($0/per month) and Enterprise with custom pricing requiring
+  contact with sales.'
+plan_count: 2
+currency: USD
+plans:
+- name: Developer
+  price_text: $0 / per month
+  price: 0
+  currency: USD
+  period: month
+  included_quota: 3 private projects, unlimited public projects, up to 3 collaborators per project, 60
+    minutes of compute time per job, 16GB CPU compute memory, limited API access
+- name: Enterprise
+  price_text: Custom Pricing
+  period: none
+  included_quota: Custom (10+) private projects, unlimited compute, GPU training, SSO, RBAC, full API
+    access
+rate_limit_statements:
+- 60 minutes of compute time per job
+- 10 experiments per project
+- Up to 3 collaborators per project
+- Limited to generating 30 min of synthetic testing data
+- Up to 1000 units
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - free
+  units: []
+  plans:
+  - name: Developer
+    access: other
+    model: free
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Enterprise
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
